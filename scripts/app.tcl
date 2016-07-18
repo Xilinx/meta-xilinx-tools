@@ -84,7 +84,7 @@ proc do_bsp_config {conf} {
 	#
 	#  Also can configure  Library Specific Configs
 	if { [catch {xsct_config bsp [dict get $conf bsp]} result] } {
-		puts "No BSP Configuration \n\t $result"
+		puts "XSCTHELPER INFO: No BSP Configuration \n\t $result"
 	}
 }
 
@@ -102,7 +102,7 @@ proc do_app_config {conf} {
 	#   linker-script                  Linker script for linking the program sections
 	#   undef-compiler-symbols         Undefine symbols. Ex. MYSYMBOL
 	if { [catch {xsct_config app [dict get $conf app]} result] } {
-		puts "No APP configuration \n\t $result"
+		puts "XSCTHELPER INFO: No APP configuration \n\t $result"
 	}
 }
 
@@ -112,7 +112,9 @@ set libs [split $params(lib) { }]
 if { $params(ws) ne "" } {
 	#Local Work Space available
 	setws $params(ws)
-	importprojects $params(ws)
+	if { [catch {importprojects $params(ws)} result] } {
+		puts "XSCTHELPER INFO: Empty WorkSpace"
+	}
 	if { $params(pname) ne "" } {
 		# hwpname/bspname is empty then default it to pname+_hwproj/bsp
 		if {$params(hwpname) eq ""} {
