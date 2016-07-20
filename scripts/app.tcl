@@ -29,7 +29,7 @@ set option {
 	{hdf.arg	""			"hardware Definition file"}
 	{processor.arg	""			"target processor"}
 	{rp.arg		""			"repo path"}
-	{app.arg	"empty_application"	"Application project fsbl, empty.."}
+	{app.arg	"Empty Application"	"Application project fsbl, empty.."}
 	{lib.arg	""			"Add library"}
 	{pname.arg	""			"Project Name"}
 	{bspname.arg	""			"standalone bsp name"}
@@ -159,7 +159,7 @@ if { $params(ws) ne "" } {
 			createhw -name $params(hwpname) -hwspec $params(hdf)
 			set regen 1
 		} else {
-			puts "INFO: HDF not available. Using $params{hwpname} project"
+			puts "INFO: HDF not available. Using $params(hwpname) project"
 		}
 
 		#Check for Project(SW/HW) availablity in work space and built it.
