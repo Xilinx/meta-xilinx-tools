@@ -1,7 +1,5 @@
-#requires hdf repo path proc dir yaml-file-location
-package require cmdline
-package require yaml
-
+set dir [file dirname [info script]]
+source $dir/base-hsi.tcl
 set option {
 	{hdf.arg	""			"hardware Definition file"}
 	{processor.arg	""			"target processor"}
@@ -14,28 +12,27 @@ set option {
 	{hwpname.arg	""			"hardware project name"}
 	{arch.arg	"64"			"32/64 bit architecture"}
 	{do_compile.arg	"0"			"Build the project"}
-	{forceconf.arg	"0"			"Apply the yaml comfigs on existing project"}
+	{forceconf.arg	"0"			"Apply the yaml configs on existing project"}
 	{yamlconf.arg	""			"Path to Config File"}
 }
-
-set usage "A script to generate device-tree sources"
+set usage "A script to generate and compile device-tree"
 array set params [::cmdline::getoptions argv $option $usage]
+set project "$params(ws)/$params(pname)"
 
-proc set_properties {} {
-    global params
-    if { $params(yamlconf) ne "" } {
-        set conf_dict [::yaml::yaml2dict -file $params(yamlconf)]
-        if {[dict exists $conf_dict "bsp"]} {
-            foreach prop [dict keys [dict get $conf_dict "bsp"]] {
-                foreach action [dict keys [dict get $conf_dict "bsp" $prop]] {
-                    hsi set_property CONFIG.$prop [dict get $conf_dict "bsp" $prop $action] [hsi get_os]
-                }
-            }
-        }
-    }
+set_hw_design $project $params(hdf)
+
+if { [catch {hsi set_repo_path $params(rp)} res] } {
+	error "Failed to set repo path $params(rp)"
 }
-hsi open_hw_design $params(hdf)
-hsi set_repo_path $params(rp)
-hsi create_sw_design device-tree -os device_tree -proc $params(processor)
-set_properties
-hsi generate_target -dir $params(pname)
+
+if {[catch {hsi create_sw_design $params(app) \
+		-os device_tree -proc $params(processor)} res] } {
+	error "create_sw_design failed for $params(app)"
+}
+set_properties $params(yamlconf)
+if {[catch {hsi generate_target -dir $project} res]} {
+	error "generate_target failed"
+}
+if { [catch {hsi close_hw_design [hsi current_hw_design]} res] } {
+	error "Failed to close hw design [hsi current_hw_design]"
+}
