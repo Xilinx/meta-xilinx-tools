@@ -142,7 +142,7 @@ if { $params(ws) ne "" } {
 			set conf_dict [::yaml::yaml2dict -file $params(yamlconf)]
 		}
 
-		if { $params(rp) ne "" } {
+		if { $params(rp) ne "none" } {
 			#Local Repo Available, Set repo path. Or will pick it up from build
 			set path [split $params(rp) { }]
 			repo -set $path
