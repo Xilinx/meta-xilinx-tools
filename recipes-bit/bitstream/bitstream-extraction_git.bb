@@ -1,0 +1,19 @@
+DESCRIPTION = "Recipe to extract bitstream"
+
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d690"
+
+DEPENDS += "virtual/hdf"
+
+inherit xsctbit deploy
+
+XSCTH_MISC = "-hwpname ${XSCTH_PROJ}_hwproj"
+
+do_compile[noexec] = "1"
+
+do_deploy() {
+        install -d ${DEPLOY_DIR_IMAGE}
+        install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ${DEPLOY_DIR_IMAGE}/download-${MACHINE}.bit
+}
+
+addtask do_deploy after do_install
