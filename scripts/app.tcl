@@ -153,7 +153,7 @@ if { $params(ws) ne "" } {
 		if { $poke_hwproj < 0 } {
 			# $hwpname not available, create new with given hdf
 			createhw -name $params(hwpname) -hwspec $params(hdf)
-		} elseif { $params(hdf) ne "" } {
+		} elseif { $params(hdf) ne "none" } {
 			# $hwpname and hdf availabe, regenerate hwproject
 			deleteprojects -name $params(hwpname)
 			createhw -name $params(hwpname) -hwspec $params(hdf)
