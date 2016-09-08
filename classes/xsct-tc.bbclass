@@ -1,4 +1,4 @@
-XSCT_PATH_ADD = "${XILINIX_SDK_TOOLCHAIN}/bin:"
+XSCT_PATH_ADD = "${XILINX_SDK_TOOLCHAIN}/bin:"
 PATH =. "${XSCT_PATH_ADD}"
 
 def xsct_run(d):
@@ -6,7 +6,7 @@ def xsct_run(d):
     import subprocess
 
     topdir = d.getVar('TOPDIR', True)
-    toolchain_path = d.getVar('XILINIX_SDK_TOOLCHAIN', True)
+    toolchain_path = d.getVar('XILINX_SDK_TOOLCHAIN', True)
     if not toolchain_path:
         return 'UNKNOWN', 'UNKNOWN'
 
@@ -36,8 +36,11 @@ python xsct_setup () {
     d.finalize()
 
     XILINX_XSCT_VERSION = xsct_get_version(d)
-    if XILINX_XSCT_VERSION != d.getVar("XILINX_VER_MAIN", True):
-        bb.fatal("XSCT version does not match. Version is %s: checking for 2016.3" % XILINX_XSCT_VERSION)
+    XILINX_REQ_VERSION = d.getVar("XILINX_VER_MAIN", True)
+    if XILINX_XSCT_VERSION != XILINX_REQ_VERSION:
+        bb.fatal("XSCT version does not match. Version is %s: checking for %s " % (XILINX_XSCT_VERSION,XILINX_REQ_VERSION))
+
+    bb.note("XSCT is valid, version is %s" % XILINX_XSCT_VERSION)
 }
 addhandler xsct_setup
 xsct_setup[eventmask] = "bb.event.BuildStarted"
