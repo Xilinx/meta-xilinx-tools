@@ -29,8 +29,8 @@ XSCTH_MISC = "-yamlconf ${YAML_FILE_PATH}"
 do_install[noexec] = "1"
 
 do_deploy() {
-	install -d ${DEPLOY_DIR_IMAGE}
-	install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/Release/${XSCTH_PROJ}.elf ${DEPLOY_DIR_IMAGE}/pmu-${MACHINE}.elf
+    install -d ${DEPLOY_DIR_IMAGE}
+    install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/Release/${XSCTH_PROJ}.elf ${DEPLOY_DIR_IMAGE}/pmu-${MACHINE}.elf
 }
 
 addtask do_deploy after do_compile

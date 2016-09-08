@@ -22,15 +22,15 @@ do_install[noexec]="1"
 DEVICETREE_FLAGS ?= ""
 
 do_compile() {
-	# use dtc to compile
-	dtc -I dts -O dtb ${DEVICETREE_FLAGS} -o ${WORKDIR}/${PN}/${MACHINE}-system.dtb ${WORKDIR}/${PN}/system.dts
-	dtc -I dtb -O dts -o ${WORKDIR}/${PN}/${MACHINE}-system.dts ${WORKDIR}/${PN}/${MACHINE}-system.dtb
+    # use dtc to compile
+    dtc -I dts -O dtb ${DEVICETREE_FLAGS} -o ${WORKDIR}/${PN}/${MACHINE}-system.dtb ${WORKDIR}/${PN}/system.dts
+    dtc -I dtb -O dts -o ${WORKDIR}/${PN}/${MACHINE}-system.dts ${WORKDIR}/${PN}/${MACHINE}-system.dtb
 }
 
 do_deploy() {
-	install -d ${DEPLOY_DIR_IMAGE}
-	install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/${MACHINE}-system.dts ${DEPLOY_DIR_IMAGE}/${MACHINE}-system.dts
-	install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/${MACHINE}-system.dtb ${DEPLOY_DIR_IMAGE}/${MACHINE}-system.dtb
+    install -d ${DEPLOY_DIR_IMAGE}
+    install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/${MACHINE}-system.dts ${DEPLOY_DIR_IMAGE}/${MACHINE}-system.dts
+    install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/${MACHINE}-system.dtb ${DEPLOY_DIR_IMAGE}/${MACHINE}-system.dtb
 }
 
 addtask do_deploy after do_compile
