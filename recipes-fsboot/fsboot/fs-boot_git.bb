@@ -3,6 +3,8 @@ DESCRIPTION = "FS-BOOT generator"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://license.txt;md5=4f2bb327107cbb7d887477d580652a89"
 
+PROVIDES = "virtual/fsboot"
+
 inherit xsctfsboot deploy
 
 COMPATIBLE_MACHINE = "^$"

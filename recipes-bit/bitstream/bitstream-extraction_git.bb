@@ -5,6 +5,8 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d
 
 DEPENDS += "virtual/hdf"
 
+PROVIDES = "virtual/bitstream"
+
 inherit xsctbit deploy
 
 XSCTH_MISC = "-hwpname ${XSCTH_PROJ}_hwproj"

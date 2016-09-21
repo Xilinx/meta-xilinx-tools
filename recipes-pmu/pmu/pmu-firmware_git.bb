@@ -3,6 +3,8 @@ DESCRIPTION = "PMU Firmware"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://license.txt;md5=4f2bb327107cbb7d887477d580652a89"
 
+PROVIDES = "virtual/pmufw"
+
 inherit xsctapp xsctyaml deploy
 
 S = "${WORKDIR}/git"

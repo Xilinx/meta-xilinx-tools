@@ -5,6 +5,8 @@ LIC_FILES_CHKSUM = "file://xadcps/data/xadcps.mdd;md5=f7fa1bfdaf99c7182fc0d8e7fd
 
 DEPENDS += "dtc-native"
 
+PROVIDES = "virtual/dtb"
+
 inherit xsctdt
 
 S = "${WORKDIR}/git"
