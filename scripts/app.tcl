@@ -22,7 +22,6 @@ proc check_ws {workspace} {
 }
 
 # re/auto generation of bsp is FALSE by default.
-set regen 0
 set autogenbsp 0
 
 set option {
@@ -124,7 +123,6 @@ if { $params(ws) ne "" } {
 			set params(bspname) "$params(pname)\_bsp"
 			set autogenbsp 1
 		}
-		check_ws $params(ws)
 		if { $params(do_compile) == 1 } {
 			# If Clean build is required, set XSCT_CLEAN_BUILD
 			if { [env_read XSCT_CLEAN_BUILD] } {
@@ -150,6 +148,10 @@ if { $params(ws) ne "" } {
 
 		# Check if $hwpname exist
 		set poke_hwproj [lsearch -exact [getprojects -type hw] $params(hwpname)]
+		#Check for Project(SW/HW) availablity in work space and built it.
+		set poke_bsp [lsearch -exact [getprojects -type bsp] $params(bspname)]
+		set poke_app [lsearch -exact [getprojects -type app] $params(pname)]
+
 		if { $poke_hwproj < 0 } {
 			# $hwpname not available, create new with given hdf
 			createhw -name $params(hwpname) -hwspec $params(hdf)
@@ -157,51 +159,30 @@ if { $params(ws) ne "" } {
 			# $hwpname and hdf availabe, regenerate hwproject
 			deleteprojects -name $params(hwpname)
 			createhw -name $params(hwpname) -hwspec $params(hdf)
-			set regen 1
 		} else {
 			puts "INFO: HDF not available. Using $params(hwpname) project"
 		}
 
-		#Check for Project(SW/HW) availablity in work space and built it.
-		set poke_bsp [lsearch -exact [getprojects -type bsp] $params(bspname)]
-		set poke_app [lsearch -exact [getprojects -type app] $params(pname)]
-
-		# create app if not available
+		#delete existing app and bsp
 		if { $poke_app >= 0 } {
-			# Project Available
-			# Normally Configs are applied only during app cration,
-			# users can override it to apply even if app exists.
-			if { $params(forceconf) == 1 && [info exists conf_dict] } {
-				do_app_config $conf_dict
-			}
-		} else {
-			if { [info exists autogenbsp] && $autogenbsp eq 1 } {
-				createapp -name $params(pname) -proc $params(processor) \
-				  -hwproject $params(hwpname) \
-				  -os standalone -lang c -app $params(app) -arch $params(arch)
-				#check if conf_dict exists(Depends on user passed the yaml file or not)
-				if { [info exists conf_dict] } {
-					do_app_config $conf_dict
-					if { $autogenbsp eq 1} {
-						do_bsp_config $conf_dict
-					}
-				}
-			} else {
-				# Custom BSP requested, Create APP after creating BSP
-				set autogenbsp 0
-			}
+			deleteprojects -name $params(pname)
+		}
+		if { $poke_bsp >= 0 } {
+			deleteprojects -name $params(bspname)
 		}
 
-		# if exists regen bsp if required or create new bsp as its not available
-		if { $poke_bsp >= 0 } {
-			if { $params(forceconf) == 1 && [info exists conf_dict] } {
-				do_bsp_config $conf_dict
+		if { [info exists autogenbsp] && $autogenbsp eq 1 } {
+			createapp -name $params(pname) -proc $params(processor) \
+			  -hwproject $params(hwpname) \
+			  -os standalone -lang c -app $params(app) -arch $params(arch)
+			#check if conf_dict exists(Depends on user passed the yaml file or not)
+			if { [info exists conf_dict] } {
+				do_app_config $conf_dict
+				if { $autogenbsp eq 1} {
+					do_bsp_config $conf_dict
+				}
 			}
-			# Regenerate BSP as HDF is also available
-			if { $regen eq 1} {
-				regenbsp -hw $params(hwpname) -bsp $params(bspname)
-			}
-		} elseif { $autogenbsp ne 1 } {
+		} else {
 			# BSP name given, but not availabe in ws. So creating a custome one
 			createbsp -name $params(bspname) -proc $params(processor) \
 				  -hwproject $params(hwpname) -os standalone -arch $params(arch)
@@ -218,7 +199,6 @@ if { $params(ws) ne "" } {
 				  -hwproject $params(hwpname) -bsp $params(bspname) \
 				  -os standalone -lang c -app $params(app) -arch $params(arch)
 		}
-
 	} else {
 		if { $prams(hwpname) ne "" } {
 			if { $params(hdf) ne "" } {
