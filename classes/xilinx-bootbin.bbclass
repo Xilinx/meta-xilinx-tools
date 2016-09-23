@@ -70,4 +70,5 @@ IMAGE_CMD_xilinx-bootbin () {
     if [ ! -e BOOT.bin ]; then
         bbfatal "bootgen failed. See log"
     fi
+    install -m 0644 BOOT.bin  ${DEPLOY_DIR_IMAGE}/BOOT.bin
 }
