@@ -7,7 +7,7 @@ DEPENDS += "dtc-native"
 
 PROVIDES = "virtual/dtb"
 
-inherit xsctdt
+inherit xsctdt deploy
 
 S = "${WORKDIR}/git"
 BRANCH = "master"
