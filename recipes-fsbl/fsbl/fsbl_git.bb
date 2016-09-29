@@ -30,7 +30,7 @@ XSCTH_APP_zynqmp = "Zynq MP FSBL"
 do_install[noexec] = "1"
 
 do_deploy() {
-    install -d ${DEPLOY_DIR_IMAGE}
-    install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/Release/fsbl.elf ${DEPLOY_DIR_IMAGE}/fsbl-${MACHINE}.elf
+    install -d ${DEPLOYDIR}
+    install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/Release/fsbl.elf ${DEPLOYDIR}/fsbl-${MACHINE}.elf
 }
 addtask do_deploy after do_compile

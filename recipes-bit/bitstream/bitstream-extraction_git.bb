@@ -14,8 +14,8 @@ XSCTH_MISC = "-hwpname ${XSCTH_PROJ}_hwproj"
 do_compile[noexec] = "1"
 
 do_deploy() {
-        install -d ${DEPLOY_DIR_IMAGE}
-        install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ${DEPLOY_DIR_IMAGE}/download-${MACHINE}.bit
+        install -d ${DEPLOYDIR}
+        install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ${DEPLOYDIR}/download-${MACHINE}.bit
 }
 
 addtask do_deploy after do_install

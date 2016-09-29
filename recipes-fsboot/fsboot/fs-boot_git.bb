@@ -30,8 +30,8 @@ do_compile() {
 }
 
 do_deploy() {
-        install -d ${DEPLOY_DIR_IMAGE}
-        install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/executable.elf ${DEPLOY_DIR_IMAGE}/fsboot-${MACHINE}.elf
+        install -d ${DEPLOYDIR}
+        install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/executable.elf ${DEPLOYDIR}/fsboot-${MACHINE}.elf
 }
 
 addtask do_deploy after do_compile

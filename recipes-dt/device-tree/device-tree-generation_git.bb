@@ -28,9 +28,9 @@ do_compile() {
 }
 
 do_deploy() {
-    install -d ${DEPLOY_DIR_IMAGE}
-    install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/${MACHINE}-system.dts ${DEPLOY_DIR_IMAGE}/${MACHINE}-system.dts
-    install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/${MACHINE}-system.dtb ${DEPLOY_DIR_IMAGE}/${MACHINE}-system.dtb
+    install -d ${DEPLOYDIR}
+    install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/${MACHINE}-system.dts ${DEPLOYDIR}/${MACHINE}-system.dts
+    install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/${MACHINE}-system.dtb ${DEPLOYDIR}/${MACHINE}-system.dtb
 }
 
 addtask do_deploy after do_compile
