@@ -7,19 +7,23 @@ BIF_FILE_PATH = "${B}/bootgen.bif"
 def create_bif(config, attrflags, attrimage, common_attr, biffd, d):
     import re
     for cfg in config:
-        if cfg not in attrflags:
+        if cfg not in attrflags and common_attr:
             error_msg = "%s: invalid ATTRIBUTE" % (cfg)
             bb.error("BIF attribute Error: %s " % (error_msg))
         else:
-            cfgval = attrflags[cfg].split(',')
             if common_attr:
+                cfgval = attrflags[cfg].split(',')
                 cfgstr = "\t [%s] %s\n" % (cfg,', '.join(cfgval))
             else:
                 if cfg not in attrimage:
                     error_msg = "%s: invalid or missing elf or image" % (cfg)
                     bb.error("BIF atrribute Error: %s " % (error_msg))
                 imagestr = d.expand(attrimage[cfg])
-                cfgstr = "\t [%s] %s\n" % (', '.join(cfgval), imagestr)
+                if cfg in attrflags:
+                    cfgval = attrflags[cfg].split(',')
+                    cfgstr = "\t [%s] %s\n" % (', '.join(cfgval), imagestr)
+                else:
+                    cfgstr = "\t %s\n" % (imagestr)
             biffd.write(cfgstr)
 
     return
@@ -37,7 +41,7 @@ python do_create_bif() {
         create_bif(bifattr, attrflags,'', 1, biffd, d)
 
     bifpartition = (d.getVar("BIF_PARTITION_ATTR", True) or "").split()
-    if bifattr:
+    if bifpartition:
         attrflags = d.getVarFlags("BIF_PARTITION_ATTR") or {}
         attrimage = d.getVarFlags("BIF_PARTITION_IMAGE") or {}
         create_bif(bifpartition, attrflags, attrimage, 0, biffd, d)
