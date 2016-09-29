@@ -1,5 +1,3 @@
-inherit image_types
-
 BIF_COMMON_ATTR ?= ''
 BIF_PARTITION_ATTR ?= ''
 BIF_PARTITION_IMAGE ?= ''
@@ -47,7 +45,8 @@ python do_create_bif() {
     biffd.write("}")
     biffd.close()
 }
-addtask do_create_bif after do_image before do_image_xilinx_bootbin
+addtask do_create_bif after do_image_complete before do_xilinx_bootbin
+
 do_create_bif[vardeps] += "BIF_PARTITION_ATTR BIF_PARTITION_IMAGE BIF_COMMON_ATTR"
 
 def get_bootbin_depends(d):
@@ -61,9 +60,9 @@ def get_bootbin_depends(d):
     return bootbindeps
 
 
-do_image_xilinx_bootbin[depends] = "${@get_bootbin_depends(d)}"
+do_xilinx_bootbin[depends] = "${@get_bootbin_depends(d)}"
 
-IMAGE_CMD_xilinx-bootbin () {
+do_xilinx_bootbin () {
     cd ${B}
     rm -f BOOT.bin
     bootgen -image ${BIF_FILE_PATH} -arch ${KMACHINE} -w -o BOOT.bin
@@ -72,3 +71,4 @@ IMAGE_CMD_xilinx-bootbin () {
     fi
     install -m 0644 BOOT.bin  ${DEPLOY_DIR_IMAGE}/BOOT.bin
 }
+addtask do_xilinx_bootbin after do_image_complete before do_build
