@@ -10,12 +10,6 @@ def xsct_run(d):
     if not toolchain_path:
         return 'UNKNOWN', 'UNKNOWN'
 
-    cmd = os.path.join(toolchain_path, 'bin', 'xsct -h')
-    try:
-        (output, error) = bb.process.run(cmd, cwd=topdir, stderr=subprocess.PIPE)
-    except bb.process.CmdError as e:
-        bb.fatal("Command %s could not be run:\n %s" % (e.command, e.msg))
-
     cmd = os.path.join(toolchain_path, 'bin', 'hsi -version')
     return bb.process.run(cmd, cwd=topdir, stderr=subprocess.PIPE)
 
@@ -30,10 +24,7 @@ def xsct_get_version(d):
         last_line = stdout.splitlines()[0].split()[-2]
         return last_line[1:]
 
-python xsct_setup () {
-    d = e.data
-    d = d.createCopy()
-    d.finalize()
+python do_xsct_setup () {
 
     XILINX_XSCT_VERSION = xsct_get_version(d)
     XILINX_REQ_VERSION = d.getVar("XILINX_VER_MAIN", True)
@@ -42,5 +33,4 @@ python xsct_setup () {
 
     bb.note("XSCT is valid, version is %s" % XILINX_XSCT_VERSION)
 }
-addhandler xsct_setup
-xsct_setup[eventmask] = "bb.event.BuildStarted"
+addtask xsct_setup before do_configure
