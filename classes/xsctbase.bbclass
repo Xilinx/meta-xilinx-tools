@@ -1,5 +1,9 @@
 DEPENDS += "virtual/hdf"
 
+XILINX_VER_MAIN ??= "2016.3"
+
+inherit xsct-tc
+
 XSCTH_PROC_zynqmp ??= "psu_cortexa53_0"
 XSCTH_PROC_zynq   ??= "ps7_cortexa9_0"
 XSCTH_PROC_microblaze ??= "microblaze_0"

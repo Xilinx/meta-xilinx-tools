@@ -1,3 +1,5 @@
+inherit xsct-tc
+
 BIF_COMMON_ATTR ?= ''
 BIF_PARTITION_ATTR ?= ''
 BIF_PARTITION_IMAGE ?= ''
