@@ -36,12 +36,12 @@ do_configure() {
     echo "APP_ARG is ${APP_ARG}"
     echo "cmd is: xsct ${XSCTH_SCRIPT} ${PROJ_ARG} ${HW_ARG} ${APP_ARG} ${MISC_ARG}"
 
-    flock -x "${WORKDIR}/xsctlock" -c 'eval xsct ${XSCTH_SCRIPT} ${PROJ_ARG} ${HW_ARG} ${APP_ARG} ${MISC_ARG}'
+    flock -x "${XSCTH_WS}/xsctlock" -c 'eval xsct ${XSCTH_SCRIPT} ${PROJ_ARG} ${HW_ARG} ${APP_ARG} ${MISC_ARG}'
 }
 
 
 do_compile() {
     export RDI_PLATFORM=ln64
     export SWT_GTK3=0
-    flock -x "${WORKDIR}/xsctlock" -c 'eval xsct ${XSCTH_SCRIPT} ${PROJ_ARG} -do_compile 1'
+    flock -x "${XSCTH_WS}/xsctlock" -c 'eval xsct ${XSCTH_SCRIPT} ${PROJ_ARG} -do_compile 1'
 }
