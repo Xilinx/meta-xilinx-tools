@@ -124,15 +124,10 @@ if { $params(ws) ne "" } {
 			set autogenbsp 1
 		}
 		if { $params(do_compile) == 1 } {
-			# If Clean build is required, set XSCT_CLEAN_BUILD
-			if { [env_read XSCT_CLEAN_BUILD] } {
-				clean_n_build bsp $params(bspname)
-				clean_n_build app $params(pname)
-			} else {
-				build_only bsp $params(bspname)
-				build_only app $params(pname)
-			}
-			# No More work
+			clean_n_build bsp $params(bspname)
+			clean_n_build app $params(pname)
+			build_only bsp $params(bspname)
+			build_only app $params(pname)
 			exit 0
 		}
 
@@ -152,26 +147,30 @@ if { $params(ws) ne "" } {
 		set poke_bsp [lsearch -exact [getprojects -type bsp] $params(bspname)]
 		set poke_app [lsearch -exact [getprojects -type app] $params(pname)]
 
-		if { $poke_hwproj < 0 } {
-			# $hwpname not available, create new with given hdf
-			createhw -name $params(hwpname) -hwspec $params(hdf)
-		} elseif { $params(hdf) ne "none" } {
-			# $hwpname and hdf availabe, regenerate hwproject
+
+		#delete existing app and bsp
+		if { $poke_app >= 0 } {
+			puts "INFO: delete app $params(pname) project"
+			deleteprojects -name $params(pname)
+		}
+		if { $poke_bsp >= 0 } {
+			puts "INFO: delete bsp $params(bspname) project"
+			deleteprojects -name $params(bspname)
+		}
+		if { $poke_hwproj >= 0 } {
+			puts "INFO: delete hw $params(hwpname) project"
 			deleteprojects -name $params(hwpname)
+		}
+
+		if { $params(hdf) ne "none" } {
+			# $hwpname and hdf availabe, regenerate hwproject
 			createhw -name $params(hwpname) -hwspec $params(hdf)
 		} else {
 			puts "INFO: HDF not available. Using $params(hwpname) project"
 		}
 
-		#delete existing app and bsp
-		if { $poke_app >= 0 } {
-			deleteprojects -name $params(pname)
-		}
-		if { $poke_bsp >= 0 } {
-			deleteprojects -name $params(bspname)
-		}
-
 		if { [info exists autogenbsp] && $autogenbsp eq 1 } {
+			puts "INFO: create app using $params(hwpname) project"
 			createapp -name $params(pname) -proc $params(processor) \
 			  -hwproject $params(hwpname) \
 			  -os standalone -lang c -app $params(app) -arch $params(arch)
@@ -183,6 +182,7 @@ if { $params(ws) ne "" } {
 				}
 			}
 		} else {
+			puts "INFO: create bsp using $params(bspname)"
 			# BSP name given, but not availabe in ws. So creating a custome one
 			createbsp -name $params(bspname) -proc $params(processor) \
 				  -hwproject $params(hwpname) -os standalone -arch $params(arch)
@@ -194,6 +194,7 @@ if { $params(ws) ne "" } {
 				do_bsp_config $conf_dict
 			}
 			regenbsp -hw $params(hwpname) -bsp $params(bspname)
+			puts "INFO: create app using custom bsp"
 			# Create a App for custom bsp
 			createapp -name $params(pname) -proc $params(processor) \
 				  -hwproject $params(hwpname) -bsp $params(bspname) \
