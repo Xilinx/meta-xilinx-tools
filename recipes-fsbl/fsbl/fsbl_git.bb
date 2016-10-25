@@ -11,7 +11,8 @@ S = "${WORKDIR}/git"
 BRANCH = "master"
 SRC_URI = "git://github.com/Xilinx/embeddedsw.git;protocol=https;branch=${BRANCH}"
 
-SRCREV ?= "${AUTOREV}"
+# This points to xilinx-v2016.3 tag
+SRCREV ?= "879d70d540d97747ecd694d61878e22846399f65"
 
 PV = "0.2+xilinx+git${SRCPV}"
 
