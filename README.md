@@ -24,13 +24,83 @@ This layer depends on:
 
 XSCT being installed in your path
 
+Define the PATH using the variable XILINX_SDK_TOOLCHAIN
+The supported tool version is indicated in XILINX_VER_MAIN
+
+Each release is dependent on the Xilinx XSCT release version. Please note that
+xsct tools may not be backward compatible with embeddedsw repo. Meaning
+2016.3 xsct tools might not work with older version on embeddedsw repo
+
 URI: git://git.openembedded.org/bitbake
 
 URI: git://git.openembedded.org/openembedded-core
-layers: meta
 
-Adding YAML configurations
-==========================
+
+Providing path to HDF
+=====================
+
+meta-xilinx-tools recipes depends on HDF to be provided.
+
+HDF_BASE can be set to git:// or file://
+
+HDF_PATH will be git repository or the path containing HDF
+
+Adding Dependencies to build BOOT.bin
+=====================================
+
+This layer can be used via dependencies while creating the required Boot.bin.
+
+Basically the goal to build FSBL or PMU etc will depend on the use-case and
+Boot.bin will indicate these dependencies.  Boot.bin is created using bootgen
+tool from Xilinx. Please refer to help files of bootgen.
+
+Executing bootgen -bif_help  will provide some detailed help on BIF attributes.
+
+BIF file is required for generating Boot.bin, BIF is partitioned into Common
+BIF attributes and Partition BIF attributes. Attributes of BIF need to be
+specified in local.conf while using xilinx-bootbin.bbclass for generating
+Boot.bin
+
+Examples for adding dependencies
+================================
+
+1) Example to include dependency for zc702-zynq7 board
+
+IMAGE_CLASSES += " xilinx-bootbin"
+
+BIF_PARTITION_ATTR= "fsbl u-boot"
+
+BIF_PARTITION_IMAGE[fsbl]="${DEPLOY_DIR_IMAGE}/fsbl-${MACHINE}.elf"
+BIF_PARTITION_DEPENDS[fsbl]="virtual/fsbl"
+
+BIF_PARTITION_IMAGE[u-boot]="${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.elf"
+
+
+2) Example to include dependency for zcu102-zynqmp board
+
+IMAGE_CLASSES += " xilinx-bootbin"
+
+BIF_COMMON_ATTR= "fsbl_config"
+BIF_COMMON_ATTR[fsbl_config]="a53_x64"
+
+BIF_PARTITION_ATTR= "fsbl pmu atf u-boot"
+
+BIF_PARTITION_ATTR[fsbl]="bootloader"
+BIF_PARTITION_IMAGE[fsbl]="${DEPLOY_DIR_IMAGE}/fsbl-${MACHINE}.elf"
+BIF_PARTITION_DEPENDS[fsbl]="virtual/fsbl"
+
+BIF_PARTITION_ATTR[pmu]="destination_cpu=pmu"
+BIF_PARTITION_IMAGE[pmu]="${DEPLOY_DIR_IMAGE}/pmu-${MACHINE}.elf"
+BIF_PARTITION_DEPENDS[pmu]="virtual/pmufw"
+
+BIF_PARTITION_ATTR[atf]="destination_cpu=a53-0,exception_level=el-3,trustzone"
+BIF_PARTITION_IMAGE[atf]="${DEPLOY_DIR_IMAGE}/arm-trusted-firmware-${TUNE_PKGARCH}.elf"
+
+BIF_PARTITION_ATTR[u-boot]="destination_cpu=a53-0,exception_level=el-2"
+BIF_PARTITION_IMAGE[u-boot]="${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.elf"
+
+Additional configurations using YAML
+====================================
 
 This layer provides additional configurations through YAML
 
