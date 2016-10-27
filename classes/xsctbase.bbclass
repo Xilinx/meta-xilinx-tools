@@ -1,6 +1,6 @@
 DEPENDS += "virtual/hdf"
 
-XILINX_VER_MAIN ??= "2016.3"
+XILINX_VER_MAIN ??= "2016.4"
 
 inherit xsct-tc
 
