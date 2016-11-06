@@ -20,6 +20,8 @@ XSCTH_ARCH ?= "${@bb.utils.contains('XSCTH_PROC', 'psu_cortexa53_0', '64', '32',
 PROJ_ARG ??= "-ws ${XSCTH_WS} -pname ${XSCTH_PROJ} -rp ${XSCTH_REPO}"
 HW_ARG ??= "-processor ${XSCTH_PROC} -hdf ${XSCTH_HDF} -arch ${XSCTH_ARCH}"
 
+do_configure[deptask] += "virtual/hdf:do_deploy"
+
 do_configure() {
     export RDI_PLATFORM=lnx64
     export SWT_GTK3=0
