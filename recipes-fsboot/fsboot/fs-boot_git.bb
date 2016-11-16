@@ -22,6 +22,7 @@ PV = "xilinx+git${SRCPV}"
 XSCTH_APP = "mba_fs_boot"
 do_install[noexec] = "1"
 
+PARALLEL_MAKE = ""
 EXTRA_OEMAKE_BSP = ""
 EXTRA_OEMAKE_APP = ""
 
