@@ -35,6 +35,10 @@ if { [catch {hsi open_sw_design \
 		$project/{$params(app)}_bsp/system.mss "
 }
 set_properties $params(yamlconf)
+file delete -force "$project/${params(app)}_bsp"
+if {[catch {hsi generate_bsp -dir "$project/${params(app)}_bsp"} res]} {
+        error "failed to regenerate bsp while updating mss "
+}
 if {[catch {hsi close_sw_design [hsi current_sw_design]} res]} {
 	error "failed to close sw_design"
 }
