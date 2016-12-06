@@ -148,25 +148,16 @@ if { $params(ws) ne "" } {
 		set poke_app [lsearch -exact [getprojects -type app] $params(pname)]
 
 
-		#delete existing app and bsp
-		if { $poke_app >= 0 } {
-			puts "INFO: delete app $params(pname) project"
-			deleteprojects -name $params(pname)
-		}
-		if { $poke_bsp >= 0 } {
-			puts "INFO: delete bsp $params(bspname) project"
-			deleteprojects -name $params(bspname)
-		}
 		if { $poke_hwproj >= 0 } {
-			puts "INFO: delete hw $params(hwpname) project"
-			deleteprojects -name $params(hwpname)
-		}
+			puts "INFO: Update hw $params(hwpname) project"
+			updatehw -hw $params(hwpname) -newhwspec $params(hdf)
 
-		if { $params(hdf) ne "none" } {
-			# $hwpname and hdf availabe, regenerate hwproject
-			createhw -name $params(hwpname) -hwspec $params(hdf)
+			if { $poke_app >= 0 && $poke_bsp >= 0 } {
+				# Configuration done
+				exit 0
+			}
 		} else {
-			puts "INFO: HDF not available. Using $params(hwpname) project"
+			createhw -name $params(hwpname) -hwspec $params(hdf)
 		}
 
 		if { [info exists autogenbsp] && $autogenbsp eq 1 } {
