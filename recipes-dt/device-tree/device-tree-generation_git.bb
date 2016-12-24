@@ -11,9 +11,9 @@ inherit xsctdt deploy
 
 S = "${WORKDIR}/git"
 BRANCH = "master"
-SRC_URI = "git://github.com/Xilinx/device-tree-xlnx.git;protocol=https;branch=${BRANCH}"
+SRC_URI = "git://gitenterprise.xilinx.com/Linux/device-tree-xlnx.git;protocol=https;branch=${BRANCH}"
 #Based on xilinx-v2016.4
-SRCREV ?= "11f81055d1afad67398fa5ef443b32be8bc74433"
+SRCREV ?= "${AUTOREV}"
 
 PV = "xilinx+git${SRCPV}"
 
