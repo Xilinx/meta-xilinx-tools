@@ -13,13 +13,13 @@ COMPATIBLE_MACHINE_microblaze = "microblaze"
 S = "${WORKDIR}/git"
 
 # Sources, by default allow for the use of SRCREV pointing to orphaned tags/commits
-ESWBRANCH ?= ""
+ESWBRANCH ?= "master"
 SRCBRANCHARG = "${@['nobranch=1', 'branch=${ESWBRANCH}'][d.getVar('ESWBRANCH', True) != '']}"
 
-SRC_URI = "git://github.com/Xilinx/embeddedsw.git;protocol=https;${SRCBRANCHARG}"
+SRC_URI = "git://gitenterprise.xilinx.com/embeddedsw/embeddedsw.git;protocol=https;${SRCBRANCHARG}"
 
 # This points to xilinx-v2016.4 tag
-SRCREV ?= "a931a8d4471ad6d1e1ecdfd41f1da66d98d6f137"
+SRCREV ?= "${AUTOREV}"
 PV = "xilinx+git${SRCPV}"
 
 XSCTH_APP = "mba_fs_boot"
