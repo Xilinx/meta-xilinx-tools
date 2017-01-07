@@ -22,7 +22,7 @@ def xsct_get_version(d):
         return 'UNKNOWN'
     else:
         last_line = stdout.splitlines()[0].split()[-2]
-        return last_line[1:]
+        return last_line[1:7]
 
 python do_xsct_setup () {
 
