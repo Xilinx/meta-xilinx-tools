@@ -55,6 +55,7 @@ proc set_bsp_conf {action prop val} {
 			puts "ERROR:[info level 0]: Cannot set Property \"$prop\" with $val \n$result2"
 		}
 	}
+        regenbsp -bsp $::params(bspname)
 }
 
 proc xsct_config {type conf} {
