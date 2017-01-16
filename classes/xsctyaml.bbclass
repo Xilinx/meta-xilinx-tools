@@ -1,6 +1,6 @@
-inherit python-dir
+inherit python3native
 
-do_create_yaml[depends] = "python-pyyaml-native:do_populate_sysroot"
+do_create_yaml[depends] = "python3-pyyaml-native:do_populate_sysroot"
 
 YAML_APP_CONFIG ?= ''
 YAML_BSP_CONFIG ?= ''
