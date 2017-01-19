@@ -32,6 +32,8 @@ XSCTH_MISC = "-yamlconf ${YAML_FILE_PATH}"
 XSCTH_APP_zynq   = "Zynq FSBL"
 XSCTH_APP_zynqmp = "Zynq MP FSBL"
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
 do_install[noexec] = "1"
 
 do_deploy() {

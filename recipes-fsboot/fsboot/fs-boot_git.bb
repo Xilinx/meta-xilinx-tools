@@ -29,6 +29,8 @@ PARALLEL_MAKE = ""
 EXTRA_OEMAKE_BSP = ""
 EXTRA_OEMAKE_APP = ""
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
 do_compile() {
         oe_runmake -C ${XSCTH_WS}/${XSCTH_PROJ}/${XSCTH_APP}_bsp ${EXTRA_OEMAKE_BSP} -j 1 && \
         oe_runmake -C ${XSCTH_WS}/${XSCTH_PROJ} ${EXTRA_OEMAKE_APP} -j 1

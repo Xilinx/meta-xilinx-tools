@@ -31,6 +31,8 @@ XSCTH_PROC_zynqmp = "psu_pmu_0"
 XSCTH_APP  = "ZynqMP PMU Firmware"
 XSCTH_MISC = "-yamlconf ${YAML_FILE_PATH}"
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
 do_install[noexec] = "1"
 
 do_deploy() {
