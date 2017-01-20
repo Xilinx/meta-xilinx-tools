@@ -1,4 +1,4 @@
-IMAGE_CLASSES += " xilinx-bootbin"
+IMAGE_CLASSES_xilinx-hdf_append += " xilinx-bootbin"
 
 #specify BIF partition attributes required for BOOT.bin
 BIF_PARTITION_ATTR= "fsbl u-boot"
