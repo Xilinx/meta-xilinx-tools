@@ -11,3 +11,4 @@ BIF_PARTITION_DEPENDS[fsbl]="virtual/fsbl"
 #specify BIF partition attributes for u-boot
 #Location where u-boot binary is present
 BIF_PARTITION_IMAGE[u-boot]="${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.elf"
+BIF_PARTITION_DEPENDS[u-boot]="virtual/bootloader"
