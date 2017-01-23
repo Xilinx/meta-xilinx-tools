@@ -1,5 +1,5 @@
 #add Boot.bin dependency
-IMAGE_CLASSES_xilinx-hdf_append += " xilinx-bootbin"
+IMAGE_CLASSES_append = " xilinx-bootbin"
 
 #specify BIF common attribute for FSBL
 BIF_COMMON_ATTR= "fsbl_config"
