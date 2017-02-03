@@ -1,5 +1,8 @@
 inherit python3native
 
+# Override site package path for multilib builds
+PYTHON_SITEPACKAGES_DIR = "${libdir_native}/${PYTHON_DIR}/site-packages"
+
 do_create_yaml[depends] = "python3-pyyaml-native:do_populate_sysroot"
 
 YAML_APP_CONFIG ?= ''
