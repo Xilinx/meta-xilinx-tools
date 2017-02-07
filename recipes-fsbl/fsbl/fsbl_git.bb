@@ -15,8 +15,8 @@ SRCBRANCHARG = "${@['nobranch=1', 'branch=${ESWBRANCH}'][d.getVar('ESWBRANCH', T
 
 SRC_URI = "git://gitenterprise.xilinx.com/embeddedsw/embeddedsw.git;protocol=https;${SRCBRANCHARG}"
 
-# This points to xilinx-v2016.4 tag
-SRCREV ?= "${AUTOREV}"
+# This points to xilinx-v2017.1 tag
+SRCREV ?= "b9ff975d9f8684a581e3aebcf94319a0bb9e9d1b"
 
 PV = "0.2+xilinx+git${SRCPV}"
 
