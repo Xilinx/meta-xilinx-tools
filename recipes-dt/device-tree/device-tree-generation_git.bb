@@ -24,7 +24,7 @@ DEVICETREE_FLAGS ?= ""
 
 do_compile() {
     # use dtc to compile
-    dtc -I dts -O dtb ${DEVICETREE_FLAGS} -o ${WORKDIR}/${PN}/${MACHINE}-system.dtb ${WORKDIR}/${PN}/system.dts
+    dtc -I dts -O dtb ${DEVICETREE_FLAGS} -o ${WORKDIR}/${PN}/${MACHINE}-system.dtb ${WORKDIR}/${PN}/system-top.dts
     dtc -I dtb -O dts -o ${WORKDIR}/${PN}/${MACHINE}-system.dts ${WORKDIR}/${PN}/${MACHINE}-system.dtb
 }
 
