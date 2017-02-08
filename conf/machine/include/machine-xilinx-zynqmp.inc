@@ -7,7 +7,7 @@ BIF_COMMON_ATTR[fsbl_config]="a53_x64"
 
 
 #specify BIF partition attributes required for BOOT.bin
-BIF_PARTITION_ATTR= "fsbl pmu atf u-boot"
+BIF_PARTITION_ATTR= "fsbl pmu atf u-boot bitstream"
 
 #specify BIF partition attributes for FSBL
 #bootloader is FSBL. Location where FSBL binary is present and dependency to build FSBL
@@ -17,7 +17,7 @@ BIF_PARTITION_DEPENDS[fsbl]="virtual/fsbl"
 
 #specify BIF partition attributes for PMU Firmware
 #destination cpu for PMU. Location where PMU binary is present and dependency to build PMU Firmware
-BIF_PARTITION_ATTR[pmu]="destination_cpu=pmu"
+BIF_PARTITION_ATTR[pmu]="pmufw_image"
 BIF_PARTITION_IMAGE[pmu]="${DEPLOY_DIR_IMAGE}/pmu-${MACHINE}.elf"
 BIF_PARTITION_DEPENDS[pmu]="virtual/pmufw"
 
@@ -32,3 +32,8 @@ BIF_PARTITION_DEPENDS[atf]="arm-trusted-firmware"
 BIF_PARTITION_ATTR[u-boot]="destination_cpu=a53-0,exception_level=el-2"
 BIF_PARTITION_IMAGE[u-boot]="${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.elf"
 BIF_PARTITION_DEPENDS[u-boot]="virtual/bootloader"
+
+#enable bitstream-Note this is not enabled by default (missing in BIF_PARTITION_ATTR)
+BIF_PARTITION_ATTR[bitstream]="destination_device=pl"
+BIF_PARTITION_IMAGE[bitstream]="${DEPLOY_DIR_IMAGE}/download-${MACHINE}.bit"
+BIF_PARTITION_DEPENDS[bitstream]="virtual/bitstream"
