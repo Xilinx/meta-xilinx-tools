@@ -27,6 +27,7 @@ set autogenbsp 0
 set option {
 	{hdf.arg	""			"hardware Definition file"}
 	{processor.arg	""			"target processor"}
+	{osname.arg	"standalone"		"target OS"}
 	{rp.arg		""			"repo path"}
 	{app.arg	"Empty Application"	"Application project fsbl, empty.."}
 	{lib.arg	""			"Add library"}
@@ -165,7 +166,7 @@ if { $params(ws) ne "" } {
 			puts "INFO: create app using $params(hwpname) project"
 			createapp -name $params(pname) -proc $params(processor) \
 			  -hwproject $params(hwpname) \
-			  -os standalone -lang c -app $params(app) -arch $params(arch)
+			  -os $params(osname) -lang c -app $params(app) -arch $params(arch)
 			#check if conf_dict exists(Depends on user passed the yaml file or not)
 			if { [info exists conf_dict] } {
 				do_app_config $conf_dict
@@ -177,7 +178,7 @@ if { $params(ws) ne "" } {
 			puts "INFO: create bsp using $params(bspname)"
 			# BSP name given, but not availabe in ws. So creating a custome one
 			createbsp -name $params(bspname) -proc $params(processor) \
-				  -hwproject $params(hwpname) -os standalone -arch $params(arch)
+				  -hwproject $params(hwpname) -os $params(osname) -arch $params(arch)
 			foreach l $libs {
 				setlib -hw $params(hwpname) -bsp $params(bspname) -lib $l
 			}
@@ -190,7 +191,7 @@ if { $params(ws) ne "" } {
 			# Create a App for custom bsp
 			createapp -name $params(pname) -proc $params(processor) \
 				  -hwproject $params(hwpname) -bsp $params(bspname) \
-				  -os standalone -lang c -app $params(app) -arch $params(arch)
+				  -os $params(osname) -lang c -app $params(app) -arch $params(arch)
 		}
 	} else {
 		if { $prams(hwpname) ne "" } {
