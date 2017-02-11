@@ -155,6 +155,11 @@ if { $params(ws) ne "" } {
 			updatehw -hw $params(hwpname) -newhwspec $params(hdf)
 
 			if { $poke_app >= 0 && $poke_bsp >= 0 } {
+				#check if conf_dict exists(Depends on user passed the yaml file or not)
+				if { [info exists conf_dict] } {
+					do_app_config $conf_dict
+					do_bsp_config $conf_dict
+				}
 				# Configuration done
 				exit 0
 			}
@@ -192,6 +197,10 @@ if { $params(ws) ne "" } {
 			createapp -name $params(pname) -proc $params(processor) \
 				  -hwproject $params(hwpname) -bsp $params(bspname) \
 				  -os $params(osname) -lang c -app $params(app) -arch $params(arch)
+			#check if conf_dict exists(Depends on user passed the yaml file or not)
+			if { [info exists conf_dict] } {
+				do_app_config $conf_dict
+			}
 		}
 	} else {
 		if { $prams(hwpname) ne "" } {
