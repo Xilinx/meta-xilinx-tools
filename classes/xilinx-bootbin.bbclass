@@ -7,7 +7,7 @@ BIF_PARTITION_DEPENDS ?= ''
 BIF_FILE_PATH = "${B}/bootgen.bif"
 
 def create_bif(config, attrflags, attrimage, common_attr, biffd, d):
-    import re
+    import re, os
     for cfg in config:
         if cfg not in attrflags and common_attr:
             error_msg = "%s: invalid ATTRIBUTE" % (cfg)
@@ -21,6 +21,9 @@ def create_bif(config, attrflags, attrimage, common_attr, biffd, d):
                     error_msg = "%s: invalid or missing elf or image" % (cfg)
                     bb.error("BIF atrribute Error: %s " % (error_msg))
                 imagestr = d.expand(attrimage[cfg])
+                if os.stat(imagestr).st_size == 0:
+                    bb.warn("Empty file %s, excluding from bif file" %(imagestr))
+                    continue
                 if cfg in attrflags:
                     cfgval = attrflags[cfg].split(',')
                     cfgstr = "\t [%s] %s\n" % (', '.join(cfgval), imagestr)

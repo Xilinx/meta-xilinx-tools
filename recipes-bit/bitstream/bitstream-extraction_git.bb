@@ -15,7 +15,11 @@ do_compile[noexec] = "1"
 
 do_deploy() {
         install -d ${DEPLOYDIR}
-        install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ${DEPLOYDIR}/download-${MACHINE}.bit
+        if [ -e ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ]; then
+                install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ${DEPLOYDIR}/download-${MACHINE}.bit
+        else
+                touch ${DEPLOYDIR}/download-${MACHINE}.bit
+        fi
 }
 
 addtask do_deploy after do_install
