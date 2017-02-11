@@ -175,9 +175,7 @@ if { $params(ws) ne "" } {
 			#check if conf_dict exists(Depends on user passed the yaml file or not)
 			if { [info exists conf_dict] } {
 				do_app_config $conf_dict
-				if { $autogenbsp eq 1} {
-					do_bsp_config $conf_dict
-				}
+				do_bsp_config $conf_dict
 			}
 		} else {
 			puts "INFO: create bsp using $params(bspname)"
