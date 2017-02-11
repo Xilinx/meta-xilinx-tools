@@ -11,7 +11,7 @@ HDF_PATH ?= "gitenterprise.xilinx.com/Yocto/hdf-examples.git"
 
 SRC_URI = "${HDF_BASE}${HDF_PATH}"
 
-SRCREV = "9a872a9b0f646d85bf2cda747c0c9cf7462c2199"
+SRCREV = "34f797397b9148b20eb850b41078ab1d3703b446"
 S = "${WORKDIR}/git"
 
 do_configure[noexec] = "1"
