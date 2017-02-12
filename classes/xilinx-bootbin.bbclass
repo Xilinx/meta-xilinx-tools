@@ -57,6 +57,7 @@ python do_create_bif() {
 addtask do_create_bif after do_image_complete before do_xilinx_bootbin
 
 do_create_bif[vardeps] += "BIF_PARTITION_ATTR BIF_PARTITION_IMAGE BIF_COMMON_ATTR"
+do_create_bif[depends] += "${@get_bootbin_depends(d)}"
 
 def get_bootbin_depends(d):
     bootbindeps = ""
@@ -68,8 +69,7 @@ def get_bootbin_depends(d):
 
     return bootbindeps
 
-
-do_xilinx_bootbin[depends] = "${@get_bootbin_depends(d)}"
+do_xilinx_bootbin[depends] += "${@get_bootbin_depends(d)}"
 
 do_xilinx_bootbin () {
     cd ${B}
