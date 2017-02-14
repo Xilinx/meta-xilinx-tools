@@ -18,7 +18,7 @@ BIF_PARTITION_DEPENDS[fsbl]="virtual/fsbl"
 #specify BIF partition attributes for PMU Firmware
 #destination cpu for PMU. Location where PMU binary is present and dependency to build PMU Firmware
 BIF_PARTITION_ATTR[pmu]="pmufw_image"
-BIF_PARTITION_IMAGE[pmu]="${DEPLOY_DIR_IMAGE}/pmu-${MACHINE}.elf"
+BIF_PARTITION_IMAGE[pmu]="${DEPLOY_DIR_IMAGE}/pmu-firmware-${MACHINE}.elf"
 BIF_PARTITION_DEPENDS[pmu]="virtual/pmufw"
 
 #specify BIF partition attributes for ATF

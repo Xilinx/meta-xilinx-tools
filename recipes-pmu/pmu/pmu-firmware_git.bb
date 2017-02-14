@@ -7,19 +7,6 @@ PROVIDES = "virtual/pmufw"
 
 inherit xsctapp xsctyaml deploy
 
-S = "${WORKDIR}/git"
-
-# Sources, by default allow for the use of SRCREV pointing to orphaned tags/commits
-ESWBRANCH ?= "master"
-SRCBRANCHARG = "${@['nobranch=1', 'branch=${ESWBRANCH}'][d.getVar('ESWBRANCH', True) != '']}"
-
-SRC_URI = "git://gitenterprise.xilinx.com/embeddedsw/embeddedsw.git;protocol=https;${SRCBRANCHARG}"
-
-# This points to xilinx-v2017.1 tag
-SRCREV ?= "b9ff975d9f8684a581e3aebcf94319a0bb9e9d1b"
-
-PV = "0.2+xilinx+git${SRCPV}"
-
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynqmp = "zynqmp"
 
@@ -30,14 +17,3 @@ YAML_APP_CONFIG[build-config]="set,release"
 XSCTH_PROC_zynqmp = "psu_pmu_0"
 XSCTH_APP  = "ZynqMP PMU Firmware"
 XSCTH_MISC = "-yamlconf ${YAML_FILE_PATH}"
-
-PACKAGE_ARCH = "${MACHINE_ARCH}"
-
-do_install[noexec] = "1"
-
-do_deploy() {
-    install -d ${DEPLOYDIR}
-    install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/Release/${XSCTH_PROJ}.elf ${DEPLOYDIR}/pmu-${MACHINE}.elf
-}
-
-addtask do_deploy after do_compile

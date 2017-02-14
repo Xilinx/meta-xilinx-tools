@@ -1,4 +1,4 @@
-inherit xsctbase
+inherit xsctapp
 
 FILESEXTRAPATHS_append := ":${XLNX_SCRIPTS_DIR}"
 SRC_URI_append =" \
@@ -6,4 +6,4 @@ SRC_URI_append =" \
   file://base-hsi.tcl \
 "
 
-XSCTH_SCRIPT = "${WORKDIR}/fsboot.tcl"
+XSCTH_SCRIPT ?= "${WORKDIR}/fsboot.tcl"
