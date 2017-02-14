@@ -17,3 +17,7 @@ YAML_APP_CONFIG[build-config]="set,release"
 XSCTH_PROC_zynqmp = "psu_pmu_0"
 XSCTH_APP  = "ZynqMP PMU Firmware"
 XSCTH_MISC = "-yamlconf ${YAML_FILE_PATH}"
+
+do_deploy_append() {
+    ln -sf ${PN}-${MACHINE}.elf ${DEPLOYDIR}/pmu-${MACHINE}.elf
+}
