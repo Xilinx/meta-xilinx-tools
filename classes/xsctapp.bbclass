@@ -1,11 +1,11 @@
 inherit xsctbase
 
-EMBEDDEDSW_REPO ?= "git://gitenterprise.xilinx.com/embeddedsw/embeddedsw.git"
+EMBEDDEDSW_REPO ?= "git://gitenterprise.xilinx.com/embeddedsw/embeddedsw.git;protocol=https"
 EMBEDDEDSW_BRANCH ?= ""
 EMBEDDEDSW_SRCREV ?= "b9ff975d9f8684a581e3aebcf94319a0bb9e9d1b"
 
 EMBEDDEDSW_BRANCHARG ?= "${@['nobranch=1', 'branch=${EMBEDDEDSW_BRANCH}'][d.getVar('EMBEDDEDSW_BRANCH', True) != '']}"
-EMBEDDEDSW_SRCURI ?= "${EMBEDDEDSW_REPO};protocol=https;${EMBEDDEDSW_BRANCHARG}"
+EMBEDDEDSW_SRCURI ?= "${EMBEDDEDSW_REPO};${EMBEDDEDSW_BRANCHARG}"
 EMBEDDEDSW_PV ?= "${XILINX_VER_MAIN}+git${SRCPV}"
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
