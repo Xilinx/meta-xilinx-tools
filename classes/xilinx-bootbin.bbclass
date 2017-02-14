@@ -4,7 +4,7 @@ BIF_COMMON_ATTR ?= ''
 BIF_PARTITION_ATTR ?= ''
 BIF_PARTITION_IMAGE ?= ''
 BIF_PARTITION_DEPENDS ?= ''
-BIF_FILE_PATH = "${B}/bootgen.bif"
+BIF_FILE_PATH = "${WORKDIR}/bootgen.bif"
 
 def create_bif(config, attrflags, attrimage, common_attr, biffd, d):
     import re, os
@@ -72,7 +72,7 @@ def get_bootbin_depends(d):
 do_xilinx_bootbin[depends] += "${@get_bootbin_depends(d)}"
 
 do_xilinx_bootbin () {
-    cd ${B}
+    cd ${WORKDIR}
     rm -f BOOT.bin
     bootgen -image ${BIF_FILE_PATH} -arch ${KMACHINE} -w -o BOOT.bin
     if [ ! -e BOOT.bin ]; then
