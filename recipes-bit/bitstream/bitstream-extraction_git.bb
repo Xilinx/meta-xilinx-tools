@@ -7,6 +7,8 @@ DEPENDS += "virtual/hdf"
 
 PROVIDES = "virtual/bitstream"
 
+PACKAGE_ARCH ?= "${MACHINE_ARCH}"
+
 inherit xsctbit deploy
 
 XSCTH_MISC = "-hwpname ${XSCTH_PROJ}_hwproj"
