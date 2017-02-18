@@ -22,11 +22,13 @@ FILESEXTRAPATHS_append := ":${XLNX_SCRIPTS_DIR}"
 SRC_URI_append = " file://app.tcl"
 XSCTH_SCRIPT ?= "${WORKDIR}/app.tcl"
 
+XSCTH_EXECUTABLE ?= "Release/${XSCTH_PROJ}.elf"
+
 do_install[noexec] = "1"
 
 do_deploy() {
     install -d ${DEPLOYDIR}
-    install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/Release/${XSCTH_PROJ}.elf ${DEPLOYDIR}/${XSCTH_BASE_NAME}.elf
+    install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ${DEPLOYDIR}/${XSCTH_BASE_NAME}.elf
     ln -sf ${XSCTH_BASE_NAME}.elf ${DEPLOYDIR}/${PN}-${MACHINE}.elf
 }
 addtask do_deploy after do_compile
