@@ -8,4 +8,4 @@ SRC_URI_append =" \
 
 XSCTH_EXECUTABLE = "executable.elf"
 
-XSCTH_SCRIPT ?= "${WORKDIR}/fsboot.tcl"
+XSCTH_SCRIPT = "${WORKDIR}/fsboot.tcl"
