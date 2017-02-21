@@ -33,4 +33,5 @@ python do_xsct_setup () {
 
     bb.note("XSCT is valid, version is %s" % XILINX_XSCT_VERSION)
 }
-addtask xsct_setup before do_configure
+addhandler do_xsct_setup
+do_xsct_setup[eventmask] = "bb.event.BuildStarted"
