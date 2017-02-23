@@ -7,7 +7,7 @@ DEPENDS += "dtc-native"
 
 PROVIDES = "virtual/dtb"
 
-inherit xsctdt deploy
+inherit xsctdt xsctyaml deploy
 
 S = "${WORKDIR}/git"
 BRANCH = "master"
@@ -17,7 +17,16 @@ SRCREV ?= "341b6938a824204c0613ca937906ef924292f0c2"
 
 PV = "xilinx+git${SRCPV}"
 
+XSCTH_BUILD_CONFIG = ""
+YAML_COMPILER_FLAGS = ""
 XSCTH_APP = "device-tree"
+
+YAML_DT_BOARD_FLAGS_zcu102-zynqmp = "{BOARD zcu102}"
+YAML_DT_BOARD_FLAGS_zcu106-zynqmp = "{BOARD zcu106}"
+YAML_DT_BOARD_FLAGS_zc702-zynq7 = "{BOARD zc702}"
+YAML_DT_BOARD_FLAGS_zc706-zynq7 = "{BOARD zc706}"
+YAML_DT_BOARD_FLAGS_zedboard-zynq7 = "{BOARD zedboard}"
+
 do_install[noexec]="1"
 
 DEVICETREE_FLAGS ?= ""
