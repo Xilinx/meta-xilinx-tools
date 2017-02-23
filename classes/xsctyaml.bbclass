@@ -8,6 +8,7 @@ do_create_yaml[depends] = "python3-pyyaml-native:do_populate_sysroot"
 YAML_APP_CONFIG ?= ''
 YAML_BSP_CONFIG ?= ''
 YAML_FILE_PATH ?= ''
+YAML_DT_BOARD_FLAGS ?= ''
 
 YAML_FILE_PATH = "${WORKDIR}/${PN}.yaml"
 XSCTH_MISC_append = " -yamlconf ${YAML_FILE_PATH}"
@@ -19,6 +20,9 @@ YAML_APP_CONFIG[build-config] = "set,${YAML_BUILD_CONFIG}"
 YAML_COMPILER_FLAGS ?= "${@d.getVar('XSCTH_COMPILER_DEBUG_FLAGS', True) if d.getVar('XSCTH_BUILD_DEBUG', True) != "0" else ''}"
 YAML_APP_CONFIG += "${@'compiler-misc' if d.getVar('YAML_COMPILER_FLAGS', True) != '' else ''}"
 YAML_APP_CONFIG[compiler-misc] = "add,${YAML_COMPILER_FLAGS}"
+
+YAML_BSP_CONFIG += "${@'periph_type_overrides' if d.getVar('YAML_DT_BOARD_FLAGS', True) != '' else ''}"
+YAML_BSP_CONFIG[periph_type_overrides] = "set,${YAML_DT_BOARD_FLAGS}"
 
 def patch_yaml(config, configflags, type, type_dict, d):
     import re
