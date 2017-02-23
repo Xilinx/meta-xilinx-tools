@@ -10,13 +10,9 @@ inherit xsctapp xsctyaml deploy
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynqmp = "zynqmp"
 
-YAML_FILE_PATH = "${WORKDIR}/pmufw.yaml"
-YAML_APP_CONFIG="build-config"
-YAML_APP_CONFIG[build-config]="set,release"
-
+XSCTH_COMPILER_DEBUG_FLAGS = "-O2 -DDEBUG_MODE -DENABLE_EM"
 XSCTH_PROC_zynqmp = "psu_pmu_0"
 XSCTH_APP  = "ZynqMP PMU Firmware"
-XSCTH_MISC = "-yamlconf ${YAML_FILE_PATH}"
 
 do_deploy_append() {
     ln -sf ${PN}-${MACHINE}.elf ${DEPLOYDIR}/pmu-${MACHINE}.elf
