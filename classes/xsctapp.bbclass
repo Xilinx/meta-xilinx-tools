@@ -22,7 +22,9 @@ FILESEXTRAPATHS_append := ":${XLNX_SCRIPTS_DIR}"
 SRC_URI_append = " file://app.tcl"
 XSCTH_SCRIPT ?= "${WORKDIR}/app.tcl"
 
-XSCTH_EXECUTABLE ?= "Release/${XSCTH_PROJ}.elf"
+XSCTH_BUILD_DEBUG ?= "0"
+XSCTH_BUILD_CONFIG ?= "${@['Debug', 'Release'][d.getVar('XSCTH_BUILD_DEBUG', True) == "0"]}"
+XSCTH_EXECUTABLE ?= "${XSCTH_BUILD_CONFIG}/${XSCTH_PROJ}.elf"
 
 do_install[noexec] = "1"
 
