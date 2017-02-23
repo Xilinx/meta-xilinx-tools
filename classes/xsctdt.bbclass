@@ -7,4 +7,6 @@ SRC_URI_append = " \
   file://base-hsi.tcl \
 "
 
+PACKAGE_ARCH ?= "${MACHINE_ARCH}"
+
 XSCTH_SCRIPT = "${WORKDIR}/dtgen.tcl"
