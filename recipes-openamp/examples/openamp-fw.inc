@@ -5,18 +5,6 @@ LIC_FILES_CHKSUM = "file://license.txt;md5=4f2bb327107cbb7d887477d580652a89"
 
 inherit xsctapp xsctyaml
 
-# Sources, by default allow for the use of SRCREV pointing to orphaned tags/commits
-ESWBRANCH ?= "master"
-SRCBRANCHARG = "${@['nobranch=1', 'branch=${ESWBRANCH}'][d.getVar('ESWBRANCH', True) != '']}"
-
-SRC_URI = "git://gitenterprise.xilinx.com/embeddedsw/embeddedsw.git;protocol=https;${SRCBRANCHARG}"
-
-SRCREV ?= "${AUTOREV}"
-
-PV ?= "master+git${SRCPV}"
-
-S = "${WORKDIR}/git"
-
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynq = "zynq"
 COMPATIBLE_MACHINE_zynqmp = "zynqmp"
