@@ -9,6 +9,8 @@ YAML_APP_CONFIG ?= ''
 YAML_BSP_CONFIG ?= ''
 YAML_FILE_PATH ?= ''
 YAML_DT_BOARD_FLAGS ?= ''
+YAML_SERIAL_CONSOLE_STDIN ?= ''
+YAML_SERIAL_CONSOLE_STDOUT ?= ''
 
 YAML_FILE_PATH = "${WORKDIR}/${PN}.yaml"
 XSCTH_MISC_append = " -yamlconf ${YAML_FILE_PATH}"
@@ -23,6 +25,12 @@ YAML_APP_CONFIG[compiler-misc] = "add,${YAML_COMPILER_FLAGS}"
 
 YAML_BSP_CONFIG += "${@'periph_type_overrides' if d.getVar('YAML_DT_BOARD_FLAGS', True) != '' else ''}"
 YAML_BSP_CONFIG[periph_type_overrides] = "set,${YAML_DT_BOARD_FLAGS}"
+
+YAML_BSP_CONFIG += "${@'stdin' if d.getVar('YAML_SERIAL_CONSOLE_STDIN', True) != '' else ''}"
+YAML_BSP_CONFIG[stdin] = "set,${YAML_SERIAL_CONSOLE_STDIN}"
+
+YAML_BSP_CONFIG += "${@'stdout' if d.getVar('YAML_SERIAL_CONSOLE_STDOUT', True) != '' else ''}"
+YAML_BSP_CONFIG[stdout] = "set,${YAML_SERIAL_CONSOLE_STDOUT}"
 
 def patch_yaml(config, configflags, type, type_dict, d):
     import re
