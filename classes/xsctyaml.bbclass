@@ -11,6 +11,8 @@ YAML_FILE_PATH ?= ''
 YAML_DT_BOARD_FLAGS ?= ''
 YAML_SERIAL_CONSOLE_STDIN ?= ''
 YAML_SERIAL_CONSOLE_STDOUT ?= ''
+YAML_MAIN_MEMORY_CONFIG ?= ''
+YAML_CONSOLE_DEVICE_CONFIG ?= ''
 
 YAML_FILE_PATH = "${WORKDIR}/${PN}.yaml"
 XSCTH_MISC_append = " -yamlconf ${YAML_FILE_PATH}"
@@ -31,6 +33,12 @@ YAML_BSP_CONFIG[stdin] = "set,${YAML_SERIAL_CONSOLE_STDIN}"
 
 YAML_BSP_CONFIG += "${@'stdout' if d.getVar('YAML_SERIAL_CONSOLE_STDOUT', True) != '' else ''}"
 YAML_BSP_CONFIG[stdout] = "set,${YAML_SERIAL_CONSOLE_STDOUT}"
+
+YAML_BSP_CONFIG += "${@'main_memory' if d.getVar('YAML_MAIN_MEMORY_CONFIG', True) != '' else ''}"
+YAML_BSP_CONFIG[main_memory] = "set,${YAML_MAIN_MEMORY_CONFIG}"
+
+YAML_BSP_CONFIG += "${@'console_device' if d.getVar('YAML_CONSOLE_DEVICE_CONFIG', True) != '' else ''}"
+YAML_BSP_CONFIG[console_device] = "set,${YAML_CONSOLE_DEVICE_CONFIG}"
 
 def patch_yaml(config, configflags, type, type_dict, d):
     import re

@@ -21,6 +21,12 @@ XSCTH_BUILD_CONFIG = ""
 YAML_COMPILER_FLAGS = ""
 XSCTH_APP = "device-tree"
 
+YAML_MAIN_MEMORY_CONFIG_zynqmp = "psu_ddr_0"
+YAML_CONSOLE_DEVICE_CONFIG_zynqmp = "psu_uart_0"
+
+YAML_MAIN_MEMORY_CONFIG_zynq = "ps7_ddr_0"
+YAML_CONSOLE_DEVICE_CONFIG_zynq = "ps7_uart_1"
+
 YAML_DT_BOARD_FLAGS_zcu102-zynqmp = "{BOARD zcu102}"
 YAML_DT_BOARD_FLAGS_zcu106-zynqmp = "{BOARD zcu106}"
 YAML_DT_BOARD_FLAGS_zc702-zynq7 = "{BOARD zc702}"
