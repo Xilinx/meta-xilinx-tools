@@ -8,6 +8,7 @@ inherit deploy
 
 HDF_BASE ?= "git://"
 HDF_PATH ?= "gitenterprise.xilinx.com/Yocto/hdf-examples.git"
+HDF_NAME ?= "system.hdf"
 
 SRC_URI = "${HDF_BASE}${HDF_PATH}"
 
@@ -20,7 +21,7 @@ do_compile[noexec] = "1"
 do_deploy() {
     install -d ${DEPLOYDIR}
     if [ "${HDF_BASE}" = "git://" ]; then
-        install -m 0644 ${WORKDIR}/git/${MACHINE}/system.hdf ${DEPLOYDIR}/Xilinx-${MACHINE}.hdf
+        install -m 0644 ${WORKDIR}/git/${MACHINE}/${HDF_NAME} ${DEPLOYDIR}/Xilinx-${MACHINE}.hdf
     else
         install -m 0644 ${WORKDIR}/${HDF_PATH} ${DEPLOYDIR}/Xilinx-${MACHINE}.hdf
     fi
