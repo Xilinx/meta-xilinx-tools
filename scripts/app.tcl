@@ -67,6 +67,13 @@ proc xsct_config {type conf} {
 	}
 }
 
+proc xsct_set_libs {addlib} {
+	foreach l $addlib {
+		setlib -bsp $::params(bspname) -lib $l
+	}
+	regenbsp -bsp $::params(bspname)
+}
+
 proc do_bsp_config {conf} {
 	#  Availabe BSP configs
 	#  proc :
@@ -175,6 +182,7 @@ if { $params(ws) ne "" } {
 			#check if conf_dict exists(Depends on user passed the yaml file or not)
 			if { [info exists conf_dict] } {
 				do_app_config $conf_dict
+				xsct_set_libs $libs
 				do_bsp_config $conf_dict
 			}
 		} else {
@@ -182,9 +190,7 @@ if { $params(ws) ne "" } {
 			# BSP name given, but not availabe in ws. So creating a custome one
 			createbsp -name $params(bspname) -proc $params(processor) \
 				  -hwproject $params(hwpname) -os $params(osname) -arch $params(arch)
-			foreach l $libs {
-				setlib -hw $params(hwpname) -bsp $params(bspname) -lib $l
-			}
+			xsct_set_libs $libs
 			#check if conf_dict exists(Depends on user passed the yaml file or not)
 			if { [info exists conf_dict] } {
 				do_bsp_config $conf_dict
