@@ -26,7 +26,7 @@ FW_LIB_DIR = "/lib/firmware"
 
 do_deploy[noexec] = "1"
 
-do_install_append () {
+do_install() {
 	install -d ${D}${FW_LIB_DIR}
 	src=${XSCTH_WS}/${XSCTH_PROJ}/${XSCTH_BUILD_CONFIG}/${XSCTH_PROJ}.elf
 	dest=${D}${FW_LIB_DIR}/${OPENAMP_FW_NAME}

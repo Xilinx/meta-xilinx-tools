@@ -26,7 +26,9 @@ XSCTH_BUILD_DEBUG ?= "0"
 XSCTH_BUILD_CONFIG ?= "${@['Debug', 'Release'][d.getVar('XSCTH_BUILD_DEBUG', True) == "0"]}"
 XSCTH_EXECUTABLE ?= "${XSCTH_BUILD_CONFIG}/${XSCTH_PROJ}.elf"
 
-do_install[noexec] = "1"
+do_install() {
+	:
+}
 
 do_deploy() {
     install -d ${DEPLOYDIR}
