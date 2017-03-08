@@ -74,7 +74,7 @@ python do_create_yaml() {
     fp = d.getVar("YAML_FILE_PATH", True)
     if fp :
         yamlfile = open(fp, 'w')
-        yamlfile.write(yaml.dump(yaml_dict, default_flow_style=True))
+        yamlfile.write(yaml.dump(yaml_dict, default_flow_style=True, width=2000))
 }
 
 addtask create_yaml before do_configure
