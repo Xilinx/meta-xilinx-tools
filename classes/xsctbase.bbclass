@@ -26,6 +26,14 @@ do_configure() {
     export RDI_PLATFORM=lnx64
     export SWT_GTK3=0
 
+    if [ -d "${S}/patches" ]; then
+       rm -rf ${S}/patches
+    fi
+
+    if [ -d "${S}/.pc" ]; then
+       rm -rf ${S}/.pc
+    fi
+
     if [ -n "${XSCTH_MISC}" ]; then
         export MISC_ARG="${XSCTH_MISC}"
     fi
