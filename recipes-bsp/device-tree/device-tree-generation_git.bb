@@ -13,7 +13,7 @@ S = "${WORKDIR}/git"
 BRANCH = "master"
 SRC_URI = "git://gitenterprise.xilinx.com/Linux/device-tree-xlnx.git;protocol=https;branch=${BRANCH}"
 #Based on xilinx-v2017.1
-SRCREV ?= "341b6938a824204c0613ca937906ef924292f0c2"
+SRCREV ?= "fed9a2dcdb11518a67fe93e77d68b5025adcc471"
 
 PV = "xilinx+git${SRCPV}"
 
