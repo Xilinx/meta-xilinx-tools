@@ -7,12 +7,12 @@ PROVIDES = "virtual/hdf"
 inherit deploy
 
 HDF_BASE ?= "git://"
-HDF_PATH ?= "gitenterprise.xilinx.com/Yocto/hdf-examples.git"
+HDF_PATH ?= "github.com/Xilinx/hdf-examples.git"
 HDF_NAME ?= "system.hdf"
 
 SRC_URI = "${HDF_BASE}${HDF_PATH}"
 
-SRCREV ?= "dc9f149c84bc68da92a512b3b711caf6b02d4841"
+SRCREV ?= "b113fcea68cf3c02ffc73e8e3982d5a19c40d6dc"
 S = "${WORKDIR}/git"
 
 do_configure[noexec] = "1"
