@@ -9,7 +9,9 @@ SRCTREECOVEREDTASKS ?= "do_patch do_unpack do_fetch"
 
 python () {
     externalsrc = d.getVar('EXTERNALXSCTSRC', True)
+
     if externalsrc:
+        d.setVar('BB_DONT_CACHE', '1')
         d.setVar('S', externalsrc)
         externalsrcbuild = d.getVar('EXTERNALXSCTSRC_BUILD', True)
         if externalsrcbuild:
@@ -42,7 +44,7 @@ python () {
                 bb.build.deltask(task, d)
             else:
                 # Since configure will likely touch ${S}, ensure only we lock so one task has access at a time
-                d.appendVarFlag(task, "lockfiles", " ${TMPDIR}/singletask.lock")
+                d.appendVarFlag(task, "lockfiles", " ${TMPDIR}/singlexscttask.lock")
 
             # We do not want our source to be wiped out, ever (kernel.bbclass does this for do_clean)
             cleandirs = (d.getVarFlag(task, 'cleandirs', False) or '').split()
@@ -74,16 +76,15 @@ python () {
 
 COMPILE_TRIGGER_FILES = " \
     ${XSCTH_WS}/${XSCTH_PROJ}/src \
-    ${XSCTH_WS}/${XSCTH_PROJ}_bsp/${XSCTH_PROC} \
+    ${XSCTH_WS}/${XSCTH_PROJ}_bsp/${XSCTH_PROC}/libsrc \
     ${XSCTH_WS}/${XSCTH_PROJ}_hwproj \
     "
-
-do_configure[file-checksum] += "${XSCTH_HDF}:True"
 
 python xsct_externalsrc_compile_prefunc() {
     # Make it obvious that this is happening, since forgetting about it could lead to much confusion
     bb.plain('NOTE: %s: compiling from external source tree %s' % (d.getVar('PN', True), d.getVar('EXTERNALXSCTSRC', True)))
 }
+
 
 def xsct_srctree_hash_files(d):
     import shutil
@@ -112,6 +113,8 @@ def xsct_srctree_hash_files(d):
     return ret
 
 def xsct_buildtree_hash_files(d):
+    import os
+
     """
     Get the list of files that should trigger do_compile to re-execute,
     """
@@ -119,7 +122,10 @@ def xsct_buildtree_hash_files(d):
     out_items = []
     for entry in in_files:
         if os.path.isdir(entry):
-            out_items.append('%s/*:%s' % (entry, os.path.exists(entry)))
+            for path, subdirs, files in os.walk(entry):
+                for file in files:
+                    if file.endswith(('.c', '.h', '.tcl')):
+                        out_items.append('%s:True' % (os.path.join(path, file)))
         else:
             out_items.append('%s:%s' % (entry, os.path.exists(entry)))
     return ' '.join(out_items)
