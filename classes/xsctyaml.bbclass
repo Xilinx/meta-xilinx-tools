@@ -21,7 +21,7 @@ YAML_BUILD_CONFIG ?= "${@d.getVar('XSCTH_BUILD_CONFIG', True).lower()}"
 YAML_APP_CONFIG += "${@'build-config' if d.getVar('YAML_BUILD_CONFIG', True) != '' else ''}"
 YAML_APP_CONFIG[build-config] = "set,${YAML_BUILD_CONFIG}"
 
-YAML_COMPILER_FLAGS ?= "${@d.getVar('XSCTH_COMPILER_DEBUG_FLAGS', True) if d.getVar('XSCTH_BUILD_DEBUG', True) != "0" else ''}"
+YAML_COMPILER_FLAGS ?= "${@d.getVar('XSCTH_COMPILER_DEBUG_FLAGS', True) if d.getVar('XSCTH_BUILD_DEBUG', True) != "0" else d.getVar('XSCTH_APP_COMPILER_FLAGS', True)}"
 YAML_APP_CONFIG += "${@'compiler-misc' if d.getVar('YAML_COMPILER_FLAGS', True) != '' else ''}"
 YAML_APP_CONFIG[compiler-misc] = "add,${YAML_COMPILER_FLAGS}"
 
