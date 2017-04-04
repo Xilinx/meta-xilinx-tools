@@ -28,6 +28,7 @@ XSCTH_SCRIPT ?= "${WORKDIR}/app.tcl"
 XSCTH_BUILD_DEBUG ?= "0"
 XSCTH_BUILD_CONFIG ?= "${@['Debug', 'Release'][d.getVar('XSCTH_BUILD_DEBUG', True) == "0"]}"
 XSCTH_EXECUTABLE ?= "${XSCTH_BUILD_CONFIG}/${XSCTH_PROJ}.elf"
+XSCTH_APP_COMPILER_FLAGS ?= ""
 
 do_install() {
 	:
