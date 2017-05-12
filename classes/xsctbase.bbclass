@@ -1,4 +1,4 @@
-XILINX_VER_MAIN ??= "2017.1"
+XILINX_VER_MAIN ??= "2017.2"
 
 inherit xsct-tc
 

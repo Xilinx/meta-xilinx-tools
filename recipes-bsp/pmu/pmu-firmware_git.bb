@@ -1,7 +1,7 @@
 DESCRIPTION = "PMU Firmware"
 
 LICENSE = "BSD"
-LIC_FILES_CHKSUM = "file://license.txt;md5=8c0025a6b0e91b4ab8e4ba9f6d2fb65c"
+LIC_FILES_CHKSUM = "file://license.txt;md5=d19cfdb99d9e373dc66709f39fc861fd"
 
 PROVIDES = "virtual/pmufw"
 
