@@ -1,0 +1,42 @@
+From 31d733ec064ad7fd96552e98fff81fb5da42a205 Mon Sep 17 00:00:00 2001
+From: Sreeja Vadakattu <svadakat@xilinx.com>
+Date: Tue, 16 May 2017 16:46:34 +0530
+Subject: [EMBEDDEDSW PATCH] zcu100 poweroff support
+
+Signed-off-by: Sreeja Vadakattu <svadakat@xilinx.com>
+---
+ lib/sw_apps/zynqmp_pmufw/src/pm_core.c |   11 +++++++++++
+ 1 files changed, 11 insertions(+), 0 deletions(-)
+
+diff --git a/lib/sw_apps/zynqmp_pmufw/src/pm_core.c b/lib/sw_apps/zynqmp_pmufw/src/pm_core.c
+index 13072de..587f4cc 100644
+--- a/lib/sw_apps/zynqmp_pmufw/src/pm_core.c
++++ b/lib/sw_apps/zynqmp_pmufw/src/pm_core.c
+@@ -535,6 +535,11 @@ static void PmGetApiVersion(const PmMaster *const master)
+ 	PmDbg(DEBUG_DETAILED,"version %d.%d\r\n", PM_VERSION_MAJOR,
+ 			PM_VERSION_MINOR);
+ 
++	/* GPIO MIO34 power off for zcu100  poweroff is done by writing 0 - default setting is 1 on that pin */
++	u32 reg = XPfw_Read32(PMU_LOCAL_GPO1_READ);
++	reg |= PMU_IOMODULE_GPO1_MIO_2_MASK;
++	XPfw_Write32(PMU_IOMODULE_GPO1, reg);
++
+ 	IPI_RESPONSE2(master->ipiMask, XST_SUCCESS, version);
+ }
+ 
+@@ -778,6 +783,12 @@ static void PmSystemShutdown(PmMaster* const master, const u32 type,
+ 	/* For shutdown type the subtype is irrelevant: shut the caller down */
+ 	if (PMF_SHUTDOWN_TYPE_SHUTDOWN == type) {
+ 		status = PmMasterFsm(master, PM_MASTER_EVENT_FORCE_DOWN);
++
++		/* GPIO MIO34 power off for zcu100  poweroff is done by writing 0 */
++		u32 reg = XPfw_Read32(PMU_LOCAL_GPO1_READ);
++		reg &= ~PMU_IOMODULE_GPO1_MIO_2_MASK;
++		XPfw_Write32(PMU_IOMODULE_GPO1, reg);
++
+ 		goto done;
+ 	}
+ 
+-- 
+1.7.1
+

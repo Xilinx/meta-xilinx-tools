@@ -5,6 +5,8 @@ LIC_FILES_CHKSUM = "file://license.txt;md5=d19cfdb99d9e373dc66709f39fc861fd"
 
 PROVIDES = "virtual/pmufw"
 
+SRC_URI_append_zcu100-zynqmp = " file://0001-zcu100-poweroff-support.patch"
+
 inherit xsctapp xsctyaml deploy
 
 COMPATIBLE_MACHINE = "^$"
