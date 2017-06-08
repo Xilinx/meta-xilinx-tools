@@ -9,8 +9,8 @@ COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynq = "zynq"
 COMPATIBLE_MACHINE_zynqmp = "zynqmp"
 
-YAML_BSP_CONFIG_zynqmp = "WITH_PROXY"
-YAML_BSP_CONFIG_zynq = "WITH_PROXY extra_compiler_flags"
+YAML_BSP_CONFIG += "WITH_PROXY"
+YAML_BSP_CONFIG += "${@bb.utils.contains('SOC_FAMILY', 'zynq', 'extra_compiler_flags', '', d)}"
 YAML_BSP_CONFIG[WITH_PROXY] = "set,false"
 YAML_BSP_CONFIG[extra_compiler_flags] = "append,-DUSE_AMP=1"
 
