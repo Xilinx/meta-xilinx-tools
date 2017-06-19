@@ -12,7 +12,7 @@ HDF_NAME ?= "system.hdf"
 
 SRC_URI = "${HDF_BASE}${HDF_PATH}"
 
-SRCREV ?= "b113fcea68cf3c02ffc73e8e3982d5a19c40d6dc"
+SRCREV ?= "97bf3d57bf53662ba42121b044b56b3ab6e0ff21"
 S = "${WORKDIR}/git"
 
 do_configure[noexec] = "1"
