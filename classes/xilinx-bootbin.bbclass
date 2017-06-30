@@ -54,7 +54,7 @@ python do_create_bif() {
     biffd.write("}")
     biffd.close()
 }
-addtask do_create_bif after do_image_complete before do_xilinx_bootbin
+addtask do_create_bif before do_xilinx_bootbin
 
 do_create_bif[vardeps] += "BIF_PARTITION_ATTR BIF_PARTITION_IMAGE BIF_COMMON_ATTR"
 do_create_bif[depends] += "${@get_bootbin_depends(d)}"
@@ -80,4 +80,4 @@ do_xilinx_bootbin () {
     fi
     install -m 0644 BOOT.bin  ${DEPLOY_DIR_IMAGE}/BOOT.bin
 }
-addtask do_xilinx_bootbin after do_image_complete before do_build
+addtask do_xilinx_bootbin before do_image
