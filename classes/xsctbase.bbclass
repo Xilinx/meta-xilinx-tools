@@ -1,5 +1,3 @@
-XILINX_VER_MAIN ??= "2017.2"
-
 inherit xsct-tc
 
 B = "${WORKDIR}/build"
