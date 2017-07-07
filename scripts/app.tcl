@@ -51,8 +51,8 @@ proc set_app_conf {action prop val} {
 }
 
 proc set_bsp_conf {action prop val} {
-	if { [catch {configbsp -$action -hw $::params(hwpname) -bsp $::params(bspname) $prop $val} result1] } {
-		if { [catch {configbsp -hw $::params(hwpname) -bsp $::params(bspname) $prop $val} result2] } {
+	if { [catch {configbsp -$action -bsp $::params(bspname) $prop $val} result1] } {
+		if { [catch {configbsp -bsp $::params(bspname) $prop $val} result2] } {
 			puts "ERROR:[info level 0]: Cannot set Property \"$prop\" with $val \n$result2"
 		}
 	}
@@ -195,7 +195,7 @@ if { $params(ws) ne "" } {
 			if { [info exists conf_dict] } {
 				do_bsp_config $conf_dict
 			}
-			regenbsp -hw $params(hwpname) -bsp $params(bspname)
+			regenbsp -bsp $params(bspname)
 			puts "INFO: create app using custom bsp"
 			# Create a App for custom bsp
 			createapp -name $params(pname) -proc $params(processor) \
