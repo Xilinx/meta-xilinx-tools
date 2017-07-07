@@ -22,10 +22,15 @@ Dependencies
 
 This layer depends on:
 
-XSCT being installed in your path
+XSCT being installed somewhere the yocto build can access. You must define
+this path by specifying the XILINX_SDK_TOOLCHAIN variable globally, typically
+in your local.conf (or site.conf).
 
-Define the PATH using the variable XILINX_SDK_TOOLCHAIN
-The supported tool version is indicated in XILINX_VER_MAIN
+The supported tool version is indicated in XILINX_VER_MAIN which defaults to
+the current release that is checked out.
+
+It would be wise then to define XILINX_SDK_TOOLCHAIN like so:
+XILINX_SDK_TOOLCHAIN = "/full/path/to/xilinx/SDK/${XILINX_VER_MAIN}"
 
 Each release is dependent on the Xilinx XSCT release version. Please note that
 xsct tools may not be backward compatible with embeddedsw repo. Meaning
