@@ -15,6 +15,7 @@ XSCTH_PROJ ??= "${PN}"
 XSCTH_WS ??= "${B}"
 XSCTH_MISC ??= ""
 XSCTH_SCRIPT ??= ""
+XSCTH_EXECUTABLE ??= ""
 XSCTH_ARCH ?= "${@bb.utils.contains('XSCTH_PROC', 'psu_cortexa53_0', '64', '32', d)}"
 
 PROJ_ARG ??= "-ws ${XSCTH_WS} -pname ${XSCTH_PROJ} -rp ${XSCTH_REPO}"
@@ -55,4 +56,7 @@ do_compile() {
     export RDI_PLATFORM=ln64
     export SWT_GTK3=0
     eval xsct ${XSCTH_SCRIPT} ${PROJ_ARG} -do_compile 1
+    if [ ! -e ${XSCTH_WS}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ]; then
+        bbfatal_log "${PN} compile failed."
+    fi
 }
