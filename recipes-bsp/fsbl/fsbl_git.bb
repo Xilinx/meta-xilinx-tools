@@ -4,8 +4,6 @@ PROVIDES = "virtual/fsbl"
 
 inherit xsctapp xsctyaml deploy
 
-SRC_URI_append_zcu100-zynqmp = " file://0001-zcu100-poweroff-support.patch"
-
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynq = "zynq"
 COMPATIBLE_MACHINE_zynqmp = "zynqmp"
