@@ -1,6 +1,6 @@
 DESCRIPTION = "OpenAMP demo firmware"
 
-inherit xsctapp xsctyaml
+inherit xsctapp xsctyaml deploy
 
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynq = "zynq"
@@ -21,11 +21,9 @@ INSANE_SKIP_${PN} = "arch"
 
 FW_LIB_DIR = "/lib/firmware"
 
-do_deploy[noexec] = "1"
-
 do_install() {
 	install -d ${D}${FW_LIB_DIR}
-	src=${XSCTH_WS}/${XSCTH_PROJ}/${XSCTH_BUILD_CONFIG}/${XSCTH_PROJ}.elf
+	src=${XSCTH_WS}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE}
 	dest=${D}${FW_LIB_DIR}/${OPENAMP_FW_NAME}
 	install -m 0644 ${src} ${dest}
 }
