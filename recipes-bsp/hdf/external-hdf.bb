@@ -6,6 +6,8 @@ PROVIDES = "virtual/hdf"
 
 inherit deploy
 
+PACKAGE_ARCH ?= "${MACHINE_ARCH}"
+
 HDF_BASE ?= "git://"
 HDF_PATH ?= "github.com/Xilinx/hdf-examples.git"
 HDF_NAME ?= "system.hdf"
