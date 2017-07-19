@@ -1,8 +1,5 @@
 DESCRIPTION = "OpenAMP demo firmware"
 
-LICENSE = "BSD"
-LIC_FILES_CHKSUM = "file://license.txt;md5=d19cfdb99d9e373dc66709f39fc861fd"
-
 inherit xsctapp xsctyaml
 
 COMPATIBLE_MACHINE = "^$"
