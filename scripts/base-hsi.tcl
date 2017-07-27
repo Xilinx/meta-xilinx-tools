@@ -27,7 +27,7 @@ proc set_properties { yamlconf } {
 			foreach prop [dict keys [dict get $conf_dict "bsp"]] {
 				foreach action [dict keys \
 						[dict get $conf_dict "bsp" $prop]] {
-					if { [lsearch -exact $os_config_list $prop] < 0} {
+					if { [lsearch -exact -nocase $os_config_list $prop] < 0} {
 						continue
 					}
 					if { [catch {hsi set_property CONFIG.$prop \
