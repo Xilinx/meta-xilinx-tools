@@ -20,24 +20,20 @@ set usage "A script to generate and compile device-tree and fs-boot sources"
 array set params [::cmdline::getoptions argv $option $usage]
 set project "$params(ws)/$params(pname)"
 
+file delete -force "$project"
 
 set_hw_design $project $params(hdf) 
 if { [catch {hsi set_repo_path $params(rp)} res] } {
 	error "Failed to set repo path $params(rp)"
 }
-if { [catch {hsi generate_app -app $params(app) \
-	-os standalone -proc $params(processor) -dir $project} res] } {
-	error "Failed to generate app $params(app)"
-}
-if { [catch {hsi open_sw_design \
-		$project/${params(app)}_bsp/system.mss} res] } {
-	error "Failed to open sw design \
-		$project/{$params(app)}_bsp/system.mss "
+
+if {[catch {hsi create_sw_design $params(app) -app $params(app) \
+		-os standalone -proc $params(processor)} res] } {
+	error "create_sw_design failed for $params(app)"
 }
 set_properties $params(yamlconf)
-file delete -force "$project/${params(app)}_bsp"
-if {[catch {hsi generate_bsp -dir "$project/${params(app)}_bsp"} res]} {
-        error "failed to regenerate bsp while updating mss "
+if { [catch {hsi generate_app -dir $project} res] } {
+	error "Failed to generate app $params(app)"
 }
 if {[catch {hsi close_sw_design [hsi current_sw_design]} res]} {
 	error "failed to close sw_design"
