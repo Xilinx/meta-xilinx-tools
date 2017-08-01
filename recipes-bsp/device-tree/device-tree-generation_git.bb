@@ -26,7 +26,7 @@ YAML_CONSOLE_DEVICE_CONFIG_zcu100-zynqmp = "psu_uart_1"
 
 YAML_DT_BOARD_FLAGS_zcu100-zynqmp = "{BOARD zcu100-revb}"
 YAML_DT_BOARD_FLAGS_zcu102-zynqmp = "{BOARD zcu102-revb}"
-YAML_DT_BOARD_FLAGS_zcu106-zynqmp = "{BOARD zcu106}"
+YAML_DT_BOARD_FLAGS_zcu106-zynqmp = "{BOARD zcu106-reva}"
 YAML_DT_BOARD_FLAGS_zc702-zynq7 = "{BOARD zc702}"
 YAML_DT_BOARD_FLAGS_zc706-zynq7 = "{BOARD zc706}"
 YAML_DT_BOARD_FLAGS_zedboard-zynq7 = "{BOARD zedboard}"
