@@ -21,6 +21,7 @@ XSCTH_BUILD_CONFIG = ""
 YAML_COMPILER_FLAGS = ""
 XSCTH_APP = "device-tree"
 
+YAML_DT_BOARD_FLAGS_zcu100-zynqmp = "{BOARD zcu100-revb}"
 YAML_DT_BOARD_FLAGS_zcu102-zynqmp = "{BOARD zcu102-revb}"
 YAML_DT_BOARD_FLAGS_zcu106-zynqmp = "{BOARD zcu106}"
 YAML_DT_BOARD_FLAGS_zc702-zynq7 = "{BOARD zc702}"
