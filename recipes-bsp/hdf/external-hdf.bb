@@ -12,6 +12,8 @@ HDF_NAME ?= "system.hdf"
 
 SRC_URI = "${HDF_BASE}${HDF_PATH}"
 
+PACKAGE_ARCH ?= "${MACHINE_ARCH}"
+
 SRCREV ?= "97bf3d57bf53662ba42121b044b56b3ab6e0ff21"
 S = "${WORKDIR}/git"
 
