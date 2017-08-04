@@ -2,7 +2,7 @@ inherit xsctbase
 
 EMBEDDEDSW_REPO ?= "git://github.com/Xilinx/embeddedsw.git;protocol=https"
 EMBEDDEDSW_BRANCH ?= ""
-EMBEDDEDSW_SRCREV ?= "122565ec409fdc7044f9b2cca73a32045269f5f9"
+EMBEDDEDSW_SRCREV ?= "3c9f0cfde9307c2dc1a298f9f22d492601232821"
 
 EMBEDDEDSW_BRANCHARG ?= "${@['nobranch=1', 'branch=${EMBEDDEDSW_BRANCH}'][d.getVar('EMBEDDEDSW_BRANCH', True) != '']}"
 EMBEDDEDSW_SRCURI ?= "${EMBEDDEDSW_REPO};${EMBEDDEDSW_BRANCHARG}"
@@ -11,7 +11,7 @@ EMBEDDEDSW_PV ?= "${XILINX_VER_MAIN}+git${SRCPV}"
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
 LICENSE = "BSD"
-LIC_FILES_CHKSUM = "file://license.txt;md5=d19cfdb99d9e373dc66709f39fc861fd"
+LIC_FILES_CHKSUM = "file://license.txt;md5=530190e8d7ebcdfeddbe396f3f20417f"
 
 SRC_URI = "${EMBEDDEDSW_SRCURI}"
 SRCREV = "${EMBEDDEDSW_SRCREV}"
