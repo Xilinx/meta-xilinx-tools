@@ -30,6 +30,7 @@ YAML_DT_BOARD_FLAGS_zcu106-zynqmp = "{BOARD zcu106-reva}"
 YAML_DT_BOARD_FLAGS_zc702-zynq7 = "{BOARD zc702}"
 YAML_DT_BOARD_FLAGS_zc706-zynq7 = "{BOARD zc706}"
 YAML_DT_BOARD_FLAGS_zedboard-zynq7 = "{BOARD zedboard}"
+YAML_DT_BOARD_FLAGS_zc1254-zynqmp = "{BOARD zc1254-reva}"
 
 DEVICETREE_WORKDIR ?= "${XSCTH_WS}/${XSCTH_PROJ}"
 
