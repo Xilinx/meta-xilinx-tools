@@ -24,7 +24,7 @@ XSCTH_APP = "device-tree"
 YAML_MAIN_MEMORY_CONFIG_zcu100-zynqmp = "psu_ddr_0"
 YAML_CONSOLE_DEVICE_CONFIG_zcu100-zynqmp = "psu_uart_1"
 
-YAML_DT_BOARD_FLAGS_zcu100-zynqmp = "{BOARD zcu100-revb}"
+YAML_DT_BOARD_FLAGS_zcu100-zynqmp = "{BOARD zcu100-revc}"
 YAML_DT_BOARD_FLAGS_zcu102-zynqmp = "{BOARD zcu102-rev1.0}"
 YAML_DT_BOARD_FLAGS_zcu106-zynqmp = "{BOARD zcu106-reva}"
 YAML_DT_BOARD_FLAGS_zc702-zynq7 = "{BOARD zc702}"
