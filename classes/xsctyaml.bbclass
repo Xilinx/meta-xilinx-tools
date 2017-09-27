@@ -13,6 +13,7 @@ YAML_SERIAL_CONSOLE_STDIN ?= ''
 YAML_SERIAL_CONSOLE_STDOUT ?= ''
 YAML_MAIN_MEMORY_CONFIG ?= ''
 YAML_CONSOLE_DEVICE_CONFIG ?= ''
+YAML_FLASH_MEMORY_CONFIG ?= ''
 
 YAML_SERIAL_CONSOLE_STDIN_zcu100-zynqmp = "psu_uart_1"
 YAML_SERIAL_CONSOLE_STDOUT_zcu100-zynqmp = "psu_uart_1"
@@ -39,6 +40,10 @@ YAML_BSP_CONFIG[stdout] = "set,${YAML_SERIAL_CONSOLE_STDOUT}"
 
 YAML_BSP_CONFIG += "${@'main_memory' if d.getVar('YAML_MAIN_MEMORY_CONFIG', True) != '' else ''}"
 YAML_BSP_CONFIG[main_memory] = "set,${YAML_MAIN_MEMORY_CONFIG}"
+
+
+YAML_BSP_CONFIG += "${@'flash_memory' if d.getVar('YAML_FLASH_MEMORY_CONFIG', True) != '' else ''}"
+YAML_BSP_CONFIG[flash_memory] = "set,${YAML_FLASH_MEMORY_CONFIG}"
 
 YAML_BSP_CONFIG += "${@'console_device' if d.getVar('YAML_CONSOLE_DEVICE_CONFIG', True) != '' else ''}"
 YAML_BSP_CONFIG[console_device] = "set,${YAML_CONSOLE_DEVICE_CONFIG}"
