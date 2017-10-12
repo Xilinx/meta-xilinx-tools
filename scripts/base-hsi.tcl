@@ -47,7 +47,7 @@ proc set_hw_design {project hdf} {
         	puts "$::errorInfo"
 	}
 
-	if { [catch {hsi open_hw_design $project/hardware_description.hdf} res] } {
+	if { [catch {openhw $project/hardware_description.hdf} res] } {
         	error "Failed to open hardware design \
                 	from $project/hardware_description.hdf"
 	}
