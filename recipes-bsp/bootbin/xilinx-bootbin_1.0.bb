@@ -1,10 +1,19 @@
-inherit xsct-tc
+SUMMARY = "Generates boot.bin using bootgen tool"
+DESCRIPTION = "Manages task dependencies and creation of boot.bin. Use the \
+BIF_PARTITION_xyz global variables and flags to determine what makes it into \
+the image."
 
-BIF_COMMON_ATTR ?= ''
-BIF_PARTITION_ATTR ?= ''
-BIF_PARTITION_IMAGE ?= ''
-BIF_PARTITION_DEPENDS ?= ''
-BIF_FILE_PATH = "${WORKDIR}/bootgen.bif"
+LICENSE = "BSD"
+
+include machine-xilinx-${SOC_FAMILY}.inc
+
+inherit xsct-tc deploy
+
+PROVIDES = "virtual/boot-bin"
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
+BIF_FILE_PATH ?= "${B}/bootgen.bif"
 
 def create_bif(config, attrflags, attrimage, common_attr, biffd, d):
     import re, os
@@ -33,7 +42,7 @@ def create_bif(config, attrflags, attrimage, common_attr, biffd, d):
 
     return
 
-python do_create_bif() {
+python do_configure() {
 
     fp = d.getVar("BIF_FILE_PATH", True)
     biffd = open(fp, 'w')
@@ -54,10 +63,9 @@ python do_create_bif() {
     biffd.write("}")
     biffd.close()
 }
-addtask do_create_bif before do_xilinx_bootbin
 
-do_create_bif[vardeps] += "BIF_PARTITION_ATTR BIF_PARTITION_IMAGE BIF_COMMON_ATTR"
-do_create_bif[depends] += "${@get_bootbin_depends(d)}"
+do_configure[vardeps] += "BIF_PARTITION_ATTR BIF_PARTITION_IMAGE BIF_COMMON_ATTR"
+do_configure[depends] += "${@get_bootbin_depends(d)}"
 
 def get_bootbin_depends(d):
     bootbindeps = ""
@@ -69,15 +77,27 @@ def get_bootbin_depends(d):
 
     return bootbindeps
 
-do_xilinx_bootbin[depends] += "${@get_bootbin_depends(d)}"
 
-do_xilinx_bootbin () {
+do_compile() {
     cd ${WORKDIR}
-    rm -f BOOT.bin
-    bootgen -image ${BIF_FILE_PATH} -arch ${KMACHINE} -w -o BOOT.bin
-    if [ ! -e BOOT.bin ]; then
+    rm -f ${B}/BOOT.bin
+    bootgen -image ${BIF_FILE_PATH} -arch ${SOC_FAMILY} -w -o ${B}/BOOT.bin
+    if [ ! -e ${B}/BOOT.bin ]; then
         bbfatal "bootgen failed. See log"
     fi
-    install -m 0644 BOOT.bin  ${DEPLOY_DIR_IMAGE}/BOOT.bin
 }
-addtask do_xilinx_bootbin before do_image
+
+do_install() {
+	:
+}
+
+BOOTBIN_BASE_NAME ?= "BOOT-${MACHINE}-${DATETIME}"
+BOOTBIN_BASE_NAME[vardepsexclude] = "DATETIME"
+
+do_deploy() {
+    install -d ${DEPLOYDIR}
+    install -m 0644 ${B}/BOOT.bin ${DEPLOYDIR}/${BOOTBIN_BASE_NAME}.bin
+    ln -sf ${BOOTBIN_BASE_NAME}.bin ${DEPLOYDIR}/BOOT-${MACHINE}.bin
+}
+addtask do_deploy before do_build after do_compile
+

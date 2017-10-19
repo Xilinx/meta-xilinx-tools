@@ -1,10 +1,6 @@
-# add Boot.bin dependency
-IMAGE_CLASSES_append ?= " xilinx-bootbin"
-
 # specify BIF common attribute for FSBL
 BIF_COMMON_ATTR ?= "fsbl_config"
 BIF_COMMON_ATTR[fsbl_config] ?= "a53_x64"
-
 
 # specify BIF partition attributes required for BOOT.bin
 BIF_PARTITION_ATTR ?= "fsbl bitstream pmu atf u-boot"
@@ -19,7 +15,7 @@ BIF_PARTITION_DEPENDS[fsbl] ?= "virtual/fsbl"
 # destination cpu for PMU. Location where PMU binary is present and dependency to build PMU Firmware
 BIF_PARTITION_ATTR[pmu] ?= "destination_cpu=pmu"
 BIF_PARTITION_IMAGE[pmu] ?= "${DEPLOY_DIR_IMAGE}/pmu-firmware-${MACHINE}.elf"
-BIF_PARTITION_DEPENDS[pmu] ?= "virtual/pmufw"
+BIF_PARTITION_DEPENDS[pmu] ?= "virtual/pmu-firmware"
 
 # specify BIF partition attributes for ATF
 # destination cpu for ATF, security levels. Location where ATF binary is present (dependency is not required as ATF is always built for ZU+, see zcu102-zynqmp.conf)

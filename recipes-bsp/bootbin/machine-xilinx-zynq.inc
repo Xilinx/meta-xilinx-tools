@@ -1,5 +1,3 @@
-IMAGE_CLASSES_append ?= " xilinx-bootbin"
-
 #specify BIF partition attributes required for BOOT.bin
 BIF_PARTITION_ATTR ?= "fsbl bitstream u-boot"
 
