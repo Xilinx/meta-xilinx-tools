@@ -6,6 +6,7 @@
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 SRCTREECOVEREDTASKS ?= "do_patch do_unpack do_fetch"
+EXTERNALXSCTSRCHASH ?= "src build"
 
 python () {
     externalsrc = d.getVar('EXTERNALXSCTSRC', True)
@@ -68,7 +69,18 @@ python () {
 
         d.prependVarFlag('do_compile', 'prefuncs', "xsct_externalsrc_compile_prefunc")
 
-        d.setVarFlag('do_compile', 'file-checksums', '${@xsct_srctree_hash_files(d)} ${@xsct_buildtree_hash_files(d)}')
+        external_xsct_src_hash = d.getVar('EXTERNALXSCTSRCHASH', True)
+
+        # If EXTERNALXSCTSRCHASH is set to both build and src, hash both.
+        # If EXTERNALXSCTSRCHASH is set to build, hash build file. By default hash src files if EXTERNALXSCTSRCHASH is empty. 
+        if ((external_xsct_src_hash.find('build') != -1) and (external_xsct_src_hash.find('src')!= -1)):
+            d.setVarFlag('do_compile', 'file-checksums', '${@xsct_buildtree_hash_files(d)} ${@xsct_srctree_hash_files(d)}')
+
+        elif external_xsct_src_hash.find('build') != -1:
+            d.setVarFlag('do_compile', 'file-checksums', '${@xsct_buildtree_hash_files(d)}')
+
+        else:
+            d.setVarFlag('do_compile', 'file-checksums', '${@xsct_srctree_hash_files(d)}')
 
         # We don't want the workdir to go away
         d.appendVar('RM_WORK_EXCLUDE', ' ' + d.getVar('PN', True))
