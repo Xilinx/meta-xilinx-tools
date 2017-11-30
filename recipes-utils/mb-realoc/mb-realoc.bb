@@ -2,6 +2,8 @@ DESCRIPTION = "mb-realoc"
 
 LICENSE = "CLOSED"
 
+PROVIDES = "virtual/elfrealloc"
+
 inherit deploy
 
 FILESEXTRAPATHS_append := ":${XLNX_SCRIPTS_DIR}"
