@@ -30,8 +30,10 @@ XSCTH_BUILD_CONFIG ?= "${@['Debug', 'Release'][d.getVar('XSCTH_BUILD_DEBUG', Tru
 XSCTH_EXECUTABLE ?= "${XSCTH_BUILD_CONFIG}/${XSCTH_PROJ}.elf"
 XSCTH_APP_COMPILER_FLAGS ?= ""
 
+SYSROOT_DIRS += "/boot"
+
 do_install() {
-	:
+	install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ${D}/boot/${PN}.elf
 }
 
 do_deploy() {
@@ -40,3 +42,5 @@ do_deploy() {
     ln -sf ${XSCTH_BASE_NAME}.elf ${DEPLOYDIR}/${PN}-${MACHINE}.elf
 }
 addtask do_deploy after do_compile
+
+FILES_${PN} = "/boot/${PN}.elf"
