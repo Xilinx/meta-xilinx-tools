@@ -49,13 +49,3 @@ do_configure() {
     eval xsct ${XSCTH_SCRIPT} ${PROJ_ARG} ${HW_ARG} ${APP_ARG} ${MISC_ARG}
 }
 
-
-do_compile[lockfiles] = "${TMPDIR}/xsct-invoke.lock"
-do_compile() {
-    export RDI_PLATFORM=ln64
-    export SWT_GTK3=0
-    eval xsct ${XSCTH_SCRIPT} ${PROJ_ARG} -do_compile 1
-    if [ ! -e ${XSCTH_WS}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ]; then
-        bbfatal_log "${PN} compile failed."
-    fi
-}

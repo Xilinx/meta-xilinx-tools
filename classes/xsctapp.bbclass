@@ -32,6 +32,16 @@ XSCTH_APP_COMPILER_FLAGS ?= ""
 
 SYSROOT_DIRS += "/boot"
 
+do_compile[lockfiles] = "${TMPDIR}/xsct-invoke.lock"
+do_compile() {
+    export RDI_PLATFORM=ln64
+    export SWT_GTK3=0
+    eval xsct ${XSCTH_SCRIPT} ${PROJ_ARG} -do_compile 1
+    if [ ! -e ${XSCTH_WS}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ]; then
+        bbfatal_log "${PN} compile failed."
+    fi
+}
+
 do_install() {
 	install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ${D}/boot/${PN}.elf
 }
