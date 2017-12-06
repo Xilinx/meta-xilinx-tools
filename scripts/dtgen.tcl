@@ -29,7 +29,11 @@ if {[catch {hsi create_sw_design $params(app) \
 		-os device_tree -proc $params(processor)} res] } {
 	error "create_sw_design failed for $params(app)"
 }
-set_properties $params(yamlconf)
+
+if {[file exists $params(yamlconf)]} {
+	set_properties $params(yamlconf)
+}
+
 if {[catch {hsi generate_target -dir $project} res]} {
 	error "generate_target failed"
 }

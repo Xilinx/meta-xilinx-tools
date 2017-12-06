@@ -79,10 +79,11 @@ python do_create_yaml() {
         configflags = d.getVarFlags("YAML_BSP_CONFIG") or {}
         yaml_dict = patch_yaml(bspconfig, configflags, 'bsp', yaml_dict, d)
 
-    fp = d.getVar("YAML_FILE_PATH", True)
-    if fp :
-        yamlfile = open(fp, 'w')
-        yamlfile.write(yaml.dump(yaml_dict, default_flow_style=True, width=2000))
+    if len(yaml_dict) != 0:
+        fp = d.getVar("YAML_FILE_PATH", True)
+        if fp :
+            yamlfile = open(fp, 'w')
+            yamlfile.write(yaml.dump(yaml_dict, default_flow_style=True, width=2000))
 }
 
 addtask create_yaml before do_configure
