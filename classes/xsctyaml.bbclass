@@ -1,9 +1,6 @@
 inherit python3native
 
-# Override site package path for multilib builds
-PYTHON_SITEPACKAGES_DIR = "${libdir_native}/${PYTHON_DIR}/site-packages"
-
-do_create_yaml[depends] = "python3-pyyaml-native:do_populate_sysroot"
+DEPENDS += "python3-pyyaml-native"
 
 YAML_APP_CONFIG ?= ''
 YAML_BSP_CONFIG ?= ''
@@ -63,7 +60,7 @@ def patch_yaml(config, configflags, type, type_dict, d):
 
 python do_create_yaml() {
     import sys, os
-    os.sys.path.append(os.path.join(d.getVar('STAGING_DIR_NATIVE', True),d.getVar('PYTHON_SITEPACKAGES_DIR', True)[1::]))
+    os.sys.path.append(os.path.join(d.getVar('RECIPE_SYSROOT_NATIVE'),d.getVar('PYTHON_SITEPACKAGES_DIR')[1::]))
     import yaml
     yaml_dict = {}
 
@@ -86,4 +83,4 @@ python do_create_yaml() {
             yamlfile.write(yaml.dump(yaml_dict, default_flow_style=True, width=2000))
 }
 
-addtask create_yaml before do_configure
+addtask create_yaml after do_prepare_recipe_sysroot before do_configure
