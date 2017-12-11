@@ -51,3 +51,12 @@ do_compile_prepend() {
 	[ -e ${DTS_FILES_PATH}/system.dts ] && rm ${DTS_FILES_PATH}/system.dts
 }
 
+DTB_BASE_NAME ?= "${MACHINE}-system-${DATETIME}"
+DTB_BASE_NAME[vardepsexclude] = "DATETIME"
+
+do_deploy() {
+	for DTB_FILE in `ls *.dtb *.dtbo`; do
+		install -Dm 0644 ${B}/${DTB_FILE} ${DEPLOYDIR}/${DTB_BASE_NAME}.${DTB_FILE#*.}
+		ln -sf ${DTB_BASE_NAME}.${DTB_FILE#*.} ${DEPLOYDIR}/${MACHINE}-system.${DTB_FILE#*.}
+	done
+}
