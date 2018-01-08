@@ -2,8 +2,6 @@ DESCRIPTION = "PMU Firmware"
 
 PROVIDES = "virtual/pmu-firmware"
 
-SRC_URI_append_zcu100-zynqmp = " file://0001-zcu100-poweroff-support.patch"
-
 inherit xsctapp xsctyaml deploy
 
 COMPATIBLE_MACHINE = "^$"
