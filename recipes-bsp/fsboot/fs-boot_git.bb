@@ -4,6 +4,9 @@ PROVIDES = "virtual/fsboot"
 
 inherit xsctfsboot deploy
 
+MB_BAREMETAL_TOOLCHAIN_PATH_ADD = "${XILINX_SDK_TOOLCHAIN}/gnu/microblaze/lin/bin:"
+PATH =. "${MB_BAREMETAL_TOOLCHAIN_PATH_ADD}"
+
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_microblaze = "microblaze"
 
