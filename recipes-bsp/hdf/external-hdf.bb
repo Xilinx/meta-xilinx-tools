@@ -25,7 +25,7 @@ do_deploy() {
     if [ "${HDF_BASE}" = "git://" ]; then
         install -m 0644 ${WORKDIR}/git/${MACHINE}/${HDF_NAME} ${DEPLOYDIR}/Xilinx-${MACHINE}.hdf
     else
-        install -m 0644 ${WORKDIR}/${HDF_PATH} ${DEPLOYDIR}/Xilinx-${MACHINE}.hdf
+        install -m 0644 ${WORKDIR}/${HDF_PATH}/${HDF_NAME} ${DEPLOYDIR}/Xilinx-${MACHINE}.hdf
     fi
 }
 addtask do_deploy after do_install
