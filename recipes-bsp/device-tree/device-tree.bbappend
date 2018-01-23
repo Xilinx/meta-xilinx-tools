@@ -41,6 +41,7 @@ KERNEL_DTS_INCLUDE_append = " ${STAGING_KERNEL_DIR}/include"
 
 COMPATIBLE_MACHINE_zynq = ".*"
 COMPATIBLE_MACHINE_zynqmp = ".*"
+COMPATIBLE_MACHINE_microblaze = ".*"
 
 do_compile_prepend_kc705-microblazeel() {
 	cp ${WORKDIR}/system-conf.dtsi ${DTS_FILES_PATH}
