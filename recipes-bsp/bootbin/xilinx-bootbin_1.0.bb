@@ -11,9 +11,25 @@ inherit xsct-tc deploy
 
 PROVIDES = "virtual/boot-bin"
 
+DEPENDS += "${@get_bootbin_depends(d)}"
+
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 BIF_FILE_PATH ?= "${B}/bootgen.bif"
+
+do_fetch[noexec] = "1"
+do_unpack[noexec] = "1"
+do_patch[noexec] = "1"
+
+def get_bootbin_depends(d):
+    bootbindeps = ""
+    bifpartition = (d.getVar("BIF_PARTITION_ATTR", True) or "").split()
+    attrdepends = d.getVarFlags("BIF_PARTITION_DEPENDS") or {}
+    for cfg in bifpartition:
+        if cfg in attrdepends:
+            bootbindeps = bootbindeps + " " + attrdepends[cfg]
+
+    return bootbindeps
 
 def create_bif(config, attrflags, attrimage, common_attr, biffd, d):
     import re, os
@@ -65,18 +81,6 @@ python do_configure() {
 }
 
 do_configure[vardeps] += "BIF_PARTITION_ATTR BIF_PARTITION_IMAGE BIF_COMMON_ATTR"
-do_configure[depends] += "${@get_bootbin_depends(d)}"
-
-def get_bootbin_depends(d):
-    bootbindeps = ""
-    bifpartition = (d.getVar("BIF_PARTITION_ATTR", True) or "").split()
-    attrdepends = d.getVarFlags("BIF_PARTITION_DEPENDS") or {}
-    for cfg in bifpartition:
-        if cfg in attrdepends:
-            bootbindeps = bootbindeps + " " + attrdepends[cfg] + ":do_deploy"
-
-    return bootbindeps
-
 
 do_compile() {
     cd ${WORKDIR}
