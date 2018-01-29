@@ -24,6 +24,20 @@ BITSTREAM_BASE_NAME[vardepsexclude] = "DATETIME"
 MMI_BASE_NAME ?= "${BITSTREAM_NAME}-${MACHINE}-${DATETIME}"
 MMI_BASE_NAME[vardepsexclude] = "DATETIME"
 
+SYSROOT_DIRS += "/boot/bitstream"
+
+do_install() {
+    install -d ${D}/boot/bitstream/
+
+    if [ -e ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ]; then
+        install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ${D}/boot/bitstream/
+    fi
+
+    if [ -e ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.mmi ]; then
+        install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.mmi ${D}/boot/bitstream/
+    fi
+}
+
 do_deploy() {
     if [ -e ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ]; then
         install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ${DEPLOYDIR}/${BITSTREAM_BASE_NAME}.bit
@@ -40,3 +54,5 @@ do_deploy() {
 
 }
 addtask do_deploy after do_install
+
+FILES_${PN} = "/boot/bitstream/*.bit /boot/bitstream/*.mmi"
