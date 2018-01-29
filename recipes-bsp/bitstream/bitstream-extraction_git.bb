@@ -21,6 +21,9 @@ BITSTREAM_NAME_microblaze ?= "system"
 BITSTREAM_BASE_NAME ?= "${BITSTREAM_NAME}-${MACHINE}-${DATETIME}"
 BITSTREAM_BASE_NAME[vardepsexclude] = "DATETIME"
 
+MMI_BASE_NAME ?= "${BITSTREAM_NAME}-${MACHINE}-${DATETIME}"
+MMI_BASE_NAME[vardepsexclude] = "DATETIME"
+
 do_deploy() {
     if [ -e ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ]; then
         install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ${DEPLOYDIR}/${BITSTREAM_BASE_NAME}.bit
@@ -28,5 +31,12 @@ do_deploy() {
     else
         touch ${DEPLOYDIR}/${BITSTREAM_NAME}-${MACHINE}.bit
     fi
+
+    #Microblaze hdf files contain mmi file which is required to generate download.bit, bin, and mcs files.
+    if [ -e ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.mmi ]; then
+        install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.mmi ${DEPLOYDIR}/${MMI_BASE_NAME}.mmi
+        ln -sf ${MMI_BASE_NAME}.mmi ${DEPLOYDIR}/${BITSTREAM_NAME}-${MACHINE}.mmi
+    fi
+
 }
 addtask do_deploy after do_install
