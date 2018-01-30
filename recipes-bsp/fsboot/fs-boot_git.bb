@@ -11,6 +11,7 @@ COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_microblaze = "microblaze"
 
 XSCTH_APP = "mba_fs_boot"
+XSCTH_MISC = " -hdf_type ${HDF_EXT}"
 
 PARALLEL_MAKE = ""
 EXTRA_OEMAKE_BSP = ""
