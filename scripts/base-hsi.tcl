@@ -41,14 +41,14 @@ proc set_properties { yamlconf } {
 	}
 }
 
-proc set_hw_design {project hdf} {
+proc set_hw_design {project hdf hdf_type} {
 	file mkdir $project
-	if { [catch { exec cp $hdf $project/hardware_description.hdf } msg] } {
+	if { [catch { exec cp $hdf $project/hardware_description.$hdf_type } msg] } {
         	puts "$::errorInfo"
 	}
 
-	if { [catch {openhw $project/hardware_description.hdf} res] } {
+	if { [catch {openhw $project/hardware_description.$hdf_type} res] } {
         	error "Failed to open hardware design \
-                	from $project/hardware_description.hdf"
+                       $project/hardware_description.$hdf_type"
 	}
 }
