@@ -18,6 +18,7 @@ PV = "xilinx+git${SRCPV}"
 XSCTH_BUILD_CONFIG = ""
 YAML_COMPILER_FLAGS = ""
 XSCTH_APP = "device-tree"
+XSCTH_MISC = " -hdf_type ${HDF_EXT}"
 
 YAML_MAIN_MEMORY_CONFIG_zcu100-zynqmp = "psu_ddr_0"
 YAML_CONSOLE_DEVICE_CONFIG_zcu100-zynqmp = "psu_uart_1"
