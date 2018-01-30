@@ -3,6 +3,7 @@ source "$dir/base-hsi.tcl"
 
 set option {
 	{hdf.arg	""			"hardware Definition file"}
+	{hdf_type.arg   ""			"hardware Defination file type: hdf or dsa"}
 	{processor.arg	""			"target processor"}
 	{rp.arg		""			"repo path"}
 	{app.arg	"empty_application"	"Application project fsbl, empty.."}
@@ -22,7 +23,7 @@ set project "$params(ws)/$params(pname)"
 
 file delete -force "$project"
 
-set_hw_design $project $params(hdf) 
+set_hw_design $project $params(hdf) $params(hdf_type)
 if { [catch {hsi set_repo_path $params(rp)} res] } {
 	error "Failed to set repo path $params(rp)"
 }
