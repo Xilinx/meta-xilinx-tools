@@ -1,13 +1,12 @@
 # specify BIF common attribute for FSBL
-BIF_COMMON_ATTR ?= "fsbl_config"
-BIF_COMMON_ATTR[fsbl_config] ?= "a53_x64"
+BIF_COMMON_ATTR ?= ""
 
 # specify BIF partition attributes required for BOOT.bin
 BIF_PARTITION_ATTR ?= "fsbl bitstream pmu atf u-boot"
 
 # specify BIF partition attributes for FSBL
 # bootloader is FSBL. Location where FSBL binary is present and dependency to build FSBL
-BIF_PARTITION_ATTR[fsbl] ?= "bootloader"
+BIF_PARTITION_ATTR[fsbl] ?= "bootloader, destination_cpu=a53-0"
 BIF_PARTITION_IMAGE[fsbl] ?= "${DEPLOY_DIR_IMAGE}/fsbl-${MACHINE}.elf"
 BIF_PARTITION_DEPENDS[fsbl] ?= "virtual/fsbl"
 
