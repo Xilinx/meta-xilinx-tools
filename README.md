@@ -22,14 +22,7 @@ Dependencies
 
 This layer depends on:
 
-* **If you don't have "x11" in your DISTRO_FEATURES, you'll need
-`xlsclients` and `Xvfb` to satisfy the SDK's dependence on it. You may install
-these by `apt-get install -y xvfb x11-utils` or the like. Note that if your
-system distro doesn't install those in /usr/bin, you'll need to provide links
-for them in /usr/bin since xsct (from the SDK itself) not only depends on these
-but it actually assumes /usr/bin.
-
-* XSCT being installed somewhere the yocto build can access. You must define
+XSCT being installed somewhere the yocto build can access. You must define
 this path by specifying the XILINX_SDK_TOOLCHAIN variable globally, typically
 in your local.conf (or site.conf).
 

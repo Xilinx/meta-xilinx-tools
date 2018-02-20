@@ -1,6 +1,5 @@
 XSCT_PATH_ADD = "${XILINX_SDK_TOOLCHAIN}/bin:"
 PATH =. "${XSCT_PATH_ADD}"
-PATH_append = ":/usr/bin"
 
 def xsct_run(d):
     import bb.process
