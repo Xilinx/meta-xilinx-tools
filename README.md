@@ -22,6 +22,9 @@ Dependencies
 
 This layer depends on:
 
+* **You'll need `xlsclients` and `Xvfb` to satisfy the XSCT dependence on it.
+You may install these by `apt-get install -y xvfb x11-utils` or the like.
+
 XSCT being installed somewhere the yocto build can access. You must define
 this path by specifying the XILINX_SDK_TOOLCHAIN variable globally, typically
 in your local.conf (or site.conf).
