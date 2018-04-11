@@ -10,8 +10,8 @@ inherit xsctdt xsctyaml
 S = "${WORKDIR}/git"
 BRANCH = "master"
 SRC_URI = "git://github.com/xilinx/device-tree-xlnx.git;protocol=https;branch=${BRANCH}"
-#Based on xilinx-v2018.1
-SRCREV ?= "682c126ef65f1bac3f853f6158a5b37109cdad94"
+#Based on xilinx-v2018.2
+SRCREV ?= "f38738e568210695f06bab078900d9469c2eff7b"
 
 PV = "xilinx+git${SRCPV}"
 
