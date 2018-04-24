@@ -7,7 +7,7 @@ LICENSE = "BSD"
 
 include machine-xilinx-${SOC_FAMILY}.inc
 
-inherit xsct-tc deploy
+inherit deploy
 
 PROVIDES = "virtual/boot-bin"
 
