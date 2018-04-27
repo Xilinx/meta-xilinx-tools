@@ -34,7 +34,7 @@ YAML_DT_BOARD_FLAGS_zc706-zynq7 ?= "{BOARD zc706}"
 YAML_DT_BOARD_FLAGS_zedboard-zynq7 ?= "{BOARD zedboard}"
 YAML_DT_BOARD_FLAGS_zc1254-zynqmp ?= "{BOARD zc1254-reva}"
 YAML_DT_BOARD_FLAGS_kc705-microblazeel ?= "{BOARD kc705-full}"
-YAML_DT_BOARD_FLAGS_zcu104-zynqmp ?= "{BOARD zcu104-reva}"
+YAML_DT_BOARD_FLAGS_zcu104-zynqmp ?= "{BOARD zcu104-revc}"
 YAML_DT_BOARD_FLAGS_zcu111-zynqmp ?= "{BOARD zcu111-reva}"
 YAML_DT_BOARD_FLAGS_zc1275-zynqmp ?= "{BOARD zc1275-revb}"
 
