@@ -20,13 +20,13 @@ YAML_COMPILER_FLAGS ?= ""
 XSCTH_APP = "device-tree"
 XSCTH_MISC = " -hdf_type ${HDF_EXT}"
 
-YAML_MAIN_MEMORY_CONFIG_zcu100-zynqmp ?= "psu_ddr_0"
-YAML_CONSOLE_DEVICE_CONFIG_zcu100-zynqmp ?= "psu_uart_1"
+YAML_MAIN_MEMORY_CONFIG_ultra96-zynqmp ?= "psu_ddr_0"
+YAML_CONSOLE_DEVICE_CONFIG_ultra96-zynqmp ?= "psu_uart_1"
 
 YAML_MAIN_MEMORY_CONFIG_kc705-microblazeel ?= "ddr3_sdram"
 YAML_CONSOLE_DEVICE_CONFIG_kc705-microblazeel ?= "rs232_uart"
 
-YAML_DT_BOARD_FLAGS_zcu100-zynqmp ?= "{BOARD zcu100-revc}"
+YAML_DT_BOARD_FLAGS_ultra96-zynqmp ?= "{BOARD zcu100-revc}"
 YAML_DT_BOARD_FLAGS_zcu102-zynqmp ?= "{BOARD zcu102-rev1.0}"
 YAML_DT_BOARD_FLAGS_zcu106-zynqmp ?= "{BOARD zcu106-reva}"
 YAML_DT_BOARD_FLAGS_zc702-zynq7 ?= "{BOARD zc702}"

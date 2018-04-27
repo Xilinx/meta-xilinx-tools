@@ -12,8 +12,8 @@ YAML_MAIN_MEMORY_CONFIG ?= ''
 YAML_CONSOLE_DEVICE_CONFIG ?= ''
 YAML_FLASH_MEMORY_CONFIG ?= ''
 
-YAML_SERIAL_CONSOLE_STDIN_zcu100-zynqmp ?= "psu_uart_1"
-YAML_SERIAL_CONSOLE_STDOUT_zcu100-zynqmp ?= "psu_uart_1"
+YAML_SERIAL_CONSOLE_STDIN_ultra96-zynqmp ?= "psu_uart_1"
+YAML_SERIAL_CONSOLE_STDOUT_ultra96-zynqmp ?= "psu_uart_1"
 
 YAML_FILE_PATH = "${WORKDIR}/${PN}.yaml"
 XSCTH_MISC_append = " -yamlconf ${YAML_FILE_PATH}"
