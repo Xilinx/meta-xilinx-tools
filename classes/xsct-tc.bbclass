@@ -21,15 +21,16 @@ def xsct_get_version(d):
         bb.error('Failed to execute xsct version is : %s' % exc)
         return 'UNKNOWN'
     else:
-        last_line = stdout.splitlines()[0].split()[-2]
-        return last_line[1:7]
+        if stdout != 'UNKNOWN':
+            last_line = stdout.splitlines()[0].split()[-2]
+            return last_line[1:7]
 
 python do_xsct_setup () {
 
     XILINX_XSCT_VERSION = xsct_get_version(d)
     XILINX_REQ_VERSION = d.getVar("XILINX_VER_MAIN", True)
     if XILINX_XSCT_VERSION != XILINX_REQ_VERSION:
-        bb.fatal("XSCT version does not match. Version is %s: checking for %s " % (XILINX_XSCT_VERSION,XILINX_REQ_VERSION))
+        bb.fatal("XSCT version does not match. Version is %s: checking for %s. Check if XILINX_SDK_TOOLCHAIN in your local.conf is pointing to the right location. " % (XILINX_XSCT_VERSION,XILINX_REQ_VERSION))
 
     bb.note("XSCT is valid, version is %s" % XILINX_XSCT_VERSION)
 }
