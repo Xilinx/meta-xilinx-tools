@@ -79,7 +79,7 @@ IMAGE_CLASSES += " xilinx-bootbin"
 BIF_PARTITION_ATTR= "fsbl u-boot"
 
 BIF_PARTITION_IMAGE[fsbl]="${DEPLOY_DIR_IMAGE}/fsbl-${MACHINE}.elf"
-BIF_PARTITION_DEPENDS[fsbl]="virtual/fsbl"
+BIF_PARTITION_DEPENDS[fsbl]="virtual/fsbl:do_deploy"
 
 BIF_PARTITION_IMAGE[u-boot]="${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.elf"
 
@@ -95,11 +95,11 @@ BIF_PARTITION_ATTR= "fsbl pmu atf u-boot"
 
 BIF_PARTITION_ATTR[fsbl]="bootloader"
 BIF_PARTITION_IMAGE[fsbl]="${DEPLOY_DIR_IMAGE}/fsbl-${MACHINE}.elf"
-BIF_PARTITION_DEPENDS[fsbl]="virtual/fsbl"
+BIF_PARTITION_DEPENDS[fsbl]="virtual/fsbl:do_deploy"
 
 BIF_PARTITION_ATTR[pmu]="destination_cpu=pmu"
 BIF_PARTITION_IMAGE[pmu]="${DEPLOY_DIR_IMAGE}/pmu-${MACHINE}.elf"
-BIF_PARTITION_DEPENDS[pmu]="virtual/pmufw"
+BIF_PARTITION_DEPENDS[pmu]="virtual/pmufw:do_deploy"
 
 BIF_PARTITION_ATTR[atf]="destination_cpu=a53-0,exception_level=el-3,trustzone"
 BIF_PARTITION_IMAGE[atf]="${DEPLOY_DIR_IMAGE}/arm-trusted-firmware-${TUNE_PKGARCH}.elf"

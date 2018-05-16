@@ -11,7 +11,7 @@ inherit xsct-tc deploy
 
 PROVIDES = "virtual/boot-bin"
 
-DEPENDS += "${@get_bootbin_depends(d)}"
+do_configure[depends] += "${@get_bootbin_depends(d)}"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
