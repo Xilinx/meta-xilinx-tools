@@ -10,6 +10,7 @@ def xsct_run(d):
     if not toolchain_path:
         return 'UNKNOWN', 'UNKNOWN'
 
+    os.environ["RDI_VERBOSE"] = "0"
     cmd = os.path.join(toolchain_path, 'bin', 'hsi -version')
     return bb.process.run(cmd, cwd=topdir, stderr=subprocess.PIPE)
 
