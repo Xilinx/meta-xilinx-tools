@@ -39,10 +39,14 @@ Each release is dependent on the Xilinx XSCT release version. Please note that
 xsct tools may not be backward compatible with embeddedsw repo. Meaning
 2016.3 xsct tools might not work with older version on embeddedsw repo
 
+Layer dependencies
+=====================
+
 URI: git://git.openembedded.org/bitbake
 
 URI: git://git.openembedded.org/openembedded-core
 
+URI: git://git.openembedded.org/meta-xilinx-bsp
 
 Providing path to HDF
 =====================
@@ -53,7 +57,7 @@ HDF_BASE can be set to git:// or file://
 
 HDF_PATH will be git repository or the path containing HDF
 
-Adding Dependencies to build BOOT.bin
+Adding dependencies to build BOOT.bin
 =====================================
 
 This layer can be used via dependencies while creating the required Boot.bin.
@@ -64,48 +68,69 @@ tool from Xilinx. Please refer to help files of bootgen.
 
 Executing bootgen -bif_help  will provide some detailed help on BIF attributes.
 
-BIF file is required for generating Boot.bin, BIF is partitioned into Common
+BIF file is required for generating boot.bin, BIF is partitioned into Common
 BIF attributes and Partition BIF attributes. Attributes of BIF need to be
-specified in local.conf while using xilinx-bootbin.bbclass for generating
-Boot.bin
+specified in local.conf while using xilinx-bootbin recipe for generating
+boot.bin
+
+Use IMAGE_INSTALL_append = " xilinx-bootbin" in local.conf
 
 Examples for adding dependencies
 ================================
 
 1) Example to include dependency for zc702-zynq7 board
+--------------------------------------------------------
 
-IMAGE_CLASSES += " xilinx-bootbin"
+See https://github.com/Xilinx/meta-xilinx-tools/blob/master/recipes-bsp/bootbin/machine-xilinx-zynq.inc
 
 BIF_PARTITION_ATTR= "fsbl u-boot"
 
+BIF_PARTITION_ATTR[fsbl]="bootloader"
+
 BIF_PARTITION_IMAGE[fsbl]="${DEPLOY_DIR_IMAGE}/fsbl-${MACHINE}.elf"
+
 BIF_PARTITION_DEPENDS[fsbl]="virtual/fsbl:do_deploy"
 
+
 BIF_PARTITION_IMAGE[u-boot]="${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.elf"
+
+BIF_PARTITION_DEPENDS[u-boot]="virtual/bootloader:do_deploy"
 
 
 2) Example to include dependency for zcu102-zynqmp board
+---------------------------------------------------------
 
-IMAGE_CLASSES += " xilinx-bootbin"
-
-BIF_COMMON_ATTR= "fsbl_config"
-BIF_COMMON_ATTR[fsbl_config]="a53_x64"
+See https://github.com/Xilinx/meta-xilinx-tools/blob/master/recipes-bsp/bootbin/machine-xilinx-zynqmp.inc
 
 BIF_PARTITION_ATTR= "fsbl pmu atf u-boot"
 
-BIF_PARTITION_ATTR[fsbl]="bootloader"
+
+BIF_PARTITION_ATTR[fsbl]="bootloader, destination_cpu=a53-0"
+
 BIF_PARTITION_IMAGE[fsbl]="${DEPLOY_DIR_IMAGE}/fsbl-${MACHINE}.elf"
+
 BIF_PARTITION_DEPENDS[fsbl]="virtual/fsbl:do_deploy"
 
+
 BIF_PARTITION_ATTR[pmu]="destination_cpu=pmu"
-BIF_PARTITION_IMAGE[pmu]="${DEPLOY_DIR_IMAGE}/pmu-${MACHINE}.elf"
-BIF_PARTITION_DEPENDS[pmu]="virtual/pmufw:do_deploy"
+
+BIF_PARTITION_IMAGE[pmu]="${DEPLOY_DIR_IMAGE}/pmu-firmware-${MACHINE}.elf"
+
+BIF_PARTITION_DEPENDS[pmu] ?= "virtual/pmu-firmware:do_deploy"
+
 
 BIF_PARTITION_ATTR[atf]="destination_cpu=a53-0,exception_level=el-3,trustzone"
+
 BIF_PARTITION_IMAGE[atf]="${DEPLOY_DIR_IMAGE}/arm-trusted-firmware-${TUNE_PKGARCH}.elf"
 
+BIF_PARTITION_DEPENDS[atf]="arm-trusted-firmware:do_deploy"
+
+
 BIF_PARTITION_ATTR[u-boot]="destination_cpu=a53-0,exception_level=el-2"
+
 BIF_PARTITION_IMAGE[u-boot]="${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.elf"
+
+BIF_PARTITION_DEPENDS[u-boot]="virtual/bootloader:do_deploy"
 
 Additional configurations using YAML
 ====================================
@@ -114,17 +139,23 @@ This layer provides additional configurations through YAML
 
 1) Example YAML based configuration for uart0 setting in PMU Firmware
 
-YAML_FILE_PATH = "${WORKDIR}/pmufw.yaml"
-YAML_BSP_CONFIG="stdin stdout"
-YAML_BSP_CONFIG[stdin]="set,psu_uart_0"
-YAML_BSP_CONFIG[stdout]="set,psu_uart_0"
-XSCTH_MISC = "-yamlconf ${YAML_FILE_PATH}"
+YAML_SERIAL_CONSOLE_STDIN = "psu_uart_0"
+
+YAML_SERIAL_CONSOLE_STDOUT = "psu_uart_0"
 
 2) Example YAML based configuration for device tree generation
 
-YAML_FILE_PATH = "${WORKDIR}/dtgen.yaml"
-YAML_BSP_CONFIG="main_memory console_device pcw_dts"
-YAML_BSP_CONFIG[main_memory]="set,psu_ddr_0"
-YAML_BSP_CONFIG[console_device]="set,psu_uart_0"
-YAML_BSP_CONFIG[pcw_dts]="set,pcw.dtsi"
-XSCTH_MISC = "-yamlconf ${YAML_FILE_PATH}"
+YAML_MAIN_MEMORY_CONFIG = "psu_ddr_0"
+
+YAML_CONSOLE_DEVICE_CONFIG = "psu_uart_0"
+
+3) YAML_DT_BOARD_FLAGS has board specific dtsi in DTG code base this can be enabled by using
+See https://github.com/Xilinx/device-tree-xlnx/tree/master/device_tree/data/kernel_dtsi/2018.1/BOARD
+
+YAML_DT_BOARD_FLAGS = "{BOARD zcu102-rev1.0}"
+
+Note only Xilinx eval boards have the dtsi in DTG, for custom board one needs
+to patch DTG to include the custom board dtsi and enable it using YAML
+configuration
+
+
