@@ -8,10 +8,14 @@ PROVIDES = "virtual/dtb"
 inherit xsctdt xsctyaml
 
 S = "${WORKDIR}/git"
-BRANCH = "master"
-SRC_URI = "git://github.com/xilinx/device-tree-xlnx.git;protocol=https;branch=${BRANCH}"
+
+REPO ??= "git://github.com/xilinx/device-tree-xlnx.git;protocol=https"
+BRANCH ??= "master"
+BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
+SRC_URI = "${REPO};${BRANCHARG}"
+
 #Based on xilinx-v2018.2
-SRCREV ?= "f38738e568210695f06bab078900d9469c2eff7b"
+SRCREV ??= "f38738e568210695f06bab078900d9469c2eff7b"
 
 PV = "xilinx+git${SRCPV}"
 
