@@ -17,6 +17,8 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 BIF_FILE_PATH ?= "${B}/bootgen.bif"
 
+BOOTGEN_EXTRA_ARGS ?= ""
+
 do_fetch[noexec] = "1"
 do_unpack[noexec] = "1"
 do_patch[noexec] = "1"
@@ -85,7 +87,7 @@ do_configure[vardeps] += "BIF_PARTITION_ATTR BIF_PARTITION_IMAGE BIF_COMMON_ATTR
 do_compile() {
     cd ${WORKDIR}
     rm -f ${B}/BOOT.bin
-    bootgen -image ${BIF_FILE_PATH} -arch ${SOC_FAMILY} -w -o ${B}/BOOT.bin
+    bootgen -image ${BIF_FILE_PATH} -arch ${SOC_FAMILY} ${BOOTGEN_EXTRA_ARGS} -w -o ${B}/BOOT.bin
     if [ ! -e ${B}/BOOT.bin ]; then
         bbfatal "bootgen failed. See log"
     fi
