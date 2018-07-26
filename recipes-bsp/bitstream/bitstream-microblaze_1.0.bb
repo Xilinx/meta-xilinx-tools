@@ -41,7 +41,7 @@ do_compile() {
 
 do_install() {
     if [ -e ${B}/download.bit ]; then
-        install -Dm 0644 ${B}/download.bit ${D}/boot/bitstream/
+        install -Dm 0644 ${B}/download.bit ${D}/boot/bitstream/download.bit
     fi
 }
 
