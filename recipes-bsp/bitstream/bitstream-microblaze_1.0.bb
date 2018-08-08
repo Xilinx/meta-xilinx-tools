@@ -48,8 +48,10 @@ do_install() {
 do_deploy() {
 	if [ -e ${B}/download.bit ]; then
 		install -Dm 0644 ${B}/download.bit ${DEPLOYDIR}/download-${MACHINE}-${DATETIME}.bit
-		ln -sf download.bit ${DEPLOYDIR}/download-${MACHINE}-${DATETIME}.bit
+		ln -sf download-${MACHINE}-${DATETIME}.bit ${DEPLOYDIR}/download-${MACHINE}.bit
 	fi
 }
+
+addtask do_deploy before do_build after do_compile
 
 FILES_${PN} = "/boot/bitstream/download.bit"
