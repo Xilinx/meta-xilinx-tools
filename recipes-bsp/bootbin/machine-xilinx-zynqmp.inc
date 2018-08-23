@@ -2,7 +2,7 @@
 BIF_COMMON_ATTR ?= ""
 
 # specify BIF partition attributes required for BOOT.bin
-BIF_PARTITION_ATTR ?= "fsbl bitstream pmu atf u-boot"
+BIF_PARTITION_ATTR ?= "fsbl pmu atf u-boot"
 
 # specify BIF partition attributes for FSBL
 # bootloader is FSBL. Location where FSBL binary is present and dependency to build FSBL

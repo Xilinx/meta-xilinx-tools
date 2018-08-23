@@ -49,6 +49,8 @@ YAML_BSP_CONFIG[console_device] = "set,${YAML_CONSOLE_DEVICE_CONFIG}"
 YAML_BSP_CONFIG += "${@'dt_overlay' if d.getVar('YAML_ENABLE_DT_OVERLAY', True) == '1' else ''}"
 YAML_BSP_CONFIG[dt_overlay] = "set,TRUE"
 
+YAML_ENABLE_DT_OVERLAY = "${@bb.utils.contains('IMAGE_FEATURES', 'fpga-manager', '1', '', d)}"
+
 def patch_yaml(config, configflags, type, type_dict, d):
     import re
     for cfg in config:

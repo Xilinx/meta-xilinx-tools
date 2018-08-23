@@ -19,6 +19,8 @@ BIF_FILE_PATH ?= "${B}/bootgen.bif"
 
 BOOTGEN_EXTRA_ARGS ?= ""
 
+BIF_PARTITION_ATTR_append_zynqmp = "${@bb.utils.contains('IMAGE_FEATURES', 'fpga-manager', '', ' bitstream', d)}"
+
 do_fetch[noexec] = "1"
 do_unpack[noexec] = "1"
 do_patch[noexec] = "1"
