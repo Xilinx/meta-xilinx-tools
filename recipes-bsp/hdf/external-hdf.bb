@@ -32,7 +32,8 @@ do_deploy() {
     fi
 
     if [ -d "${EXTRA_HDF}" ]; then
-        install -Dm 0644 ${EXTRA_HDF}/* ${DEPLOYDIR}/extra_hdf/
+        install -d ${DEPLOYDIR}/extra_hdf/
+        install -m 0644 ${EXTRA_HDF}/* ${DEPLOYDIR}/extra_hdf/
     fi
 }
 addtask do_deploy after do_install
