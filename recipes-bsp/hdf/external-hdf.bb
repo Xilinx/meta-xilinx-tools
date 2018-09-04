@@ -7,7 +7,7 @@ PROVIDES = "virtual/hdf"
 inherit deploy
 
 HDF_BASE ?= "git://"
-HDF_PATH ?= "github.com/xilinx/hdf-examples.git"
+HDF_PATH ??= "github.com/xilinx/hdf-examples.git"
 HDF_NAME ?= "system.hdf"
 
 #Set HDF_EXT to "dsa" if you want to use a dsa file instead of hdf.
@@ -17,7 +17,7 @@ SRC_URI = "${HDF_BASE}${HDF_PATH}"
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
-SRCREV ?= "35fc620e3cd7dc06cddd610e61a738c68412ae67"
+SRCREV ??= "35fc620e3cd7dc06cddd610e61a738c68412ae67"
 S = "${WORKDIR}/git"
 
 do_configure[noexec] = "1"
