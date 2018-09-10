@@ -44,11 +44,13 @@ do_install() {
         install -Dm 0644 ${B}/download.bit ${D}/boot/bitstream/download.bit
     fi
 }
+DOWNLOADBIT_BASE_NAME ?= "download-${MACHINE}-${DATETIME}"
+DOWNLOADBIT_BASE_NAME[vardepsexclude] = "DATETIME"
 
 do_deploy() {
 	if [ -e ${B}/download.bit ]; then
-		install -Dm 0644 ${B}/download.bit ${DEPLOYDIR}/download-${MACHINE}-${DATETIME}.bit
-		ln -sf download-${MACHINE}-${DATETIME}.bit ${DEPLOYDIR}/download-${MACHINE}.bit
+		install -Dm 0644 ${B}/download.bit ${DEPLOYDIR}/${DOWNLOADBIT_BASE_NAME}.bit
+		ln -sf ${DOWNLOADBIT_BASE_NAME}.bit ${DEPLOYDIR}/download-${MACHINE}.bit
 	fi
 }
 

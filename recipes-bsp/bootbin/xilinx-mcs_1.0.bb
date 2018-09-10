@@ -61,9 +61,6 @@ do_install() {
 BOOT_BASE_NAME ?= "boot-${MACHINE}-${DATETIME}"
 BOOT_BASE_NAME[vardepsexclude] = "DATETIME"
 
-DOWNLOADBIT_BASE_NAME ?= "download-${MACHINE}-${DATETIME}"
-DOWNLOADBIT_BASE_NAME[vardepsexclude] = "DATETIME"
-
 do_deploy() {
     #install BOOT.mcs
     if [ -e ${B}/BOOT.${BOOT_EXT} ]; then
