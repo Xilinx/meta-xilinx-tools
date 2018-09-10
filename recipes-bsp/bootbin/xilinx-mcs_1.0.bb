@@ -58,7 +58,7 @@ do_install() {
 	:
 }
 
-BOOT_BASE_NAME ?= "boot-${MACHINE}-${DATETIME}"
+BOOT_BASE_NAME ?= "BOOT-${MACHINE}-${DATETIME}"
 BOOT_BASE_NAME[vardepsexclude] = "DATETIME"
 
 do_deploy() {
