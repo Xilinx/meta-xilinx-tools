@@ -28,7 +28,7 @@ BOOT_EXT = "${@d.getVar('MB_OUT_FORMAT', True).lower()}"
 
 BITSTREAM_FILE ?= "${RECIPE_SYSROOT}/boot/bitstream/download.bit"
 B = "${WORKDIR}/build"
-WR_CFGMEM_MISC ?= "up 0 ${BITSTREAM_FILE}"
+WR_CFGMEM_MISC ?= "-loadbit \" up 0 ${BITSTREAM_FILE}\""
 
 do_check_for_vivado() {
 	bbnote "Checking Vivado install path"
@@ -40,7 +40,7 @@ do_check_for_vivado() {
 addtask do_check_for_vivado before do_configure
 
 do_configure() {
-    echo " write_cfgmem -force -format ${MB_OUT_FORMAT} -size ${FLASH_SIZE} -interface ${FLASH_INTERFACE} -loadbit \" ${WR_CFGMEM_MISC}\" ${B}/BOOT.${BOOT_EXT} " > ${B}/write_cfgmem_boot_mcs.tcl
+    echo " write_cfgmem -force -format ${MB_OUT_FORMAT} -size ${FLASH_SIZE} -interface ${FLASH_INTERFACE} ${WR_CFGMEM_MISC} ${B}/BOOT.${BOOT_EXT} " > ${B}/write_cfgmem_boot_mcs.tcl
     if [ ! -e ${B}/write_cfgmem_boot_mcs.tcl ]; then
         bbfatal "write_cfgmem_boot_mcs.tcl creation failed. See log for details"
     fi
