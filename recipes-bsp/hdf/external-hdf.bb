@@ -30,10 +30,5 @@ do_deploy() {
     else
         install -m 0644 ${WORKDIR}/${HDF_PATH} ${DEPLOYDIR}/Xilinx-${MACHINE}.${HDF_EXT}
     fi
-
-    if [ -d "${EXTRA_HDF}" ]; then
-        install -d ${DEPLOYDIR}/extra_hdf/
-        install -m 0644 ${EXTRA_HDF}/* ${DEPLOYDIR}/extra_hdf/
-    fi
 }
 addtask do_deploy after do_install
