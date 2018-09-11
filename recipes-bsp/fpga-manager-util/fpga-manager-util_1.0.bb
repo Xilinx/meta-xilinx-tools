@@ -44,9 +44,18 @@ DEVICETREE_PP_FLAGS ?= " \
 		${@' '.join(['-I%s' % i for i in d.getVar('DTS_INCLUDE', True).split()])} \
 		"
 HDF_EXT ?= "hdf"
-EXTRA_HDFS ?= ""
-XSCTH_HDF ?= "${DEPLOY_DIR_IMAGE}/extra_hdf"
+EXTRA_HDF ?= ""
+XSCTH_HDF ?= "${B}/extra_hdf"
 XSCTH_MISC = " -hdf_type ${HDF_EXT}"
+
+do_configure_prepend() {
+    if [ -d "${EXTRA_HDF}" ]; then
+        install -d ${XSCTH_HDF}
+        install -m 0644 ${EXTRA_HDF}/* ${XSCTH_HDF}
+    fi
+}
+
+
 
 do_compile() {
 
