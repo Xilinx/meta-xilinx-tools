@@ -1,5 +1,6 @@
 set option {
         {hdf.arg        ""                      "hardware Definition file"}
+	{hdf_type.arg   "hdf"                   "hardware Defination file type: hdf or dsa"}
         {processor.arg  ""                      "target processor"}
         {rp.arg         ""                      "repo path"}
         {app.arg        "Empty Application"     "Application project fsbl, empty.."}
@@ -21,17 +22,16 @@ if {$params(hwpname) eq ""} {
         set params(hwpname) "$params(pname)\_hwproj"
 }
 
+catch {cd $params(ws)}
+set project "$params(hwpname)"
+file delete -force "$project"
+file mkdir "$project"
+if { [catch { exec cp $params(hdf) $project/hardware_description.$params(hdf_type) } msg] } {
+        puts "$::errorInfo"
+}
 
-setws $params(ws);
-set poke_hwproj [lsearch -exact [getprojects -type hw] $params(hwpname)]
-if { $poke_hwproj < 0 } {
-	# $hwpname not available, create new with given hdf
-	createhw -name $params(hwpname) -hwspec $params(hdf)
-} elseif { $params(hdf) ne "" } {
-	# $hwpname and hdf availabe, regenerate hwproject
-	deleteprojects -name $params(hwpname)
-      	createhw -name $params(hwpname) -hwspec $params(hdf)
-} else {
-	puts "INFO: HDF not available. Using $params(hwpname) project"
+if { [catch {openhw $project/hardware_description.$params(hdf_type)} res] } {
+        error "Failed to open hardware design \
+               $project/hardware_description.$params(hdf_type)"
 }
 
