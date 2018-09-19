@@ -90,12 +90,44 @@ proc xsct_set_libs {addlib} {
 }
 
 proc do_bsp_config {conf} {
+	#  Availabe BSP configs
+	#  proc :
+	#  archiver   ex: aarch64-none-elf-ar
+	#  compiler   ex: aarch64-none-elf-gcc
+	#  compiler_flags
+	#  extra_compiler_flags
+	#
+	#  OS: (standalone)
+	#  enable_sw_intrusive_profiling
+	#  microblaze_exceptions
+	#  predecode_fpu_exceptions
+	#  profile_timer
+	#  stdin
+	#  stdout
+	#
+	#  Also can configure  Library Specific Configs
+	#
+	#  puts "DEBUG: bsp conf  $conf "
 	if { [catch {xsct_config bsp [dict get $conf bsp]} result] } {
 		puts "XSCTHELPER INFO: No BSP Configuration \n\t $result"
 	}
 }
 
 proc do_app_config {conf} {
+	# Available App Configurations
+	#   assembler-flags                Miscellaneous flags for assembler
+	#   build-config                   Get/set build configuration
+	#   compiler-misc                  Compiler miscellaneous flags
+	#   compiler-optimization          Optimization level
+	#   define-compiler-symbols        Define symbols. Ex. MYSYMBOL
+	#   include-path                   Include path for header files
+	#   libraries                      Libraries to be added while linking
+	#   library-search-path            Search path for the libraries added
+	#   linker-misc                    Linker miscellaneous flags
+	#   linker-script                  Linker script for linking the program sections
+	#   undef-compiler-symbols         Undefine symbols. Ex. MYSYMBOL
+	#
+	#   puts "DEBUG: app conf  $conf "
 	if { [catch {xsct_config app [dict get $conf app]} result] } {
 		puts "XSCTHELPER INFO: No APP configuration \n\t $result"
 	}
@@ -105,12 +137,15 @@ set libs [split $params(lib) { }]
 
 # Workspace required
 if { $params(ws) ne "" } {
+	#Local Work Space available
 	if { $params(pname) ne "" } {
+		# hwpname/bspname is empty then default it to pname+_hwproj/bsp
 		if {$params(hwpname) eq ""} {
 			set params(hwpname) "$params(pname)\_plat"
 		}
 		if {$params(bspname) eq ""} {
 			set params(bspname) "$params(pname)\_domain"
+			# set autogenbsp 1
 		}
 		if { $params(do_compile) == 1 } {
 			clean_n_build app $params(pname)
@@ -160,12 +195,14 @@ if { $params(ws) ne "" } {
 		puts "INFO: create bsp using $params(bspname)"
 		cd $params(ws)
 		set platname $params(hwpname)
+		# Create a App for custom bsp
 		if { [info exists conf_dict] } {
 			do_app_config $conf_dict
 		}
 		app create -name $params(pname) -lang c -template $params(app) -plnx
 	}
 } else {
+	# Error: Workspace is needed
 	puts stderr "ERROR: Workspace not mentioned"
 }
 
