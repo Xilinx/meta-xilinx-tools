@@ -5,6 +5,7 @@ XSCT_DLDIR ?= "${DL_DIR}/xsct/"
 XSCT_STAGING_DIR ?= "${STAGING_DIR}-xsct"
 
 XSCT_CHECKSUM ?= "3efde32122fe5de7f820194b54cbc4fd"
+VALIDATE_XSCT_CHECKSUM ?= '1'
 
 USE_XSCT_TARBALL ?= '1'
 USE_XSCT_TARBALL[doc] = "Flag to determine whether or not to use the xsct-tarball class. \
@@ -24,6 +25,7 @@ python xsct_event_extract() {
     ext_tarball = d.getVar("EXTERNAL_XSCT_TARBALL")
     use_xscttar = d.getVar("USE_XSCT_TARBALL")
     chksum_tar = d.getVar("XSCT_CHECKSUM")
+    validate = d.getVar("VALIDATE_XSCT_CHECKSUM")
 
     if use_xscttar == '0':
         return
@@ -34,7 +36,7 @@ python xsct_event_extract() {
         import hashlib
         with open(ext_tarball, 'rb') as f:
             chksum_tar_actual = hashlib.md5(f.read()).hexdigest()
-        if chksum_tar != chksum_tar_actual:
+        if validate == '1' and chksum_tar != chksum_tar_actual:
             bb.fatal('Provided external tarball\'s md5sum does not match checksum defined in xsct-tarball class')
 
     xsctdldir = d.getVar("XSCT_DLDIR")
@@ -47,7 +49,7 @@ python xsct_event_extract() {
     if os.path.exists(loader) and os.path.exists(tarballchksum):
         with open(tarballchksum, "r") as f:
             readchksum = f.read().strip()
-        if readchksum == chksum_tar:
+        if readchksum == chksum_tar_actual:
             return
     bb.note('Extracting external xsct-tarball to sysroots')
 
@@ -67,7 +69,7 @@ python xsct_event_extract() {
         subprocess.check_output(cmd, shell=True)
 
         with open(tarballchksum, "w") as f:
-            f.write(chksum_tar)
+            f.write(chksum_tar_actual)
 
     except RuntimeError as e:
         bb.error(str(e))
