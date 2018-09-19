@@ -51,7 +51,7 @@ XSCTH_MISC = " -hdf_type ${HDF_EXT}"
 do_configure_prepend() {
     if [ -d "${EXTRA_HDF}" ]; then
         install -d ${XSCTH_HDF}
-        install -m 0644 ${EXTRA_HDF}/* ${XSCTH_HDF}
+        install -m 0644 ${EXTRA_HDF}/*.${HDF_EXT} ${XSCTH_HDF}
     fi
 }
 
@@ -120,7 +120,7 @@ python () {
 
 		if extra:
 			import glob
-			for hdf in glob.glob(d.getVar('EXTRA_HDF', True)+"/*.hdf"):
+			for hdf in glob.glob(d.getVar('EXTRA_HDF', True)+"/*." + d.getVar('HDF_EXT')):
 				name = os.path.splitext(os.path.basename(hdf))[0]
 				extrapackages.append(pn + '-' + name)
 				d.setVar('FILES_' + pn + '-' + name, baselib + '/firmware/' + name )
