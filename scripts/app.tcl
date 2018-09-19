@@ -125,7 +125,7 @@ if { $params(ws) ne "" } {
 		if { $params(rp) ne "none" } {
 			#Local Repo Available, Set repo path. Or will pick it up from build
 			set path [split $params(rp) { }]
-			hsi set_repo_path $path
+			::hsi::utils::add_repo "$path/lib $path"
 		}
 
 		# Check if $hwpname exist
