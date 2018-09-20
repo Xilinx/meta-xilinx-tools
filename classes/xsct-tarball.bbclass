@@ -59,8 +59,7 @@ python xsct_event_extract() {
 
         if not os.path.exists(xsctdldir):
             bb.utils.mkdirhier(xsctdldir)
-        if not os.path.exists(os.path.join(xsctdldir, tarballname)):
-            shutil.copy(ext_tarball, os.path.join(xsctdldir, tarballname))
+        shutil.copy(ext_tarball, os.path.join(xsctdldir, tarballname))
 
         cmd = d.expand("\
             mkdir -p ${STAGING_DIR}-xsct; \
