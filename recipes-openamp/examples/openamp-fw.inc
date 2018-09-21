@@ -6,6 +6,8 @@ COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynq = "zynq"
 COMPATIBLE_MACHINE_zynqmp = "zynqmp"
 
+XSCTH_APP_COMPILER_FLAGS_zynqmp = "-mcpu=cortex-r5 -DARMR5"
+
 YAML_BSP_CONFIG += "WITH_PROXY"
 YAML_BSP_CONFIG += "${@bb.utils.contains('SOC_FAMILY', 'zynq', 'extra_compiler_flags', '', d)}"
 YAML_BSP_CONFIG[WITH_PROXY] = "set,false"
