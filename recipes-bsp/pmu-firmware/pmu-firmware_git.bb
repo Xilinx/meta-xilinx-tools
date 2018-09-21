@@ -7,6 +7,8 @@ inherit xsctapp xsctyaml deploy
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynqmp = "zynqmp"
 
+XSCTH_MISC_append_zynqmpdr = " -lib libmetal"
+
 XSCTH_COMPILER_DEBUG_FLAGS = "-O2 -DDEBUG_MODE -DENABLE_EM"
 XSCTH_PROC_zynqmp = "psu_pmu_0"
 XSCTH_APP  = "ZynqMP PMU Firmware"
