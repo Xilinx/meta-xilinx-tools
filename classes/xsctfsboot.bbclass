@@ -7,6 +7,5 @@ SRC_URI_append =" \
 "
 
 XSCTH_BUILD_CONFIG = ""
-XSCTH_EXECUTABLE = "executable.elf"
 
 XSCTH_SCRIPT = "${WORKDIR}/fsboot.tcl"

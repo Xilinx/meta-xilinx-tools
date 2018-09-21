@@ -37,17 +37,17 @@ do_compile() {
 
     cd ${B}/${XSCTH_PROJ}
     make
-    if [ ! -e ${B}/${XSCTH_PROJ}/executable.elf ]; then
+    if [ ! -e ${B}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ]; then
         bbfatal_log "${XSCTH_PROJ} compile failed."
     fi
 }
 
 do_install() {
-    install -Dm 0644 ${B}/${XSCTH_PROJ}/executable.elf ${D}/boot/${PN}.elf
+    install -Dm 0644 ${B}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ${D}/boot/${PN}.elf
 }
 
 do_deploy() {
-    install -Dm 0644 ${B}/${XSCTH_PROJ}/executable.elf ${DEPLOYDIR}/${XSCTH_BASE_NAME}.elf
+    install -Dm 0644 ${B}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ${DEPLOYDIR}/${XSCTH_BASE_NAME}.elf
     ln -sf ${XSCTH_BASE_NAME}.elf ${DEPLOYDIR}/${PN}-${MACHINE}.elf
 }
 addtask do_deploy after do_compile

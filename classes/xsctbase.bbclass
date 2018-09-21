@@ -14,7 +14,7 @@ XSCTH_PROJ ??= "${PN}"
 XSCTH_WS ??= "${B}"
 XSCTH_MISC ??= ""
 XSCTH_SCRIPT ??= ""
-XSCTH_EXECUTABLE ??= ""
+XSCTH_EXECUTABLE ??= "executable.elf"
 XSCTH_ARCH ?= "${@bb.utils.contains('XSCTH_PROC', 'psu_cortexa53_0', '64', '32', d)}"
 
 PROJ_ARG ??= "-ws ${XSCTH_WS} -pname ${XSCTH_PROJ} -rp ${XSCTH_REPO}"
