@@ -45,16 +45,12 @@ DEVICETREE_PP_FLAGS ?= " \
 		"
 HDF_EXT ?= "hdf"
 EXTRA_HDF ?= ""
-XSCTH_HDF ?= "${B}/extra_hdf"
+XSCTH_HDF ?= "${WORKDIR}${EXTRA_HDF}"
 XSCTH_MISC = " -hdf_type ${HDF_EXT}"
 HDF_LIST = ""
 
-do_configure_prepend() {
-    if [ -d "${EXTRA_HDF}" ]; then
-        install -d ${XSCTH_HDF}
-        install -m 0644 ${EXTRA_HDF}/*.${HDF_EXT} ${XSCTH_HDF}
-    fi
-}
+do_fetch[cleandirs] = "${XSCTH_HDF}"
+do_configure[cleandirs] = "${XSCTH_WS}"
 
 do_compile() {
 
@@ -85,7 +81,7 @@ do_compile() {
 	echo -e "all:\n{\n\t${basebit}\n}" > base.bif
 	bootgen -image base.bif -arch zynqmp -o ${bitname}.bin_base -w
 
-    cp ${RECIPE_SYSROOT}/boot/devicetree/*.dtb ${B}/base.dtb
+    cp ${RECIPE_SYSROOT}/boot/devicetree/*.dtb ${XSCTH_WS}/base.dtb
 }
 do_install() {
 	#install base hdf artifacts
@@ -117,15 +113,19 @@ python () {
 
 		if extra:
 			hdflist = []
+			hdffullpath = []
 			import glob
 			for hdf in glob.glob(d.getVar('EXTRA_HDF', True)+"/*." + d.getVar('HDF_EXT')):
 				name = os.path.splitext(os.path.basename(hdf))[0]
 				hdflist.append(name)
+				hdffullpath.append(hdf)
 				d.setVar('FILES_' + pn + '-' + name, baselib + '/firmware/' + name )
 			d.setVar('HDF_LIST', ' '.join(hdflist))
 			extrapackages = [pn + '-{0}'.format(i) for i in hdflist]
 			packages = packages + extrapackages
 			d.setVar('PACKAGES', ' '.join(packages))
+			#Add all extra hdfs to src_uri
+			d.setVar('SRC_URI', ' '.join([' file://{0}'.format(i) for i in hdffullpath] + d.getVar('SRC_URI').split()))
 
 			#put back base package when setting RDEPENDS
 			extrapackages.append(pn + '-base')
