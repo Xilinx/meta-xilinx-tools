@@ -12,6 +12,7 @@ YAML_MAIN_MEMORY_CONFIG ?= ''
 YAML_CONSOLE_DEVICE_CONFIG ?= ''
 YAML_FLASH_MEMORY_CONFIG ?= ''
 YAML_ENABLE_DT_OVERLAY ?= ''
+YAML_REMOVE_PL_DT ?= ''
 
 YAML_SERIAL_CONSOLE_STDIN_ultra96-zynqmp ?= "psu_uart_1"
 YAML_SERIAL_CONSOLE_STDOUT_ultra96-zynqmp ?= "psu_uart_1"
@@ -50,6 +51,9 @@ YAML_BSP_CONFIG += "${@'dt_overlay' if d.getVar('YAML_ENABLE_DT_OVERLAY', True) 
 YAML_BSP_CONFIG[dt_overlay] = "set,TRUE"
 
 YAML_ENABLE_DT_OVERLAY = "${@bb.utils.contains('IMAGE_FEATURES', 'fpga-manager', '1', '', d)}"
+
+YAML_BSP_CONFIG += "${@'remove_pl' if d.getVar('YAML_REMOVE_PL_DT', True) == '1' else ''}"
+YAML_BSP_CONFIG[remove_pl] = "set,TRUE"
 
 def patch_yaml(config, configflags, type, type_dict, d):
     import re
