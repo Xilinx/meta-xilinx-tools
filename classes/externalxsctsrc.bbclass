@@ -86,11 +86,7 @@ python () {
         d.appendVar('RM_WORK_EXCLUDE', ' ' + d.getVar('PN', True))
 }
 
-COMPILE_TRIGGER_FILES = " \
-    ${XSCTH_WS}/${XSCTH_PROJ}/src \
-    ${XSCTH_WS}/${XSCTH_PROJ}_bsp/${XSCTH_PROC}/libsrc \
-    ${XSCTH_WS}/${XSCTH_PROJ}_hwproj \
-    "
+COMPILE_TRIGGER_FILES = "${XSCTH_WS}/${XSCTH_PROJ}"
 
 python xsct_externalsrc_compile_prefunc() {
     # Make it obvious that this is happening, since forgetting about it could lead to much confusion
