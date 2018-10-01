@@ -81,11 +81,11 @@ do_compile() {
 	echo -e "all:\n{\n\t${basebit}\n}" > base.bif
 	bootgen -image base.bif -arch zynqmp -o ${bitname}.bin_base -w
 
-    cp ${RECIPE_SYSROOT}/boot/devicetree/*.dtb ${XSCTH_WS}/base.dtb
+    cp ${RECIPE_SYSROOT}/boot/devicetree/*.dtbo ${XSCTH_WS}/base.dtbo
 }
 do_install() {
 	#install base hdf artifacts
-	install -Dm 0644 base.dtb ${D}/lib/firmware/base/base.dtb
+	install -Dm 0644 base.dtbo ${D}/lib/firmware/base/base.dtbo
 	newname=`basename *.bit.bin_base | awk -F '.bit.bin_' '{print $1}'`
 	install -Dm 0644 *.bit.bin_base ${D}/lib/firmware/base/${newname}.bit.bin
 
