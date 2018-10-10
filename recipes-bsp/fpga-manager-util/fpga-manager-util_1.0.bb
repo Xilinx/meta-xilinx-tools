@@ -56,18 +56,18 @@ do_compile() {
 
 	for hdf in ${HDF_LIST}; do
 
-	#generate .dtbo
+		#generate .dtbo
 		DTS_FILE=${XSCTH_WS}/${hdf}/pl.dtsi
 		#use the existance of the '/plugin/' tag to detect overlays
 		if grep -qse "/plugin/;" ${DTS_FILE}; then
 			${BUILD_CPP} ${DEVICETREE_PP_FLAGS} -o ${hdf}-pl.dtsi.pp ${DTS_FILE}
 			dtc ${DEVICETREE_FLAGS} -I dts -O dtb -o ${hdf}.dtbo ${hdf}-pl.dtsi.pp
 		else
-            #not an error
+			#not an error
 			echo "${DTS_FILE} is not an overlay!"
 		fi
 
-	#generate .bin
+		#generate .bin
 		BIT=`ls ${XSCTH_WS}/${hdf}/*.bit`
 		bitname=`basename ${BIT}`
 		echo -e "all:\n{\n\t${BIT}\n}" > ${hdf}.bif
@@ -81,8 +81,9 @@ do_compile() {
 	echo -e "all:\n{\n\t${basebit}\n}" > base.bif
 	bootgen -image base.bif -arch zynqmp -o ${bitname}.bin_base -w
 
-    cp ${RECIPE_SYSROOT}/boot/devicetree/*.dtbo ${XSCTH_WS}/base.dtbo
+	cp ${RECIPE_SYSROOT}/boot/devicetree/*.dtbo ${XSCTH_WS}/base.dtbo
 }
+
 do_install() {
 	#install base hdf artifacts
 	install -Dm 0644 base.dtbo ${D}/lib/firmware/base/base.dtbo
