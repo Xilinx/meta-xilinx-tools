@@ -73,6 +73,9 @@ do_compile() {
 		echo -e "all:\n{\n\t${BIT}\n}" > ${hdf}.bif
 		bootgen -image ${hdf}.bif -arch zynqmp -o ${bitname}.bin_${hdf} -w
 
+		if [ ! -e "${bitname}.bin_${hdf}" ]; then
+			bbfatal "bootgen failed. Enable -log debug with bootgen and check logs"
+		fi
 	done
 
 	#generate bin file for base hdf and copy over dtb file
@@ -80,6 +83,10 @@ do_compile() {
 	bitname=`basename $basebit`
 	echo -e "all:\n{\n\t${basebit}\n}" > base.bif
 	bootgen -image base.bif -arch zynqmp -o ${bitname}.bin_base -w
+
+	if [ ! -e "${bitname}.bin_base" ]; then
+		bbfatal "bootgen failed. Enable -log debug with bootgen and check logs"
+	fi
 
 	cp ${RECIPE_SYSROOT}/boot/devicetree/*.dtbo ${XSCTH_WS}/base.dtbo
 }
