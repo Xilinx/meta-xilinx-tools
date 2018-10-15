@@ -7,6 +7,8 @@ PROVIDES = "virtual/dtb"
 
 inherit xsctdt xsctyaml
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+
 S = "${WORKDIR}/git"
 
 REPO ??= "git://github.com/xilinx/device-tree-xlnx.git;protocol=https"
@@ -50,6 +52,15 @@ KERNEL_DTS_INCLUDE_append = " ${STAGING_KERNEL_DIR}/include"
 COMPATIBLE_MACHINE_zynq = ".*"
 COMPATIBLE_MACHINE_zynqmp = ".*"
 COMPATIBLE_MACHINE_microblaze = ".*"
+
+
+SRC_URI_append_ultra96-zynqmp = " file://mipi-support-ultra96.dtsi"
+
+do_configure_append_ultra96-zynqmp() {
+        cp ${WORKDIR}/mipi-support-ultra96.dtsi ${DTS_FILES_PATH}/mipi-support-ultra96.dtsi
+        echo '/include/ "mipi-support-ultra96.dtsi"' >> ${DTS_FILES_PATH}/system-top.dts
+}
+
 
 do_compile_prepend_kc705-microblazeel() {
 	cp ${WORKDIR}/system-conf.dtsi ${DTS_FILES_PATH}

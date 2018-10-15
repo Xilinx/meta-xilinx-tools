@@ -1,0 +1,138 @@
+/{
+	mipi_clk: mipi_clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <0x16e3600>;
+	};
+};
+
+&axi_uart16550_0 {
+	port-number = <1>;
+};
+
+&amba_pl {
+	/delete-node/ mipi_csi2_rx_subsystem@80000000;
+	mipi_csi2_rx_subsyst_0: mipi_csi2_rx_subsystem@80000000 {
+			clocks = <&clk 71>, <&misc_clk_0>, <&misc_clk_0>;
+			compatible = "xlnx,mipi-csi2-rx-subsystem-3.0";
+			interrupt-names = "csirxss_csi_irq";
+			interrupt-parent = <&gic>;
+			interrupts = <0 90 4>;
+			reg = <0x0 0x80000000 0x0 0x20000>;
+			xlnx,axis-tdata-width = <0x10>;
+			xlnx,csi-pxl-format = "YUV422_8bit";
+			xlnx,max-lanes = <0x2>;
+			xlnx,vc = <4>;
+			xlnx,vfb ;
+			xlnx,ppc = <0x1>;
+			csiss_ports: ports {
+				#address-cells = <1>;
+				#size-cells = <0>;
+				csiss_port0: port@0 {
+					/* Fill cfa-pattern=rggb for raw data types, other fields video-format and video-width user needs to fill */
+ 					reg = <0>;
+ 					xlnx,cfa-pattern = "rggb";
+ 					xlnx,video-format = <0>;
+ 					xlnx,video-width = <8>;
+ 					csiss_out: endpoint {
+ 						remote-endpoint =  <&scaler_in>;
+ 					};
+ 				};
+ 				csiss_port1: port@1 {
+ 				/* Fill cfa-pattern=rggb for raw data  types, other fields video-format,video-width user needs to fill */
+ 				/* User need to add something like  remote-endpoint=<&out> under the node csiss_in:endpoint */
+ 					reg = <1>;
+ 					xlnx,cfa-pattern = "rggb";
+ 					xlnx,video-format = <0>;
+ 					xlnx,video-width = <8>;
+ 					csiss_in: endpoint {
+ 						data-lanes = <1 2>;
+ 						remote-endpoint =  <&ov5640_out>;
+ 					};
+ 				};
+ 			};
+ 		};
+		/delete-node/ v_frmbuf_wr@80020000;
+ 		v_frmbuf_wr_0: v_frmbuf_wr@80020000 {
+ 			#dma-cells = <1>;
+ 			compatible = "xlnx,v-frmbuf-wr-2.1", "xlnx,axi-frmbuf-wr-v2.1";
+ 			interrupt-names = "interrupt";
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 91 4>;
+ 			reg = <0x0 0x80020000 0x0 0x10000>;
+ 			reset-gpios = <&gpio 84 1>;
+ 			xlnx,dma-addr-width = <32>;
+ 			xlnx,pixels-per-clock = <1>;
+ 			xlnx,vid-formats = "rgb888", "bgr888", "xbgr8888", "xbgr8888", "uyvy", "y8", "vuy888", "xvuy8888", "yuyv", "nv12", "nv16";
+ 		};
+ 		/delete-node/ v_proc_ss@80080000;
+ 		v_proc_ss_scaler: v_proc_ss@80080000 {
+ 			clocks = <&misc_clk_0>;
+ 			compatible = "xlnx,v-proc-ss-2.0","xlnx,v-vpss-scaler","xlnx,vpss-scaler";
+ 			reg = <0x0 0x80080000 0x0 0x40000>;
+ 			reset-gpios = <&gpio 85 1>;
+ 			xlnx,max-height = <2160>;
+ 			xlnx,max-width = <3840>;
+ 			xlnx,num-hori-taps = <8>;
+ 			xlnx,num-vert-taps = <8>;
+ 			xlnx,pix-per-clk = <1>;
+ 			scaler_ports: ports {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 				scaler_port0: port@0 {
+ 				/* For xlnx,video-format user needs to  fill as per their requirement */
+ 					reg = <0>;
+ 					xlnx,video-format = <0>;
+ 					xlnx,video-width = <8>;
+ 					scaler_in: endpoint {
+ 						remote-endpoint =  <&csiss_out>;
+ 					};
+ 				};
+ 				scaler_port1: port@1 {
+ 				/* For xlnx,video-format user needs to  fill as per their requirement */
+ 				reg = <1>;
+ 				xlnx,video-format = <0>;
+ 				xlnx,video-width = <8>;
+ 				scaler_out: endpoint {
+ 					remote-endpoint =  <&vcap_csi_in>;
+					};
+				};
+			};
+		};
+		/delete-node/ vcap_csi;
+		vcap_csi {
+			compatible = "xlnx,video";
+			dma-names = "port0";
+			dmas = <&v_frmbuf_wr_0 0>;
+			vcap_ports: ports {
+				#address-cells = <1>;
+				#size-cells = <0>;
+				vcap_port: port@0 {
+					direction = "input";
+					reg = <0>;
+					vcap_csi_in: endpoint {
+						remote-endpoint = <&scaler_out>;
+ 					};
+ 				};
+ 			};
+ 		};
+ };
+ 
+ &i2csw_2 {
+ 	ov5640: camera@3c {
+ 				compatible = "ovti,ov5640";
+ 				reg = <0x3c>;
+ 				clock-names = "xclk";
+ 				clocks = <&mipi_clk>;
+ 				powerdown-gpios = <0x17 0x51 0x0>;
+ 				reset-gpios = <0x17 0x50 0x1>;
+ 
+ 				port {
+ 					ov5640_out: endpoint {
+ 					remote-endpoint = <&csiss_in>;
+ 					clock-lanes = <0>;
+ 					data-lanes = <1 2>;
+ 					};
+ 				};
+ 			};
+  };
