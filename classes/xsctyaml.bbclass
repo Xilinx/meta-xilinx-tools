@@ -16,6 +16,8 @@ YAML_REMOVE_PL_DT ?= ''
 YAML_SERIAL_CONSOLE_STDIN_ultra96-zynqmp ?= "psu_uart_1"
 YAML_SERIAL_CONSOLE_STDOUT_ultra96-zynqmp ?= "psu_uart_1"
 
+YAML_COMPILER_FLAGS_append_ultra96-zynqmp = " -DPMU_MIO_INPUT_PIN=0 -DBOARD_SHUTDOWN_PIN=2 -DBOARD_SHUTDOWN_PIN_STATE=0"
+
 YAML_FILE_PATH = "${WORKDIR}/${PN}.yaml"
 XSCTH_MISC_append = " -yamlconf ${YAML_FILE_PATH}"
 
