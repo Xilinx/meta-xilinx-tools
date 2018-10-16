@@ -26,6 +26,7 @@ python xsct_event_extract() {
     use_xscttar = d.getVar("USE_XSCT_TARBALL")
     chksum_tar = d.getVar("XSCT_CHECKSUM")
     validate = d.getVar("VALIDATE_XSCT_CHECKSUM")
+    chksum_tar_actual = ""
 
     if use_xscttar == '0':
         return
