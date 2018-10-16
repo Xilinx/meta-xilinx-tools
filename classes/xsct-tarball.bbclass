@@ -29,7 +29,7 @@ python xsct_event_extract() {
 
     if use_xscttar == '0':
         return
-    elif d.getVar('WITHIN_EXT_SDK') != 1:
+    elif d.getVar('WITHIN_EXT_SDK') != '1':
         if not ext_tarball:
             bb.fatal('xsct-tarball class is enabled but no external tarball is provided.\n\
 \tEither set USE_XSCT_TARBALL to "0" or provide a path to EXTERNAL_XSCT_TARBALL')
