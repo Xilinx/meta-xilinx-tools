@@ -64,6 +64,7 @@ python xsct_event_extract() {
             shutil.copy(ext_tarball, os.path.join(xsctdldir, tarballname))
 
         cmd = d.expand("\
+            rm -rf ${STAGING_DIR}-xsct; \
             mkdir -p ${STAGING_DIR}-xsct; \
             cd ${STAGING_DIR}-xsct; \
             tar -xvf ${XSCT_DLDIR}/${XSCT_TARBALL};")
