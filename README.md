@@ -20,20 +20,11 @@ Manjukumar Harthikote Matha
 Dependencies
 ============
 
-This layer depends on:
+This layer depends on: xsct
 
-* **You'll need `xlsclients` and `Xvfb` to satisfy the XSCT dependence on it.
-You may install these by `apt-get install -y xvfb x11-utils` or the like.
-
-XSCT being installed somewhere the yocto build can access. You must define
-this path by specifying the XILINX_SDK_TOOLCHAIN variable globally, typically
-in your local.conf (or site.conf).
-
-The supported tool version is indicated in XILINX_VER_MAIN which defaults to
-the current release that is checked out.
-
-It would be wise then to define XILINX_SDK_TOOLCHAIN like so:
-XILINX_SDK_TOOLCHAIN = "/full/path/to/xilinx/SDK/${XILINX_VER_MAIN}"
+xsct-tarball class fetches the required xsct tool and installs it in the local
+sysroots of Yocto build. All the recipes which depend xsct or bootgen will use
+from sysroots.
 
 Each release is dependent on the Xilinx XSCT release version. Please note that
 xsct tools may not be backward compatible with embeddedsw repo. Meaning
@@ -56,6 +47,14 @@ meta-xilinx-tools recipes depends on HDF to be provided.
 HDF_BASE can be set to git:// or file://
 
 HDF_PATH will be git repository or the path containing HDF
+
+For example:
+
+Set the following way to use HDF/DSA from local path
+
+HDF_BASE = "file://"
+
+HDF_PATH = "/< path-to-hdf >/system.hdf"
 
 Adding dependencies to build BOOT.bin
 =====================================
@@ -103,7 +102,6 @@ BIF_PARTITION_DEPENDS[u-boot]="virtual/bootloader:do_deploy"
 See https://github.com/Xilinx/meta-xilinx-tools/blob/master/recipes-bsp/bootbin/machine-xilinx-zynqmp.inc
 
 BIF_PARTITION_ATTR= "fsbl pmu atf u-boot"
-
 
 BIF_PARTITION_ATTR[fsbl]="bootloader, destination_cpu=a53-0"
 
