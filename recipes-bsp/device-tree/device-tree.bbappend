@@ -44,10 +44,10 @@ YAML_DT_BOARD_FLAGS_zcu104-zynqmp ?= "{BOARD zcu104-revc}"
 YAML_DT_BOARD_FLAGS_zcu111-zynqmp ?= "{BOARD zcu111-reva}"
 YAML_DT_BOARD_FLAGS_zc1275-zynqmp ?= "{BOARD zc1275-revb}"
 
-DTS_FILES_PATH = "${XSCTH_WS}/${XSCTH_PROJ}"
-DTS_INCLUDE_append = " ${WORKDIR}"
+DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_PROJ}"
+DT_INCLUDE_append = " ${WORKDIR}"
 DT_PADDING_SIZE = "0x1000"
-KERNEL_DTS_INCLUDE_append = " ${STAGING_KERNEL_DIR}/include"
+KERNEL_INCLUDE_append = " ${STAGING_KERNEL_DIR}/include"
 
 COMPATIBLE_MACHINE_zynq = ".*"
 COMPATIBLE_MACHINE_zynqmp = ".*"
@@ -57,20 +57,19 @@ SRC_URI_append_ultra96-zynqmp = "${@bb.utils.contains('MACHINE_FEATURES', 'mipi'
 
 do_configure_append_ultra96-zynqmp() {
         if [ -e ${WORKDIR}/mipi-support-ultra96.dtsi ]; then
-               cp ${WORKDIR}/mipi-support-ultra96.dtsi ${DTS_FILES_PATH}/mipi-support-ultra96.dtsi
-               echo '/include/ "mipi-support-ultra96.dtsi"' >> ${DTS_FILES_PATH}/system-top.dts
+               cp ${WORKDIR}/mipi-support-ultra96.dtsi ${DT_FILES_PATH}/mipi-support-ultra96.dtsi
+               echo '/include/ "mipi-support-ultra96.dtsi"' >> ${DT_FILES_PATH}/system-top.dts
         fi
 }
 
-
-do_compile_prepend_kc705-microblazeel() {
-	cp ${WORKDIR}/system-conf.dtsi ${DTS_FILES_PATH}
-	cp ${WORKDIR}/kc705-microblazeel.dts ${DTS_FILES_PATH}
-}
-
 do_compile_prepend() {
-	[ -e ${DTS_FILES_PATH}/system.dts ] && rm ${DTS_FILES_PATH}/system.dts
+    listpath = d.getVar("DT_FILES_PATH")
+    try:
+        os.remove(os.path.join(listpath, "system.dts"))
+    except OSError:
+        pass
 }
+
 
 DTB_BASE_NAME ?= "${MACHINE}-system-${DATETIME}"
 DTB_BASE_NAME[vardepsexclude] = "DATETIME"
