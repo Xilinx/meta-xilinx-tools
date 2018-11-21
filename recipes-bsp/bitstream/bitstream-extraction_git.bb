@@ -27,13 +27,14 @@ MMI_BASE_NAME[vardepsexclude] = "DATETIME"
 SYSROOT_DIRS += "/boot/bitstream"
 
 do_install() {
-    install -d ${D}/boot/bitstream/
 
     if [ -e ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ]; then
+        install -d ${D}/boot/bitstream/
         install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ${D}/boot/bitstream/
     fi
 
     if [ -e ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.mmi ]; then
+        install -d ${D}/boot/bitstream/
         install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.mmi ${D}/boot/bitstream/
     fi
 }
