@@ -16,8 +16,8 @@ BRANCH ??= "master"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
 
-#Based on xilinx-v2018.2
-SRCREV ??= "f38738e568210695f06bab078900d9469c2eff7b"
+#Based on xilinx-v2018.3
+SRCREV ??= "b7466bbeeede15ec72143e3c3466e067589821a1"
 
 PV = "xilinx+git${SRCPV}"
 

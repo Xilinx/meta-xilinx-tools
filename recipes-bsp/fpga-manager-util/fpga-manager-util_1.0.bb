@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://xadcps/data/xadcps.mdd;md5=f7fa1bfdaf99c7182fc0d8e7fd
 
 inherit deploy xsctbase xsctyaml
 
-REPO ??= "git://gitenterprise.xilinx.com/Linux/device-tree-xlnx.git;protocol=https"
+REPO ??= "git://github.com/xilinx/device-tree-xlnx.git;protocol=https"
 BRANCH ??= "master"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
@@ -14,7 +14,7 @@ SRC_URI = "${REPO};${BRANCHARG}"
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/build"
 
-SRCREV ??= "${AUTOREV}"
+SRCREV ??= "b7466bbeeede15ec72143e3c3466e067589821a1"
 PV = "xilinx+git${SRCPV}"
 
 FILESEXTRAPATHS_append := ":${XLNX_SCRIPTS_DIR}"
