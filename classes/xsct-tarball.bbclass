@@ -1,10 +1,11 @@
 XSCT_LOADER ?= "${XSCT_STAGING_DIR}/SDK/${XILINX_VER_MAIN}/bin/xsct"
 
+XSCT_URL ?= "http://petalinux.xilinx.com/sswreleases/rel-v2018.3/xsct-trim/"
 XSCT_TARBALL ?= "xsct.tar.xz"
 XSCT_DLDIR ?= "${DL_DIR}/xsct/"
 XSCT_STAGING_DIR ?= "${STAGING_DIR}-xsct"
 
-XSCT_CHECKSUM ?= "3efde32122fe5de7f820194b54cbc4fd"
+XSCT_CHECKSUM ?= "27533cf9b7ebb0ef1572b6c481746749"
 VALIDATE_XSCT_CHECKSUM ?= '1'
 
 USE_XSCT_TARBALL ?= '1'
@@ -26,19 +27,22 @@ python xsct_event_extract() {
     use_xscttar = d.getVar("USE_XSCT_TARBALL")
     chksum_tar = d.getVar("XSCT_CHECKSUM")
     validate = d.getVar("VALIDATE_XSCT_CHECKSUM")
+    xsct_url = d.getVar("XSCT_URL")
     chksum_tar_actual = ""
 
     if use_xscttar == '0':
         return
     elif d.getVar('WITHIN_EXT_SDK') != '1':
-        if not ext_tarball:
-            bb.fatal('xsct-tarball class is enabled but no external tarball is provided.\n\
-\tEither set USE_XSCT_TARBALL to "0" or provide a path to EXTERNAL_XSCT_TARBALL')
-        import hashlib
-        with open(ext_tarball, 'rb') as f:
-            chksum_tar_actual = hashlib.md5(f.read()).hexdigest()
-        if validate == '1' and chksum_tar != chksum_tar_actual:
-            bb.fatal('Provided external tarball\'s md5sum does not match checksum defined in xsct-tarball class')
+        if not ext_tarball and not xsct_url:
+            bb.fatal('xsct-tarball class is enabled but no external tarball or url is provided.\n\
+\tEither set USE_XSCT_TARBALL to "0" or provide a path/url')
+        if os.path.exists(ext_tarball):
+            bb.note("Checking local xsct tarball checksum")
+            import hashlib
+            with open(ext_tarball, 'rb') as f:
+                chksum_tar_actual = hashlib.md5(f.read()).hexdigest()
+            if validate == '1' and chksum_tar != chksum_tar_actual:
+                bb.fatal('Provided external tarball\'s md5sum does not match checksum defined in xsct-tarball class')
 
     xsctdldir = d.getVar("XSCT_DLDIR")
     tarballname = d.getVar("XSCT_TARBALL")
@@ -50,28 +54,51 @@ python xsct_event_extract() {
     if os.path.exists(loader) and os.path.exists(tarballchksum):
         with open(tarballchksum, "r") as f:
             readchksum = f.read().strip()
-        if readchksum == chksum_tar_actual:
+        if readchksum == chksum_tar:
             return
-    bb.note('Extracting external xsct-tarball to sysroots')
 
     try:
         import subprocess
         import shutil
-
+        tarballpath = os.path.join(xsctdldir, tarballname)
         if not os.path.exists(xsctdldir):
             bb.utils.mkdirhier(xsctdldir)
-        if ext_tarball:
-            shutil.copy(ext_tarball, os.path.join(xsctdldir, tarballname))
+
+        if os.path.exists(ext_tarball):
+            shutil.copy(ext_tarball, tarballpath)
+        elif xsct_url:
+            localdata = bb.data.createCopy(d)
+            localdata.setVar('FILESPATH', "")
+            localdata.setVar('DL_DIR', xsctdldir)
+            srcuri = d.expand("${XSCT_URL}${XSCT_TARBALL};md5sum=%s" % chksum_tar)
+            bb.note("Fetching xsct binary tarball from %s" % srcuri)
+            fetcher = bb.fetch2.Fetch([srcuri], localdata, cache=False)
+            fetcher.download()
+            localpath = fetcher.localpath(srcuri)
+            if localpath != tarballpath and os.path.exists(localpath) and not os.path.exists(tarballpath):
+                # Follow the symlink behavior from the bitbake fetch2.
+                # This will cover the case where an existing symlink is broken
+                # as well as if there are two processes trying to create it
+                # at the same time.
+                if os.path.islink(tarballpath):
+                    # Broken symbolic link
+                    os.unlink(tarballpath)
+ 
+                # Deal with two processes trying to make symlink at once
+                try:
+                    os.symlink(localpath, tarballpath)
+                except FileExistsError:
+                    pass
 
         cmd = d.expand("\
             rm -rf ${STAGING_DIR}-xsct; \
             mkdir -p ${STAGING_DIR}-xsct; \
             cd ${STAGING_DIR}-xsct; \
             tar -xvf ${XSCT_DLDIR}/${XSCT_TARBALL};")
+        bb.note('Extracting external xsct-tarball to sysroots')
         subprocess.check_output(cmd, shell=True)
-
         with open(tarballchksum, "w") as f:
-            f.write(chksum_tar_actual)
+            f.write(chksum_tar)
 
     except RuntimeError as e:
         bb.error(str(e))
