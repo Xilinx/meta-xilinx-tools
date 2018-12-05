@@ -21,6 +21,8 @@ SRCREV ??= "b7466bbeeede15ec72143e3c3466e067589821a1"
 
 PV = "xilinx+git${SRCPV}"
 
+XSCTH_PROC_versal ??= "psu_cortexa72_0"
+
 XSCTH_BUILD_CONFIG = ""
 YAML_COMPILER_FLAGS ?= ""
 XSCTH_APP = "device-tree"
@@ -52,6 +54,7 @@ KERNEL_INCLUDE_append = " ${STAGING_KERNEL_DIR}/include"
 COMPATIBLE_MACHINE_zynq = ".*"
 COMPATIBLE_MACHINE_zynqmp = ".*"
 COMPATIBLE_MACHINE_microblaze = ".*"
+COMPATIBLE_MACHINE_versal = ".*"
 
 SRC_URI_append_ultra96-zynqmp = "${@bb.utils.contains('MACHINE_FEATURES', 'mipi', ' file://mipi-support-ultra96.dtsi', '', d)}"
 
