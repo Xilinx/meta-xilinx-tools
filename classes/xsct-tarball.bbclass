@@ -25,7 +25,7 @@ xsct_event_extract[eventmask] = "bb.event.BuildStarted"
 python xsct_event_extract() {
     ext_tarball = d.getVar("EXTERNAL_XSCT_TARBALL")
     use_xscttar = d.getVar("USE_XSCT_TARBALL")
-    chksum_tar = d.getVar("XSCT_CHECKSUM")
+    chksum_tar_recipe = d.getVar("XSCT_CHECKSUM")
     validate = d.getVar("VALIDATE_XSCT_CHECKSUM")
     xsct_url = d.getVar("XSCT_URL")
     chksum_tar_actual = ""
@@ -41,9 +41,11 @@ python xsct_event_extract() {
             import hashlib
             with open(ext_tarball, 'rb') as f:
                 chksum_tar_actual = hashlib.md5(f.read()).hexdigest()
-            if validate == '1' and chksum_tar != chksum_tar_actual:
+            if validate == '1' and chksum_tar_recipe != chksum_tar_actual:
                 bb.fatal('Provided external tarball\'s md5sum does not match checksum defined in xsct-tarball class')
-
+        elif xsct_url:
+            #if fetching the tarball, setting chksum_tar_actual as the one defined in the recipe as the fetcher will fail later otherwise
+            chksum_tar_actual = chksum_tar_recipe
     xsctdldir = d.getVar("XSCT_DLDIR")
     tarballname = d.getVar("XSCT_TARBALL")
     xsctsysroots = d.getVar("XSCT_STAGING_DIR")
@@ -54,7 +56,7 @@ python xsct_event_extract() {
     if os.path.exists(loader) and os.path.exists(tarballchksum):
         with open(tarballchksum, "r") as f:
             readchksum = f.read().strip()
-        if readchksum == chksum_tar:
+        if readchksum == chksum_tar_actual:
             return
 
     try:
@@ -70,7 +72,7 @@ python xsct_event_extract() {
             localdata = bb.data.createCopy(d)
             localdata.setVar('FILESPATH', "")
             localdata.setVar('DL_DIR', xsctdldir)
-            srcuri = d.expand("${XSCT_URL}${XSCT_TARBALL};md5sum=%s" % chksum_tar)
+            srcuri = d.expand("${XSCT_URL}${XSCT_TARBALL};md5sum=%s" % chksum_tar_recipe)
             bb.note("Fetching xsct binary tarball from %s" % srcuri)
             fetcher = bb.fetch2.Fetch([srcuri], localdata, cache=False)
             fetcher.download()
@@ -98,7 +100,7 @@ python xsct_event_extract() {
         bb.note('Extracting external xsct-tarball to sysroots')
         subprocess.check_output(cmd, shell=True)
         with open(tarballchksum, "w") as f:
-            f.write(chksum_tar)
+            f.write(chksum_tar_actual)
 
     except RuntimeError as e:
         bb.error(str(e))
