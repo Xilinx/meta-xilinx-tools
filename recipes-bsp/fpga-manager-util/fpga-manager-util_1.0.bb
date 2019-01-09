@@ -28,6 +28,7 @@ DEPENDS = "virtual/hdf virtual/bitstream virtual/dtb dtc-native"
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 COMPATIBLE_MACHINE ?= "^$"
 COMPATIBLE_MACHINE_zynqmp = ".*"
+COMPATIBLE_MACHINE_zynq = ".*"
 
 XSCTH_SCRIPT = "${WORKDIR}/multipleHDF.tcl"
 XSCTH_BUILD_CONFIG ?= 'Release'
@@ -71,7 +72,7 @@ do_compile() {
 		BIT=`ls ${XSCTH_WS}/${hdf}/*.bit`
 		bitname=`basename ${BIT}`
 		echo -e "all:\n{\n\t${BIT}\n}" > ${hdf}.bif
-		bootgen -image ${hdf}.bif -arch zynqmp -o ${bitname}.bin_${hdf} -w
+		bootgen -image ${hdf}.bif -arch ${SOC_FAMILY} -o ${bitname}.bin_${hdf} -w
 
 		if [ ! -e "${bitname}.bin_${hdf}" ]; then
 			bbfatal "bootgen failed. Enable -log debug with bootgen and check logs"
@@ -82,7 +83,7 @@ do_compile() {
 	basebit=`ls ${RECIPE_SYSROOT}/boot/bitstream/*`
 	bitname=`basename $basebit`
 	echo -e "all:\n{\n\t${basebit}\n}" > base.bif
-	bootgen -image base.bif -arch zynqmp -o ${bitname}.bin_base -w
+	bootgen -image base.bif -arch ${SOC_FAMILY} -o ${bitname}.bin_base -w
 
 	if [ ! -e "${bitname}.bin_base" ]; then
 		bbfatal "bootgen failed. Enable -log debug with bootgen and check logs"
