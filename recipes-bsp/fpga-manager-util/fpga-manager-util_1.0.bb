@@ -71,7 +71,7 @@ do_compile() {
 		#generate .bin
 		BIT=`ls ${XSCTH_WS}/${hdf}/*.bit`
 		bitname=`basename ${BIT}`
-		echo -e "all:\n{\n\t${BIT}\n}" > ${hdf}.bif
+		printf "all:\n{\n\t${BIT}\n}" > ${hdf}.bif
 		bootgen -image ${hdf}.bif -arch ${SOC_FAMILY} -o ${bitname}.bin_${hdf} -w
 
 		if [ ! -e "${bitname}.bin_${hdf}" ]; then
@@ -82,7 +82,7 @@ do_compile() {
 	#generate bin file for base hdf and copy over dtb file
 	basebit=`ls ${RECIPE_SYSROOT}/boot/bitstream/*`
 	bitname=`basename $basebit`
-	echo -e "all:\n{\n\t${basebit}\n}" > base.bif
+	printf "all:\n{\n\t${basebit}\n}" > base.bif
 	bootgen -image base.bif -arch ${SOC_FAMILY} -o ${bitname}.bin_base -w
 
 	if [ ! -e "${bitname}.bin_base" ]; then
