@@ -13,7 +13,7 @@
 &amba_pl {
 	/delete-node/ mipi_csi2_rx_subsystem@80000000;
 	mipi_csi2_rx_subsyst_0: mipi_csi2_rx_subsystem@80000000 {
-			clocks = <&clk 71>, <&misc_clk_0>, <&misc_clk_0>;
+			clocks = <&zynqmp_clk 71>, <&misc_clk_0>, <&misc_clk_0>;
 			compatible = "xlnx,mipi-csi2-rx-subsystem-3.0";
 			interrupt-names = "csirxss_csi_irq";
 			interrupt-parent = <&gic>;
