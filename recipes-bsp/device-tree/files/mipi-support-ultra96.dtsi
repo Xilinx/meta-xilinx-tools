@@ -13,6 +13,7 @@
 &amba_pl {
 	/delete-node/ mipi_csi2_rx_subsystem@80000000;
 	mipi_csi2_rx_subsyst_0: mipi_csi2_rx_subsystem@80000000 {
+                        clock-names = "lite_aclk", "dphy_clk_200M", "video_aclk";
 			clocks = <&zynqmp_clk 71>, <&misc_clk_0>, <&misc_clk_0>;
 			compatible = "xlnx,mipi-csi2-rx-subsystem-3.0";
 			interrupt-names = "csirxss_csi_irq";
@@ -52,9 +53,16 @@
  				};
  			};
  		};
+                misc_clk_0: misc_clk_0 {
+                        #clock-cells = <0>;
+                        clock-frequency = <0xbebc200>;
+                        compatible = "fixed-clock";
+                };  
 		/delete-node/ v_frmbuf_wr@80020000;
  		v_frmbuf_wr_0: v_frmbuf_wr@80020000 {
  			#dma-cells = <1>;
+                        clock-names = "ap_clk";
+ 			clocks = <&misc_clk_0>;
  			compatible = "xlnx,v-frmbuf-wr-2.1", "xlnx,axi-frmbuf-wr-v2.1";
  			interrupt-names = "interrupt";
  			interrupt-parent = <&gic>;
@@ -67,7 +75,8 @@
  		};
  		/delete-node/ v_proc_ss@80080000;
  		v_proc_ss_scaler: v_proc_ss@80080000 {
- 			clocks = <&misc_clk_0>;
+                        clock-names = "aclk_axis", "aclk_ctrl";
+ 			clocks = <&misc_clk_0>, <&zynqmp_clk 71>;
  			compatible = "xlnx,v-proc-ss-2.0","xlnx,v-vpss-scaler","xlnx,vpss-scaler";
  			reg = <0x0 0x80080000 0x0 0x40000>;
  			reset-gpios = <&gpio 85 1>;
@@ -124,8 +133,8 @@
  				reg = <0x3c>;
  				clock-names = "xclk";
  				clocks = <&mipi_clk>;
- 				powerdown-gpios = <0x17 0x51 0x0>;
- 				reset-gpios = <0x17 0x50 0x1>;
+ 				powerdown-gpios = <&gpio 0x51 0x0>;
+ 				reset-gpios = <&gpio 0x50 0x1>;
  
  				port {
  					ov5640_out: endpoint {
