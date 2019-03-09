@@ -78,9 +78,18 @@ do_compile_prepend() {
 DTB_BASE_NAME ?= "${MACHINE}-system-${DATETIME}"
 DTB_BASE_NAME[vardepsexclude] = "DATETIME"
 
+do_install_append_microblaze () {
+    for DTB_FILE in `ls *.dtb`; do
+        dtc -I dtb -O dts -o ${D}/boot/devicetree/mb.dts ${B}/${DTB_FILE}
+    done
+}
+
 do_deploy() {
 	for DTB_FILE in `ls *.dtb *.dtbo`; do
 		install -Dm 0644 ${B}/${DTB_FILE} ${DEPLOYDIR}/${DTB_BASE_NAME}.${DTB_FILE#*.}
 		ln -sf ${DTB_BASE_NAME}.${DTB_FILE#*.} ${DEPLOYDIR}/${MACHINE}-system.${DTB_FILE#*.}
 	done
 }
+
+FILES_${PN}_append_microblaze = " /boot/devicetree/*.dts"
+
