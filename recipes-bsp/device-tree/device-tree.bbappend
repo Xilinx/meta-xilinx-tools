@@ -49,7 +49,7 @@ YAML_DT_BOARD_FLAGS_zc1275-zynqmp ?= "{BOARD zc1275-revb}"
 DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_PROJ}"
 DT_INCLUDE_append = " ${WORKDIR}"
 DT_PADDING_SIZE = "0x1000"
-DTC_FLAGS_append = "${@bb.utils.contains('IMAGE_FEATURES', 'fpga-manager', ' -@', '', d)}"
+DTC_FLAGS_append = "${@['', ' -@'][d.getVar('YAML_ENABLE_DT_OVERLAY') == '1']}"
 KERNEL_INCLUDE_append = " ${STAGING_KERNEL_DIR}/include"
 
 COMPATIBLE_MACHINE_zynq = ".*"
