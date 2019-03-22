@@ -1,7 +1,7 @@
 XSCT_LOADER ?= "${XSCT_STAGING_DIR}/SDK/${XILINX_VER_MAIN}/bin/xsct"
 
-XSCT_URL ?= "http://petalinux.xilinx.com/sswreleases/rel-v2018.3/xsct-trim/"
-XSCT_TARBALL ?= "xsct.tar.xz"
+XSCT_URL ?= "http://petalinux.xilinx.com/sswreleases/rel-v2018.3/xsct-trim/xsct.tar.xz"
+XSCT_TARBALL ?= "xsct_${XILINX_VER_MAIN}.tar.xz"
 XSCT_DLDIR ?= "${DL_DIR}/xsct/"
 XSCT_STAGING_DIR ?= "${STAGING_DIR}-xsct"
 
@@ -72,9 +72,9 @@ python xsct_event_extract() {
             localdata = bb.data.createCopy(d)
             localdata.setVar('FILESPATH', "")
             localdata.setVar('DL_DIR', xsctdldir)
-            srcuri = d.expand("${XSCT_URL}${XSCT_TARBALL};md5sum=%s" % chksum_tar_recipe)
+            srcuri = d.expand("${XSCT_URL};md5sum=%s;downloadfilename=%s" % (chksum_tar_actual, tarballname))
             bb.note("Fetching xsct binary tarball from %s" % srcuri)
-            fetcher = bb.fetch2.Fetch([srcuri], localdata, cache=False)
+            fetcher = bb.fetch2.Fetch([srcuri], localdata)
             fetcher.download()
             localpath = fetcher.localpath(srcuri)
             if localpath != tarballpath and os.path.exists(localpath) and not os.path.exists(tarballpath):
