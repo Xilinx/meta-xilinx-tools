@@ -21,8 +21,6 @@ SRCREV ??= "b7466bbeeede15ec72143e3c3466e067589821a1"
 
 PV = "xilinx+git${SRCPV}"
 
-XSCTH_PROC_versal ??= "psu_cortexa72_0"
-
 XSCTH_BUILD_CONFIG = ""
 YAML_COMPILER_FLAGS ?= ""
 XSCTH_APP = "device-tree"
