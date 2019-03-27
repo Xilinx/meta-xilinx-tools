@@ -72,7 +72,7 @@ do_compile() {
 		BIT=`ls ${XSCTH_WS}/${hdf}/*.bit`
 		bitname=`basename ${BIT}`
 		printf "all:\n{\n\t${BIT}\n}" > ${hdf}.bif
-		bootgen -image ${hdf}.bif -arch ${SOC_FAMILY} -o ${bitname}.bin_${hdf} -w
+		bootgen -image ${hdf}.bif -arch ${SOC_FAMILY} -o ${bitname}.bin_${hdf} ${@bb.utils.contains('SOC_FAMILY','zynqmp','-w','-process_bitstream bin',d)}
 
 		if [ ! -e "${bitname}.bin_${hdf}" ]; then
 			bbfatal "bootgen failed. Enable -log debug with bootgen and check logs"
@@ -83,7 +83,7 @@ do_compile() {
 	basebit=`ls ${RECIPE_SYSROOT}/boot/bitstream/*`
 	bitname=`basename $basebit`
 	printf "all:\n{\n\t${basebit}\n}" > base.bif
-	bootgen -image base.bif -arch ${SOC_FAMILY} -o ${bitname}.bin_base -w
+	bootgen -image base.bif -arch ${SOC_FAMILY} -o ${bitname}.bin_base ${@bb.utils.contains('SOC_FAMILY','zynqmp','-w','-process_bitstream bin',d)}
 
 	if [ ! -e "${bitname}.bin_base" ]; then
 		bbfatal "bootgen failed. Enable -log debug with bootgen and check logs"
