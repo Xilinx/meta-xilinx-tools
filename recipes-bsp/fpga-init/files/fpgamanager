@@ -1,0 +1,6 @@
+#Configuration file for fpga-manager
+
+#Set FPGA_INIT to false to disable init behavior
+#Init behavior is enabled by default
+
+FPGA_INIT=true;
