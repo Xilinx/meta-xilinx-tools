@@ -121,7 +121,7 @@ do_install() {
 ALLOW_EMPTY_${PN} = "1"
 
 python () {
-	if bb.utils.contains("IMAGE_FEATURES", "fpga-manager", True, False, d):
+	if d.getVar('FPGA_MNGR_RECONFIG_ENABLE') == '1':
 		extra = d.getVar('EXTRA_HDF', True)
 		pn = d.getVar('PN')
 		baselib = d.getVar('base_libdir')

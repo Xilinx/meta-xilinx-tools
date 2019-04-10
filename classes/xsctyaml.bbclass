@@ -52,7 +52,7 @@ YAML_BSP_CONFIG[console_device] = "set,${YAML_CONSOLE_DEVICE_CONFIG}"
 YAML_BSP_CONFIG += "${@'dt_overlay' if d.getVar('YAML_ENABLE_DT_OVERLAY', True) == '1' else ''}"
 YAML_BSP_CONFIG[dt_overlay] = "set,TRUE"
 
-YAML_ENABLE_DT_OVERLAY ?= "${@bb.utils.contains('IMAGE_FEATURES', 'fpga-manager', '1', '', d)}"
+YAML_ENABLE_DT_OVERLAY ?= "${@'1' if d.getVar('FPGA_MNGR_RECONFIG_ENABLE') == '1' else ''}"
 
 YAML_BSP_CONFIG += "${@'firmware_name' if d.getVar('YAML_FIRMWARE_NAME', True) != '' else ''}"
 YAML_BSP_CONFIG[firmware_name] = "set,${YAML_FIRMWARE_NAME}"

@@ -17,8 +17,8 @@ DT_PADDING_SIZE = "0x1000"
 BOOTGEN_FLAGS ?= " -arch ${SOC_FAMILY} ${@bb.utils.contains('SOC_FAMILY','zynqmp','-w','-process_bitstream bin',d)}"
 
 python do_configure() {
-    if not bb.utils.contains("IMAGE_FEATURES", "fpga-manager", True, False, d):
-        bb.fatal("Using fpga-manager.bbclass requires 'fpga-manager' to be in IMAGE_FEATURES")
+    if not d.getVar('FPGA_MNGR_RECONFIG_ENABLE') == '1':
+        bb.fatal("Using fpga-manager.bbclass requires fpga-manager IMAGE_FEATURE or FPGA_MNGR_RECONFIG_ENABLE to be set")
 }
 
 python devicetree_do_compile_append() {
