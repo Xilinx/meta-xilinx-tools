@@ -8,6 +8,7 @@ XSCTH_PROC_microblaze ??= "microblaze_0"
 XSCTH_PROC_versal ??= "psv_cortexa72_0"
 
 HDF_EXT ??= "hdf"
+HDF_EXT_versal ??= "dsa"
 XSCTH_HDF ??= "${DEPLOY_DIR_IMAGE}/Xilinx-${MACHINE}.${HDF_EXT}"
 XSCTH_APP ??= ""
 XSCTH_REPO ??= "${S}"

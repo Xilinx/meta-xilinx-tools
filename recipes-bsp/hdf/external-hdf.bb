@@ -9,9 +9,11 @@ inherit deploy
 HDF_BASE ?= "git://"
 HDF_PATH ??= "github.com/xilinx/hdf-examples.git"
 HDF_NAME ?= "system.hdf"
+HDF_NAME_versal ?= "system.dsa"
 
 #Set HDF_EXT to "dsa" if you want to use a dsa file instead of hdf.
 HDF_EXT ?= "hdf"
+HDF_EXT_versal ?= "dsa"
 
 SRC_URI = "${HDF_BASE}${HDF_PATH}"
 
