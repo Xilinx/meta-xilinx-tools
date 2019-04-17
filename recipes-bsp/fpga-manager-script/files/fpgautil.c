@@ -33,6 +33,7 @@
  * Author: Appana Durga Kedareswara Rao <appanad@xilinx.com>
  * Author: Nava kishore Manne <navam@xilinx.com>
  */
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -184,6 +185,28 @@ static int cmd_flags(int argc, const char *name)
 	return flag;
 }
 
+static int isvalid_flags(int argc, const char *name, bool is_secure)
+{
+	int valid_flag = 0;
+	int count = 0;
+	struct fpgaflag *p;
+
+	if (!is_secure)
+		p = flagdump;
+	else
+		p = &flagdump[2];
+
+	while (p->flag) {
+		if (!strcmp(name, p->flag))
+			return 0;
+		else if ((!is_secure) && (++count == 2))
+			return 1;
+		p++;
+	}
+
+	return 1;
+}
+
 int main(int argc, char **argv)
 {
 	int ret;
@@ -221,8 +244,15 @@ int main(int argc, char **argv)
 				name = argv[4];
 				flags = cmd_flags(argc, name);
 			}
+
+			ret = isvalid_flags(argc, name, false);
+			if (ret) {
+				printf("Error: Invalid arugments :%s\n", strerror(1));
+				print_usage(basename(argv[0]));
+				return -EINVAL;
+                        }
+
 			flags += sflags;
-			printf("Flags : 0x%x\r\n", flags);
 			break;
 		case 's':
 			if (flow == OVERLAY) {
@@ -232,8 +262,15 @@ int main(int argc, char **argv)
 				name = argv[6];
 				sflags = cmd_flags(argc, name);
 			}
+
+			ret = isvalid_flags(argc, name, true);
+			if (ret) {
+				printf("Error: Invalid arugments :%s\n", strerror(1));
+				print_usage(basename(argv[0]));
+				return -EINVAL;
+			}
+
 			flags += sflags;
-			printf("Flags : 0x%x\r\n", flags);
 			break;
 		case 'p':
 			partial_overlay = optarg;
