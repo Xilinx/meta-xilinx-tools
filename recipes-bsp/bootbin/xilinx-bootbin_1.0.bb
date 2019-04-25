@@ -106,6 +106,8 @@ do_deploy() {
     install -d ${DEPLOYDIR}
     install -m 0644 ${B}/BOOT.bin ${DEPLOYDIR}/${BOOTBIN_BASE_NAME}.bin
     ln -sf ${BOOTBIN_BASE_NAME}.bin ${DEPLOYDIR}/BOOT-${MACHINE}.bin
+    ln -sf ${BOOTBIN_BASE_NAME}.bin ${DEPLOYDIR}/boot.bin
 }
+
 addtask do_deploy before do_build after do_compile
 
