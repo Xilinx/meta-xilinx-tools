@@ -95,9 +95,17 @@ do_compile() {
     fi
 }
 
+do_compile_append_versal() {
+    dd if=/dev/zero bs=256M count=1  > ${B}/QEMU_qspi.bin
+    dd if=${B}/BOOT.bin of=${B}/QEMU_qspi.bin bs=1 seek=0 conv=notrunc
+}
+
 do_install() {
 	:
 }
+
+QEMUQSPI_BASE_NAME ?= "QEMU_qspi-${MACHINE}-${DATETIME}"
+QEMUQSPI_BASE_NAME[vardepsexclude] = "DATETIME"
 
 BOOTBIN_BASE_NAME ?= "BOOT-${MACHINE}-${DATETIME}"
 BOOTBIN_BASE_NAME[vardepsexclude] = "DATETIME"
@@ -107,6 +115,15 @@ do_deploy() {
     install -m 0644 ${B}/BOOT.bin ${DEPLOYDIR}/${BOOTBIN_BASE_NAME}.bin
     ln -sf ${BOOTBIN_BASE_NAME}.bin ${DEPLOYDIR}/BOOT-${MACHINE}.bin
     ln -sf ${BOOTBIN_BASE_NAME}.bin ${DEPLOYDIR}/boot.bin
+}
+
+do_deploy_append_versal () {
+
+    install -m 0644 ${B}/BOOT_bh.bin ${DEPLOYDIR}/${BOOTBIN_BASE_NAME}_bh.bin
+    ln -sf ${BOOTBIN_BASE_NAME}_bh.bin ${DEPLOYDIR}/BOOT-${MACHINE}_bh.bin
+
+    install -m 0644 ${B}/QEMU_qspi.bin ${DEPLOYDIR}/${QEMUQSPI_BASE_NAME}.bin
+    ln -sf ${QEMUQSPI_BASE_NAME}.bin ${DEPLOYDIR}/QEMU_qspi-${MACHINE}.bin
 }
 
 addtask do_deploy before do_build after do_compile
