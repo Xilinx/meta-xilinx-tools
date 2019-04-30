@@ -33,7 +33,7 @@ BIF_PARTITION_DEPENDS[dtb] ?= "virtual/dtb:do_deploy"
 # specify BIF partition attributes for u-boot
 BIF_PARTITION_ATTR[u-boot] ?= ""
 BIF_PARTITION_IMAGE[u-boot] ?= "${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.elf"
-BIF_PARTITION_DEPENDS[u-boot] ?= "virtual/bootloader:do_deploy"
+BIF_PARTITION_DEPENDS[u-boot] ?= "virtual/bootloader:do_deploy u-boot-zynq-scr:do_deploy"
 
 # specify BIF partition attributes for atf
 BIF_PARTITION_ATTR[atf] ?= "destination_cpu=a72-0, exception_level = el-3, trustzone"

@@ -98,6 +98,7 @@ do_compile() {
 do_compile_append_versal() {
     dd if=/dev/zero bs=256M count=1  > ${B}/QEMU_qspi.bin
     dd if=${B}/BOOT.bin of=${B}/QEMU_qspi.bin bs=1 seek=0 conv=notrunc
+    dd if=${DEPLOY_DIR_IMAGE}/boot.scr of=${B}/QEMU_qspi.bin bs=1 seek=66584576 conv=notrunc
 }
 
 do_install() {
