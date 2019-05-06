@@ -19,7 +19,7 @@ SRC_URI = "${HDF_BASE}${HDF_PATH}"
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
-SRCREV ??= "9a979b79918b3cdf83ac17daff3341ccf49e22c9"
+SRCREV ??= "70444dab8e0263fef94f4ca19f026526936999c6"
 S = "${WORKDIR}/git"
 
 do_configure[noexec] = "1"
