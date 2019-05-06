@@ -1,11 +1,11 @@
 XSCT_LOADER ?= "${XSCT_STAGING_DIR}/Scout/${XILINX_VER_MAIN}/bin/xsct"
 
-XSCT_URL ?= "http://petalinux.xilinx.com/sswreleases/rel-v2018.3/xsct-trim/xsct.tar.xz"
+XSCT_URL ?= "http://petalinux.xilinx.com/sswreleases/rel-v2019.1/xsct-trim/xsct.tar.xz"
 XSCT_TARBALL ?= "xsct_${XILINX_VER_MAIN}.tar.xz"
 XSCT_DLDIR ?= "${DL_DIR}/xsct/"
 XSCT_STAGING_DIR ?= "${STAGING_DIR}-xsct"
 
-XSCT_CHECKSUM ?= "27533cf9b7ebb0ef1572b6c481746749"
+XSCT_CHECKSUM ?= "d0c62c3b72efd5de5692f405aac400d7"
 VALIDATE_XSCT_CHECKSUM ?= '1'
 
 USE_XSCT_TARBALL ?= '1'
