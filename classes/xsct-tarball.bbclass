@@ -20,9 +20,20 @@ EXTERNAL_XSCT_TARBALL ?= ""
 EXTERNAL_XSCT_TARBALL[doc] = "Variable that defines where the xsct tarball is stored"
 
 addhandler xsct_event_extract
-xsct_event_extract[eventmask] = "bb.event.BuildStarted"
+xsct_event_extract[eventmask] = "bb.event.DepTreeGenerated"
+
+# Specify which targets actually need to call xsct
+XSCT_TARGETS ?= "fpga-manager-util extract-cdo bitstream-extraction device-tree fsbl pmu-firmware openamp_fw"
 
 python xsct_event_extract() {
+
+    # Only a handful of targets/tasks need XSCT
+    tasks_xsct = [t + '.do_configure' for t in d.getVar('XSCT_TARGETS').split()]
+    xsct_buildtargets = [t for t in e._depgraph['tdepends'] for x in tasks_xsct if x in t]
+
+    if not xsct_buildtargets:
+      return
+
     ext_tarball = d.getVar("EXTERNAL_XSCT_TARBALL")
     use_xscttar = d.getVar("USE_XSCT_TARBALL")
     chksum_tar_recipe = d.getVar("XSCT_CHECKSUM")
