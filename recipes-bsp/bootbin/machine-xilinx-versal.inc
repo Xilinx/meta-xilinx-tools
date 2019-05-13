@@ -17,8 +17,8 @@ BIF_PARTITION_DEPENDS[pmc_cdo] ?= "virtual/cdo:do_deploy"
 
 # specify BIF partition attributes for plm
 BIF_PARTITION_ATTR[plm] ?= "bootloader"
-BIF_PARTITION_IMAGE[plm] ?= "${DEPLOY_DIR_IMAGE}/plm-firmware-${MACHINE}.elf"
-BIF_PARTITION_DEPENDS[plm] ?= "virtual/plm-firmware:do_deploy"
+BIF_PARTITION_IMAGE[plm] ?= "${DEPLOY_DIR_IMAGE}/plm-${MACHINE}.elf"
+BIF_PARTITION_DEPENDS[plm] ?= "virtual/plm:do_deploy"
 
 # specify BIF partition attributes for psm
 BIF_PARTITION_ATTR[psm] ?= "destination_cpu=psm"

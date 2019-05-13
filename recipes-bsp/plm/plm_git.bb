@@ -1,7 +1,7 @@
-DESCRIPTION = "PLM Firmware"
-SUMMARY = "PLM firmware for versal devices"
+DESCRIPTION = "Platform Loader and Manager"
+SUMMARY = "Platform Loader and Manager for Versal devices"
 
-PROVIDES = "virtual/plm-firmware"
+PROVIDES = "virtual/plm"
 
 inherit xsctapp xsctyaml deploy
 
