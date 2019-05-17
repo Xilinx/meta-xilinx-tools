@@ -45,7 +45,7 @@ YAML_DT_BOARD_FLAGS_zcu111-zynqmp ?= "{BOARD zcu111-reva}"
 YAML_DT_BOARD_FLAGS_zc1275-zynqmp ?= "{BOARD zc1275-revb}"
 YAML_DT_BOARD_FLAGS_zcu1285-zynqmp ?= "{BOARD zcu1285-reva}"
 YAML_DT_BOARD_FLAGS_virt-versal ?= "{BOARD versal-virt}"
-YAML_DT_BOARD_FLAGS_a2197-zynqmp ?= "{BOARD zynqmp-a2197-g-reva}"
+YAML_DT_BOARD_FLAGS_a2197-zynqmp ?= "{BOARD zynqmp-a2197-p-reva}"
 
 DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_PROJ}"
 DT_INCLUDE_append = " ${WORKDIR}"
