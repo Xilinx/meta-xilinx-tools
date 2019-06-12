@@ -47,6 +47,9 @@ YAML_DT_BOARD_FLAGS_zcu1285-zynqmp ?= "{BOARD zcu1285-reva}"
 YAML_DT_BOARD_FLAGS_virt-versal ?= "{BOARD versal-virt}"
 YAML_DT_BOARD_FLAGS_a2197-zynqmp ?= "{BOARD zynqmp-a2197-p-reva}"
 
+YAML_OVERLAY_CUSTOM_DTS ?= "pl-final.dts"
+CUSTOM_PL_INCLUDE_DTSI ?= ""
+
 DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_PROJ}"
 DT_INCLUDE_append = " ${WORKDIR}"
 DT_PADDING_SIZE = "0x1000"
@@ -65,6 +68,13 @@ do_configure_append_ultra96-zynqmp() {
                cp ${WORKDIR}/mipi-support-ultra96.dtsi ${DT_FILES_PATH}/mipi-support-ultra96.dtsi
                echo '/include/ "mipi-support-ultra96.dtsi"' >> ${DT_FILES_PATH}/system-top.dts
         fi
+}
+
+do_configure_append () {
+    if [ -n "${CUSTOM_PL_INCLUDE_DTSI}" ]; then
+        [ ! -f "${CUSTOM_PL_INCLUDE_DTSI}" ] && bbfatal "Please check that the correct filepath was provided using CUSTOM_PL_INCLUDE_DTSI"
+        cp ${CUSTOM_PL_INCLUDE_DTSI} ${XSCTH_WS}/${XSCTH_PROJ}/pl-custom.dtsi
+    fi
 }
 
 do_compile_prepend() {

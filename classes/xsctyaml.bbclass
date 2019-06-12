@@ -57,6 +57,9 @@ YAML_ENABLE_DT_OVERLAY ?= "${@'1' if d.getVar('FPGA_MNGR_RECONFIG_ENABLE') == '1
 YAML_BSP_CONFIG += "${@'firmware_name' if d.getVar('YAML_FIRMWARE_NAME', True) != '' else ''}"
 YAML_BSP_CONFIG[firmware_name] = "set,${YAML_FIRMWARE_NAME}"
 
+YAML_BSP_CONFIG += "${@'overlay_custom_dts' if d.getVar('YAML_OVERLAY_CUSTOM_DTS', True) != '' else ''}"
+YAML_BSP_CONFIG[overlay_custom_dts] = "set,${YAML_OVERLAY_CUSTOM_DTS}"
+
 YAML_BSP_CONFIG += "${@'remove_pl' if d.getVar('YAML_REMOVE_PL_DT', True) == '1' else ''}"
 YAML_BSP_CONFIG[remove_pl] = "set,TRUE"
 

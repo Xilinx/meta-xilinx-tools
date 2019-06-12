@@ -99,10 +99,10 @@ do_compile() {
                 bbfatal "bootgen failed. Enable -log debug with bootgen and check logs"
         fi
 
-        if [ ! -e "${RECIPE_SYSROOT}/boot/devicetree/pl.dtbo" ]; then
+        if [ ! -e "${RECIPE_SYSROOT}/boot/devicetree/pl-final.dtbo" ]; then
                 bbfatal "base dtbo was not generated. Check logs, make sure overlays are enabled."
         fi
-        cp ${RECIPE_SYSROOT}/boot/devicetree/pl.dtbo ${XSCTH_WS}/base.dtbo
+        cp ${RECIPE_SYSROOT}/boot/devicetree/pl-final.dtbo ${XSCTH_WS}/base.dtbo
 }
 
 do_install() {
