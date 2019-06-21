@@ -12,6 +12,9 @@ python () {
     externalsrc = d.getVar('EXTERNALXSCTSRC', True)
 
     if externalsrc:
+        import oe.recipeutils
+        import oe.path
+
         d.setVar('BB_DONT_CACHE', '1')
         d.setVar('S', externalsrc)
         externalsrcbuild = d.getVar('EXTERNALXSCTSRC_BUILD', True)
@@ -48,10 +51,10 @@ python () {
                 d.appendVarFlag(task, "lockfiles", " ${TMPDIR}/singlexscttask.lock")
 
             # We do not want our source to be wiped out, ever (kernel.bbclass does this for do_clean)
-            cleandirs = (d.getVarFlag(task, 'cleandirs', False) or '').split()
+            cleandirs = oe.recipeutils.split_var_value(d.getVarFlag(task, 'cleandirs', False) or '')
             setvalue = False
             for cleandir in cleandirs[:]:
-                if d.expand(cleandir) == externalsrc:
+                if oe.path.is_path_parent(externalsrc, d.expand(cleandir)):
                     cleandirs.remove(cleandir)
                     setvalue = True
             if setvalue:
