@@ -23,7 +23,12 @@ SRC_URI_append = " \
         file://multipleHDF.tcl \
         file://base-hsi.tcl \
         "
-DEPENDS = "virtual/hdf virtual/bitstream virtual/dtb dtc-native"
+DEPENDS += "\
+    virtual/hdf \
+    virtual/bitstream \
+    virtual/dtb \
+    dtc-native \
+"
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 COMPATIBLE_MACHINE ?= "^$"
