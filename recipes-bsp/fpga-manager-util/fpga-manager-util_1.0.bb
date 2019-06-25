@@ -55,19 +55,34 @@ XSCTH_HDF ?= "${WORKDIR}${EXTRA_HDF}"
 XSCTH_MISC = " -hdf_type ${HDF_EXT}"
 HDF_LIST = ""
 
+YAML_OVERLAY_CUSTOM_DTS ?= "pl-final.dts"
+
 do_fetch[cleandirs] = "${XSCTH_HDF}"
 do_configure[cleandirs] = "${XSCTH_WS}"
+
+do_configure_append () {
+    for hdf in ${HDF_LIST}; do
+        customfile=${WORKDIR}${EXTRA_HDF}/${hdf}.dtsi
+        if [ -f "${customfile}" ];then
+            echo "Using pl-custom.dtsi from: ${EXTRA_HDF}/${hdf}.dtsi"
+            cp ${customfile} ${XSCTH_WS}/${hdf}/pl-custom.dtsi
+        fi
+    done
+}
+
 
 do_compile() {
 
         for hdf in ${HDF_LIST}; do
 
                 #generate .dtbo
-                DTS_FILE=${XSCTH_WS}/${hdf}/pl.dtsi
+                DTS_FILE=${XSCTH_WS}/${hdf}/pl-final.dts
                 #use the existance of the '/plugin/' tag to detect overlays
-                if grep -qse "/plugin/;" ${DTS_FILE}; then
-                        ${BUILD_CPP} ${DEVICETREE_PP_FLAGS} -o ${hdf}-pl.dtsi.pp ${DTS_FILE}
-                        dtc ${DEVICETREE_FLAGS} -I dts -O dtb -o ${hdf}.dtbo ${hdf}-pl.dtsi.pp
+                #checking pl.dtsi but compiling pl-final.dts as pl-final.dts just includes
+                #both pl.dtsi and pl-custom.dtsi
+                if grep -qse "/plugin/;" ${XSCTH_WS}/${hdf}/pl.dtsi; then
+                        ${BUILD_CPP} ${DEVICETREE_PP_FLAGS} -o ${hdf}-pl-final.dts.pp ${DTS_FILE}
+                        dtc ${DEVICETREE_FLAGS} -I dts -O dtb -o ${hdf}.dtbo ${hdf}-pl-final.dts.pp
                 else
                         #not an error
                         echo "${DTS_FILE} is not an overlay!"
@@ -146,6 +161,10 @@ python () {
                                 name = os.path.splitext(os.path.basename(hdf))[0]
                                 hdflist.append(name)
                                 hdffullpath.append(hdf)
+                                dtsifile = d.getVar('EXTRA_HDF', True) + "/" + name + ".dtsi"
+                                if os.path.isfile(dtsifile):
+                                    hdffullpath.append(dtsifile)
+
                                 d.setVar('FILES_' + pn + '-' + name, baselib + '/firmware/' + name )
                         d.setVar('HDF_LIST', ' '.join(hdflist))
                         extrapackages = [pn + '-{0}'.format(i) for i in hdflist]
