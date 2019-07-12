@@ -31,7 +31,7 @@ BIF_PARTITION_IMAGE[dtb] ?= "${DEPLOY_DIR_IMAGE}/system.dtb"
 BIF_PARTITION_DEPENDS[dtb] ?= "virtual/dtb:do_deploy"
 
 # specify BIF partition attributes for u-boot
-BIF_PARTITION_ATTR[u-boot] ?= ""
+BIF_PARTITION_ATTR[u-boot] ?= "load=0x8000000"
 BIF_PARTITION_IMAGE[u-boot] ?= "${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.elf"
 BIF_PARTITION_DEPENDS[u-boot] ?= "virtual/bootloader:do_deploy u-boot-zynq-scr:do_deploy"
 
