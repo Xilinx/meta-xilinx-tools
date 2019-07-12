@@ -5,6 +5,7 @@ inherit xsctapp xsctyaml deploy
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynq = "zynq"
 COMPATIBLE_MACHINE_zynqmp = "zynqmp"
+COMPATIBLE_MACHINE_versal = "versal"
 
 XSCTH_APP_COMPILER_FLAGS_append_zynqmp = " -mfloat-abi=hard "
 
@@ -16,6 +17,7 @@ YAML_BSP_CONFIG[extra_compiler_flags] = "append,-DUSE_AMP=1"
 FW_OS_NAME ?= "freertos10_xilinx"
 
 XSCTH_MISC = "-osname ${FW_OS_NAME}"
+XSCTH_PROC_versal ?= "psv_cortexr5_0"
 XSCTH_PROC_zynqmp ?= "psu_cortexr5_0"
 XSCTH_PROC_zynq ?= "ps7_cortexa9_1"
 
