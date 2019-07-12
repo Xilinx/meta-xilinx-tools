@@ -1,19 +1,19 @@
 #Extra args for versal
 BOOTGEN_EXTRA_ARGS += "-dump bh"
 
-#Add cdo dependency for versal
-DEPENDS += "virtual/cdo"
+#Add cdo and pdi dependency for versal
+DEPENDS += "virtual/cdo virtual/base-pdi"
 
 # specify BIF common attribute for FSBL
 BIF_COMMON_ATTR ?= ""
 
 # specify BIF partition attributes required for BOOT.bin
-BIF_PARTITION_ATTR ?= "pmc_cdo plm psm dtb u-boot atf"
+BIF_PARTITION_ATTR ?= "pdi plm psm dtb u-boot atf"
 
-# specify BIF partition attributes for pmc_cdo
-BIF_PARTITION_ATTR[pmc_cdo] ?= "pmcdata,load=0xF2000000"
-BIF_PARTITION_IMAGE[pmc_cdo] ?= "${DEPLOY_DIR_IMAGE}/CDO/pmc_cdo.bin"
-BIF_PARTITION_DEPENDS[pmc_cdo] ?= "virtual/cdo:do_deploy"
+# specify BIF partition attributes for pdi
+BIF_PARTITION_ATTR[pdi] ?= "bootimage"
+BIF_PARTITION_IMAGE[pdi] ?= "${RECIPE_SYSROOT}/boot/base-design.pdi"
+BIF_PARTITION_DEPENDS[pdi] ?= "virtual/base-pdi:do_populate_sysroot"
 
 # specify BIF partition attributes for plm
 BIF_PARTITION_ATTR[plm] ?= "bootloader"
