@@ -47,7 +47,7 @@ YAML_DT_BOARD_FLAGS_zcu1285-zynqmp ?= "{BOARD zcu1285-reva}"
 YAML_DT_BOARD_FLAGS_virt-versal ?= "{BOARD versal-virt}"
 YAML_DT_BOARD_FLAGS_a2197-zynqmp ?= "{BOARD zynqmp-p-a2197-00-reva}"
 
-YAML_OVERLAY_CUSTOM_DTS ?= "pl-final.dts"
+YAML_OVERLAY_CUSTOM_DTS = "pl-final.dts"
 CUSTOM_PL_INCLUDE_DTSI ?= ""
 
 DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_PROJ}"

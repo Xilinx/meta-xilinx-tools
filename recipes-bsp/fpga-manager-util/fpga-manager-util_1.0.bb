@@ -55,7 +55,7 @@ XSCTH_HDF ?= "${WORKDIR}${EXTRA_HDF}"
 XSCTH_MISC = " -hdf_type ${HDF_EXT}"
 HDF_LIST = ""
 
-YAML_OVERLAY_CUSTOM_DTS ?= "pl-final.dts"
+YAML_OVERLAY_CUSTOM_DTS = "pl-final.dts"
 
 do_fetch[cleandirs] = "${XSCTH_HDF}"
 do_configure[cleandirs] = "${XSCTH_WS}"
