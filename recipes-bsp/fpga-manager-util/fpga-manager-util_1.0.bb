@@ -105,32 +105,35 @@ do_compile() {
         done
 
         #generate bin file for base hdf and copy over dtb file
-        basebit=`ls ${RECIPE_SYSROOT}/boot/bitstream/*`
-        bitname=`basename $basebit`
-        printf "all:\n{\n\t${basebit}\n}" > base.bif
-        bootgen -image base.bif -arch ${SOC_FAMILY} -o ${bitname}.bin_base -w on ${@bb.utils.contains('SOC_FAMILY','zynqmp','','-process_bitstream bin',d)}
-
-        #need this as with -process_bitstream flag bin file is automatically created in same dir as bitstream
-        if [ "${SOC_FAMILY}" = "zynq" ]; then
-                cp ${RECIPE_SYSROOT}/boot/bitstream/*.bit.bin ./${bitname}.bin_base
-        fi
-
-        if [ ! -e "${bitname}.bin_base" ]; then
-                bbfatal "bootgen failed. Enable -log debug with bootgen and check logs"
-        fi
-
         if [ ! -e "${RECIPE_SYSROOT}/boot/devicetree/pl-final.dtbo" ]; then
-                bbfatal "base dtbo was not generated. Check logs, make sure overlays are enabled."
+                echo "base dtbo was not generated.  Either base design has no pl.dtsi or dtbo was not generated. Please check logs if dtbo was expected"
+        else
+                cp ${RECIPE_SYSROOT}/boot/devicetree/pl-final.dtbo ${XSCTH_WS}/base.dtbo
+
+                basebit=`ls ${RECIPE_SYSROOT}/boot/bitstream/*`
+                bitname=`basename $basebit`
+                printf "all:\n{\n\t${basebit}\n}" > base.bif
+                bootgen -image base.bif -arch ${SOC_FAMILY} -o ${bitname}.bin_base -w on ${@bb.utils.contains('SOC_FAMILY','zynqmp','','-process_bitstream bin',d)}
+
+                #need this as with -process_bitstream flag bin file is automatically created in same dir as bitstream
+                if [ "${SOC_FAMILY}" = "zynq" ]; then
+                        cp ${RECIPE_SYSROOT}/boot/bitstream/*.bit.bin ./${bitname}.bin_base
+                fi
+
+                if [ ! -e "${bitname}.bin_base" ]; then
+                        bbfatal "bootgen failed. Enable -log debug with bootgen and check logs"
+                fi
         fi
-        cp ${RECIPE_SYSROOT}/boot/devicetree/pl-final.dtbo ${XSCTH_WS}/base.dtbo
 }
 
 do_install() {
-        #install base hdf artifacts
-        install -Dm 0644 base.dtbo ${D}/lib/firmware/base/base.dtbo
-        newname=`basename *.bit.bin_base | awk -F '.bit.bin_' '{print $1}'`
-        install -Dm 0644 *.bit.bin_base ${D}/lib/firmware/base/${newname}.bit.bin
-
+        install -d ${D}/lib/firmware/base
+        if [ -e "base.dtbo" ]; then
+            #install base hdf artifacts
+            install -Dm 0644 base.dtbo ${D}/lib/firmware/base/base.dtbo
+            newname=`basename *.bit.bin_base | awk -F '.bit.bin_' '{print $1}'`
+            install -Dm 0644 *.bit.bin_base ${D}/lib/firmware/base/${newname}.bit.bin
+        fi
         for hdf in ${HDF_LIST}; do
                 install -Dm 0644 ${hdf}.dtbo ${D}/lib/firmware/${hdf}/${hdf}.dtbo
                 newname=`basename *.bit.bin_${hdf} | awk -F '.bit.bin_' '{print $1}'`
