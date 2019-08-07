@@ -102,7 +102,8 @@ do_compile_append_versal() {
 }
 
 do_install() {
-	:
+    install -d ${D}/boot
+    install -m 0644 ${B}/BOOT.bin ${D}/boot/BOOT.bin
 }
 
 QEMUQSPI_BASE_NAME ?= "QEMU_qspi-${MACHINE}-${DATETIME}"
@@ -126,6 +127,9 @@ do_deploy_append_versal () {
     install -m 0644 ${B}/QEMU_qspi.bin ${DEPLOYDIR}/${QEMUQSPI_BASE_NAME}.bin
     ln -sf ${QEMUQSPI_BASE_NAME}.bin ${DEPLOYDIR}/QEMU_qspi-${MACHINE}.bin
 }
+
+FILES_${PN} += "/boot/BOOT.bin"
+SYSROOT_DIRS += "/boot"
 
 addtask do_deploy before do_build after do_compile
 
