@@ -1,5 +1,5 @@
 inherit xsct-tarball
-XILINX_SDK_TOOLCHAIN ??= "${STAGING_DIR}-xsct/Scout/${XILINX_VER_MAIN}"
+XILINX_SDK_TOOLCHAIN ??= "${STAGING_DIR}-xsct/Vitis/${XILINX_VER_MAIN}"
 
 XSCT_PATH_ADD = "${XILINX_SDK_TOOLCHAIN}/bin:\
 ${XILINX_SDK_TOOLCHAIN}/gnu/microblaze/lin/bin:\

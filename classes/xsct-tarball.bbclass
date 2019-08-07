@@ -1,4 +1,4 @@
-XSCT_LOADER ?= "${XSCT_STAGING_DIR}/Scout/${XILINX_VER_MAIN}/bin/xsct"
+XSCT_LOADER ?= "${XSCT_STAGING_DIR}/Vitis/${XILINX_VER_MAIN}/bin/xsct"
 
 XSCT_URL ?= "http://petalinux.xilinx.com/sswreleases/rel-v2019/xsct-trim/xsct-2019-1.tar.xz"
 XSCT_TARBALL ?= "xsct_${XILINX_VER_MAIN}.tar.xz"
