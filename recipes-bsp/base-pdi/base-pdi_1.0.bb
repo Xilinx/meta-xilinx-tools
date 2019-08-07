@@ -4,14 +4,14 @@ LICENSE = "CLOSED"
 
 PROVIDES = "virtual/base-pdi"
 
-DEPENDS += "virtual/hdf unzip-native"
+DEPENDS += "virtual/hdf"
 
 HDF_EXT ?= "xsa"
 PDI_HDF ?= "${DEPLOY_DIR_IMAGE}/Xilinx-${MACHINE}.${HDF_EXT}"
 
-do_configure[depends] += "virtual/hdf:do_deploy"
+inherit xsctbit
 
-B = "${WORKDIR}/build"
+XSCTH_MISC = "-hwpname ${XSCTH_PROJ}_hwproj -hdf_type ${HDF_EXT}"
 
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_versal = "versal"
@@ -20,14 +20,9 @@ PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
 do_compile[noexec] = "1"
 
-do_configure() {
-    cp -f ${PDI_HDF} ${B}
-    unzip ${B}/`basename ${PDI_HDF}` -d ${B}
-}
-
 do_install() {
     install -d ${D}/boot
-    install -m 0644 $(ls ${B}/*.pdi | head -1)  ${D}/boot/base-design.pdi
+    install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.pdi ${D}/boot/base-design.pdi
 }
 SYSROOT_DIRS += "/boot"
 
