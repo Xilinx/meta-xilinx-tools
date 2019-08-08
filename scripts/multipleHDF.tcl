@@ -2,7 +2,7 @@ set dir [file dirname [info script]]
 source $dir/base-hsi.tcl
 set option {
 	{hdf.arg	""			"hardware Definition file"}
-	{hdf_type.arg   "hdf"			"hardware Defination file type: hdf or dsa"}
+	{hdf_type.arg   "hdf"			"hardware Defination file type: xsa"}
 	{processor.arg	""			"target processor"}
 	{rp.arg		""			"repo path"}
 	{app.arg	"empty_application"	"Application project fsbl, empty.."}

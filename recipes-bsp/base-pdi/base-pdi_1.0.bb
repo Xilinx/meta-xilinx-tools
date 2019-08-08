@@ -6,7 +6,7 @@ PROVIDES = "virtual/base-pdi"
 
 DEPENDS += "virtual/hdf unzip-native"
 
-HDF_EXT ?= "dsa"
+HDF_EXT ?= "xsa"
 PDI_HDF ?= "${DEPLOY_DIR_IMAGE}/Xilinx-${MACHINE}.${HDF_EXT}"
 
 do_configure[depends] += "virtual/hdf:do_deploy"

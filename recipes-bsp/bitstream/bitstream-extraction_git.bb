@@ -47,7 +47,7 @@ do_deploy() {
         touch ${DEPLOYDIR}/${BITSTREAM_NAME}-${MACHINE}.bit
     fi
 
-    #Microblaze hdf files contain mmi file which is required to generate download.bit, bin, and mcs files.
+    #Microblaze xsa files contain mmi file which is required to generate download.bit, bin, and mcs files.
     if [ -e ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.mmi ]; then
         install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.mmi ${DEPLOYDIR}/${MMI_BASE_NAME}.mmi
         ln -sf ${MMI_BASE_NAME}.mmi ${DEPLOYDIR}/${BITSTREAM_NAME}-${MACHINE}.mmi

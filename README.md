@@ -40,10 +40,12 @@ URI: git://git.openembedded.org/openembedded-core
 
 URI: git://git.openembedded.org/meta-xilinx-bsp
 
-Providing path to HDF
+Providing path to XSA
 =====================
 
-meta-xilinx-tools recipes depends on HDF to be provided.
+meta-xilinx-tools recipes depends on XSA to be provided.
+In 2019.2 release, all design file used will be renamed from hdf to xsa.
+But the variables and references to hdf will remain and renamed in the future release
 
 HDF_BASE can be set to git:// or file://
 
@@ -51,11 +53,11 @@ HDF_PATH will be git repository or the path containing HDF
 
 For example:
 
-Set the following way to use HDF/DSA from local path
+Set the following way to use XSA from local path
 
 HDF_BASE = "file://"
 
-HDF_PATH = "/< path-to-hdf >/system.hdf"
+HDF_PATH = "/< path-to-xsa >/system.xsa"
 
 Adding dependencies to build BOOT.bin
 =====================================

@@ -1,4 +1,4 @@
-#requires hdf repo path proc dir yaml-file-location
+#requires xsa repo path proc dir yaml-file-location
 package require cmdline
 package require yaml
 

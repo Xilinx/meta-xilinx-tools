@@ -10,7 +10,6 @@ HDF_BASE ?= "git://"
 HDF_PATH ??= "github.com/xilinx/hdf-examples.git"
 HDF_NAME ?= "system.xsa"
 
-#Set HDF_EXT to "dsa" if you want to use a dsa file instead of hdf.
 HDF_EXT ?= "xsa"
 
 SRC_URI = "${HDF_BASE}${HDF_PATH}"

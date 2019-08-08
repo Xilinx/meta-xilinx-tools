@@ -49,7 +49,7 @@ DEVICETREE_PP_FLAGS ?= " \
                 -nostdinc -Ulinux -x assembler-with-cpp \
                 ${@' '.join(['-I%s' % i for i in d.getVar('DTS_INCLUDE', True).split()])} \
                 "
-HDF_EXT ?= "hdf"
+HDF_EXT ?= "xsa"
 EXTRA_HDF ?= ""
 XSCTH_HDF ?= "${WORKDIR}${EXTRA_HDF}"
 XSCTH_MISC = " -hdf_type ${HDF_EXT}"
