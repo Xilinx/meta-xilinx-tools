@@ -183,7 +183,6 @@ if { $params(ws) ne "" } {
 		}
 		platform create -name $params(hwpname) -hw $params(hdf) -out $params(ws)
 		set hsitemplate [::scw::get_app_template $params(app)]
-		sysconfig create -name sysconfig1
 		domain create -name $params(bspname) -proc $params(processor) \
 				  -os $params(osname) -support-app $hsitemplate	-arch $params(arch)
 		if { [info exists conf_dict] } {
