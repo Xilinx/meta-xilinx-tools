@@ -1,8 +1,8 @@
 #Extra args for versal
 BOOTGEN_EXTRA_ARGS += "-dump bh"
 
-#Add cdo and pdi dependency for versal
-DEPENDS += "virtual/cdo virtual/base-pdi"
+#Add pdi dependency for versal
+DEPENDS += "virtual/base-pdi"
 
 # specify BIF common attribute for FSBL
 BIF_COMMON_ATTR ?= ""
