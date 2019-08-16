@@ -106,3 +106,4 @@ do_deploy() {
 
 FILES_${PN}_append_microblaze = " /boot/devicetree/*.dts"
 
+EXTERNALSRC_SYMLINKS = ""
