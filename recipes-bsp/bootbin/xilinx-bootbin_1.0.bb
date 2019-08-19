@@ -11,6 +11,9 @@ inherit deploy
 
 PROVIDES = "virtual/boot-bin"
 
+DEPENDS_zynq += "bootgen-native"
+DEPENDS_zynqmp += "bootgen-native"
+
 do_configure[depends] += "${@get_bootbin_depends(d)}"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
