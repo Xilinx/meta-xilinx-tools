@@ -47,6 +47,7 @@ YAML_DT_BOARD_FLAGS_zcu1285-zynqmp ?= "{BOARD zcu1285-reva}"
 YAML_DT_BOARD_FLAGS_virt-versal ?= "{BOARD versal-virt}"
 YAML_DT_BOARD_FLAGS_a2197-zynqmp ?= "{BOARD zynqmp-p-a2197-00-reva}"
 YAML_DT_BOARD_FLAGS_vc-p-a2197-00-versal ?= "{BOARD versal-vc-p-a2197-00-reva-x-prc-01-reva}"
+YAML_DT_BOARD_FLAGS_v350-versal ?= "{BOARD versal-vc-d-d1760-01-reva}"
 
 YAML_OVERLAY_CUSTOM_DTS = "pl-final.dts"
 CUSTOM_PL_INCLUDE_DTSI ?= ""
