@@ -46,7 +46,7 @@ def create_bif(config, attrflags, attrimage, common_attr, biffd, d):
             bb.error("BIF attribute Error: %s " % (error_msg))
         else:
             if common_attr:
-                cfgval = attrflags[cfg].split(',')
+                cfgval = d.expand(attrflags[cfg]).split(',')
                 cfgstr = "\t [%s] %s\n" % (cfg,', '.join(cfgval))
             else:
                 if cfg not in attrimage:
@@ -57,7 +57,7 @@ def create_bif(config, attrflags, attrimage, common_attr, biffd, d):
                     bb.warn("Empty file %s, excluding from bif file" %(imagestr))
                     continue
                 if cfg in attrflags:
-                    cfgval = attrflags[cfg].split(',')
+                    cfgval = d.expand(attrflags[cfg]).split(',')
                     cfgstr = "\t [%s] %s\n" % (', '.join(cfgval), imagestr)
                 else:
                     cfgstr = "\t %s\n" % (imagestr)
