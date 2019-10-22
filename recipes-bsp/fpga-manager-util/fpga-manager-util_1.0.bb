@@ -14,7 +14,7 @@ SRC_URI = "${REPO};${BRANCHARG}"
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/build"
 
-SRCREV ??= "73e546e312a22d7fb410c28d5c79174d2eb29938"
+SRCREV ??= "a8b39cf536e6ccda56affb27b2727c1e4d6edad2"
 PV = "xilinx+git${SRCPV}"
 
 FILESEXTRAPATHS_append := ":${XLNX_SCRIPTS_DIR}"

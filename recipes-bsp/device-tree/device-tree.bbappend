@@ -16,8 +16,8 @@ BRANCH ??= "master"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
 
-#Based on xilinx-v2019.1
-SRCREV ??= "73e546e312a22d7fb410c28d5c79174d2eb29938"
+#Based on xilinx-v2019.2
+SRCREV ??= "a8b39cf536e6ccda56affb27b2727c1e4d6edad2"
 
 DT_VERSION_EXTENSION ?= "xilinx-${XILINX_RELEASE_VERSION}"
 PV = "${DT_VERSION_EXTENSION}+git${SRCPV}"
