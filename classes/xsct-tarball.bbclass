@@ -50,8 +50,12 @@ python xsct_event_extract() {
         if os.path.exists(ext_tarball):
             bb.note("Checking local xsct tarball checksum")
             import hashlib
+            md5hash = hashlib.md5()
+            readsize = 1024*md5hash.block_size
             with open(ext_tarball, 'rb') as f:
-                chksum_tar_actual = hashlib.md5(f.read()).hexdigest()
+                for chunk in iter(lambda: f.read(readsize), b''):
+                    md5hash.update(chunk)
+            chksum_tar_actual = md5hash.hexdigest()
             if validate == '1' and chksum_tar_recipe != chksum_tar_actual:
                 bb.fatal('Provided external tarball\'s md5sum does not match checksum defined in xsct-tarball class')
         elif xsct_url:
