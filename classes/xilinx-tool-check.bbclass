@@ -4,13 +4,13 @@ def run_tool(d):
     import bb.process
     import subprocess
 
-    topdir = d.getVar('TOPDIR', True)
-    toolchain_path = d.getVar('TOOL_PATH', True)
+    topdir = d.getVar('TOPDIR')
+    toolchain_path = d.getVar('TOOL_PATH')
     if not toolchain_path:
         return 'UNKNOWN', 'UNKNOWN'
 
     os.environ["RDI_VERBOSE"] = "0"
-    cmd = os.path.join(toolchain_path, d.getVar('TOOL_VERSION_COMMAND', True))
+    cmd = os.path.join(toolchain_path, d.getVar('TOOL_VERSION_COMMAND'))
     return bb.process.run(cmd, cwd=topdir, stderr=subprocess.PIPE)
 
 def tool_get_version(d):
@@ -27,8 +27,8 @@ def tool_get_version(d):
 
 python tool_eventhandler () {
     TOOL_VERSION = tool_get_version(d)
-    TOOL_REQ_VERSION = d.getVar("TOOL_VER_MAIN", True)
-    CURRENT_TOOL_NAME = d.getVar("TOOL_NAME", True)
+    TOOL_REQ_VERSION = d.getVar("TOOL_VER_MAIN")
+    CURRENT_TOOL_NAME = d.getVar("TOOL_NAME")
     if TOOL_VERSION != TOOL_REQ_VERSION:
         bb.fatal("%s version does not match. Version is %s: checking for %s. Check if XILINX_SDK_TOOLCHAIN or XILINX_VIVADO_DESIGN_SUIT in your local.conf is pointing to the right location. " % (CURRENT_TOOL_NAME, TOOL_VERSION, TOOL_REQ_VERSION))
 

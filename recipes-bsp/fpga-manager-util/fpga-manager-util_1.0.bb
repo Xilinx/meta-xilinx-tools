@@ -8,7 +8,7 @@ inherit deploy xsctbase xsctyaml
 
 REPO ??= "git://github.com/xilinx/device-tree-xlnx.git;protocol=https"
 BRANCH ??= "master"
-BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
+BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
 
 S = "${WORKDIR}/git"
@@ -43,11 +43,11 @@ DT_PADDING_SIZE ?= "0x1000"
 
 DEVICETREE_FLAGS ?= " \
                 -R 8 -p ${DT_PADDING_SIZE} -b 0 -@ -H epapr \
-                ${@' '.join(['-i %s' % i for i in d.getVar('DTS_INCLUDE', True).split()])} \
+                ${@' '.join(['-i %s' % i for i in d.getVar('DTS_INCLUDE').split()])} \
                "
 DEVICETREE_PP_FLAGS ?= " \
                 -nostdinc -Ulinux -x assembler-with-cpp \
-                ${@' '.join(['-I%s' % i for i in d.getVar('DTS_INCLUDE', True).split()])} \
+                ${@' '.join(['-I%s' % i for i in d.getVar('DTS_INCLUDE').split()])} \
                 "
 HDF_EXT ?= "xsa"
 EXTRA_HDF ?= ""
@@ -145,7 +145,7 @@ ALLOW_EMPTY_${PN} = "1"
 
 python () {
         if d.getVar('FPGA_MNGR_RECONFIG_ENABLE') == '1':
-                extra = d.getVar('EXTRA_HDF', True)
+                extra = d.getVar('EXTRA_HDF')
                 pn = d.getVar('PN')
                 baselib = d.getVar('base_libdir')
                 packages = d.getVar('PACKAGES').split()
@@ -160,11 +160,11 @@ python () {
                         hdflist = []
                         hdffullpath = []
                         import glob
-                        for hdf in glob.glob(d.getVar('EXTRA_HDF', True)+"/*." + d.getVar('HDF_EXT')):
+                        for hdf in glob.glob(d.getVar('EXTRA_HDF')+"/*." + d.getVar('HDF_EXT')):
                                 name = os.path.splitext(os.path.basename(hdf))[0]
                                 hdflist.append(name)
                                 hdffullpath.append(hdf)
-                                dtsifile = d.getVar('EXTRA_HDF', True) + "/" + name + ".dtsi"
+                                dtsifile = d.getVar('EXTRA_HDF') + "/" + name + ".dtsi"
                                 if os.path.isfile(dtsifile):
                                     hdffullpath.append(dtsifile)
 

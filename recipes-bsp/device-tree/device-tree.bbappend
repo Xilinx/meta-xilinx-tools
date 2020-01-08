@@ -13,7 +13,7 @@ S = "${WORKDIR}/git"
 
 REPO ??= "git://github.com/xilinx/device-tree-xlnx.git;protocol=https"
 BRANCH ??= "master"
-BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
+BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
 
 #Based on xilinx-v2019.2

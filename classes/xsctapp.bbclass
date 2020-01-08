@@ -5,7 +5,7 @@ EMBEDDEDSW_BRANCH ??= "release-2019.2"
 EMBEDDEDSW_SRCREV ??= "e8db5fb118229fdc621e0ec7848641a23bf60998"
 
 
-EMBEDDEDSW_BRANCHARG ?= "${@['nobranch=1', 'branch=${EMBEDDEDSW_BRANCH}'][d.getVar('EMBEDDEDSW_BRANCH', True) != '']}"
+EMBEDDEDSW_BRANCHARG ?= "${@['nobranch=1', 'branch=${EMBEDDEDSW_BRANCH}'][d.getVar('EMBEDDEDSW_BRANCH') != '']}"
 EMBEDDEDSW_SRCURI ?= "${EMBEDDEDSW_REPO};${EMBEDDEDSW_BRANCHARG}"
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
@@ -26,7 +26,7 @@ SRC_URI_append = " file://app.tcl"
 XSCTH_SCRIPT ?= "${WORKDIR}/app.tcl"
 
 XSCTH_BUILD_DEBUG ?= "0"
-XSCTH_BUILD_CONFIG ?= "${@['Debug', 'Release'][d.getVar('XSCTH_BUILD_DEBUG', True) == "0"]}"
+XSCTH_BUILD_CONFIG ?= "${@['Debug', 'Release'][d.getVar('XSCTH_BUILD_DEBUG') == "0"]}"
 XSCTH_APP_COMPILER_FLAGS ?= ""
 
 SYSROOT_DIRS += "/boot"

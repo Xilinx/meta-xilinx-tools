@@ -24,7 +24,7 @@ PROC_kc705-microblazeel = "kc705_i/microblaze_0"
 FLASH_SIZE ??= "0x80"
 FLASH_INTERFACE ??= "BPIx16"
 MB_OUT_FORMAT  ??= "mcs"
-BOOT_EXT = "${@d.getVar('MB_OUT_FORMAT', True).lower()}"
+BOOT_EXT = "${@d.getVar('MB_OUT_FORMAT').lower()}"
 
 BITSTREAM_FILE ?= "${RECIPE_SYSROOT}/boot/bitstream/download.bit"
 B = "${WORKDIR}/build"

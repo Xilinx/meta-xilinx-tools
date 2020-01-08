@@ -30,7 +30,7 @@ do_patch[noexec] = "1"
 
 def get_bootbin_depends(d):
     bootbindeps = ""
-    bifpartition = (d.getVar("BIF_PARTITION_ATTR", True) or "").split()
+    bifpartition = (d.getVar("BIF_PARTITION_ATTR") or "").split()
     attrdepends = d.getVarFlags("BIF_PARTITION_DEPENDS") or {}
     for cfg in bifpartition:
         if cfg in attrdepends:
@@ -67,17 +67,17 @@ def create_bif(config, attrflags, attrimage, common_attr, biffd, d):
 
 python do_configure() {
 
-    fp = d.getVar("BIF_FILE_PATH", True)
+    fp = d.getVar("BIF_FILE_PATH")
     biffd = open(fp, 'w')
     biffd.write("the_ROM_image:\n")
     biffd.write("{\n")
 
-    bifattr = (d.getVar("BIF_COMMON_ATTR", True) or "").split()
+    bifattr = (d.getVar("BIF_COMMON_ATTR") or "").split()
     if bifattr:
         attrflags = d.getVarFlags("BIF_COMMON_ATTR") or {}
         create_bif(bifattr, attrflags,'', 1, biffd, d)
 
-    bifpartition = (d.getVar("BIF_PARTITION_ATTR", True) or "").split()
+    bifpartition = (d.getVar("BIF_PARTITION_ATTR") or "").split()
     if bifpartition:
         attrflags = d.getVarFlags("BIF_PARTITION_ATTR") or {}
         attrimage = d.getVarFlags("BIF_PARTITION_IMAGE") or {}

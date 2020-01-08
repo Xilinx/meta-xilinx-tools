@@ -24,7 +24,7 @@ do_compile[noexec] = "1"
 
 
 python do_check() {
-    ext=d.getVar('HDF_EXT',True)
+    ext=d.getVar('HDF_EXT')
     if(ext == 'hdf'):
          bb.warn("Only XSA format is supported in Vivado tool starting from 2019.2 release")
 }

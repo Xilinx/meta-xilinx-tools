@@ -9,7 +9,7 @@ SRCTREECOVEREDTASKS ?= "do_patch do_unpack do_fetch"
 EXTERNALXSCTSRCHASH ?= "src build"
 
 python () {
-    externalsrc = d.getVar('EXTERNALXSCTSRC', True)
+    externalsrc = d.getVar('EXTERNALXSCTSRC')
 
     if externalsrc:
         import oe.recipeutils
@@ -17,18 +17,18 @@ python () {
 
         d.setVar('BB_DONT_CACHE', '1')
         d.setVar('S', externalsrc)
-        externalsrcbuild = d.getVar('EXTERNALXSCTSRC_BUILD', True)
+        externalsrcbuild = d.getVar('EXTERNALXSCTSRC_BUILD')
         if externalsrcbuild:
             d.setVar('B', externalsrcbuild)
         else:
             d.setVar('B', '${WORKDIR}/${BPN}-${PV}/')
 
-        if d.getVar('S', True) == d.getVar('B', True):
+        if d.getVar('S') == d.getVar('B'):
             bb.error("Cannot set build directory to be same as source directory")
             return None
 
         local_srcuri = []
-        fetch = bb.fetch2.Fetch((d.getVar('SRC_URI', True) or '').split(), d)
+        fetch = bb.fetch2.Fetch((d.getVar('SRC_URI') or '').split(), d)
         for url in fetch.urls:
             url_data = fetch.ud[url]
             if (url_data.type == 'file'):
@@ -65,14 +65,14 @@ python () {
         # Note that we cannot use d.appendVarFlag() here because deps is expected to be a list object, not a string
         d.setVarFlag('do_configure', 'deps', (d.getVarFlag('do_configure', 'deps', False) or []) + ['do_unpack'])
 
-        for task in d.getVar("SRCTREECOVEREDTASKS", True).split():
+        for task in d.getVar("SRCTREECOVEREDTASKS").split():
             if local_srcuri and task in fetch_tasks:
                 continue
             bb.build.deltask(task, d)
 
         d.prependVarFlag('do_compile', 'prefuncs', "xsct_externalsrc_compile_prefunc")
 
-        external_xsct_src_hash = d.getVar('EXTERNALXSCTSRCHASH', True)
+        external_xsct_src_hash = d.getVar('EXTERNALXSCTSRCHASH')
 
         # If EXTERNALXSCTSRCHASH is set to both build and src, hash both.
         # If EXTERNALXSCTSRCHASH is set to build, hash build file. By default hash src files if EXTERNALXSCTSRCHASH is empty. 
@@ -86,14 +86,14 @@ python () {
             d.setVarFlag('do_compile', 'file-checksums', '${@xsct_srctree_hash_files(d)}')
 
         # We don't want the workdir to go away
-        d.appendVar('RM_WORK_EXCLUDE', ' ' + d.getVar('PN', True))
+        d.appendVar('RM_WORK_EXCLUDE', ' ' + d.getVar('PN'))
 }
 
 COMPILE_TRIGGER_FILES = "${XSCTH_WS}/${XSCTH_PROJ}"
 
 python xsct_externalsrc_compile_prefunc() {
     # Make it obvious that this is happening, since forgetting about it could lead to much confusion
-    bb.plain('NOTE: %s: compiling from external source tree %s' % (d.getVar('PN', True), d.getVar('EXTERNALXSCTSRC', True)))
+    bb.plain('NOTE: %s: compiling from external source tree %s' % (d.getVar('PN'), d.getVar('EXTERNALXSCTSRC')))
 }
 
 
@@ -102,7 +102,7 @@ def xsct_srctree_hash_files(d):
     import subprocess
     import tempfile
 
-    s_dir = d.getVar('EXTERNALXSCTSRC', True)
+    s_dir = d.getVar('EXTERNALXSCTSRC')
     git_dir = os.path.join(s_dir, '.git')
     oe_hash_file = os.path.join(git_dir, 'oe-devtool-tree-sha1')
 
@@ -120,7 +120,7 @@ def xsct_srctree_hash_files(d):
             fobj.write(sha1)
         ret = oe_hash_file + ':True'
     else:
-        ret = d.getVar('EXTERNALXSCTSRC', True) + '/*:True'
+        ret = d.getVar('EXTERNALXSCTSRC') + '/*:True'
     return ret
 
 def xsct_buildtree_hash_files(d):
@@ -129,7 +129,7 @@ def xsct_buildtree_hash_files(d):
     """
     Get the list of files that should trigger do_compile to re-execute,
     """
-    in_files = (d.getVar('COMPILE_TRIGGER_FILES', True) or '').split()
+    in_files = (d.getVar('COMPILE_TRIGGER_FILES') or '').split()
     out_items = []
     for entry in in_files:
         if os.path.isdir(entry):
