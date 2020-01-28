@@ -14,6 +14,7 @@ YAML_FLASH_MEMORY_CONFIG ?= ''
 YAML_REMOVE_PL_DT ?= ''
 YAML_FIRMWARE_NAME ?= ''
 YAML_OVERLAY_CUSTOM_DTS ?= ''
+YAML_BSP_COMPILER_FLAGS ?= ''
 
 YAML_SERIAL_CONSOLE_STDIN_ultra96-zynqmp ?= "psu_uart_1"
 YAML_SERIAL_CONSOLE_STDOUT_ultra96-zynqmp ?= "psu_uart_1"
@@ -30,6 +31,9 @@ YAML_APP_CONFIG[build-config] = "set,${YAML_BUILD_CONFIG}"
 YAML_COMPILER_FLAGS ?= "${@d.getVar('XSCTH_COMPILER_DEBUG_FLAGS') if d.getVar('XSCTH_BUILD_DEBUG') != "0" else d.getVar('XSCTH_APP_COMPILER_FLAGS')}"
 YAML_APP_CONFIG += "${@'compiler-misc' if d.getVar('YAML_COMPILER_FLAGS') != '' else ''}"
 YAML_APP_CONFIG[compiler-misc] = "add,${YAML_COMPILER_FLAGS}"
+
+YAML_BSP_CONFIG += "${@'extra_compiler_flags' if d.getVar('YAML_BSP_COMPILER_FLAGS') != '' else ''}"
+YAML_BSP_CONFIG[extra_compiler_flags] = "add,${YAML_BSP_COMPILER_FLAGS}"
 
 YAML_BSP_CONFIG += "${@'periph_type_overrides' if d.getVar('YAML_DT_BOARD_FLAGS') != '' else ''}"
 YAML_BSP_CONFIG[periph_type_overrides] = "set,${YAML_DT_BOARD_FLAGS}"
