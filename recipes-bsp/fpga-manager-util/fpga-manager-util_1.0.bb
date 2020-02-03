@@ -110,7 +110,7 @@ do_compile() {
         else
                 cp ${RECIPE_SYSROOT}/boot/devicetree/pl-final.dtbo ${XSCTH_WS}/base.dtbo
 
-                basebit=`ls ${RECIPE_SYSROOT}/boot/bitstream/*`
+                basebit=`ls ${RECIPE_SYSROOT}/boot/bitstream/*.bit`
                 bitname=`basename $basebit`
                 printf "all:\n{\n\t${basebit}\n}" > base.bif
                 bootgen -image base.bif -arch ${SOC_FAMILY} -o ${bitname}.bin_base -w on ${@bb.utils.contains('SOC_FAMILY','zynqmp','','-process_bitstream bin',d)}
