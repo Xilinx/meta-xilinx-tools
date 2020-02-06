@@ -28,6 +28,11 @@ BIF_PARTITION_ATTR[u-boot] ?= "destination_cpu=a53-0,exception_level=el-2"
 BIF_PARTITION_IMAGE[u-boot] ?= "${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.elf"
 BIF_PARTITION_DEPENDS[u-boot] ?= "virtual/bootloader:do_deploy"
 
+# specify BIF partition attributes for dtb
+BIF_PARTITION_ATTR[dtb] ?= "load=0x100000"
+BIF_PARTITION_IMAGE[dtb] ?= "${DEPLOY_DIR_IMAGE}/system.dtb"
+BIF_PARTITION_DEPENDS[dtb] ?= "virtual/dtb:do_deploy"
+
 # enable bitstream-Note this is not enabled by default (missing in BIF_PARTITION_ATTR)
 BIF_PARTITION_ATTR[bitstream] ?= "destination_device=pl"
 BIF_PARTITION_IMAGE[bitstream] ?= "${DEPLOY_DIR_IMAGE}/download-${MACHINE}.bit"
