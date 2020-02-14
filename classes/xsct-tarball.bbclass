@@ -3,7 +3,7 @@ XSCT_LOADER ?= "${XSCT_STAGING_DIR}/Vitis/${XILINX_VER_MAIN}/bin/xsct"
 XSCT_URL ?= "http://petalinux.xilinx.com/sswreleases/rel-v2019/xsct-trim/xsct-2019-2.tar.xz"
 XSCT_TARBALL ?= "xsct_${XILINX_VER_MAIN}.tar.xz"
 XSCT_DLDIR ?= "${DL_DIR}/xsct/"
-XSCT_STAGING_DIR ?= "${STAGING_DIR}-xsct"
+XSCT_STAGING_DIR ?= "${TOPDIR}/xsct"
 
 XSCT_CHECKSUM ?= "c24a31b1df22e6a31ff7a302255ce310"
 VALIDATE_XSCT_CHECKSUM ?= '1'
@@ -108,9 +108,9 @@ python xsct_event_extract() {
                     pass
 
         cmd = d.expand("\
-            rm -rf ${STAGING_DIR}-xsct; \
-            mkdir -p ${STAGING_DIR}-xsct; \
-            cd ${STAGING_DIR}-xsct; \
+            rm -rf ${XSCT_STAGING_DIR}; \
+            mkdir -p ${XSCT_STAGING_DIR}; \
+            cd ${XSCT_STAGING_DIR}; \
             tar -xvf ${XSCT_DLDIR}/${XSCT_TARBALL};")
         bb.note('Extracting external xsct-tarball to sysroots')
         subprocess.check_output(cmd, shell=True)
