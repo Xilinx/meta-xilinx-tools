@@ -92,6 +92,12 @@ do_compile_prepend() {
         pass
 }
 
+BINARY_EXT = ".dtb"
+#installing base dtb in proper format for updateboot
+do_install_append () {
+    install -Dm 0644 ${B}/*.dtb ${D}/boot/${PN}-${SRCPV}${BINARY_EXT}
+}
+FILES_${PN} += "/boot/${PN}-${SRCPV}${BINARY_EXT}"
 
 DTB_BASE_NAME ?= "${MACHINE}-system-${DATETIME}"
 DTB_BASE_NAME[vardepsexclude] = "DATETIME"

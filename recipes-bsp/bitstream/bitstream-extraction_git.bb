@@ -18,6 +18,9 @@ do_compile[noexec] = "1"
 BITSTREAM_NAME ?= "download"
 BITSTREAM_NAME_microblaze ?= "system"
 
+BINARY_NAME = "${BITSTREAM_NAME}"
+BINARY_EXT = ".bit"
+
 BITSTREAM_BASE_NAME ?= "${BITSTREAM_NAME}-${MACHINE}-${DATETIME}"
 BITSTREAM_BASE_NAME[vardepsexclude] = "DATETIME"
 
@@ -31,6 +34,7 @@ do_install() {
     if [ -e ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ]; then
         install -d ${D}/boot/bitstream/
         install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ${D}/boot/bitstream/
+        install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ${D}/boot/${BINARY_NAME}-${BINARY_ID}${BINARY_EXT}
     fi
 
     if [ -e ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.mmi ]; then
@@ -56,4 +60,4 @@ do_deploy() {
 }
 addtask do_deploy after do_install
 
-FILES_${PN} = "/boot/bitstream/*.bit /boot/bitstream/*.mmi"
+FILES_${PN} += "/boot/bitstream/*.bit /boot/bitstream/*.mmi /boot/*.bit"

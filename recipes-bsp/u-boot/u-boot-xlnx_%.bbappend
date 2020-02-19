@@ -10,4 +10,6 @@ python __anonymous () {
 DTB_PATH ?= "/boot/devicetree"
 DTB_NAME ?= ""
 
+UBOOT_ELF_IMAGE = "${PN}-${SRCPV}.${UBOOT_ELF_SUFFIX}"
+
 EXTRA_OEMAKE += "${@'EXT_DTB=${RECIPE_SYSROOT}/${DTB_PATH}/${DTB_NAME}' if (d.getVar('DTB_NAME') != '') else '' }"
