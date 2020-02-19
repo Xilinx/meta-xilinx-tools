@@ -42,7 +42,7 @@ do_compile() {
 }
 
 do_install() {
-    install -Dm 0644 ${B}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ${D}/boot/${PN}.elf
+    install -Dm 0644 ${B}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ${D}/boot/${PN}-${SRCPV}.elf
 }
 
 do_deploy() {
@@ -51,4 +51,4 @@ do_deploy() {
 }
 addtask do_deploy after do_compile
 
-FILES_${PN} = "/boot/${PN}.elf"
+FILES_${PN} = "/boot/${PN}-${SRCPV}.elf"
