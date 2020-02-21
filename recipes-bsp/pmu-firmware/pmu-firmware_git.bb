@@ -2,7 +2,9 @@ DESCRIPTION = "PMU Firmware"
 
 PROVIDES = "virtual/pmu-firmware"
 
-inherit xsctapp xsctyaml deploy
+inherit xsctapp xsctyaml deploy bootbin-component
+
+BOOTBIN_BIF_FRAGMENT_zynqmp = "destination_cpu=pmu"
 
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynqmp = "zynqmp"

@@ -9,7 +9,9 @@ PROVIDES = "virtual/bitstream"
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
-inherit xsctbit deploy
+inherit xsctbit deploy bootbin-component
+
+BOOTBIN_BIF_FRAGMENT_zynqmp = "destination_device=pl"
 
 XSCTH_MISC = "-hwpname ${XSCTH_PROJ}_hwproj -hdf_type ${HDF_EXT}"
 

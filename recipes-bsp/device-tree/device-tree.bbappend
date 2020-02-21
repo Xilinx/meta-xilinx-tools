@@ -5,7 +5,10 @@ LIC_FILES_CHKSUM = "file://xadcps/data/xadcps.mdd;md5=f7fa1bfdaf99c7182fc0d8e7fd
 
 PROVIDES = "virtual/dtb"
 
-inherit xsctdt xsctyaml
+inherit xsctdt xsctyaml bootbin-component
+
+BOOTBIN_BIF_FRAGMENT_zynqmp = "load=0x100000"
+BOOTBIN_BIF_FRAGMENT_zynq = "load=0x100000"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
