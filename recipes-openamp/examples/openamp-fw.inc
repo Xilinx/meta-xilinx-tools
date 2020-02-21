@@ -2,6 +2,8 @@ DESCRIPTION = "OpenAMP demo firmware"
 
 inherit xsctapp xsctyaml deploy
 
+LICENSE = "BSD"
+
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynq = "zynq"
 COMPATIBLE_MACHINE_zynqmp = "zynqmp"
