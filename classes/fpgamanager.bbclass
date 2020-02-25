@@ -43,7 +43,7 @@ python devicetree_do_compile_append() {
 
 do_install() {
     install -d ${D}/lib/firmware/${PN}/
-    install -Dm 0644 pl.dtbo ${D}/lib/firmware/${PN}/${PN}.dtbo
+    install -Dm 0644 *.dtbo ${D}/lib/firmware/${PN}/${PN}.dtbo
     install -Dm 0644 ${PN}.bit.bin ${D}/lib/firmware/${PN}/${PN}.bit.bin
 
     install -Dm 0644 ${PN}.env ${D}/lib/firmware/${PN}/${PN}.env
