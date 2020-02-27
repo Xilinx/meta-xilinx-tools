@@ -5,7 +5,10 @@ LIC_FILES_CHKSUM = "file://xadcps/data/xadcps.mdd;md5=f7fa1bfdaf99c7182fc0d8e7fd
 
 PROVIDES = "virtual/dtb"
 
-inherit xsctdt xsctyaml bootbin-component
+# We only want to add the bootbin setup for Linux based builds
+# For instance, baremetal won't support this
+BOOTBININHERIT = "${@'bootbin-component' if d.getVar('TARGET_OS').startswith('linux') else ''}"
+inherit xsctdt xsctyaml ${BOOTBININHERIT}
 
 BOOTBIN_BIF_FRAGMENT_zynqmp = "load=0x100000"
 BOOTBIN_BIF_FRAGMENT_zynq = "load=0x100000"
