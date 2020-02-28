@@ -5,14 +5,22 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 RDEPENDS_${PN} += "python python-shell"
 
-RDEPENDS_${PN}_append = " fsbl \
-        u-boot-xlnx \
-        bitstream-extraction \
-        device-tree \
-        bootgen \
+
+ALL_ARCHS_BOOT_COMPONENTS = " \
+	u-boot-xlnx \
+	bitstream-extraction \
+	device-tree \
+	bootgen \
+"
+RDEPENDS_${PN}_append = " \
+	${ALL_ARCHS_BOOT_COMPONENTS} \
+"
+RDEPENDS_${PN}_append_zynq = " fsbl \
         "
 
-RDEPENDS_${PN}_append_zynqmp = " pmu-firmware \
+RDEPENDS_${PN}_append_zynqmp = " \
+	fsbl \
+	pmu-firmware \
         arm-trusted-firmware \
         device-tree \
 	    "
