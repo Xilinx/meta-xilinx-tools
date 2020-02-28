@@ -3,8 +3,6 @@ inherit deploy update-alternatives
 BINARY_NAME ?= "${PN}"
 BINARY_EXT ?= ".elf"
 
-RDEPENDS_${PN} += "updateboot"
-
 BINARY_ID = "${@d.getVar('SRCPV') if d.getVar('SRCPV') else d.getVar('PR') }"
 
 BOOTBIN_BIF_FRAGMENT ?= ""
