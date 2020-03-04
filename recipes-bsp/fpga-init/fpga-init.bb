@@ -15,6 +15,17 @@ SRC_URI += " \
     file://fpga-init.sh \
     file://fpgamanager \
 "
+
+FPGA_INIT ?= "1"
+
+do_fetch[vardeps] += "FPGA_INIT"
+
+do_configure() {
+    if [ ${FPGA_INIT} != "1" ]; then
+        sed -i -e 's/FPGA_INIT=true/FPGA_INIT=false/' ${WORKDIR}/fpgamanager
+    fi
+}
+
 do_install() {
     install -Dm 0755 ${WORKDIR}/fpga-init.sh ${D}${sysconfdir}/init.d/fpga-init.sh
     install -Dm 0755 ${WORKDIR}/fpgamanager ${D}${sysconfdir}/default/fpgamanager
