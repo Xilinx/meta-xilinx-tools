@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Xilinx, Inc.  All rights reserved.
+ * Copyright (C) 2019-2020 Xilinx, Inc.  All rights reserved.
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -48,7 +48,7 @@
 #define OVERLAY      1
 #define FPGA_SYSFS   2
 #define READBACK     3
-#define ENCRYPTION_USERKEY_EN     (0x00000008U)
+#define ENCRYPTION_USERKEY_EN		(0x20U)
 
 int fpga_getplatform()
 {
@@ -151,17 +151,17 @@ struct fpgaflag {
 };
 
 static struct fpgaflag flagdump[] = {
-        {.flag = "Full",		.value = 0x0},
-        {.flag = "Partial",		.value = 0x1},
-        {.flag = "AuthDDR",		.value = 0x2},
-        {.flag = "AuthOCM",		.value = 0x4},
-        {.flag = "EnUsrKey",		.value = 0x8},
-        {.flag = "EnDevKey",		.value = 0x10},
-        {.flag = "AuthEnUsrKeyDDR",	.value = 0xA},
-        {.flag = "AuthEnUsrKeyOCM",	.value = 0xC},
-        {.flag = "AuthEnDevKeyDDR",	.value = 0x12},
-        {.flag = "AuthEnDevKeyOCM",	.value = 0x14},
-        {}
+	{.flag = "Full",                .value = 0x0},
+	{.flag = "Partial",             .value = 0x1},
+	{.flag = "AuthDDR",             .value = 0x40},
+	{.flag = "AuthOCM",             .value = 0x80},
+	{.flag = "EnUsrKey",            .value = 0x20},
+	{.flag = "EnDevKey",            .value = 0x4},
+	{.flag = "AuthEnUsrKeyDDR",     .value = 0x60},
+	{.flag = "AuthEnUsrKeyOCM",     .value = 0xA0},
+	{.flag = "AuthEnDevKeyDDR",     .value = 0x44},
+	{.flag = "AuthEnDevKeyOCM",     .value = 0x84},
+	{}
 };
 
 static int cmd_flags(int argc, const char *name)
