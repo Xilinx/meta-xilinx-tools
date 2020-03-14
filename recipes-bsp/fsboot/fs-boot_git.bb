@@ -2,7 +2,7 @@ DESCRIPTION = "FS-BOOT generator"
 
 PROVIDES = "virtual/fsboot"
 
-inherit xsctfsboot deploy
+inherit xsctfsboot xsctyaml deploy
 
 MB_BAREMETAL_TOOLCHAIN_PATH_ADD = "${XILINX_SDK_TOOLCHAIN}/gnu/microblaze/lin/bin:"
 PATH =. "${MB_BAREMETAL_TOOLCHAIN_PATH_ADD}"
