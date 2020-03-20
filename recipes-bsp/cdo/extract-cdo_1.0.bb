@@ -6,7 +6,7 @@ inherit deploy
 
 PROVIDES = "virtual/cdo"
 
-DEPENDS += "virtual/boot-bin"
+DEPENDS += "virtual/boot-bin bootgen-native"
 
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_versal = "versal"
