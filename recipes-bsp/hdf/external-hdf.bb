@@ -14,7 +14,7 @@ HDF_EXT ?= "xsa"
 
 SRC_URI = "${HDF_BASE}${HDF_PATH}"
 
-COMPATIBLE_OS_xilinx-standalone = "${TARGET_OS}"
+COMPATIBLE_HOST_xilinx-standalone = "${HOST_SYS}"
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
 SRCREV ??= "446afb7ade6386e864d5f7175d714f8880d52921"
