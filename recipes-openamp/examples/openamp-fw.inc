@@ -17,7 +17,7 @@ YAML_BSP_CONFIG += "${@bb.utils.contains('SOC_FAMILY', 'zynq', 'extra_compiler_f
 YAML_BSP_CONFIG[WITH_PROXY] = "set,false"
 YAML_BSP_CONFIG[extra_compiler_flags] = "append,-DUSE_AMP=1"
 
-FW_OS_NAME ?= "freertos10_xilinx"
+FW_OS_NAME ?= "standalone"
 
 XSCTH_MISC = "-osname ${FW_OS_NAME}"
 XSCTH_PROC_versal ?= "psv_cortexr5_0"
