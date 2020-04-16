@@ -11,6 +11,8 @@ do_install[vardeps] += "BOOTBIN_BIF_FRAGMENT"
 python() {
     pn = d.getVar("PN")
     binaryid = d.getVar('BINARY_ID')
+    if bb.data.inherits_class('externalsrc', d):
+        binaryid = '999'
     binaryname = d.getVar('BINARY_NAME')
     binaryext = d.getVar('BINARY_EXT')
     d.setVarFlag('ALTERNATIVE_TARGET', pn, '/boot/' + binaryname +'-'+ binaryid + binaryext)
