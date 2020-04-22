@@ -28,6 +28,7 @@ DEPENDS += "\
     virtual/bitstream \
     virtual/dtb \
     dtc-native \
+    bootgen-native \
 "
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
