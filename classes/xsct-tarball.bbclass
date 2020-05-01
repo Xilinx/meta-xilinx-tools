@@ -31,7 +31,7 @@ python xsct_event_extract() {
     tasks_xsct = [t + '.do_configure' for t in d.getVar('XSCT_TARGETS').split()]
     xsct_buildtargets = [t for t in e._depgraph['tdepends'] for x in tasks_xsct if x in t]
 
-    if not xsct_buildtargets:
+    if not xsct_buildtargets and d.getVar('FORCE_XSCT_DOWNLOAD') != '1':
       return
 
     ext_tarball = d.getVar("EXTERNAL_XSCT_TARBALL")
