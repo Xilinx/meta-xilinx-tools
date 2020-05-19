@@ -1,12 +1,12 @@
 SECTION	= "libs"
 
 REPO ?= "git://github.com/Xilinx/embeddedsw.git;protocol=https"
-BRANCH ?= "release-2019.2"
+BRANCH ?= "release-2020.1"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
-SRCREV ?= "e8db5fb118229fdc621e0ec7848641a23bf60998"
+SRCREV ?= "9a6cb8ffdf112a33c0c02b81d860eff638c44866"
 
 LICENSE = "BSD"
-LIC_FILES_CHKSUM="file://license.txt;md5=39ab6ab638f4d1836ba994ec6852de94"
+LIC_FILES_CHKSUM="file://license.txt;md5=8b565227e1264d677db8f841c2948cba"
 
 SRC_URI = "${REPO};${BRANCHARG}"
 
