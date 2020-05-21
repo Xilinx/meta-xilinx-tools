@@ -2,7 +2,7 @@ inherit xsctbase
 
 EMBEDDEDSW_REPO ??= "git://github.com/Xilinx/embeddedsw.git;protocol=https"
 EMBEDDEDSW_BRANCH ??= "release-2020.1"
-EMBEDDEDSW_SRCREV ??= "9a6cb8ffdf112a33c0c02b81d860eff638c44866"
+EMBEDDEDSW_SRCREV ??= "86ab9c5b1a780fa1d4d9e7a6a4cceccbba161db6"
 
 
 EMBEDDEDSW_BRANCHARG ?= "${@['nobranch=1', 'branch=${EMBEDDEDSW_BRANCH}'][d.getVar('EMBEDDEDSW_BRANCH') != '']}"
