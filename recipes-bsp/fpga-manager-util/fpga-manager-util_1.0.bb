@@ -71,7 +71,20 @@ do_configure_append () {
     done
 }
 
+generate_bin() {
+    bitname=`basename ${BITPATH}`
+    printf "all:\n{\n\t`ls ${BITPATH}`\n}" > ${hdf}.bif
+    bootgen -image ${hdf}.bif -arch ${SOC_FAMILY} -o ${bitname}.bin_${hdf} -w on ${@bb.utils.contains('SOC_FAMILY','zynqmp','','-process_bitstream bin',d)}
 
+    #need this as with -process_bitstream flag bin file is automatically created in same dir as bitstream
+    if [ "${SOC_FAMILY}" = "zynq" ]; then
+            cp ${BITPATH}.bin ./${bitname}.bin_${hdf}
+    fi
+
+    if [ ! -e "${bitname}.bin_${hdf}" ]; then
+            bbfatal "bootgen failed. Enable -log debug with bootgen and check logs"
+    fi
+}
 do_compile() {
 
         for hdf in ${HDF_LIST}; do
@@ -90,18 +103,12 @@ do_compile() {
                 fi
 
                 #generate .bin
-                BIT=`ls ${XSCTH_WS}/${hdf}/*.bit`
-                bitname=`basename ${BIT}`
-                printf "all:\n{\n\t${BIT}\n}" > ${hdf}.bif
-                bootgen -image ${hdf}.bif -arch ${SOC_FAMILY} -o ${bitname}.bin_${hdf} -w on ${@bb.utils.contains('SOC_FAMILY','zynqmp','','-process_bitstream bin',d)}
-
-                #need this as with -process_bitstream flag bin file is automatically created in same dir as bitstream
-                if [ "${SOC_FAMILY}" = "zynq" ]; then
-                        cp ${XSCTH_WS}/${hdf}/*.bit.bin ./${bitname}.bin_${hdf}
-                fi
-
-                if [ ! -e "${bitname}.bin_${hdf}" ]; then
-                        bbfatal "bootgen failed. Enable -log debug with bootgen and check logs"
+                if [ "${SOC_FAMILY}" != "versal" ]; then
+                    BITPATH=${XSCTH_WS}/${hdf}/*.bit
+                    generate_bin
+                else
+                    #partial pdi in xsa is not yet supported, will need to modify this part once supported
+                    echo "TODO"
                 fi
         done
 
@@ -111,18 +118,13 @@ do_compile() {
         else
                 cp ${RECIPE_SYSROOT}/boot/devicetree/pl-final.dtbo ${XSCTH_WS}/base.dtbo
 
-                basebit=`ls ${RECIPE_SYSROOT}/boot/bitstream/*.bit`
-                bitname=`basename $basebit`
-                printf "all:\n{\n\t${basebit}\n}" > base.bif
-                bootgen -image base.bif -arch ${SOC_FAMILY} -o ${bitname}.bin_base -w on ${@bb.utils.contains('SOC_FAMILY','zynqmp','','-process_bitstream bin',d)}
-
-                #need this as with -process_bitstream flag bin file is automatically created in same dir as bitstream
-                if [ "${SOC_FAMILY}" = "zynq" ]; then
-                        cp ${RECIPE_SYSROOT}/boot/bitstream/*.bit.bin ./${bitname}.bin_base
-                fi
-
-                if [ ! -e "${bitname}.bin_base" ]; then
-                        bbfatal "bootgen failed. Enable -log debug with bootgen and check logs"
+                if [ "${SOC_FAMILY}" != "versal" ]; then
+                    BITPATH=${RECIPE_SYSROOT}/boot/bitstream/*.bit
+                    hdf="base"
+                    generate_bin
+                else
+                    #partial pdi in xsa is not yet supported, will need to modify this part once supported
+                    echo "TODO"
                 fi
         fi
 }
@@ -132,13 +134,23 @@ do_install() {
         if [ -e "base.dtbo" ]; then
             #install base hdf artifacts
             install -Dm 0644 base.dtbo ${D}/lib/firmware/base/base.dtbo
-            newname=`basename *.bit.bin_base | awk -F '.bit.bin_' '{print $1}'`
-            install -Dm 0644 *.bit.bin_base ${D}/lib/firmware/base/${newname}.bit.bin
+            if [ "${SOC_FAMILY}" != "versal" ]; then
+                newname=`basename *.bit.bin_base | awk -F '.bit.bin_' '{print $1}'`
+                install -Dm 0644 *.bit.bin_base ${D}/lib/firmware/base/${newname}.bit.bin
+            else
+                #partial pdi in xsa is not yet supported, will need to modify this part once supported
+                echo "TODO"
+            fi
         fi
         for hdf in ${HDF_LIST}; do
                 install -Dm 0644 ${hdf}.dtbo ${D}/lib/firmware/${hdf}/${hdf}.dtbo
-                newname=`basename *.bit.bin_${hdf} | awk -F '.bit.bin_' '{print $1}'`
-                install -Dm 0644 *.bit.bin_${hdf} ${D}/lib/firmware/${hdf}/${newname}.bit.bin
+                if [ "${SOC_FAMILY}" != "versal" ]; then
+                    newname=`basename *.bit.bin_${hdf} | awk -F '.bit.bin_' '{print $1}'`
+                    install -Dm 0644 *.bit.bin_${hdf} ${D}/lib/firmware/${hdf}/${newname}.bit.bin
+                else
+                    #partial pdi in xsa is not yet supported, will need to modify this part once supported
+                    echo "TODO"
+                fi
         done
 }
 
