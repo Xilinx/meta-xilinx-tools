@@ -75,11 +75,13 @@ COMPATIBLE_MACHINE_zynqmp = ".*"
 COMPATIBLE_MACHINE_microblaze = ".*"
 COMPATIBLE_MACHINE_versal = ".*"
 
-SRC_URI_append_ultra96-zynqmp = "${@bb.utils.contains('MACHINE_FEATURES', 'mipi', ' file://mipi-support-ultra96.dtsi', '', d)}"
+SRC_URI_append_ultra96-zynqmp = "${@bb.utils.contains('MACHINE_FEATURES', 'mipi', ' file://mipi-support-ultra96.dtsi file://pl.dtsi', '', d)}"
 
 do_configure_append_ultra96-zynqmp() {
         if [ -e ${WORKDIR}/mipi-support-ultra96.dtsi ]; then
                cp ${WORKDIR}/mipi-support-ultra96.dtsi ${DT_FILES_PATH}/mipi-support-ultra96.dtsi
+	       sed -i '/pl\.dtsi/d' ${DT_FILES_PATH}/system-top.dts
+               echo '/include/ "pl.dtsi"' >> ${DT_FILES_PATH}/system-top.dts
                echo '/include/ "mipi-support-ultra96.dtsi"' >> ${DT_FILES_PATH}/system-top.dts
         fi
 }

@@ -15,7 +15,7 @@
 	mipi_csi2_rx_subsyst_0: mipi_csi2_rx_subsystem@80000000 {
                         clock-names = "lite_aclk", "dphy_clk_200M", "video_aclk";
 			clocks = <&zynqmp_clk 71>, <&misc_clk_1>, <&misc_clk_1>;
-			compatible = "xlnx,mipi-csi2-rx-subsystem-3.0";
+			compatible = "xlnx,mipi-csi2-rx-subsystem-5.0";
 			interrupt-names = "csirxss_csi_irq";
 			interrupt-parent = <&gic>;
 			interrupts = <0 90 4>;
