@@ -8,6 +8,8 @@ BINARY_ID = "${@d.getVar('SRCPV') if d.getVar('SRCPV') else d.getVar('PR') }"
 BOOTBIN_BIF_FRAGMENT ?= ""
 do_install[vardeps] += "BOOTBIN_BIF_FRAGMENT"
 
+BASE_DTS ?= "system-top"
+
 python() {
     pn = d.getVar("PN")
     binaryid = d.getVar('BINARY_ID')

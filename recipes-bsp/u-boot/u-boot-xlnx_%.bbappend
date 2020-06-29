@@ -6,7 +6,7 @@ python __anonymous () {
     if providerdtb:
        d.appendVarFlag('do_configure', 'depends', ' virtual/dtb:do_populate_sysroot')
        if d.getVar("DTB_NAME") is not None:
-           d.setVar('DTB_NAME', 'system-top.dtb')
+            d.setVar('DTB_NAME', d.getVar('BASE_DTS')+ '.dtb')
 }
 
 DTB_PATH ?= "/boot/devicetree"
