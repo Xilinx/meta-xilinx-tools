@@ -104,7 +104,7 @@ do_compile_prepend() {
 BINARY_EXT = ".dtb"
 #installing base dtb in proper format for updateboot
 do_install_append () {
-    install -Dm 0644 ${B}/*.dtb ${D}/boot/${PN}-${SRCPV}${BINARY_EXT}
+    install -Dm 0644 ${B}/${BASE_DTS}.dtb ${D}/boot/${PN}-${SRCPV}${BINARY_EXT}
 }
 FILES_${PN} += "/boot/${PN}-${SRCPV}${BINARY_EXT}"
 
@@ -118,10 +118,14 @@ do_install_append_microblaze () {
 }
 
 do_deploy() {
+    #deploy base dtb
+    install -Dm 0644 ${B}/${BASE_DTS}.dtb ${DEPLOYDIR}/${DTB_BASE_NAME}.dtb
+    ln -sf ${DTB_BASE_NAME}.dtb ${DEPLOYDIR}/${MACHINE}-system.dtb
+    ln -sf ${DTB_BASE_NAME}.dtb ${DEPLOYDIR}/system.dtb
+
+    #deploy everything in case
 	for DTB_FILE in `ls *.dtb *.dtbo`; do
-		install -Dm 0644 ${B}/${DTB_FILE} ${DEPLOYDIR}/${DTB_BASE_NAME}.${DTB_FILE#*.}
-		ln -sf ${DTB_BASE_NAME}.${DTB_FILE#*.} ${DEPLOYDIR}/${MACHINE}-system.${DTB_FILE#*.}
-		ln -sf ${DTB_BASE_NAME}.${DTB_FILE#*.} ${DEPLOYDIR}/system.${DTB_FILE#*.}
+		install -Dm 0644 ${B}/${DTB_FILE} ${DEPLOYDIR}/
 	done
 }
 
