@@ -20,6 +20,7 @@ YAML_DISABLE_DT_ZOCL ?= ''
 YAML_FIRMWARE_NAME ?= ''
 YAML_OVERLAY_CUSTOM_DTS ?= ''
 YAML_BSP_COMPILER_FLAGS ?= ''
+YAML_KERNEL_VERSION ?= ''
 YAML_ENABLE_NO_ALIAS ?= ''
 YAML_ENABLE_DT_VERBOSE ?= ''
 YAML_PARTIAL_OVERLAY_CUSTOM_DTS ?= ''
@@ -40,6 +41,9 @@ YAML_BSP_CONFIG[extra_compiler_flags] = "add,${YAML_BSP_COMPILER_FLAGS}"
 
 YAML_BSP_CONFIG += "${@'periph_type_overrides' if d.getVar('YAML_DT_BOARD_FLAGS') != '' else ''}"
 YAML_BSP_CONFIG[periph_type_overrides] = "set,${YAML_DT_BOARD_FLAGS}"
+
+YAML_BSP_CONFIG += "${@'kernel_version' if d.getVar('YAML_KERNEL_VERSION') != '' else ''}"
+YAML_BSP_CONFIG[kernel_version] = "set,${YAML_KERNEL_VERSION}"
 
 YAML_BSP_CONFIG += "${@'stdin' if d.getVar('YAML_SERIAL_CONSOLE_STDIN') != '' else ''}"
 YAML_BSP_CONFIG[stdin] = "set,${YAML_SERIAL_CONSOLE_STDIN}"
