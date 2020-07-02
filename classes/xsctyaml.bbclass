@@ -104,6 +104,7 @@ python do_create_yaml() {
         if fp :
             yamlfile = open(fp, 'w')
             yamlfile.write(yaml.dump(yaml_dict, default_flow_style=True, width=2000))
+            yamlfile.close()
 }
 
 addtask create_yaml after do_prepare_recipe_sysroot before do_configure
