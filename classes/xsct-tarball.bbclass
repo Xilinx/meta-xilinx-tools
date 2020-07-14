@@ -93,9 +93,9 @@ python xsct_event_extract() {
                     pass
 
         cmd = d.expand("\
-            rm -rf ${STAGING_DIR}-xsct; \
-            mkdir -p ${STAGING_DIR}-xsct; \
-            cd ${STAGING_DIR}-xsct; \
+            rm -rf ${XSCT_STAGING_DIR}; \
+            mkdir -p ${XSCT_STAGING_DIR}; \
+            cd ${XSCT_STAGING_DIR}; \
             tar -xvf ${XSCT_DLDIR}/${XSCT_TARBALL};")
         bb.note('Extracting external xsct-tarball to sysroots')
         subprocess.check_output(cmd, shell=True)
