@@ -9,6 +9,7 @@ PROVIDES = "virtual/dtb"
 # For instance, baremetal won't support this
 BOOTBININHERIT = "${@'bootbin-component' if d.getVar('TARGET_OS').startswith('linux') else ''}"
 inherit xsctdt xsctyaml ${BOOTBININHERIT}
+BASE_DTS ?= "system-top"
 
 BOOTBIN_BIF_FRAGMENT_zynqmp = "load=0x100000"
 BOOTBIN_BIF_FRAGMENT_zynq = "load=0x100000"
