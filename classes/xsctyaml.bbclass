@@ -2,6 +2,9 @@ inherit python3native
 
 DEPENDS += "python3-pyyaml-native"
 
+# Since we're not inheriting native.bbclass, we need to set libdir to correctly point to the native libdir
+PYTHON_SITEPACKAGES_DIR = "${libdir_native}/${PYTHON_DIR}/site-packages"
+
 YAML_APP_CONFIG ?= ''
 YAML_BSP_CONFIG ?= ''
 YAML_FILE_PATH ?= ''
