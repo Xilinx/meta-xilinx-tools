@@ -15,7 +15,9 @@ with ['meta-xilinx-tools'] in the subject:
 
 Maintainers:
 
-Manjukumar Harthikote Matha
+	Jaewon Lee <jaewon.lee@xilinx.com>
+        Sai Hari Chandana Kalluri <chandana.kalluri@xilinx.com>
+        Mark Hatle <mark.hatle@xilinx.com>
 
 Dependencies
 ============
