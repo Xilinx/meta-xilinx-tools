@@ -37,8 +37,8 @@ XSCTH_MISC = " -hdf_type ${HDF_EXT}"
 YAML_MAIN_MEMORY_CONFIG_ultra96-zynqmp ?= "psu_ddr_0"
 YAML_CONSOLE_DEVICE_CONFIG_ultra96-zynqmp ?= "psu_uart_1"
 
-YAML_MAIN_MEMORY_CONFIG_kc705-microblazeel ?= "ddr3_sdram"
-YAML_CONSOLE_DEVICE_CONFIG_kc705-microblazeel ?= "rs232_uart"
+YAML_MAIN_MEMORY_CONFIG_kc705-microblazeel ?= "mig_7series_0"
+YAML_CONSOLE_DEVICE_CONFIG_kc705-microblazeel ?= "axi_uartlite_0"
 
 YAML_DT_BOARD_FLAGS_ultra96-zynqmp ?= "{BOARD avnet-ultra96-rev1}"
 YAML_DT_BOARD_FLAGS_zcu102-zynqmp ?= "{BOARD zcu102-rev1.0}"
