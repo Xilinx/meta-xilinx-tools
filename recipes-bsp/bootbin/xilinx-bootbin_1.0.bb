@@ -37,7 +37,7 @@ def get_bootbin_depends(d):
 
     return bootbindeps
 
-def create_bif(config, attrflags, attrimage, common_attr, biffd, d):
+def create_bif(config, attrflags, attrimage, ids, common_attr, biffd, d):
     import re, os
     for cfg in config:
         if cfg not in attrflags and common_attr:
@@ -64,8 +64,51 @@ def create_bif(config, attrflags, attrimage, common_attr, biffd, d):
 
     return
 
-python do_configure() {
+def create_versal_bif(config, attrflags, attrimage, ids, common_attr, biffd, d):
+    import re, os
+    id_dict = {}
+    for cfg in config:
+        if cfg not in attrflags and common_attr:
+            error_msg = "%s: invalid ATTRIBUTE" % (cfg)
+            bb.error("BIF attribute Error: %s " % (error_msg))
+        else:
+            if common_attr:
+                cfgval = d.expand(attrflags[cfg]).split(',')
+                #TODO: Does common attribute syntax change in similar way for versal?
+                cfgstr = "\t { %s %s }\n" % (cfg,', '.join(cfgval))
+                biffd.write(cfgstr)
+            else:
+                if cfg not in attrimage:
+                    error_msg = "%s: invalid or missing elf or image" % (cfg)
+                    bb.error("BIF atrribute Error: %s " % (error_msg))
+                imagestr = d.expand(attrimage[cfg])
+                if os.stat(imagestr).st_size == 0:
+                    bb.warn("Empty file %s, excluding from bif file" %(imagestr))
+                    continue
+                if cfg in attrflags:
+                    cfgval = d.expand(attrflags[cfg]).split(',')
+                    try:
+                        id = d.expand(ids[cfg])
+                    except:
+                        id = '0'
+                    cfgstr = "\t { %s, file=%s }\n" % (', '.join(cfgval), imagestr)
+                    try:
+                        id_dict[id] += cfgstr
+                    except:
+                        id_dict[id] = cfgstr
+                else:
+                    cfgstr = "\t %s\n" % (imagestr)
+    for id, string in id_dict.items():
+        biffd.write("\timage {\n")
+        if id != '0':
+            biffd.write("\t id = " + id + "\n")
+        biffd.write(string)
+        biffd.write("\t}\n")
+    return
 
+python do_configure() {
+    arch = d.getVar("SOC_FAMILY")
+    biffunc = {'versal':create_versal_bif, 'zynq':create_bif, 'zynqmp':create_bif}
     fp = d.getVar("BIF_FILE_PATH")
     biffd = open(fp, 'w')
     biffd.write("the_ROM_image:\n")
@@ -74,13 +117,14 @@ python do_configure() {
     bifattr = (d.getVar("BIF_COMMON_ATTR") or "").split()
     if bifattr:
         attrflags = d.getVarFlags("BIF_COMMON_ATTR") or {}
-        create_bif(bifattr, attrflags,'', 1, biffd, d)
+        biffunc[arch](bifattr, attrflags,'','', 1, biffd, d)
 
     bifpartition = (d.getVar("BIF_PARTITION_ATTR") or "").split()
     if bifpartition:
         attrflags = d.getVarFlags("BIF_PARTITION_ATTR") or {}
         attrimage = d.getVarFlags("BIF_PARTITION_IMAGE") or {}
-        create_bif(bifpartition, attrflags, attrimage, 0, biffd, d)
+        ids = d.getVarFlags("BIF_PARTITION_ID") or {}
+        biffunc[arch](bifpartition, attrflags, attrimage, ids, 0, biffd, d)
 
     biffd.write("}")
     biffd.close()
