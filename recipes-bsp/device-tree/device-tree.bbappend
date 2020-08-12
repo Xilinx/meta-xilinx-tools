@@ -65,6 +65,7 @@ YAML_DT_BOARD_FLAGS_vc-p-a2197-00-versal ?= "{BOARD versal-vc-p-a2197-00-reva-x-
 
 YAML_OVERLAY_CUSTOM_DTS = "pl-final.dts"
 CUSTOM_PL_INCLUDE_DTSI ?= ""
+EXTRA_DT_FILES ?= ""
 
 DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_PROJ}"
 DT_INCLUDE_append = " ${WORKDIR}"
@@ -79,6 +80,10 @@ COMPATIBLE_MACHINE_versal = ".*"
 
 SRC_URI_append_ultra96-zynqmp = "${@bb.utils.contains('MACHINE_FEATURES', 'mipi', ' file://mipi-support-ultra96.dtsi file://pl.dtsi', '', d)}"
 
+SRC_URI_append = "${@" ".join(["file://%s" % f for f in (d.getVar('EXTRA_DT_FILES') or "").split()])}"
+do_configure[cleandirs] += "${DT_FILES_PATH} ${B}"
+do_deploy[cleandirs] += "${DEPLOYDIR}"
+
 do_configure_append_ultra96-zynqmp() {
         if [ -e ${WORKDIR}/mipi-support-ultra96.dtsi ]; then
                cp ${WORKDIR}/mipi-support-ultra96.dtsi ${DT_FILES_PATH}/mipi-support-ultra96.dtsi
@@ -92,6 +97,10 @@ do_configure_append () {
         [ ! -f "${CUSTOM_PL_INCLUDE_DTSI}" ] && bbfatal "Please check that the correct filepath was provided using CUSTOM_PL_INCLUDE_DTSI"
         cp ${CUSTOM_PL_INCLUDE_DTSI} ${XSCTH_WS}/${XSCTH_PROJ}/pl-custom.dtsi
     fi
+
+    for f in ${EXTRA_DT_FILES}; do
+        cp ${WORKDIR}/${f} ${DT_FILES_PATH}/
+    done
 }
 
 do_compile_prepend() {
