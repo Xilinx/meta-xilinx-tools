@@ -13,7 +13,7 @@ BASE_DTS ?= "system-top"
 python() {
     pn = d.getVar("PN")
     binaryid = d.getVar('BINARY_ID')
-    if bb.data.inherits_class('externalsrc', d):
+    if bb.data.inherits_class('externalsrc', d) and d.getVar('EXTERNALSRC'):
         binaryid = '999'
     binaryname = d.getVar('BINARY_NAME')
     binaryext = d.getVar('BINARY_EXT')
