@@ -1,12 +1,12 @@
 inherit xsctbase
 
-EMBEDDEDSW_REPO ??= "git://github.com/Xilinx/embeddedsw.git;protocol=https"
-EMBEDDEDSW_BRANCH ??= "release-2020.1"
-EMBEDDEDSW_SRCREV ??= "6cbb920f4de9e650dc361b8e487f139fd4c3c743"
+REPO ??= "git://github.com/Xilinx/embeddedsw.git;protocol=https"
+BRANCH ??= "release-2020.1"
+SRCREV ??= "6cbb920f4de9e650dc361b8e487f139fd4c3c743"
 
 
-EMBEDDEDSW_BRANCHARG ?= "${@['nobranch=1', 'branch=${EMBEDDEDSW_BRANCH}'][d.getVar('EMBEDDEDSW_BRANCH') != '']}"
-EMBEDDEDSW_SRCURI ?= "${EMBEDDEDSW_REPO};${EMBEDDEDSW_BRANCHARG}"
+EMBEDDEDSW_BRANCHARG ?= "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
+EMBEDDEDSW_SRCURI ?= "${REPO};${EMBEDDEDSW_BRANCHARG}"
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
@@ -14,7 +14,6 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://license.txt;md5=8b565227e1264d677db8f841c2948cba"
 
 SRC_URI = "${EMBEDDEDSW_SRCURI}"
-SRCREV = "${EMBEDDEDSW_SRCREV}"
 PV = "${XILINX_VER_MAIN}+git${SRCPV}"
 S = "${WORKDIR}/git"
 
