@@ -1,10 +1,9 @@
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
-inherit update-alternatives devicetree
+inherit devicetree
 
 DEPENDS = "virtual/dtb dtc-native"
-RDEPENDS_${PN} = "fpga-init"
 
 COMPATIBLE_MACHINE ?= "^$"
 COMPATIBLE_MACHINE_zynqmp = ".*"
@@ -35,24 +34,14 @@ python devicetree_do_compile_append() {
 
     if not os.path.isfile(pn + ".bit.bin"):
         bb.fatal("bootgen failed. Enable -log debug with bootgen and check logs")
-
-    with open(pn + ".env", 'w') as f:
-        f.write("DTBO=/lib/firmware/%s/%s.dtbo\n" % (pn, pn) )
-        f.write("BIN=/lib/firmware/%s/%s.bit.bin\n" % (pn, pn) )
 }
 
 do_install() {
     install -d ${D}/lib/firmware/${PN}/
     install -Dm 0644 *.dtbo ${D}/lib/firmware/${PN}/${PN}.dtbo
     install -Dm 0644 ${PN}.bit.bin ${D}/lib/firmware/${PN}/${PN}.bit.bin
-
-    install -Dm 0644 ${PN}.env ${D}/lib/firmware/${PN}/${PN}.env
 }
 
 do_deploy[noexec] = "1"
 
 FILES_${PN} += "/lib/firmware/${PN}"
-
-ALTERNATIVE_${PN} = "overlay"
-ALTERNATIVE_TARGET[overlay] = "/lib/firmware/${PN}/${PN}.env"
-ALTERNATIVE_LINK_NAME[overlay] = "/lib/firmware/fpga-default.env"
