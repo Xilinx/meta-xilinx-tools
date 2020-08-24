@@ -18,7 +18,7 @@ S = "${WORKDIR}/git"
 I = "${AIEDIR}/include"
 
 # Keep v1 as default for now.
-DEFAULT_PREFERENCE = "-1"
+COMPATIBLE_HOST = "${@bb.utils.contains('AIED_VERSION','2.0','.*','none',d)}"
 
 DEPENDS = "libmetal"
 RDEPENDS_${PN} = "libmetal"
