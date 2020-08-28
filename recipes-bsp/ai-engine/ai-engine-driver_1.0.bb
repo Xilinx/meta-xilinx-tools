@@ -3,6 +3,9 @@ DESCRIPTION = "This library provides APIs for the runtime support of the Xilinx 
 
 require ai-engine.inc
 
+COMPATIBLE_MACHINE = "^$"
+COMPATIBLE_MACHINE_versal-ai-core = "versal-ai-core"
+
 DEPENDS = "libmetal openamp"
 RDEPENDS_${PN} = "libmetal"
 PROVIDES = "libxaiengine"
@@ -25,3 +28,5 @@ do_install(){
 	install -d ${D}${libdir}
 	cp -dr ${AIEDIR}/src/*.so* ${D}${libdir}
 }
+
+PACKAGE_ARCH_versal-ai-core = "${SOC_VARIANT_ARCH}"
