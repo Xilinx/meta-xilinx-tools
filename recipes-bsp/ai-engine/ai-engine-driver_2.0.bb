@@ -17,6 +17,9 @@ AIEDIR = "${S}"
 S = "${WORKDIR}/git"
 I = "${AIEDIR}/include"
 
+COMPATIBLE_MACHINE = "^$"
+COMPATIBLE_MACHINE_versal-ai-core = "versal-ai-core"
+
 # Keep v1 as default for now.
 DEFAULT_PREFERENCE = "-1"
 
@@ -42,3 +45,5 @@ do_install(){
 	install -d ${D}${libdir}
 	cp -dr ${AIEDIR}/src/*.so* ${D}${libdir}
 }
+
+PACKAGE_ARCH_versal-ai-core = "${SOC_VARIANT_ARCH}"
