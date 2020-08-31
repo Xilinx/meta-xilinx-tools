@@ -4,12 +4,12 @@ DESCRIPTION = "This library provides APIs for the runtime support of the Xilinx 
 SECTION	= "libs"
 
 REPO ?= "git://gitenterprise.xilinx.com/embeddedsw/aienginev2.git;protocol=https"
-BRANCH ?= "master"
+BRANCH ?= "master-aie"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
-SRCREV ?= "${AUTOREV}"
+SRCREV ?= "b3bbdb3f379cf3d5bcdbc9ba51ccc4ae83c2e7ea"
 
 LICENSE = "MIT"
-LIC_FILES_CHKSUM="file://license.txt;md5=f5b04e905dfe6ab50aa69bcc488f88fa"
+LIC_FILES_CHKSUM="file://README.md;md5=da61ef6820cf9d62720cb8caf9f79635"
 
 SRC_URI = "${REPO};${BRANCHARG}"
 
