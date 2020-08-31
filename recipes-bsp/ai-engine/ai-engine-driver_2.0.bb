@@ -22,9 +22,6 @@ COMPATIBLE_MACHINE_versal-ai-core = "versal-ai-core"
 
 IOBACKENDS ?= "Linux"
 
-# Keep v1 as default for now.
-DEFAULT_PREFERENCE = "-1"
-
 DEPENDS = "${@bb.utils.contains('IOBACKENDS', 'metal', 'libmetal', '', d)}"
 RDEPENDS_${PN} = "${@bb.utils.contains('IOBACKENDS', 'metal', 'libmetal', '', d)}"
 
