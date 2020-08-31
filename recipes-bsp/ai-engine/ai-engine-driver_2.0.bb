@@ -20,18 +20,25 @@ I = "${AIEDIR}/include"
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_versal-ai-core = "versal-ai-core"
 
+IOBACKENDS ?= "Linux"
+
 # Keep v1 as default for now.
 DEFAULT_PREFERENCE = "-1"
 
-DEPENDS = "libmetal"
-RDEPENDS_${PN} = "libmetal"
+DEPENDS = "${@bb.utils.contains('IOBACKENDS', 'metal', 'libmetal', '', d)}"
+RDEPENDS_${PN} = "${@bb.utils.contains('IOBACKENDS', 'metal', 'libmetal', '', d)}"
+
 PROVIDES = "libxaiengine"
 RPROVIDES_${PN}	= "libxaiengine"
 
 # The makefile isn't ready for parallel execution at the moment
 PARALLEL_MAKE = "-j 1"
 
-EXTRA_OEMAKE = "-C ${AIEDIR}/src -f Makefile.Linux"
+CFLAGS += "-Wall -Wextra"
+CFLAGS += "${@bb.utils.contains('IOBACKENDS', 'Linux', ' -D__AIELINUX__', '', d)}"
+CFLAGS += "${@bb.utils.contains('IOBACKENDS', 'metal', ' -D__AIEMETAL__', '', d)}"
+EXTRA_OEMAKE = "-C ${AIEDIR}/src -f Makefile.Linux CFLAGS='${CFLAGS}'"
+
 
 do_compile(){
 	oe_runmake
