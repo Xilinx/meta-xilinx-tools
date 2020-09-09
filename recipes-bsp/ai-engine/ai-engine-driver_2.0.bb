@@ -1,19 +1,11 @@
 SUMMARY = "Xilinx AI Engine runtime"
 DESCRIPTION = "This library provides APIs for the runtime support of the Xilinx AI Engine IP"
 
+require ai-engine.inc
+
 SECTION	= "libs"
 
-REPO ?= "git://gitenterprise.xilinx.com/embeddedsw/aienginev2.git;protocol=https"
-BRANCH ?= "master-aie"
-BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
-SRCREV ?= "b3bbdb3f379cf3d5bcdbc9ba51ccc4ae83c2e7ea"
-
-LICENSE = "MIT"
-LIC_FILES_CHKSUM="file://README.md;md5=da61ef6820cf9d62720cb8caf9f79635"
-
-SRC_URI = "${REPO};${BRANCHARG}"
-
-AIEDIR = "${S}"
+AIEDIR ?= "${S}/XilinxProcessorIPLib/drivers/aienginev2"
 S = "${WORKDIR}/git"
 I = "${AIEDIR}/include"
 
