@@ -3,6 +3,10 @@ DESCRIPTION = "This library provides APIs for the runtime support of the Xilinx 
 
 require ai-engine.inc
 
+AIEDIR = "${S}/XilinxProcessorIPLib/drivers/aiengine"
+S = "${WORKDIR}/git"
+I = "${AIEDIR}/include"
+
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_versal-ai-core = "versal-ai-core"
 
