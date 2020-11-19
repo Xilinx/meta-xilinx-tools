@@ -12,6 +12,10 @@ COMPATIBLE_MACHINE_zynqmp = "zynqmp"
 XSCTH_APP_zynqmp = "Image Selector"
 
 do_configure_append () {
+	# Required for SOM only
+	sed -i "s|//#define XIS_UPDATE_A_B_MECHANISM|#define XIS_UPDATE_A_B_MECHANISM|g" ${B}/${XSCTH_PROJ}/xis_config.h
+	sed -i "s|#define XIS_GET_BOARD_PARAMS|//#define XIS_GET_BOARD_PARAMS|g" ${B}/${XSCTH_PROJ}/xis_config.h
+
 cat > ${WORKDIR}/${PN}.bif << EOF
         the_ROM_image:
         {
