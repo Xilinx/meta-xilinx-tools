@@ -8,7 +8,7 @@ DEPENDS += "virtual/base-pdi"
 BIF_COMMON_ATTR ?= ""
 
 # specify BIF partition attributes required for BOOT.bin
-BIF_PARTITION_ATTR ?= "pdi plm dtb atf u-boot"
+BIF_PARTITION_ATTR ?= "pdi plm psm dtb atf u-boot"
 
 # specify BIF partition attributes for pdi
 BIF_PARTITION_ATTR[pdi] ?= "type=bootimage"
