@@ -130,23 +130,23 @@ do_compile() {
 }
 
 do_install() {
-        install -d ${D}/lib/firmware/base
+        install -d ${D}/lib/firmware/xilinx/base
         if [ -e "base.dtbo" ]; then
             #install base hdf artifacts
-            install -Dm 0644 base.dtbo ${D}/lib/firmware/base/base.dtbo
+            install -Dm 0644 base.dtbo ${D}/lib/firmware/xilinx/base/base.dtbo
             if [ "${SOC_FAMILY}" != "versal" ]; then
                 newname=`basename *.bit.bin_base | awk -F '.bit.bin_' '{print $1}'`
-                install -Dm 0644 *.bit.bin_base ${D}/lib/firmware/base/${newname}.bit.bin
+                install -Dm 0644 *.bit.bin_base ${D}/lib/firmware/xilinx/base/${newname}.bit.bin
             else
                 #partial pdi in xsa is not yet supported, will need to modify this part once supported
                 echo "TODO"
             fi
         fi
         for hdf in ${HDF_LIST}; do
-                install -Dm 0644 ${hdf}.dtbo ${D}/lib/firmware/${hdf}/${hdf}.dtbo
+                install -Dm 0644 ${hdf}.dtbo ${D}/lib/firmware/xilinx/${hdf}/${hdf}.dtbo
                 if [ "${SOC_FAMILY}" != "versal" ]; then
                     newname=`basename *.bit.bin_${hdf} | awk -F '.bit.bin_' '{print $1}'`
-                    install -Dm 0644 *.bit.bin_${hdf} ${D}/lib/firmware/${hdf}/${newname}.bit.bin
+                    install -Dm 0644 *.bit.bin_${hdf} ${D}/lib/firmware/xilinx/${hdf}/${newname}.bit.bin
                 else
                     #partial pdi in xsa is not yet supported, will need to modify this part once supported
                     echo "TODO"
@@ -165,7 +165,7 @@ python () {
 
                 #package base hdf
                 packages.append(pn + '-base')
-                d.setVar('FILES_' + pn + '-base', baselib + '/firmware/base')
+                d.setVar('FILES_' + pn + '-base', baselib + '/firmware/xilinx/base')
                 d.setVar('PACKAGES', ' '.join(packages))
                 d.setVar('RDEPENDS_' + pn , pn + '-base')
 
@@ -181,7 +181,7 @@ python () {
                                 if os.path.isfile(dtsifile):
                                     hdffullpath.append(dtsifile)
 
-                                d.setVar('FILES_' + pn + '-' + name, baselib + '/firmware/' + name )
+                                d.setVar('FILES_' + pn + '-' + name, baselib + '/firmware/xilinx/' + name )
                         d.setVar('HDF_LIST', ' '.join(hdflist))
                         extrapackages = [pn + '-{0}'.format(i) for i in hdflist]
                         packages = packages + extrapackages
