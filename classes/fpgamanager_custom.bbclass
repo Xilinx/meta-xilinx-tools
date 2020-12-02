@@ -63,14 +63,14 @@ python devicetree_do_compile_append() {
 }
 
 do_install() {
-    install -d ${D}/lib/firmware/${PN}/
-    install -Dm 0644 *.dtbo ${D}/lib/firmware/${PN}/${PN}.dtbo
-    install -Dm 0644 ${PN}.bit.bin ${D}/lib/firmware/${PN}/${PN}.bit.bin
+    install -d ${D}/lib/firmware/xilinx/${PN}/
+    install -Dm 0644 *.dtbo ${D}/lib/firmware/xilinx/${PN}/${PN}.dtbo
+    install -Dm 0644 ${PN}.bit.bin ${D}/lib/firmware/xilinx/${PN}/${PN}.bit.bin
     if ls ${WORKDIR}/${XCL_PATH}/*.xclbin >/dev/null 2>&1; then
-        install -Dm 0644 ${WORKDIR}/${XCL_PATH}/*.xclbin ${D}/lib/firmware/${PN}/${PN}.xclbin
+        install -Dm 0644 ${WORKDIR}/${XCL_PATH}/*.xclbin ${D}/lib/firmware/xilinx/${PN}/${PN}.xclbin
     fi
 }
 
 do_deploy[noexec] = "1"
 
-FILES_${PN} += "/lib/firmware/${PN}"
+FILES_${PN} += "/lib/firmware/xilinx/{PN}"
