@@ -34,13 +34,13 @@ YAML_COMPILER_FLAGS ?= ""
 XSCTH_APP = "device-tree"
 XSCTH_MISC = " -hdf_type ${HDF_EXT}"
 
-YAML_MAIN_MEMORY_CONFIG_ultra96-zynqmp ?= "psu_ddr_0"
-YAML_CONSOLE_DEVICE_CONFIG_ultra96-zynqmp ?= "psu_uart_1"
+YAML_MAIN_MEMORY_CONFIG_ultra96 ?= "psu_ddr_0"
+YAML_CONSOLE_DEVICE_CONFIG_ultra96 ?= "psu_uart_1"
 
 YAML_MAIN_MEMORY_CONFIG_kc705-microblazeel ?= "mig_7series_0"
 YAML_CONSOLE_DEVICE_CONFIG_kc705-microblazeel ?= "axi_uartlite_0"
 
-YAML_DT_BOARD_FLAGS_ultra96-zynqmp ?= "{BOARD avnet-ultra96-rev1}"
+YAML_DT_BOARD_FLAGS_ultra96 ?= "{BOARD avnet-ultra96-rev1}"
 YAML_DT_BOARD_FLAGS_zcu102-zynqmp ?= "{BOARD zcu102-rev1.0}"
 YAML_DT_BOARD_FLAGS_zcu106-zynqmp ?= "{BOARD zcu106-reva}"
 YAML_DT_BOARD_FLAGS_zc702-zynq7 ?= "{BOARD zc702}"
@@ -77,13 +77,13 @@ COMPATIBLE_MACHINE_zynqmp = ".*"
 COMPATIBLE_MACHINE_microblaze = ".*"
 COMPATIBLE_MACHINE_versal = ".*"
 
-SRC_URI_append_ultra96-zynqmp = "${@bb.utils.contains('MACHINE_FEATURES', 'mipi', ' file://mipi-support-ultra96.dtsi file://pl.dtsi', '', d)}"
+SRC_URI_append_ultra96 = "${@bb.utils.contains('MACHINE_FEATURES', 'mipi', ' file://mipi-support-ultra96.dtsi file://pl.dtsi', '', d)}"
 
 SRC_URI_append = "${@" ".join(["file://%s" % f for f in (d.getVar('EXTRA_DT_FILES') or "").split()])}"
 do_configure[cleandirs] += "${DT_FILES_PATH} ${B}"
 do_deploy[cleandirs] += "${DEPLOYDIR}"
 
-do_configure_append_ultra96-zynqmp() {
+do_configure_append_ultra96() {
         if [ -e ${WORKDIR}/mipi-support-ultra96.dtsi ]; then
                cp ${WORKDIR}/mipi-support-ultra96.dtsi ${DT_FILES_PATH}/mipi-support-ultra96.dtsi
                cp ${WORKDIR}/pl.dtsi ${DT_FILES_PATH}/pl.dtsi
