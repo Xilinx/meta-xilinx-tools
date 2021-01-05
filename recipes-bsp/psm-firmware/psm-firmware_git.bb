@@ -8,7 +8,7 @@ inherit xsctapp xsctyaml deploy
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_versal = "versal"
 
-XSCTH_PROC_versal = "psv_psm_0"
+XSCTH_PROC_IP_versal = "psv_psm"
 XSCTH_APP   = "versal PSM Firmware"
 
 INSANE_SKIP_${PN} = "arch"
