@@ -73,4 +73,4 @@ do_install() {
 
 do_deploy[noexec] = "1"
 
-FILES_${PN} += "/lib/firmware/xilinx/{PN}"
+FILES_${PN} += "/lib/firmware/xilinx/${PN}"
