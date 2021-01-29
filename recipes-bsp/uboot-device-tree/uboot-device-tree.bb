@@ -44,7 +44,6 @@ YAML_DT_BOARD_FLAGS_zynqmp-generic ?= ""
 YAML_DT_BOARD_FLAGS_versal-generic ?= ""
 YAML_DT_BOARD_FLAGS_zynq-generic ?= ""
 UBOOT_DTS_NAME = "u-boot"
-DTB_FILE = "u-boot.dtb"
 
 do_configure[dirs] += "${DT_FILES_PATH}"
 SRC_URI_append = "${@" ".join(["file://%s" % f for f in (d.getVar('UBOOT_DTS') or "").split()])}"
@@ -52,7 +51,7 @@ SRC_URI_append = "${@" ".join(["file://%s" % f for f in (d.getVar('UBOOT_DTS') o
 do_configure_prepend () {
     if [ ! -z "${UBOOT_DTS}" ]; then
         for f in ${UBOOT_DTS}; do
-            cp -rf ${WORKDIR}/${f} ${DT_FILES_PATH}/
+            cp  ${WORKDIR}/${f} ${DT_FILES_PATH}/
         done
         return
     fi
@@ -64,15 +63,19 @@ do_configure_prepend () {
 #moving system-top.dts to othername.
 do_compile_prepend() {
     import shutil
-   
     listpath = d.getVar("DT_FILES_PATH")
-    try:
+    if os.path.exists(os.path.join(listpath, "system.dts")):
         os.remove(os.path.join(listpath, "system.dts"))
-        shutil.move(os.path.join(listpath, "system-top.dts"), os.path.join(listpath, d.getVar("UBOOT_DTS_NAME") + ".dts"))
-    except OSError:
-        pass
+    for file in os.listdir(listpath):
+        try:
+            if file.endswith(".dts"):
+                shutil.move(os.path.join(listpath, file), os.path.join(listpath, d.getVar("UBOOT_DTS_NAME") + ".dts"))
+        except OSError:
+            pass
 }
 
 do_deploy() {
-        install -Dm 0644 ${B}/${UBOOT_DTS_NAME}.dtb ${DEPLOYDIR}/${UBOOT_DTS_NAME}.dtb
+    for DTB_FILE in `ls *.dtb *.dtbo`; do
+        install -Dm 0644 ${B}/${DTB_FILE} ${DEPLOYDIR}/${DTB_FILE}
+    done
 }
