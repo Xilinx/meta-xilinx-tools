@@ -9,7 +9,7 @@ BOOTBIN_BIF_FRAGMENT_zynqmp = "destination_cpu=pmu"
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynqmp = "zynqmp"
 
-XSCTH_MISC_append_zynqmpdr = " -lib libmetal"
+XSCTH_MISC_append_zynqmp-dr = " -lib libmetal"
 
 XSCTH_COMPILER_DEBUG_FLAGS = "-DDEBUG_MODE -DXPFW_DEBUG_DETAILED"
 XSCTH_PROC_IP_zynqmp = "psu_pmu"

@@ -16,5 +16,5 @@ XSCTH_COMPILER_DEBUG_FLAGS = " -DFSBL_DEBUG_INFO"
 XSCTH_APP_zynq   = "Zynq FSBL"
 XSCTH_APP_zynqmp = "Zynq MP FSBL"
 
-XSCTH_MISC_append_zynqmpdr = " -lib libmetal"
+XSCTH_MISC_append_zynqmp-dr = " -lib libmetal"
 
