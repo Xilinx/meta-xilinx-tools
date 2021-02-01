@@ -14,7 +14,7 @@ COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynqmp = "zynqmp"
 COMPATIBLE_MACHINE_versal = "versal"
 
-S = "${WORKDIR}/git/"
+S = "${WORKDIR}/git"
 
 inherit cmake
 
