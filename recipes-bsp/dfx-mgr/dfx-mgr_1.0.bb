@@ -9,7 +9,7 @@ REPO ?= "git://gitenterprise.xilinx.com/Madagascar/acapd.git;protocol=https"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
 
-SRCREV ?= "5f994a2ed6bd1acb191a27f31f4060ef85c6d011"
+SRCREV ?= "8af1e3d58bd0e9bb3696c98d2910242999d9f203"
 
 S = "${WORKDIR}/git"
 
