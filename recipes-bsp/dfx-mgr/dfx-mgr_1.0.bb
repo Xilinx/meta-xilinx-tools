@@ -5,11 +5,11 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=d67bcef754e935bf77b6d7051bd62b5e"
 
 BRANCH ?= "master"
-REPO ?= "git://gitenterprise.xilinx.com/Madagascar/acapd.git;protocol=https"
+REPO ?= "git://github.com/Xilinx/dfx-mgr.git;protocol=https"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
 
-SRCREV ?= "5f994a2ed6bd1acb191a27f31f4060ef85c6d011"
+SRCREV ?= "fe7b4355d817d62327167aa1b7a611096613a3ac"
 
 S = "${WORKDIR}/git"
 
