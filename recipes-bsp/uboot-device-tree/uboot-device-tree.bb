@@ -74,8 +74,15 @@ do_compile_prepend() {
             pass
 }
 
+do_install() {
+    for DTB_FILE in `ls *.dtb`; do
+        install -Dm 0644 ${B}/${DTB_FILE} ${D}/boot/devicetree/${DTB_FILE}
+    done
+}
+
+
 do_deploy() {
-    for DTB_FILE in `ls *.dtb *.dtbo`; do
+    for DTB_FILE in `ls *.dtb`; do
         install -Dm 0644 ${B}/${DTB_FILE} ${DEPLOYDIR}/${DTB_FILE}
     done
 }
