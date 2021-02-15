@@ -1,14 +1,14 @@
 SUMMARY = "Xilinx libdfx library"
 DESCRIPTION = "Xilinx libdfx Library and headers"
 
-LICENSE = "MIT"
+LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE.md;md5=94aba86aec117f003b958a52f019f1a7"
 
 BRANCH ?= "master"
 REPO ?= "git://github.com/Xilinx/libdfx.git;protocol=https"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
-SRCREV ?= "f45bded93fcb9b853ab04e52eec0e5816ef3b308"
+SRCREV ?= "f9e02e35ed69750643e0597ef8188aa99187f012"
 
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynqmp = "zynqmp"
