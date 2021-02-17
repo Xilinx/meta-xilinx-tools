@@ -8,7 +8,7 @@ REPO = "git://gitenterprise.xilinx.com/Linux/device-tree-xlnx.git;protocol=https
 BRANCH = "master"
 SRCREV = "3768b9f8d97c8120f0605bcc07d980a701ef8fa5"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
-SRC_URI = "${REPO};${BRANCHARG}"
+SRC_URI_append = " ${REPO};${BRANCHARG}"
 
 DEPENDS = "dtc-native bootgen-native"
 
