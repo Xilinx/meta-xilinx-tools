@@ -29,4 +29,6 @@ do_compile_append () {
 do_deploy_append () {
         install -Dm 0644 ${B}/${XSCTH_PROJ}/${PN}.bin ${DEPLOYDIR}/${XSCTH_BASE_NAME}.bin
         ln -sf ${XSCTH_BASE_NAME}.bin ${DEPLOYDIR}/${PN}-${MACHINE}.bin
+
+        install -Dm 0644 ${S}/lib/sw_apps/img_rcvry/misc/web.img ${DEPLOYDIR}/imgrcry_web.img
 }
