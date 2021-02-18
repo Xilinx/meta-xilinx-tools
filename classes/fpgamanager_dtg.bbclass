@@ -4,11 +4,14 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 inherit devicetree xsctdt xsctyaml
 PROVIDES = ''
 
-REPO = "git://gitenterprise.xilinx.com/Linux/device-tree-xlnx.git;protocol=https"
-BRANCH = "master"
-SRCREV = "3768b9f8d97c8120f0605bcc07d980a701ef8fa5"
-BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
-SRC_URI_append = " ${REPO};${BRANCHARG}"
+DT_REPO ??= "git://github.com/xilinx/device-tree-xlnx.git;protocol=https"
+DT_BRANCH ??= "master"
+#Based on xilinx-v2020.2
+DT_SRCREV ??= "f725aaecffb806aff8dc081b6ab508ce7bb1fc3d"
+
+SRCREV = "${DT_SRCREV}"
+BRANCHARG = "${@['nobranch=1', 'branch=${DT_BRANCH}'][d.getVar('DT_BRANCH') != '']}"
+SRC_URI_append = " ${DT_REPO};${BRANCHARG}"
 
 DEPENDS = "dtc-native bootgen-native"
 
