@@ -193,3 +193,5 @@ python () {
                         extrapackages.append(pn + '-base')
                         d.setVar('RDEPENDS_'+pn , ' '.join(extrapackages))
 }
+
+FILES_${PN} += "${base_libdir}/*"
