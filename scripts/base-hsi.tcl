@@ -47,6 +47,8 @@ proc set_hw_design {project hdf hdf_type} {
         	puts "$::errorInfo"
 	}
 
+	file mkdir $project/drivers
+
 	if { [catch {openhw $project/hardware_description.$hdf_type} res] } {
         	error "Failed to open hardware design \
                        $project/hardware_description.$hdf_type"
