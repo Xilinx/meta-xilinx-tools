@@ -125,23 +125,23 @@ do_compile() {
 }
 
 do_install() {
-        install -d ${D}/lib/firmware/xilinx/base
+        install -d ${D}${nonarch_base_libdir}/firmware/xilinx/base
         if [ -e "base.dtbo" ]; then
             #install base hdf artifacts
-            install -Dm 0644 base.dtbo ${D}/lib/firmware/xilinx/base/base.dtbo
+            install -Dm 0644 base.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/base/base.dtbo
             if [ "${SOC_FAMILY}" != "versal" ]; then
                 newname=`basename *.bit.bin_base | awk -F '.bit.bin_' '{print $1}'`
-                install -Dm 0644 *.bit.bin_base ${D}/lib/firmware/xilinx/base/${newname}.bit.bin
+                install -Dm 0644 *.bit.bin_base ${D}${nonarch_base_libdir}/firmware/xilinx/base/${newname}.bit.bin
             else
                 #partial pdi in xsa is not yet supported, will need to modify this part once supported
                 echo "TODO"
             fi
         fi
         for hdf in ${HDF_LIST}; do
-                install -Dm 0644 ${hdf}.dtbo ${D}/lib/firmware/xilinx/${hdf}/${hdf}.dtbo
+                install -Dm 0644 ${hdf}.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${hdf}/${hdf}.dtbo
                 if [ "${SOC_FAMILY}" != "versal" ]; then
                     newname=`basename *.bit.bin_${hdf} | awk -F '.bit.bin_' '{print $1}'`
-                    install -Dm 0644 *.bit.bin_${hdf} ${D}/lib/firmware/xilinx/${hdf}/${newname}.bit.bin
+                    install -Dm 0644 *.bit.bin_${hdf} ${D}${nonarch_base_libdir}/firmware/xilinx/${hdf}/${newname}.bit.bin
                 else
                     #partial pdi in xsa is not yet supported, will need to modify this part once supported
                     echo "TODO"
@@ -155,7 +155,7 @@ python () {
         if d.getVar('FPGA_MNGR_RECONFIG_ENABLE') == '1':
                 extra = d.getVar('EXTRA_HDF')
                 pn = d.getVar('PN')
-                baselib = d.getVar('base_libdir')
+                baselib = d.getVar('nonarch_base_libdir')
                 packages = d.getVar('PACKAGES').split()
 
                 #package base hdf
