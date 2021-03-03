@@ -28,7 +28,8 @@ proc check_ws {workspace} {
 
 set option {
 	{hdf.arg	""			"hardware Definition file"}
-	{processor_ip.arg	""			"target processor_ip"}
+	{processor_ip.arg	""		"target processor_ip"}
+	{processor.arg	""			"target processor_ip instance name"}
 	{osname.arg	"standalone"		"target OS"}
 	{rp.arg		""			"repo path"}
 	{app.arg	"Empty Application"	"Application project fsbl, empty.."}
@@ -185,7 +186,11 @@ if { $params(ws) ne "" } {
 		platform create -name $params(hwpname) -hw $params(hdf) -out $params(ws)
 		set hsitemplate [::scw::get_app_template $params(app)]
 		sysconfig create -name sysconfig1
-		set processor [lindex [hsi get_cells -hier -filter IP_NAME==$params(processor_ip)] 0]
+		if { $params(processor) ne "" } {
+			set processor $params(processor)
+		} else {
+			set processor [lindex [hsi get_cells -hier -filter IP_NAME==$params(processor_ip)] 0]
+		}
 		domain create -name $params(bspname) -proc $processor \
 				  -os $params(osname) -support-app $hsitemplate	-arch $params(arch)
 		if { [info exists conf_dict] } {
