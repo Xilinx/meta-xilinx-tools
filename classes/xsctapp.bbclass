@@ -1,21 +1,9 @@
-inherit xsctbase image-artifact-names
+S = "${WORKDIR}/git"
+B = "${S}/${XSCTH_PROJ}"
 
-REPO ??= "git://github.com/Xilinx/embeddedsw.git;protocol=https"
-BRANCH ??= "master-rel-2020.2"
-SRCREV ??= "08b9f4304d1634ed632f4276d603d834940fd55a"
-
-
-EMBEDDEDSW_BRANCHARG ?= "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
-EMBEDDEDSW_SRCURI ?= "${REPO};${EMBEDDEDSW_BRANCHARG}"
+inherit xlnx-embeddedsw xsctbase image-artifact-names
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
-
-LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://license.txt;md5=3a6e22aebf6516f0f74a82e1183f74f8"
-
-SRC_URI = "${EMBEDDEDSW_SRCURI}"
-PV = "${XILINX_VER_MAIN}+git${SRCPV}"
-S = "${WORKDIR}/git"
 
 XSCTH_BASE_NAME ?= "${PN}${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
 
@@ -33,7 +21,7 @@ do_compile[lockfiles] = "${TMPDIR}/xsct-invoke.lock"
 do_compile() {
 
     cd ${B}/${XSCTH_PROJ}
-    make
+    oe_runmake
     if [ ! -e ${B}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ]; then
         bbfatal_log "${XSCTH_PROJ} compile failed."
     fi
