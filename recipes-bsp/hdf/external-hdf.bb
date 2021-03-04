@@ -31,7 +31,7 @@ python do_check() {
 }
 
 
-HDF_MACHINE ?= "${MACHINE}"
+HDF_MACHINE ?= "${@'${BOARD}' if d.getVar('BOARD',True) else '${MACHINE}'}"
 
 do_install() {
     install -d ${D}/opt/xilinx/hw-design
