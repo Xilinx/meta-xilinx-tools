@@ -4,6 +4,8 @@ LICENSE = "CLOSED"
 
 PROVIDES = "virtual/hdf"
 
+INHIBIT_DEFAULT_DEPS = "1"
+
 inherit deploy
 
 HDF_BASE ?= "git://"
@@ -22,7 +24,7 @@ S = "${WORKDIR}/git"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
-
+do_install[noexec] = "1"
 
 python do_check() {
     ext=d.getVar('HDF_EXT')
@@ -53,6 +55,7 @@ do_deploy() {
 
 addtask do_check before do_deploy
 addtask do_deploy after do_install
+
+PACKAGES = ""
 FILES_${PN}= "/opt/xilinx/hw-design/design.xsa"
 SYSROOT_DIRS += "/opt"
-

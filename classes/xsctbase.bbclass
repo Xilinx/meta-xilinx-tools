@@ -1,11 +1,13 @@
 inherit xsct-tc
 
-B = "${WORKDIR}/build"
+B ?= "${WORKDIR}/build"
 
-XSCTH_PROC_zynqmp ??= "psu_cortexa53_0"
-XSCTH_PROC_zynq   ??= "ps7_cortexa9_0"
-XSCTH_PROC_microblaze ??= "microblaze_0"
-XSCTH_PROC_versal ??= "psv_cortexa72_0"
+XSCTH_PROC_DEFAULT_zynqmp     ?= "psu_cortexa53_0"
+XSCTH_PROC_DEFAULT_zynq       ?= "ps7_cortexa9_0"
+XSCTH_PROC_DEFAULT_microblaze ?= "microblaze_0"
+XSCTH_PROC_DEFAULT_versal     ?= "psv_cortexa72_0"
+
+XSCTH_PROC ??= "${XSCTH_PROC_DEFAULT}"
 
 HDF_EXT ??= "xsa"
 XSCTH_HDF ??= "${DEPLOY_DIR_IMAGE}/Xilinx-${MACHINE}.${HDF_EXT}"
