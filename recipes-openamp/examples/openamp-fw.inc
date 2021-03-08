@@ -20,8 +20,8 @@ YAML_BSP_CONFIG[extra_compiler_flags] = "append,-DUSE_AMP=1"
 FW_OS_NAME ?= "standalone"
 
 XSCTH_MISC = "-osname ${FW_OS_NAME}"
-XSCTH_PROC_versal ?= "psv_cortexr5_0"
-XSCTH_PROC_zynqmp ?= "psu_cortexr5_0"
+XSCTH_PROC_IP_versal ?= "psv_cortexr5"
+XSCTH_PROC_IP_zynqmp ?= "psu_cortexr5"
 XSCTH_PROC_zynq ?= "ps7_cortexa9_1"
 
 INSANE_SKIP_${PN} = "arch"

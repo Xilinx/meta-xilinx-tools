@@ -1,7 +1,8 @@
 set option {
         {hdf.arg        ""                      "hardware Definition file"}
 	{hdf_type.arg   "hdf"                   "hardware Defination file type: xsa"}
-        {processor_ip.arg  ""                      "target processor_ip"}
+        {processor_ip.arg  ""                   "target processor_ip"}
+        {processor.arg	""			"target processor_ip instance name"}
         {rp.arg         ""                      "repo path"}
         {app.arg        "Empty Application"     "Application project fsbl, empty.."}
         {lib.arg        ""                      "Add library"}

@@ -4,7 +4,8 @@ source "$dir/base-hsi.tcl"
 set option {
 	{hdf.arg	""			"hardware Definition file"}
 	{hdf_type.arg   "hdf"			"hardware Defination file type: xsa"}
-	{processor_ip.arg	""			"target processor_ip"}
+	{processor_ip.arg	""		"target processor_ip"}
+	{processor.arg	""			"target processor_ip instance name"}
 	{rp.arg		""			"repo path"}
 	{app.arg	"empty_application"	"Application project fsbl, empty.."}
 	{lib.arg	""			"Add library"}
@@ -28,7 +29,11 @@ if { [catch {hsi set_repo_path $params(rp)} res] } {
 	error "Failed to set repo path $params(rp)"
 }
 
-set processor [lindex [hsi get_cells -hier -filter IP_NAME==$params(processor_ip)] 0]
+if { $params(processor) ne "" } {
+	set processor $params(processor)
+} else {
+	set processor [lindex [hsi get_cells -hier -filter IP_NAME==$params(processor_ip)] 0]
+}
 if {[catch {hsi create_sw_design $params(app) -app $params(app) \
 		-os standalone -proc $processor} res] } {
 	error "create_sw_design failed for $params(app)"
