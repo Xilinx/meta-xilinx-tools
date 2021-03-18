@@ -26,12 +26,14 @@ do_install(){
 	install -d ${D}${bindir}
 	install -d ${D}${sysconfdir}/init.d/
 	install -d ${D}${base_libdir}/firmware/xilinx
+	install -d ${D}/etc/dfx-mgrd
 
 	cp ${B}/example/sys/linux/dfx-mgrd-static ${D}${bindir}/dfx-mgrd
 	cp ${B}/example/sys/linux/dfx-mgr-client-static ${D}${bindir}/dfx-mgr-client
 	chrpath -d ${D}${bindir}/dfx-mgrd
 	chrpath -d ${D}${bindir}/dfx-mgr-client
 	install -m 0755 ${S}/src/dfx-mgr.sh ${D}${sysconfdir}/init.d/
+	install -m 0755 ${S}/src/daemon.conf ${D}/etc/dfx-mgrd/
 }
 
 FILES_${PN} += "${base_libdir}/firmware/xilinx"
