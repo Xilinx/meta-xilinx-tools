@@ -4,6 +4,9 @@ PROVIDES = "virtual/fsbl"
 
 inherit xsctapp xsctyaml deploy bootbin-component
 
+# Fix random build failures
+PARALLEL_MAKE = "-j1"
+
 BOOTBIN_BIF_FRAGMENT_zynqmp = "bootloader, destination_cpu=a53-0"
 BOOTBIN_BIF_FRAGMENT_zynq = "bootloader"
 
