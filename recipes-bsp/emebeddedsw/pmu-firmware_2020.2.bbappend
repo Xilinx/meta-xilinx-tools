@@ -1,5 +1,7 @@
 inherit xsctapp xsctyaml
 
+B = "${S}/${XSCTH_PROJ}"
+
 BOOTBIN_BIF_FRAGMENT_zynqmp = "destination_cpu=pmu"
 
 XSCTH_MISC_append_zynqmpdr = " -lib libmetal"

@@ -1,5 +1,7 @@
 inherit xsctapp xsctyaml
 
+B = "${S}/${XSCTH_PROJ}"
+
 XSCTH_PROC = "psv_psm_0"
 XSCTH_APP  = "versal PSM Firmware"
 

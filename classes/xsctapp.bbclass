@@ -1,5 +1,4 @@
 S = "${WORKDIR}/git"
-B = "${S}/${XSCTH_PROJ}"
 
 inherit xlnx-embeddedsw xsctbase
 
