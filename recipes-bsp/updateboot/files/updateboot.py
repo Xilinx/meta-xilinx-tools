@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #put together bif fragments and paths to elfs pointed to by softlinks in /boot
 import os,sys,glob
 
@@ -25,7 +25,7 @@ for cfg in '@@BOOTBIN_BIF_ATTR@@'.split(' '):
             cfgelf = os.path.join(basepath, os.path.basename(os.readlink(cfgelf)))
     except:
         print('The binary for ' + cfg + ' is not present')
-	continue
+        continue
     cfgbif = os.path.join(basepath, cfg + '.bif')
     if os.path.isfile(cfgbif):
         with open(cfgbif, 'r') as f:
