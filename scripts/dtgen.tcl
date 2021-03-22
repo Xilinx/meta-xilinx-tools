@@ -37,6 +37,11 @@ if {[catch {hsi create_sw_design $params(app) \
 	error "create_sw_design failed for $params(app)"
 }
 
+#Enable zocl by default when its a expandable xsa
+if { [ishwexpandable $params(hdf)] } {
+	hsi set_property CONFIG.dt_zocl true [hsi get_os]
+}
+
 if {[file exists $params(yamlconf)]} {
 	set_properties $params(yamlconf)
 }

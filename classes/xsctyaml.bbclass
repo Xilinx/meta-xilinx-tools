@@ -15,6 +15,7 @@ YAML_MAIN_MEMORY_CONFIG ?= ''
 YAML_CONSOLE_DEVICE_CONFIG ?= ''
 YAML_FLASH_MEMORY_CONFIG ?= ''
 YAML_REMOVE_PL_DT ?= ''
+YAML_DISABLE_DT_ZOCL ?= ''
 YAML_FIRMWARE_NAME ?= ''
 YAML_OVERLAY_CUSTOM_DTS ?= ''
 YAML_BSP_COMPILER_FLAGS ?= ''
@@ -64,6 +65,9 @@ YAML_ENABLE_DT_OVERLAY ?= "${@'1' if d.getVar('FPGA_MNGR_RECONFIG_ENABLE') == '1
 
 YAML_BSP_CONFIG += "${@'firmware_name' if d.getVar('YAML_FIRMWARE_NAME') != '' else ''}"
 YAML_BSP_CONFIG[firmware_name] = "set,${YAML_FIRMWARE_NAME}"
+
+YAML_BSP_CONFIG += "${@'dt_zocl' if d.getVar('YAML_DISABLE_DT_ZOCL') == '1' else ''}"
+YAML_BSP_CONFIG[dt_zocl] = "set,FALSE"
 
 YAML_BSP_CONFIG += "${@'overlay_custom_dts' if d.getVar('YAML_OVERLAY_CUSTOM_DTS') != '' else ''}"
 YAML_BSP_CONFIG[overlay_custom_dts] = "set,${YAML_OVERLAY_CUSTOM_DTS}"
