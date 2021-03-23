@@ -1,3 +1,6 @@
+# We WANT to default to this version when available
+DEFAULT_PREFERENCE = "100"
+
 inherit xsctapp xsctyaml
 
 B = "${S}/${XSCTH_PROJ}"
