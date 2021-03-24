@@ -1,4 +1,4 @@
-inherit xsctbase
+inherit xsctbase image-artifact-names
 
 REPO ??= "git://github.com/Xilinx/embeddedsw.git;protocol=https"
 BRANCH ??= "master-rel-2020.2"
@@ -17,8 +17,7 @@ SRC_URI = "${EMBEDDEDSW_SRCURI}"
 PV = "${XILINX_VER_MAIN}+git${SRCPV}"
 S = "${WORKDIR}/git"
 
-XSCTH_BASE_NAME ?= "${PN}${PKGE}-${PKGV}-${PKGR}-${MACHINE}-${DATETIME}"
-XSCTH_BASE_NAME[vardepsexclude] = "DATETIME"
+XSCTH_BASE_NAME ?= "${PN}${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
 
 FILESEXTRAPATHS_append := ":${XLNX_SCRIPTS_DIR}"
 SRC_URI_append = " file://app.tcl"

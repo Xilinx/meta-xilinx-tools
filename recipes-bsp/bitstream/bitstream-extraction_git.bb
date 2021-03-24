@@ -9,7 +9,7 @@ PROVIDES = "virtual/bitstream"
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
-inherit xsctbit deploy bootbin-component
+inherit xsctbit deploy bootbin-component image-artifact-names
 
 BOOTBIN_BIF_FRAGMENT_zynqmp = "destination_device=pl"
 
@@ -23,11 +23,9 @@ BITSTREAM_NAME_microblaze ?= "system"
 BINARY_NAME = "${BITSTREAM_NAME}"
 BINARY_EXT = ".bit"
 
-BITSTREAM_BASE_NAME ?= "${BITSTREAM_NAME}-${MACHINE}-${DATETIME}"
-BITSTREAM_BASE_NAME[vardepsexclude] = "DATETIME"
+BITSTREAM_BASE_NAME ?= "${BITSTREAM_NAME}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
 
-MMI_BASE_NAME ?= "${BITSTREAM_NAME}-${MACHINE}-${DATETIME}"
-MMI_BASE_NAME[vardepsexclude] = "DATETIME"
+MMI_BASE_NAME ?= "${BITSTREAM_NAME}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
 
 SYSROOT_DIRS += "/boot/bitstream"
 

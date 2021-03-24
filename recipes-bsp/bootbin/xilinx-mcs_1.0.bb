@@ -12,7 +12,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 COMPATIBLE_MACHINE ?= "^$"
 COMPATIBLE_MACHINE_microblaze = ".*"
 
-inherit deploy
+inherit deploy image-artifact-names
 
 do_fetch[noexec] = "1"
 do_unpack[noexec] = "1"
@@ -58,8 +58,7 @@ do_install() {
 	:
 }
 
-BOOT_BASE_NAME ?= "BOOT-${MACHINE}-${DATETIME}"
-BOOT_BASE_NAME[vardepsexclude] = "DATETIME"
+BOOT_BASE_NAME ?= "BOOT-${MACHINE}${IMAGE_VERSION_SUFFIX}"
 
 do_deploy() {
     #install BOOT.mcs

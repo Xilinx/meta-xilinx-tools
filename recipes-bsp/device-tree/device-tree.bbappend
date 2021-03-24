@@ -8,7 +8,7 @@ PROVIDES = "virtual/dtb"
 # We only want to add the bootbin setup for Linux based builds
 # For instance, baremetal won't support this
 BOOTBININHERIT = "${@'bootbin-component' if d.getVar('TARGET_OS').startswith('linux') else ''}"
-inherit xsctdt xsctyaml ${BOOTBININHERIT}
+inherit xsctdt xsctyaml ${BOOTBININHERIT} image-artifact-names
 BASE_DTS ?= "system-top"
 
 BOOTBIN_BIF_FRAGMENT_zynqmp = "load=0x100000"
@@ -117,8 +117,7 @@ do_install_append () {
 }
 FILES_${PN} += "/boot/${PN}-${SRCPV}${BINARY_EXT}"
 
-DTB_BASE_NAME ?= "${MACHINE}-system-${DATETIME}"
-DTB_BASE_NAME[vardepsexclude] = "DATETIME"
+DTB_BASE_NAME ?= "${MACHINE}-system${IMAGE_VERSION_SUFFIX}"
 
 do_install_append_microblaze () {
     for DTB_FILE in `ls *.dtb`; do

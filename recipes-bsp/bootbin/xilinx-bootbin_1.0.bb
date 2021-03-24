@@ -161,11 +161,11 @@ do_install() {
     install -m 0644 ${B}/BOOT.bin ${D}/boot/BOOT.bin
 }
 
-QEMUQSPI_BASE_NAME ?= "QEMU_qspi-${MACHINE}-${DATETIME}"
-QEMUQSPI_BASE_NAME[vardepsexclude] = "DATETIME"
+inherit image-artifact-names
 
-BOOTBIN_BASE_NAME ?= "BOOT-${MACHINE}-${DATETIME}"
-BOOTBIN_BASE_NAME[vardepsexclude] = "DATETIME"
+QEMUQSPI_BASE_NAME ?= "QEMU_qspi-${MACHINE}${IMAGE_VERSION_SUFFIX}"
+
+BOOTBIN_BASE_NAME ?= "BOOT-${MACHINE}${IMAGE_VERSION_SUFFIX}"
 
 do_deploy() {
     install -d ${DEPLOYDIR}

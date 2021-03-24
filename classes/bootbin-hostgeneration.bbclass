@@ -1,7 +1,8 @@
 inherit deploy
 
-BOOTBIN_BASE_NAME ?= "BOOT-${MACHINE}-${DATETIME}"
-BOOTBIN_BASE_NAME[vardepsexclude] = "DATETIME"
+inherit image-artifact-names
+
+BOOTBIN_BASE_NAME ?= "BOOT-${MACHINE}${IMAGE_VERSION_SUFFIX}"
 
 DEPENDS += "updateboot bootgen-native"
 

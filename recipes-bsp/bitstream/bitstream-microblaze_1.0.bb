@@ -44,8 +44,10 @@ do_install() {
         install -Dm 0644 ${B}/download.bit ${D}/boot/bitstream/download.bit
     fi
 }
-DOWNLOADBIT_BASE_NAME ?= "download-${MACHINE}-${DATETIME}"
-DOWNLOADBIT_BASE_NAME[vardepsexclude] = "DATETIME"
+
+inherit image-artifact-names
+
+DOWNLOADBIT_BASE_NAME ?= "download-${MACHINE}${IMAGE_VERSION_SUFFIX}"
 
 do_deploy() {
 	if [ -e ${B}/download.bit ]; then
