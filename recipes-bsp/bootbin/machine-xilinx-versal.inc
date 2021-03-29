@@ -16,13 +16,15 @@ BIF_PARTITION_IMAGE[pdi] ?= "${RECIPE_SYSROOT}/boot/base-design.pdi"
 BIF_PARTITION_DEPENDS[pdi] ?= "virtual/base-pdi:do_populate_sysroot"
 
 # specify BIF partition attributes for plm
+PLM_IMAGE_NAME ??= "plm-${MACHINE}"
 BIF_PARTITION_ATTR[plm] ?= "type=bootloader"
-BIF_PARTITION_IMAGE[plm] ?= "${DEPLOY_DIR_IMAGE}/plm-${MACHINE}.elf"
+BIF_PARTITION_IMAGE[plm] ?= "${DEPLOY_DIR_IMAGE}/${PLM_IMAGE_NAME}.elf"
 BIF_PARTITION_DEPENDS[plm] ?= "virtual/plm:do_deploy"
 
 # specify BIF partition attributes for psm
+PSM_FIRMWARE_IMAGE_NAME ??= "psm-firmware-${MACHINE}"
 BIF_PARTITION_ATTR[psm] ?= "core=psm"
-BIF_PARTITION_IMAGE[psm] ?= "${DEPLOY_DIR_IMAGE}/psm-firmware-${MACHINE}.elf"
+BIF_PARTITION_IMAGE[psm] ?= "${DEPLOY_DIR_IMAGE}/${PSM_FIRMWARE_IMAGE_NAME}.elf"
 BIF_PARTITION_DEPENDS[psm] ?= "virtual/psm-firmware:do_deploy"
 
 # specify BIF partition attributes for dtb

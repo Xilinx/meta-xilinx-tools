@@ -40,13 +40,15 @@ URI: git://git.openembedded.org/bitbake
 
 URI: git://git.openembedded.org/openembedded-core
 
-URI: git://git.openembedded.org/meta-xilinx-bsp
+URI: git://git.openembedded.org/meta-xilinx (meta-xilinx-bsp)
+
+URI: git://git.openembedded.org/meta-xilinx (meta-xilinx-standalone)
 
 Providing path to XSA
 =====================
 
 meta-xilinx-tools recipes depends on XSA to be provided.
-In 2019.2 release, all design file used will be renamed from hdf to xsa.
+As of the 2019.2 release, all design files were renamed from hdf to xsa.
 But the variables and references to hdf will remain and renamed in the future release
 
 HDF_BASE can be set to git:// or file://
