@@ -23,7 +23,24 @@ addhandler xsct_event_extract
 xsct_event_extract[eventmask] = "bb.event.DepTreeGenerated"
 
 # Specify which targets actually need to call xsct
-XSCT_TARGETS ?= "fpga-manager-util extract-cdo bitstream-extraction device-tree fsbl pmu-firmware openamp_fw psm-firmware plm"
+XSCT_TARGETS ?= "\
+	base-pdi \
+	bitstream-extraction \
+	device-tree \
+	extract-cdo \
+	fpga-manager-util \
+	fsbl \
+	fs-boot \
+	imgrcry \
+	imgsel \
+	openamp-fw-echo-testd \
+	openamp-fw-mat-muld \
+	openamp-fw-rpc-demo \
+	plm-firmware \
+	pmu-firmware \
+	psm-firmware \
+	uboot-device-tree \
+	"
 
 python xsct_event_extract() {
 
