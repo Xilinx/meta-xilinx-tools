@@ -4,6 +4,8 @@ inherit xsctapp xsctyaml deploy
 
 LICENSE = "BSD"
 
+PARALLEL_MAKE = "-j 1"
+
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynq = "zynq"
 COMPATIBLE_MACHINE_zynqmp = "zynqmp"
