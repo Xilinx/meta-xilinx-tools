@@ -11,6 +11,7 @@ I = "${AIEDIR}/include"
 
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_versal-ai-core = "versal-ai-core"
+PV = "2.1"
 
 IOBACKENDS ?= "Linux"
 
