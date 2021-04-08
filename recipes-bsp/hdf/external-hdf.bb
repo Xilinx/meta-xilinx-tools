@@ -7,7 +7,7 @@ PROVIDES = "virtual/hdf"
 inherit deploy
 
 HDF_BASE ?= "git://"
-HDF_PATH ??= "github.com/xilinx/hdf-examples.git;branch=rel-v2020.2"
+HDF_PATH ??= "github.com/Xilinx/hdf-examples.git;branch=rel-v2020.2"
 HDF_NAME ?= "system.xsa"
 
 HDF_EXT ?= "xsa"

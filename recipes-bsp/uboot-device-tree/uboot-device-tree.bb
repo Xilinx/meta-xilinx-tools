@@ -11,7 +11,7 @@ LIC_FILES_CHKSUM = " \
 inherit devicetree xsctdt xsctyaml
 
 
-REPO ??= "git://github.com/xilinx/device-tree-xlnx.git;protocol=https"
+REPO ??= "git://github.com/Xilinx/device-tree-xlnx.git;protocol=https"
 BRANCH ??= "release-2020.2.2_k26"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
