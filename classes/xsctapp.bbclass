@@ -1,8 +1,8 @@
 inherit xsctbase
 
 REPO ??= "git://github.com/Xilinx/embeddedsw.git;protocol=https"
-BRANCH ??= "master-rel-2020.2"
-SRCREV ??= "08b9f4304d1634ed632f4276d603d834940fd55a"
+BRANCH ??= "release-2020.2.2_k26"
+SRCREV ??= "6d507ed8c006d8090aec8c10e24ef34706920884"
 
 
 EMBEDDEDSW_BRANCHARG ?= "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
@@ -11,7 +11,7 @@ EMBEDDEDSW_SRCURI ?= "${REPO};${EMBEDDEDSW_BRANCHARG}"
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://license.txt;md5=3a6e22aebf6516f0f74a82e1183f74f8"
+LIC_FILES_CHKSUM = "file://license.txt;md5=64e026e5fcf32dffb500cb265cf57fe1"
 
 SRC_URI = "${EMBEDDEDSW_SRCURI}"
 PV = "${XILINX_VER_MAIN}+git${SRCPV}"

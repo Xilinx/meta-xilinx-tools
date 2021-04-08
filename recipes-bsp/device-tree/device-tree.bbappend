@@ -19,12 +19,12 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 S = "${WORKDIR}/git"
 
 REPO ??= "git://github.com/xilinx/device-tree-xlnx.git;protocol=https"
-BRANCH ??= "master"
+BRANCH ??= "release-2020.2.2_k26"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
 
-#Based on xilinx-v2020.2
-SRCREV ??= "f725aaecffb806aff8dc081b6ab508ce7bb1fc3d"
+#Based on xilinx-v2020.2.2_som
+SRCREV ??= "968a646b6d5832c12fb057e871099f0df656fc65"
 
 DT_VERSION_EXTENSION ?= "xilinx-${XILINX_RELEASE_VERSION}"
 PV = "${DT_VERSION_EXTENSION}+git${SRCPV}"

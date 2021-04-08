@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://xadcps/data/xadcps.mdd;md5=f7fa1bfdaf99c7182fc0d8e7fd
 inherit deploy xsctbase xsctyaml
 
 REPO ??= "git://github.com/xilinx/device-tree-xlnx.git;protocol=https"
-BRANCH ??= "master"
+BRANCH ??= "release-2020.2.2_k26"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
 

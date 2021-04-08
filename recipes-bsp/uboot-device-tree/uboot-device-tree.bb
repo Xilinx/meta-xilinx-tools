@@ -12,7 +12,7 @@ inherit devicetree xsctdt xsctyaml
 
 
 REPO ??= "git://github.com/xilinx/device-tree-xlnx.git;protocol=https"
-BRANCH ??= "master"
+BRANCH ??= "release-2020.2.2_k26"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
 
@@ -21,7 +21,7 @@ PROVIDES = "virtual/uboot-dtb"
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/build"
 
-SRCREV ??= "bc8445833318e9320bf485ea125921eecc3dc97a"
+SRCREV ??= "408478c12aee37ad7346a36ae350fa247de941dc"
 PV = "xilinx+git${SRCPV}"
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"

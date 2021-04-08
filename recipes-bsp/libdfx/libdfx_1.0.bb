@@ -4,11 +4,11 @@ DESCRIPTION = "Xilinx libdfx Library and headers"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE.md;md5=94aba86aec117f003b958a52f019f1a7"
 
-BRANCH ?= "master"
+BRANCH ?= "release-2020.2.2_k26"
 REPO ?= "git://github.com/Xilinx/libdfx.git;protocol=https"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
-SRCREV ?= "f9e02e35ed69750643e0597ef8188aa99187f012"
+SRCREV ?= "6aec15214bf59ece3bb13b51d2d26dd899ba9389"
 
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_zynqmp = "zynqmp"
