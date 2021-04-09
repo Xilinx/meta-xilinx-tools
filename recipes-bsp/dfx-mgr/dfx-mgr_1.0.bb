@@ -4,11 +4,11 @@ DESCRIPTION = "Xilinx Runtime User Space Libraries and Binaries"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=d67bcef754e935bf77b6d7051bd62b5e"
 
-BRANCH ?= "master"
+BRANCH ?= "release-2020.2.2_k26"
 REPO ?= "git://github.com/Xilinx/dfx-mgr.git;protocol=https"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
-SRCREV ?= "40fb697b11b1588ddc96c42fe8ac6f8ce1fb6ff6"
+SRCREV ?= "c1ee0a572b366a99f13e64325d18ecd0cdec2b14"
 
 S = "${WORKDIR}/git"
 
