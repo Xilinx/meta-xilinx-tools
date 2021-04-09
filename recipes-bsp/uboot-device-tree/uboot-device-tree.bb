@@ -21,7 +21,7 @@ PROVIDES = "virtual/uboot-dtb"
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/build"
 
-SRCREV ??= "408478c12aee37ad7346a36ae350fa247de941dc"
+SRCREV ??= "968a646b6d5832c12fb057e871099f0df656fc65"
 PV = "xilinx+git${SRCPV}"
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"

@@ -6,8 +6,8 @@ PROVIDES = ''
 
 DT_REPO ??= "git://github.com/Xilinx/device-tree-xlnx.git;protocol=https"
 DT_BRANCH ??= "release-2020.2.2_k26"
-#Based on xilinx-v2020.2
-DT_SRCREV ??= "dcdc0dbee136eccab4e03ffa4fd514215ceeef2e"
+#Based on xilinx-v2020.2.2_k26
+DT_SRCREV ??= "968a646b6d5832c12fb057e871099f0df656fc65"
 
 SRCREV = "${DT_SRCREV}"
 BRANCHARG = "${@['nobranch=1', 'branch=${DT_BRANCH}'][d.getVar('DT_BRANCH') != '']}"
