@@ -5,9 +5,9 @@ inherit devicetree xsctdt xsctyaml
 PROVIDES = ''
 
 DT_REPO ??= "git://github.com/Xilinx/device-tree-xlnx.git;protocol=https"
-DT_BRANCH ??= "master"
+DT_BRANCH ??= "release-2020.2.2_k26"
 #Based on xilinx-v2020.2
-DT_SRCREV ??= "f725aaecffb806aff8dc081b6ab508ce7bb1fc3d"
+DT_SRCREV ??= "dcdc0dbee136eccab4e03ffa4fd514215ceeef2e"
 
 SRCREV = "${DT_SRCREV}"
 BRANCHARG = "${@['nobranch=1', 'branch=${DT_BRANCH}'][d.getVar('DT_BRANCH') != '']}"
