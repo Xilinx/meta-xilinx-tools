@@ -7,7 +7,7 @@ PROVIDES = "virtual/hdf"
 inherit deploy
 
 HDF_BASE ?= "git://"
-HDF_PATH ??= "github.com/Xilinx/hdf-examples.git;branch=rel-v2020.2"
+HDF_PATH ??= "github.com/Xilinx/hdf-examples.git;branch=release-2020.2.2_k26"
 HDF_NAME ?= "system.xsa"
 
 HDF_EXT ?= "xsa"
@@ -17,7 +17,7 @@ SRC_URI = "${HDF_BASE}${HDF_PATH}"
 COMPATIBLE_HOST_xilinx-standalone = "${HOST_SYS}"
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
-SRCREV ??= "3dd3e5e8d895858d9d2aefd34a053822d19936a4"
+SRCREV ??= "d328f1b586872a0e632a15f1e5977bbd1f588d15"
 S = "${WORKDIR}/git"
 
 do_configure[noexec] = "1"
