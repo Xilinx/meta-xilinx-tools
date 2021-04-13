@@ -134,8 +134,13 @@ python xsct_event_extract() {
         with open(tarballchksum, "w") as f:
             f.write(chksum_tar_actual)
 
+        if not os.path.exists(loader):
+            bb.fatal("XSCT is not usable, this usually means the wrong version of XSCT is being\nused.\nUnable to find %s." % loader)
+
+    except bb.fetch2.BBFetchException as e:
+        bb.fatal(str(e))
     except RuntimeError as e:
-        bb.error(str(e))
+        bb.fatal(str(e))
     except subprocess.CalledProcessError as exc:
-        bb.error("Unable to extract xsct tarball: %s" % str(exc))
+        bb.fatal("Unable to extract xsct tarball: %s" % str(exc))
 }
