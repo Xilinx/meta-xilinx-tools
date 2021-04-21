@@ -1,5 +1,3 @@
-inherit bootbin-component
-
 python __anonymous () {
     #check if there are any dtb providers
     providerdtb = d.getVar("PREFERRED_PROVIDER_virtual/dtb")
@@ -8,13 +6,9 @@ python __anonymous () {
        if d.getVar("DTB_NAME") is not None:
             d.setVar('DTB_NAME', d.getVar('BASE_DTS')+ '.dtb')
 }
-
+BASE_DTS ?= "system-top"
 DTB_PATH ?= "/boot/devicetree"
 DTB_NAME ?= ""
-
-BOOTBIN_BIF_FRAGMENT_zynqmp = "destination_cpu=a53-0,exception_level=el-2"
-
-UBOOT_ELF_IMAGE = "${PN}-${SRCPV}.${UBOOT_ELF_SUFFIX}"
 
 EXTRA_OEMAKE += "${@'EXT_DTB=${RECIPE_SYSROOT}/${DTB_PATH}/${DTB_NAME}' if (d.getVar('DTB_NAME') != '') else '' }"
 

@@ -8,8 +8,6 @@ inherit xsctapp xsctyaml
 
 B = "${S}/${XSCTH_PROJ}"
 
-BOOTBIN_BIF_FRAGMENT_zynqmp = "destination_cpu=pmu"
-
 XSCTH_MISC_append_zynqmp-dr = " -lib libmetal"
 
 XSCTH_COMPILER_DEBUG_FLAGS = "-DDEBUG_MODE -DXPFW_DEBUG_DETAILED"

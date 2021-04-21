@@ -5,14 +5,8 @@ LIC_FILES_CHKSUM = "file://xadcps/data/xadcps.mdd;md5=f7fa1bfdaf99c7182fc0d8e7fd
 
 PROVIDES = "virtual/dtb"
 
-# We only want to add the bootbin setup for Linux based builds
-# For instance, baremetal won't support this
-BOOTBININHERIT = "${@'bootbin-component' if d.getVar('TARGET_OS').startswith('linux') else ''}"
-inherit xsctdt xsctyaml ${BOOTBININHERIT} image-artifact-names
+inherit xsctdt xsctyaml image-artifact-names
 BASE_DTS ?= "system-top"
-
-BOOTBIN_BIF_FRAGMENT_zynqmp = "load=0x100000"
-BOOTBIN_BIF_FRAGMENT_zynq = "load=0x100000"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
@@ -118,11 +112,10 @@ do_compile_prepend() {
 }
 
 BINARY_EXT = ".dtb"
-#installing base dtb in proper format for updateboot
 do_install_append () {
-    install -Dm 0644 ${B}/${BASE_DTS}.dtb ${D}/boot/${PN}-${SRCPV}${BINARY_EXT}
+    install -Dm 0644 ${B}/${BASE_DTS}.dtb ${D}/boot/${PN}${BINARY_EXT}
 }
-FILES_${PN} += "/boot/${PN}-${SRCPV}${BINARY_EXT}"
+FILES_${PN} += "/boot/${PN}${BINARY_EXT}"
 
 DTB_BASE_NAME ?= "${MACHINE}-system${IMAGE_VERSION_SUFFIX}"
 
