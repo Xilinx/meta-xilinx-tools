@@ -53,7 +53,7 @@ python (){
 do_configure_prepend() {
 
     if [ "${FPGA_MNGR_RECONFIG_ENABLE}" != "1" ] ; then
-        bbfatal "Using fpga-manager.bbclass requires fpga-manager IMAGE_FEATURE or FPGA_MNGR_RECONFIG_ENABLE to be set"
+        bbfatal "Using fpga-manager.bbclass requires fpga-overlay DISTRO_FEATURE or FPGA_MNGR_RECONFIG_ENABLE to be set"
     fi
 }
 
