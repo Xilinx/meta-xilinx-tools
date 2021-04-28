@@ -26,6 +26,7 @@ COMPATIBLE_HOST_zynqmp = "${HOST_SYS}"
 
 # Clear this for a Linux build, using the XSCT toolchain
 EXTRA_OEMAKE_linux = ""
+EXTRA_OEMAKE_linux-gnueabi = ""
 
 # Workaround for hardcoded toolchain items
 XSCT_PATH_ADD_append_elf = "\

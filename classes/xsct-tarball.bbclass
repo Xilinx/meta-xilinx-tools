@@ -29,7 +29,7 @@ XSCT_TARGETS ?= "\
 	device-tree \
 	extract-cdo \
 	fpga-manager-util \
-	fsbl \
+	fsbl-firmware \
 	fs-boot \
 	imgrcry \
 	imgsel \
