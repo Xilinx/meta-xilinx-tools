@@ -156,10 +156,10 @@ do_compile_append_versal() {
     dd if=${DEPLOY_DIR_IMAGE}/boot.scr of=${B}/QEMU_qspi.bin bs=1 seek=66584576 conv=notrunc
 }
 
-do_install() {
-    install -d ${D}/boot
-    install -m 0644 ${B}/BOOT.bin ${D}/boot/BOOT.bin
-}
+do_install[noexec] = "1"
+do_package[noexec] = "1"
+do_packagedata[noexec] = '1'
+do_package_qa[noexec] = '1'
 
 inherit image-artifact-names
 
@@ -183,8 +183,6 @@ do_deploy_append_versal () {
     ln -sf ${QEMUQSPI_BASE_NAME}.bin ${DEPLOYDIR}/QEMU_qspi-${MACHINE}.bin
 }
 
-FILES_${PN} += "/boot/BOOT.bin"
-SYSROOT_DIRS += "/boot"
-
 addtask do_deploy before do_build after do_compile
 
+PACKAGES = ""
