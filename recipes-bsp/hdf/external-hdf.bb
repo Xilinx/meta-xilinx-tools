@@ -9,17 +9,21 @@ INHIBIT_DEFAULT_DEPS = "1"
 inherit deploy
 
 HDF_BASE ?= "git://"
-HDF_PATH ??= "github.com/xilinx/hdf-examples.git;branch=rel-v2020.2"
+HDF_PATH ??= "github.com/Xilinx/hdf-examples.git"
 HDF_NAME ?= "system.xsa"
+
+BRANCH = "master"
+SRCREV = "96f02c8897f89e297dfde88f5ad266163d166168"
+BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 
 HDF_EXT ?= "xsa"
 
-SRC_URI = "${HDF_BASE}${HDF_PATH}"
+SRC_URI = "${HDF_BASE}${HDF_PATH};${BRANCHARG}"
 
 COMPATIBLE_HOST_xilinx-standalone = "${HOST_SYS}"
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
-SRCREV ??= "3dd3e5e8d895858d9d2aefd34a053822d19936a4"
+SRCREV = "edd124fb18524f407dc91ef097cb9170abd50622"
 S = "${WORKDIR}/git"
 
 do_configure[noexec] = "1"
