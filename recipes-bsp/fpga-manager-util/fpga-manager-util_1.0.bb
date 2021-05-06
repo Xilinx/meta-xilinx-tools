@@ -5,16 +5,11 @@ LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://xadcps/data/xadcps.mdd;md5=f7fa1bfdaf99c7182fc0d8e7fd28e04a"
 
 inherit deploy xsctbase xsctyaml
-
-REPO ??= "git://github.com/xilinx/device-tree-xlnx.git;protocol=https"
-BRANCH ??= "master"
-BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
-SRC_URI = "${REPO};${BRANCHARG}"
+require recipes-bsp/device-tree/device-tree.inc
 
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/build"
 
-SRCREV ??= "bc8445833318e9320bf485ea125921eecc3dc97a"
 PV = "xilinx+git${SRCPV}"
 
 FILESEXTRAPATHS_append := ":${XLNX_SCRIPTS_DIR}"

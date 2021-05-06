@@ -9,19 +9,13 @@ LIC_FILES_CHKSUM = " \
                 "
 
 inherit devicetree xsctdt xsctyaml
-
-
-REPO ??= "git://github.com/xilinx/device-tree-xlnx.git;protocol=https"
-BRANCH ??= "master"
-BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
-SRC_URI = "${REPO};${BRANCHARG}"
+require recipes-bsp/device-tree/device-tree.inc
 
 PROVIDES = "virtual/uboot-dtb"
 
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/build"
 
-SRCREV ??= "bc8445833318e9320bf485ea125921eecc3dc97a"
 PV = "xilinx+git${SRCPV}"
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"

@@ -5,20 +5,13 @@ LIC_FILES_CHKSUM = "file://xadcps/data/xadcps.mdd;md5=f7fa1bfdaf99c7182fc0d8e7fd
 
 PROVIDES = "virtual/dtb"
 
+require recipes-bsp/device-tree/device-tree.inc
 inherit xsctdt xsctyaml image-artifact-names
 BASE_DTS ?= "system-top"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
 S = "${WORKDIR}/git"
-
-REPO ??= "git://github.com/xilinx/device-tree-xlnx.git;protocol=https"
-BRANCH ??= "master"
-BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
-SRC_URI = "${REPO};${BRANCHARG}"
-
-#Based on xilinx-v2020.2
-SRCREV ??= "f725aaecffb806aff8dc081b6ab508ce7bb1fc3d"
 
 DT_VERSION_EXTENSION ?= "xilinx-${XILINX_RELEASE_VERSION}"
 PV = "${DT_VERSION_EXTENSION}+git${SRCPV}"
