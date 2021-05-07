@@ -6,7 +6,9 @@ inherit deploy
 
 PROVIDES = "virtual/cdo"
 
-DEPENDS += "virtual/boot-bin bootgen-native"
+DEPENDS += "bootgen-native"
+
+do_compile[depends] += "virtual/boot-bin:do_deploy"
 
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_versal = "versal"
@@ -17,16 +19,9 @@ B = "${WORKDIR}/build"
 
 BOOTGEN_CMD ?= "bootgen"
 BOOTGEN_ARGS ?= "-arch versal"
-BOOTGEN_OUTFILE ?= "BOOT.bin"
+BOOTGEN_OUTFILE ?= "${DEPLOY_DIR_IMAGE}/boot.bin"
 
+#The following line creates the pmc_cdo.bin file at the same dir as the boot.bin which is DEPLOY_DIR_IMAGE
 do_compile() {
-
-    cp ${RECIPE_SYSROOT}/boot/BOOT.bin ${B}
     ${BOOTGEN_CMD} ${BOOTGEN_ARGS} -dump ${BOOTGEN_OUTFILE} pmc_cdo
 }
-
-do_deploy() {
-    install -d ${DEPLOYDIR}/CDO
-    install -m 0644 ${B}/pmc_cdo.bin* ${DEPLOYDIR}/CDO/pmc_cdo.bin
-}
-addtask do_deploy after do_install
