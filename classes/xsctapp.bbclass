@@ -1,7 +1,7 @@
 inherit xsctbase
 
 REPO ??= "git://github.com/Xilinx/embeddedsw.git;protocol=https"
-BRANCH ??= "release-2020.2.2_k26"
+BRANCH ??= "master-rel-2020.2.2_som"
 SRCREV ??= "6d507ed8c006d8090aec8c10e24ef34706920884"
 
 
