@@ -25,3 +25,10 @@ BOOTGEN_OUTFILE ?= "${DEPLOY_DIR_IMAGE}/boot.bin"
 do_compile() {
     ${BOOTGEN_CMD} ${BOOTGEN_ARGS} -dump ${BOOTGEN_OUTFILE} pmc_cdo
 }
+
+do_deploy() {
+    install -d ${DEPLOYDIR}/CDO
+    install -m 0644 ${DEPLOY_DIR_IMAGE}/pmc_cdo.bin ${DEPLOYDIR}/CDO/pmc_cdo.bin
+}
+
+addtask do_deploy after do_install
