@@ -79,4 +79,4 @@ do_install() {
 
 do_deploy[noexec] = "1"
 
-FILES_${PN} += "/${nonarch_base_libdir}/firmware/xilinx/${PN}"
+FILES_${PN} += "${nonarch_base_libdir}/firmware/xilinx/${PN}"
