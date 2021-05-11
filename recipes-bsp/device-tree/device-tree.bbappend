@@ -19,8 +19,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 S = "${WORKDIR}/git"
 
 REPO ??= "git://github.com/Xilinx/device-tree-xlnx.git;protocol=https"
-BRANCH ??= "master-rel-2020.2.2_som"
-
+BRANCH ??= "release-2020.2.2_k26"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
 
