@@ -1,8 +1,6 @@
 SECTION	= "libs"
 
-require conf/embeddedsw.inc
+ESW_VER = "git"
+inherit xlnx-embeddedsw
 
 LICENSE = "BSD"
-
-BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
-SRC_URI = "${REPO};${BRANCHARG}"
