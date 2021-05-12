@@ -26,7 +26,7 @@ SRC_URI += "${@('file://' + d.getVar("BIF_FILE_PATH")) if d.getVar("BIF_FILE_PAT
 
 BOOTGEN_EXTRA_ARGS ?= ""
 
-BIF_PARTITION_ATTR_zynqmp = "${@'fsbl pmu atf dtb u-boot' if d.getVar('FPGA_MNGR_RECONFIG_ENABLE') == '1' else 'fsbl bitstream pmu atf dtb u-boot'}"
+BIF_PARTITION_ATTR_zynqmp = "${@bb.utils.contains('MACHINE_FEATURES', 'fpga-overlay', 'fsbl pmu atf dtb u-boot', 'fsbl bitstream pmu atf dtb u-boot', d)}"
 
 do_patch[noexec] = "1"
 

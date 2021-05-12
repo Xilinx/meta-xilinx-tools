@@ -41,8 +41,8 @@ python (){
 python do_configure() {
     import glob, re, shutil
 
-    if not d.getVar('FPGA_MNGR_RECONFIG_ENABLE') == '1':
-        bb.fatal("Using fpga-manager.bbclass requires fpga-overlay DISTRO_FEATURE or FPGA_MNGR_RECONFIG_ENABLE to be set")
+    if bb.utils.contains('MACHINE_FEATURES', 'fpga-overlay', False, True, d):
+        bb.fatal("Using fpga-manager.bbclass requires fpga-overlay MACHINE_FEATURE to be enabled")
 
     #renaming firmware-name using $PN as bitstream will be renamed using $PN when generating the bin file
     orig_dtsi = glob.glob(d.getVar('S')+ (d.getVar('DTSI_PATH') or '') + '/*.dtsi')[0]
