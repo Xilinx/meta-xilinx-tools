@@ -9,6 +9,7 @@ I = "${AIEDIR}/include"
 
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE_versal-ai-core = "versal-ai-core"
+PV = "1.0"
 
 DEPENDS = "libmetal openamp"
 RDEPENDS_${PN} = "libmetal"
