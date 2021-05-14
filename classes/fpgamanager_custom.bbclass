@@ -26,11 +26,13 @@ python (){
     if "git://" in d.getVar("SRC_URI") or "https://" in d.getVar("SRC_URI"):
         d.setVar("S",d.getVar("WORKDIR")+'/git/'+d.getVar("FW_DIR"))
     else:
-        if d.getVar("SRC_URI").count(".dtsi") != 1 or d.getVar("SRC_URI").count(".bit") != 1:
-            bb.fatal("Need one '.dtsi' and one '.bit' file added to SRC_URI")
+        if d.getVar("SRC_URI").count(".dtsi") != 1 or d.getVar("SRC_URI").count(".bit") != 1 \
+            or d.getVar("SRC_URI").count("shell.json") != 1:
+            bb.fatal("Need one '.dtsi', one '.bit' and one 'shell.json' file added to SRC_URI")
 
         d.setVar("DTSI_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split('file://') if '.dtsi' in a][0]))
         d.setVar("BIT_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split('file://') if '.bit' in a][0]))
+        d.setVar("JSON_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split('file://') if 'shell.json' in a][0]))
 
         #optional input
         if '.xclbin' in d.getVar("SRC_URI"):
@@ -75,6 +77,7 @@ do_install() {
     if ls ${S}/${XCL_PATH}/*.xclbin >/dev/null 2>&1; then
         install -Dm 0644 ${S}/${XCL_PATH}/*.xclbin ${D}/${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.xclbin
     fi
+    install -Dm 0644 ${S}/${JSON_PATH}/shell.json ${D}/${nonarch_base_libdir}/firmware/xilinx/${PN}/shell.json
 }
 
 do_deploy[noexec] = "1"
