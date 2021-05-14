@@ -157,9 +157,6 @@ do_compile_append_versal() {
 }
 
 do_install[noexec] = "1"
-do_package[noexec] = "1"
-do_packagedata[noexec] = '1'
-do_package_qa[noexec] = '1'
 
 inherit image-artifact-names
 
