@@ -31,7 +31,7 @@ do_configure[cleandirs] = "${B}"
 python (){
 
     if d.getVar("SRC_URI").count(".xsa") != 1 or d.getVar("SRC_URI").count("shell.json") != 1:
-        bb.fatal("Need one '.xsa' and one 'shell.json' file added to SRC_URI")
+        raise bb.parse.SkipRecipe("Need one '.xsa' and one 'shell.json' file added to SRC_URI")
 
     d.setVar("XSCTH_HDF_PATH",[a for a in d.getVar('SRC_URI').split('file://') if '.xsa' in a][0])
     d.setVar("JSON_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split('file://') if 'shell.json' in a][0]))
@@ -47,7 +47,7 @@ python (){
 do_configure_prepend() {
 
     if ${@bb.utils.contains('MACHINE_FEATURES', 'fpga-overlay', 'false', 'true', d)}; then
-        bbfatal "Using fpga-manager.bbclass requires fpga-overlay MACHINE_FEATURE to be enabled"
+        bbwarn "Using fpga-manager.bbclass requires fpga-overlay MACHINE_FEATURE to be enabled"
     fi
 }
 

@@ -28,7 +28,7 @@ python (){
     else:
         if d.getVar("SRC_URI").count(".dtsi") != 1 or d.getVar("SRC_URI").count(".bit") != 1 \
             or d.getVar("SRC_URI").count("shell.json") != 1:
-            bb.fatal("Need one '.dtsi', one '.bit' and one 'shell.json' file added to SRC_URI")
+            raise bb.parse.SkipRecipe("Need one '.dtsi', one '.bit' and one 'shell.json' file added to SRC_URI")
 
         d.setVar("DTSI_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split('file://') if '.dtsi' in a][0]))
         d.setVar("BIT_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split('file://') if '.bit' in a][0]))
@@ -42,7 +42,7 @@ python do_configure() {
     import glob, re, shutil
 
     if bb.utils.contains('MACHINE_FEATURES', 'fpga-overlay', False, True, d):
-        bb.fatal("Using fpga-manager.bbclass requires fpga-overlay MACHINE_FEATURE to be enabled")
+        bb.warn("Using fpga-manager.bbclass requires fpga-overlay MACHINE_FEATURE to be enabled")
 
     #renaming firmware-name using $PN as bitstream will be renamed using $PN when generating the bin file
     orig_dtsi = glob.glob(d.getVar('S')+ (d.getVar('DTSI_PATH') or '') + '/*.dtsi')[0]
