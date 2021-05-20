@@ -19,6 +19,7 @@ YAML_DISABLE_DT_ZOCL ?= ''
 YAML_FIRMWARE_NAME ?= ''
 YAML_OVERLAY_CUSTOM_DTS ?= ''
 YAML_BSP_COMPILER_FLAGS ?= ''
+YAML_ENABLE_NO_ALIAS ?= ''
 
 YAML_SERIAL_CONSOLE_STDIN_ultra96 ?= "psu_uart_1"
 YAML_SERIAL_CONSOLE_STDOUT_ultra96 ?= "psu_uart_1"
@@ -74,6 +75,8 @@ YAML_BSP_CONFIG[overlay_custom_dts] = "set,${YAML_OVERLAY_CUSTOM_DTS}"
 
 YAML_BSP_CONFIG += "${@'remove_pl' if d.getVar('YAML_REMOVE_PL_DT') == '1' else ''}"
 YAML_BSP_CONFIG[remove_pl] = "set,TRUE"
+YAML_BSP_CONFIG += "${@'no_alias' if d.getVar('YAML_ENABLE_NO_ALIAS') == '1' else ''}"
+YAML_BSP_CONFIG[no_alias] = "set,TRUE"
 
 def patch_yaml(config, configflags, type, type_dict, d):
     import re
