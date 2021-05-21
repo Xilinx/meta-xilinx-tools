@@ -2,7 +2,7 @@ DESCRIPTION = "Image Recovery"
 
 S = "${WORKDIR}/git"
 PROVIDES = "virtual/imgrcry"
-DEPENDS += "bootgen-native fsbl"
+DEPENDS += "bootgen-native fsbl-firmware"
 inherit xsctapp xsctyaml deploy
 
 
