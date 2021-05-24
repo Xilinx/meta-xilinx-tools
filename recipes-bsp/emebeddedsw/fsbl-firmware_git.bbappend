@@ -10,8 +10,6 @@ B = "${S}/${XSCTH_PROJ}"
 B_zynq = "${S}/${XSCTH_PROJ}"
 B_zynqmp = "${S}/${XSCTH_PROJ}"
 
-XSCTH_MISC_append_zynqmp-dr = " -lib libmetal"
-
 XSCTH_COMPILER_DEBUG_FLAGS = " -DFSBL_DEBUG_INFO"
 
 XSCTH_APP_zynq   = "Zynq FSBL"

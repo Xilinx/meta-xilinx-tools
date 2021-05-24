@@ -8,8 +8,6 @@ inherit xsctapp xsctyaml
 
 B = "${S}/${XSCTH_PROJ}"
 
-XSCTH_MISC_append_zynqmp-dr = " -lib libmetal"
-
 XSCTH_COMPILER_DEBUG_FLAGS = "-DDEBUG_MODE -DXPFW_DEBUG_DETAILED"
 XSCTH_PROC_IP = "psu_pmu"
 XSCTH_APP  = "ZynqMP PMU Firmware"
