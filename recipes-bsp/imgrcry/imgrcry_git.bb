@@ -32,3 +32,4 @@ do_deploy_append () {
 
         install -Dm 0644 ${S}/lib/sw_apps/img_rcvry/misc/web.img ${DEPLOYDIR}/imgrcry_web.img
 }
+PARALLEL_MAKE = "-j1"
