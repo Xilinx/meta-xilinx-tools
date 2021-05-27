@@ -13,7 +13,7 @@ HDF_PATH ??= "github.com/Xilinx/hdf-examples.git"
 HDF_NAME ?= "system.xsa"
 
 BRANCH = "master"
-SRCREV = "96f02c8897f89e297dfde88f5ad266163d166168"
+SRCREV = "9da77b1de79a5ee76a04e3faeab61c6448fc25c1"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 
 HDF_EXT ?= "xsa"
@@ -23,7 +23,6 @@ SRC_URI = "${HDF_BASE}${HDF_PATH};${BRANCHARG}"
 COMPATIBLE_HOST_xilinx-standalone = "${HOST_SYS}"
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
-SRCREV = "edd124fb18524f407dc91ef097cb9170abd50622"
 S = "${WORKDIR}/git"
 
 do_configure[noexec] = "1"
