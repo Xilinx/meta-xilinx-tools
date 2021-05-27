@@ -56,6 +56,7 @@ YAML_DT_BOARD_FLAGS_vcu118 ?= "{BOARD vcu118-rev2.0}"
 YAML_DT_BOARD_FLAGS_k26 ?= "{BOARD zynqmp-sm-k26-revb}"
 YAML_DT_BOARD_FLAGS_zcu670 ?= "{BOARD zcu670-reva}"
 YAML_DT_BOARD_FLAGS_vpk120 ?= "{BOARD versal-vpk120-reva}"
+YAML_DT_BOARD_FLAGS_vpk-sc ?= "{BOARD zynqmp-vpk120-reva}"
 
 YAML_OVERLAY_CUSTOM_DTS = "pl-final.dts"
 CUSTOM_PL_INCLUDE_DTSI ?= ""
