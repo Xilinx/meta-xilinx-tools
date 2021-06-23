@@ -7,6 +7,9 @@ PDI_HDF ?= "${DEPLOY_DIR_IMAGE}/Xilinx-${MACHINE}.${HDF_EXT}"
 
 BASE_PDI_NAME ?= "project_1.pdi"
 
+# We generate the PDI with XSCT, so don't verify the user provided one
+PDI_SKIP_CHECK = '1'
+
 inherit xsctbit
 
 XSCTH_MISC = "-hwpname ${XSCTH_PROJ}_hwproj -hdf_type ${HDF_EXT}"
