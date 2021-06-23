@@ -3,10 +3,8 @@ DESCRIPTION = "Device Tree generation and packaging for BSP Device Trees using D
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://xadcps/data/xadcps.mdd;md5=f7fa1bfdaf99c7182fc0d8e7fd28e04a"
 
-PROVIDES = "virtual/dtb"
-
 require recipes-bsp/device-tree/device-tree.inc
-inherit xsctdt xsctyaml image-artifact-names
+inherit xsctdt xsctyaml
 BASE_DTS ?= "system-top"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
@@ -107,31 +105,13 @@ do_compile_prepend() {
         pass
 }
 
-BINARY_EXT = ".dtb"
-do_install_append () {
-    install -Dm 0644 ${B}/${BASE_DTS}.dtb ${D}/boot/${PN}${BINARY_EXT}
-}
-FILES_${PN} += "/boot/${PN}${BINARY_EXT}"
-
-DTB_BASE_NAME ?= "${MACHINE}-system${IMAGE_VERSION_SUFFIX}"
-
 do_install_append_microblaze () {
     for DTB_FILE in `ls *.dtb`; do
         dtc -I dtb -O dts -o ${D}/boot/devicetree/mb.dts ${B}/${DTB_FILE}
     done
 }
 
-do_deploy() {
-    #deploy base dtb
-    install -Dm 0644 ${B}/${BASE_DTS}.dtb ${DEPLOYDIR}/${DTB_BASE_NAME}.dtb
-    ln -sf ${DTB_BASE_NAME}.dtb ${DEPLOYDIR}/${MACHINE}-system.dtb
-    ln -sf ${DTB_BASE_NAME}.dtb ${DEPLOYDIR}/system.dtb
-
-    #deploy everything in case
-	for DTB_FILE in `ls *.dtb *.dtbo`; do
-		install -Dm 0644 ${B}/${DTB_FILE} ${DEPLOYDIR}/
-	done
-}
+DTB_FILE_NAME = "${BASE_DTS}.dtb"
 
 FILES_${PN}_append_microblaze = " /boot/devicetree/*.dts"
 
