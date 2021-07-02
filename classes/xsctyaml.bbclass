@@ -11,6 +11,7 @@ YAML_FILE_PATH ?= ''
 YAML_DT_BOARD_FLAGS ?= ''
 YAML_SERIAL_CONSOLE_STDIN ?= ''
 YAML_SERIAL_CONSOLE_STDOUT ?= ''
+YAML_SERIAL_CONSOLE_BAUDRATE ?= ''
 YAML_MAIN_MEMORY_CONFIG ?= ''
 YAML_CONSOLE_DEVICE_CONFIG ?= ''
 YAML_FLASH_MEMORY_CONFIG ?= ''
@@ -81,6 +82,9 @@ YAML_BSP_CONFIG[no_alias] = "set,TRUE"
 
 YAML_BSP_CONFIG += "${@'dt_verbose' if d.getVar('YAML_ENABLE_DT_VERBOSE') == '1' else ''}"
 YAML_BSP_CONFIG[dt_verbose] = "set,TRUE"
+
+YAML_BSP_CONFIG += "${@'dt_setbaud' if d.getVar('YAML_SERIAL_CONSOLE_BAUDRATE') != '' else ''}"
+YAML_BSP_CONFIG[dt_setbaud] = "set,${YAML_SERIAL_CONSOLE_BAUDRATE}"
 
 def patch_yaml(config, configflags, type, type_dict, d):
     import re
