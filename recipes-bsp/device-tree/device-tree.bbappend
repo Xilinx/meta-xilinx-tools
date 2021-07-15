@@ -75,6 +75,8 @@ COMPATIBLE_MACHINE_versal = ".*"
 SRC_URI_append_ultra96 = "${@bb.utils.contains('MACHINE_FEATURES', 'mipi', ' file://mipi-support-ultra96.dtsi file://pl.dtsi', '', d)}"
 
 SRC_URI_append = "${@" ".join(["file://%s" % f for f in (d.getVar('EXTRA_DT_FILES') or "").split()])}"
+SRC_URI_append = "${@['', ' file://${CUSTOM_PL_INCLUDE_DTSI}'][d.getVar('CUSTOM_PL_INCLUDE_DTSI') != '']}"
+
 do_configure[cleandirs] += "${DT_FILES_PATH} ${B}"
 do_deploy[cleandirs] += "${DEPLOYDIR}"
 
@@ -89,7 +91,7 @@ do_configure_append_ultra96() {
 do_configure_append () {
     if [ -n "${CUSTOM_PL_INCLUDE_DTSI}" ]; then
         [ ! -f "${CUSTOM_PL_INCLUDE_DTSI}" ] && bbfatal "Please check that the correct filepath was provided using CUSTOM_PL_INCLUDE_DTSI"
-        cp ${CUSTOM_PL_INCLUDE_DTSI} ${XSCTH_WS}/${XSCTH_PROJ}/pl-custom.dtsi
+        cp ${WORKDIR}/${CUSTOM_PL_INCLUDE_DTSI} ${XSCTH_WS}/${XSCTH_PROJ}/pl-custom.dtsi
     fi
 
     for f in ${EXTRA_DT_FILES}; do
