@@ -16,7 +16,7 @@ IOBACKENDS ?= "Linux"
 PROVIDES = "aiefal"
 ALLOW_EMPTY_${PN} = "1"
 
-inherit pkgconfig cmake yocto-cmake-translation
+inherit pkgconfig cmake
 
 DEPENDS = "libxaiengine"
 
