@@ -24,7 +24,7 @@ DT_FILES_PATH = "${S}/${DTSI_PATH}"
 python (){
 
     if "git://" in d.getVar("SRC_URI") or "https://" in d.getVar("SRC_URI"):
-        d.setVar("S",d.getVar("WORKDIR")+'/git/'+d.getVar("FW_DIR"))
+        d.setVar("S",'${WORKDIR}/git/'+d.getVar("FW_DIR"))
     else:
         if d.getVar("SRC_URI").count(".dtsi") != 1 or d.getVar("SRC_URI").count(".bit") != 1 \
             or d.getVar("SRC_URI").count("shell.json") != 1:
