@@ -59,6 +59,7 @@ YAML_DT_BOARD_FLAGS_vpk-sc ?= "{BOARD zynqmp-vpk120-reva}"
 YAML_OVERLAY_CUSTOM_DTS = "pl-final.dts"
 CUSTOM_PL_INCLUDE_DTSI ?= ""
 EXTRA_DT_FILES ?= ""
+EXTRA_OVERLAYS ?= ""
 
 DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_PROJ}"
 DT_INCLUDE_append = " ${WORKDIR}"
@@ -74,6 +75,7 @@ SRC_URI_append_ultra96 = "${@bb.utils.contains('MACHINE_FEATURES', 'mipi', ' fil
 
 SRC_URI_append = "${@" ".join(["file://%s" % f for f in (d.getVar('EXTRA_DT_FILES') or "").split()])}"
 SRC_URI_append = "${@['', ' file://${CUSTOM_PL_INCLUDE_DTSI}'][d.getVar('CUSTOM_PL_INCLUDE_DTSI') != '']}"
+SRC_URI_append = "${@" ".join(["file://%s" % f for f in (d.getVar('EXTRA_OVERLAYS') or "").split()])}"
 
 do_configure[cleandirs] += "${DT_FILES_PATH} ${B}"
 do_deploy[cleandirs] += "${DEPLOYDIR}"
@@ -95,6 +97,12 @@ do_configure_append () {
     for f in ${EXTRA_DT_FILES}; do
         cp ${WORKDIR}/${f} ${DT_FILES_PATH}/
     done
+
+    for f in ${EXTRA_OVERLAYS}; do
+        cp ${WORKDIR}/${f} ${DT_FILES_PATH}/
+        echo "/include/ \"$f\"" >> ${DT_FILES_PATH}/${BASE_DTS}.dts
+    done
+
 }
 
 do_compile_prepend() {
