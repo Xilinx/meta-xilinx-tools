@@ -37,7 +37,7 @@ XSCTH_APP = "device-tree"
 YAML_DT_BOARD_FLAGS_zynqmp ?= ""
 YAML_DT_BOARD_FLAGS_versal ?= ""
 YAML_DT_BOARD_FLAGS_zynq ?= ""
-UBOOT_DTS_NAME = "u-boot"
+UBOOT_DTS_NAME = "uboot-device-tree"
 
 do_configure[dirs] += "${DT_FILES_PATH}"
 SRC_URI_append = "${@" ".join(["file://%s" % f for f in (d.getVar('UBOOT_DTS') or "").split()])}"
