@@ -3,5 +3,5 @@ BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
 SRC_URI_append = " ${REPO};${BRANCHARG}"
 
 BRANCH = "xlnx_rel_v2021.2"
-SRCREV = "4718d2441b6178466368ca758520e116d5097173"
+SRCREV = "a3ca87a6d3b62069f09d7f054fd38590d738a198"
 
