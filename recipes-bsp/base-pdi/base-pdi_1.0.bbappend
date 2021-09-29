@@ -1,8 +1,4 @@
-DESCRIPTION = "Recipe to deploy base pdi"
-
-LICENSE = "CLOSED"
-
-PROVIDES = "virtual/base-pdi"
+SRC_URI = ""
 
 DEPENDS += "virtual/hdf"
 
@@ -11,16 +7,12 @@ PDI_HDF ?= "${DEPLOY_DIR_IMAGE}/Xilinx-${MACHINE}.${HDF_EXT}"
 
 BASE_PDI_NAME ?= "project_1.pdi"
 
+# We generate the PDI with XSCT, so don't verify the user provided one
+PDI_SKIP_CHECK = '1'
+
 inherit xsctbit
 
 XSCTH_MISC = "-hwpname ${XSCTH_PROJ}_hwproj -hdf_type ${HDF_EXT}"
-
-COMPATIBLE_MACHINE = "^$"
-COMPATIBLE_MACHINE_versal = "versal"
-
-PACKAGE_ARCH ?= "${MACHINE_ARCH}"
-
-do_compile[noexec] = "1"
 
 do_install() {
     install -d ${D}/boot
@@ -39,6 +31,3 @@ do_install() {
         bbfatal "No pdi exists in design"
     fi
 }
-SYSROOT_DIRS += "/boot"
-
-FILES_${PN} += "/boot/*"

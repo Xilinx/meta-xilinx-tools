@@ -8,8 +8,9 @@ REPO ?= "git://github.com/Xilinx/dfx-mgr.git;protocol=https"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
 
-BRANCH = "master"
-SRCREV = "9989200612b149d926077c5c8096f95b9a74e5ff"
+BRANCH = "xlnx_rel_v2021.2"
+SRCREV = "c3c0553089f9243d20825ee7f33c88260cbd0477"
+SOVERSION = "1.0"
 
 S = "${WORKDIR}/git"
 
@@ -24,16 +25,21 @@ INITSCRIPT_PARAMS = "start 99 S ."
 
 do_install(){
 	install -d ${D}${bindir}
+	install -d ${D}${libdir}
+	install -d ${D}${includedir}
 	install -d ${D}${sysconfdir}/init.d/
 	install -d ${D}${base_libdir}/firmware/xilinx
-	install -d ${D}/etc/dfx-mgrd
+	install -d ${D}${sysconfdir}/dfx-mgrd
 
 	cp ${B}/example/sys/linux/dfx-mgrd-static ${D}${bindir}/dfx-mgrd
 	cp ${B}/example/sys/linux/dfx-mgr-client-static ${D}${bindir}/dfx-mgr-client
 	chrpath -d ${D}${bindir}/dfx-mgrd
 	chrpath -d ${D}${bindir}/dfx-mgr-client
 	install -m 0755 ${S}/src/dfx-mgr.sh ${D}${sysconfdir}/init.d/
-	install -m 0755 ${S}/src/daemon.conf ${D}/etc/dfx-mgrd/
+	install -m 0755 ${S}/src/daemon.conf ${D}${sysconfdir}/dfx-mgrd/
+	install -m 0644 ${S}/src/dfxmgr_client.h ${D}${includedir}
+
+	oe_soinstall ${B}/src/libdfx-mgr.so.${SOVERSION} ${D}${libdir}
 }
 
 FILES_${PN} += "${base_libdir}/firmware/xilinx"

@@ -11,6 +11,7 @@ YAML_FILE_PATH ?= ''
 YAML_DT_BOARD_FLAGS ?= ''
 YAML_SERIAL_CONSOLE_STDIN ?= ''
 YAML_SERIAL_CONSOLE_STDOUT ?= ''
+YAML_SERIAL_CONSOLE_BAUDRATE ?= ''
 YAML_MAIN_MEMORY_CONFIG ?= ''
 YAML_CONSOLE_DEVICE_CONFIG ?= ''
 YAML_FLASH_MEMORY_CONFIG ?= ''
@@ -20,6 +21,7 @@ YAML_FIRMWARE_NAME ?= ''
 YAML_OVERLAY_CUSTOM_DTS ?= ''
 YAML_BSP_COMPILER_FLAGS ?= ''
 YAML_ENABLE_NO_ALIAS ?= ''
+YAML_ENABLE_DT_VERBOSE ?= ''
 
 YAML_SERIAL_CONSOLE_STDIN_ultra96 ?= "psu_uart_1"
 YAML_SERIAL_CONSOLE_STDOUT_ultra96 ?= "psu_uart_1"
@@ -77,6 +79,12 @@ YAML_BSP_CONFIG += "${@'remove_pl' if d.getVar('YAML_REMOVE_PL_DT') == '1' else 
 YAML_BSP_CONFIG[remove_pl] = "set,TRUE"
 YAML_BSP_CONFIG += "${@'no_alias' if d.getVar('YAML_ENABLE_NO_ALIAS') == '1' else ''}"
 YAML_BSP_CONFIG[no_alias] = "set,TRUE"
+
+YAML_BSP_CONFIG += "${@'dt_verbose' if d.getVar('YAML_ENABLE_DT_VERBOSE') == '1' else ''}"
+YAML_BSP_CONFIG[dt_verbose] = "set,TRUE"
+
+YAML_BSP_CONFIG += "${@'dt_setbaud' if d.getVar('YAML_SERIAL_CONSOLE_BAUDRATE') != '' else ''}"
+YAML_BSP_CONFIG[dt_setbaud] = "set,${YAML_SERIAL_CONSOLE_BAUDRATE}"
 
 def patch_yaml(config, configflags, type, type_dict, d):
     import re
