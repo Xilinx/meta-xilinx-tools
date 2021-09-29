@@ -7,41 +7,41 @@ DEFAULT_PREFERENCE = "100"
 inherit xsctapp xsctyaml
 
 B = "${S}/${XSCTH_PROJ}"
-B_zynq = "${S}/${XSCTH_PROJ}"
-B_zynqmp = "${S}/${XSCTH_PROJ}"
+B:zynq = "${S}/${XSCTH_PROJ}"
+B:zynqmp = "${S}/${XSCTH_PROJ}"
 
 # Use BOARDVARIANT_ARCH, but if it's undefined fall back to SOC_VARIANT_ARCH
 # instead of MACHINE_ARCH.  This is because the same machine may be used with
 # different variants, and zynqmp-dr is known to be 'different'.
 SOC_VARIANT_ARCH ??= "${MACHINE_ARCH}"
-PACKAGE_ARCH_zynqmp-dr = "${@['${BOARDVARIANT_ARCH}', '${SOC_VARIANT_ARCH}'][d.getVar('BOARDVARIANT_ARCH')==d.getVar('MACHINE_ARCH')]}"
+PACKAGE_ARCH:zynqmp-dr = "${@['${BOARDVARIANT_ARCH}', '${SOC_VARIANT_ARCH}'][d.getVar('BOARDVARIANT_ARCH')==d.getVar('MACHINE_ARCH')]}"
 
-XSCTH_MISC_append_zynqmp-dr = " -lib libmetal"
+XSCTH_MISC:append:zynqmp-dr = " -lib libmetal"
 
 XSCTH_COMPILER_DEBUG_FLAGS = " -DFSBL_DEBUG_INFO"
 
-XSCTH_APP_zynq   = "Zynq FSBL"
-XSCTH_APP_zynqmp = "Zynq MP FSBL"
+XSCTH_APP:zynq   = "Zynq FSBL"
+XSCTH_APP:zynqmp = "Zynq MP FSBL"
 
 # Building for zynq does work here
-COMPATIBLE_MACHINE_zynq = ".*"
+COMPATIBLE_MACHINE:zynq = ".*"
 
 # XSCT version provides it's own toolchain, so can build in any environment
-COMPATIBLE_HOST_zynq   = "${HOST_SYS}"
-COMPATIBLE_HOST_zynqmp = "${HOST_SYS}"
+COMPATIBLE_HOST:zynq   = "${HOST_SYS}"
+COMPATIBLE_HOST:zynqmp = "${HOST_SYS}"
 
 # Clear this for a Linux build, using the XSCT toolchain
 EXTRA_OEMAKE_linux = ""
-EXTRA_OEMAKE_linux-gnueabi = ""
+EXTRA_OEMAKE:linux-gnueabi = ""
 
 # Workaround for hardcoded toolchain items
-XSCT_PATH_ADD_append_elf = "\
+XSCT_PATH_ADD:append_elf = "\
 ${WORKDIR}/bin:"
 
-XSCT_PATH_ADD_append_eabi = "\
+XSCT_PATH_ADD:append:eabi = "\
 ${WORKDIR}/bin:"
 
-do_compile_prepend_elf_aarch64() {
+do_compile:prepend_elf:aarch64() {
   mkdir -p ${WORKDIR}/bin
   echo "#! /bin/bash\n${CC} \$@" > ${WORKDIR}/bin/aarch64-none-elf-gcc
   echo "#! /bin/bash\n${AS} \$@" > ${WORKDIR}/bin/aarch64-none-elf-as
@@ -51,8 +51,8 @@ do_compile_prepend_elf_aarch64() {
   chmod 0755 ${WORKDIR}/bin/aarch64-none-elf-ar
 }
 
-ARM_INSTRUCTION_SET_eabi_arm = "arm"
-do_compile_prepend_eabi_arm() {
+ARM_INSTRUCTION_SET:eabi:arm = "arm"
+do_compile:prepend:eabi:arm() {
   mkdir -p ${WORKDIR}/bin
   echo "#! /bin/bash\n${CC} \$@" > ${WORKDIR}/bin/arm-none-eabi-gcc
   echo "#! /bin/bash\n${AS} \$@" > ${WORKDIR}/bin/arm-none-eabi-as

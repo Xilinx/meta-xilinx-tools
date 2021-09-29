@@ -7,7 +7,7 @@ require recipes-bsp/device-tree/device-tree.inc
 inherit xsctdt xsctyaml
 BASE_DTS ?= "system-top"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 S = "${WORKDIR}/git"
 
@@ -62,25 +62,25 @@ EXTRA_DT_FILES ?= ""
 EXTRA_OVERLAYS ?= ""
 
 DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_PROJ}"
-DT_INCLUDE_append = " ${WORKDIR}"
+DT_INCLUDE:append = " ${WORKDIR}"
 DT_PADDING_SIZE = "0x1000"
-DTC_FLAGS_append = "${@['', ' -@'][d.getVar('YAML_ENABLE_DT_OVERLAY') == '1']}"
+DTC_FLAGS:append = "${@['', ' -@'][d.getVar('YAML_ENABLE_DT_OVERLAY') == '1']}"
 
-COMPATIBLE_MACHINE_zynq = ".*"
-COMPATIBLE_MACHINE_zynqmp = ".*"
-COMPATIBLE_MACHINE_microblaze = ".*"
-COMPATIBLE_MACHINE_versal = ".*"
+COMPATIBLE_MACHINE:zynq = ".*"
+COMPATIBLE_MACHINE:zynqmp = ".*"
+COMPATIBLE_MACHINE:microblaze = ".*"
+COMPATIBLE_MACHINE:versal = ".*"
 
-SRC_URI_append_ultra96 = "${@bb.utils.contains('MACHINE_FEATURES', 'mipi', ' file://mipi-support-ultra96.dtsi file://pl.dtsi', '', d)}"
+SRC_URI:append_ultra96 = "${@bb.utils.contains('MACHINE_FEATURES', 'mipi', ' file://mipi-support-ultra96.dtsi file://pl.dtsi', '', d)}"
 
-SRC_URI_append = "${@" ".join(["file://%s" % f for f in (d.getVar('EXTRA_DT_FILES') or "").split()])}"
-SRC_URI_append = "${@['', ' file://${CUSTOM_PL_INCLUDE_DTSI}'][d.getVar('CUSTOM_PL_INCLUDE_DTSI') != '']}"
-SRC_URI_append = "${@" ".join(["file://%s" % f for f in (d.getVar('EXTRA_OVERLAYS') or "").split()])}"
+SRC_URI:append = "${@" ".join(["file://%s" % f for f in (d.getVar('EXTRA_DT_FILES') or "").split()])}"
+SRC_URI:append = "${@['', ' file://${CUSTOM_PL_INCLUDE_DTSI}'][d.getVar('CUSTOM_PL_INCLUDE_DTSI') != '']}"
+SRC_URI:append = "${@" ".join(["file://%s" % f for f in (d.getVar('EXTRA_OVERLAYS') or "").split()])}"
 
 do_configure[cleandirs] += "${DT_FILES_PATH} ${B}"
 do_deploy[cleandirs] += "${DEPLOYDIR}"
 
-do_configure_append_ultra96() {
+do_configure:append_ultra96() {
         if [ -e ${WORKDIR}/mipi-support-ultra96.dtsi ]; then
                cp ${WORKDIR}/mipi-support-ultra96.dtsi ${DT_FILES_PATH}/mipi-support-ultra96.dtsi
                cp ${WORKDIR}/pl.dtsi ${DT_FILES_PATH}/pl.dtsi
@@ -88,7 +88,7 @@ do_configure_append_ultra96() {
         fi
 }
 
-do_configure_append () {
+do_configure:append () {
     if [ -n "${CUSTOM_PL_INCLUDE_DTSI}" ]; then
         [ ! -f "${CUSTOM_PL_INCLUDE_DTSI}" ] && bbfatal "Please check that the correct filepath was provided using CUSTOM_PL_INCLUDE_DTSI"
         cp ${WORKDIR}/${CUSTOM_PL_INCLUDE_DTSI} ${XSCTH_WS}/${XSCTH_PROJ}/pl-custom.dtsi
@@ -105,7 +105,7 @@ do_configure_append () {
 
 }
 
-do_compile_prepend() {
+do_compile:prepend() {
     listpath = d.getVar("DT_FILES_PATH")
     try:
         os.remove(os.path.join(listpath, "system.dts"))
@@ -113,7 +113,7 @@ do_compile_prepend() {
         pass
 }
 
-do_install_append_microblaze () {
+do_install:append:microblaze () {
     for DTB_FILE in `ls *.dtb`; do
         dtc -I dtb -O dts -o ${D}/boot/devicetree/mb.dts ${B}/${DTB_FILE}
     done
@@ -121,6 +121,6 @@ do_install_append_microblaze () {
 
 DTB_FILE_NAME = "${BASE_DTS}.dtb"
 
-FILES_${PN}_append_microblaze = " /boot/devicetree/*.dts"
+FILES:${PN}:append:microblaze = " /boot/devicetree/*.dts"
 
 EXTERNALSRC_SYMLINKS = ""

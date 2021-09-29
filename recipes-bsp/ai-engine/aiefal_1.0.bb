@@ -9,12 +9,12 @@ XAIEFAL_DIR ?= "XilinxProcessorIPLib/drivers/aiefal"
 S = "${WORKDIR}/git"
 
 COMPATIBLE_MACHINE = "^$"
-COMPATIBLE_MACHINE_versal-ai-core = "versal-ai-core"
+COMPATIBLE_MACHINE:versal-ai-core = "versal-ai-core"
 
 IOBACKENDS ?= "Linux"
 
 PROVIDES = "aiefal"
-ALLOW_EMPTY_${PN} = "1"
+ALLOW_EMPTY:${PN} = "1"
 
 inherit pkgconfig cmake yocto-cmake-translation
 
@@ -23,10 +23,10 @@ DEPENDS = "libxaiengine"
 OECMAKE_SOURCEPATH = "${S}/${XAIEFAL_DIR}"
 
 EXTRA_OECMAKE = "-DWITH_TESTS=OFF "
-EXTRA_OECMAKE_append = "${@'-DWITH_EXAMPLES=ON' if d.getVar('WITH_EXAMPLES') == 'y' else '-DWITH_EXAMPLES=OFF'}"
+EXTRA_OECMAKE:append = "${@'-DWITH_EXAMPLES=ON' if d.getVar('WITH_EXAMPLES') == 'y' else '-DWITH_EXAMPLES=OFF'}"
 
-FILES_${PN}-demos = " \
+FILES:${PN}-demos = " \
     ${bindir}/* \
 "
 
-PACKAGE_ARCH_versal-ai-core = "${SOC_VARIANT_ARCH}"
+PACKAGE_ARCH:versal-ai-core = "${SOC_VARIANT_ARCH}"

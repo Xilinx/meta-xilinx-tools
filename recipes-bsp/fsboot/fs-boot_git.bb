@@ -8,7 +8,7 @@ MB_BAREMETAL_TOOLCHAIN_PATH_ADD = "${XILINX_SDK_TOOLCHAIN}/gnu/microblaze/lin/bi
 PATH =. "${MB_BAREMETAL_TOOLCHAIN_PATH_ADD}"
 
 COMPATIBLE_MACHINE = "^$"
-COMPATIBLE_MACHINE_microblaze = "microblaze"
+COMPATIBLE_MACHINE:microblaze = "microblaze"
 
 XSCTH_APP = "mba_fs_boot"
 XSCTH_MISC = " -hdf_type ${HDF_EXT}"
@@ -22,6 +22,6 @@ do_compile() {
         oe_runmake -C ${XSCTH_WS}/${XSCTH_PROJ} ${EXTRA_OEMAKE_APP} -j 1
 }
 
-do_deploy_append() {
+do_deploy:append() {
         ln -sf ${PN}-${MACHINE}.elf ${DEPLOYDIR}/fsboot-${MACHINE}.elf
 }

@@ -11,14 +11,14 @@ SRC_URI = "${REPO};${BRANCHARG}"
 SRCREV = "f79ff436edc620e1933592822a25561ccb5bd6ec"
 
 COMPATIBLE_MACHINE = "^$"
-COMPATIBLE_MACHINE_zynqmp = "zynqmp"
-COMPATIBLE_MACHINE_versal = "versal"
+COMPATIBLE_MACHINE:zynqmp = "zynqmp"
+COMPATIBLE_MACHINE:versal = "versal"
 
 S = "${WORKDIR}/git"
 
 inherit cmake
 
-RDEPENDS_${PN} = "${PN}-staticdev"
+RDEPENDS:${PN} = "${PN}-staticdev"
 PACKAGES =+ "${PN}-examples"
 
 do_install () {
@@ -30,5 +30,5 @@ do_install () {
     install -m 0755 ${B}/apps/dfx_app ${D}${bindir}
 }
 
-ALLOW_EMPTY_${PN} = "1"
-ALLOW_EMPTY_${PN}-examples = "1"
+ALLOW_EMPTY:${PN} = "1"
+ALLOW_EMPTY:${PN}-examples = "1"

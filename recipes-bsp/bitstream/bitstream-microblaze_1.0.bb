@@ -11,7 +11,7 @@ DEPENDS = "virtual/fsboot virtual/bitstream"
 inherit deploy
 
 COMPATIBLE_MACHINE ?= "^$"
-COMPATIBLE_MACHINE_microblaze = ".*"
+COMPATIBLE_MACHINE:microblaze = ".*"
 
 MMI_FILE ?= "${RECIPE_SYSROOT}/boot/bitstream/system.mmi"
 BIT_FILE ?= "${RECIPE_SYSROOT}/boot/bitstream/system.bit"
@@ -58,4 +58,4 @@ do_deploy() {
 
 addtask do_deploy before do_build after do_compile
 
-FILES_${PN} = "/boot/bitstream/download.bit"
+FILES:${PN} = "/boot/bitstream/download.bit"

@@ -26,10 +26,10 @@ YAML_ENABLE_DT_VERBOSE ?= ''
 YAML_SERIAL_CONSOLE_STDIN_ultra96 ?= "psu_uart_1"
 YAML_SERIAL_CONSOLE_STDOUT_ultra96 ?= "psu_uart_1"
 
-YAML_COMPILER_FLAGS_append_ultra96 = " -DBOARD_SHUTDOWN_PIN=2 -DBOARD_SHUTDOWN_PIN_STATE=0 "
+YAML_COMPILER_FLAGS:append_ultra96 = " -DBOARD_SHUTDOWN_PIN=2 -DBOARD_SHUTDOWN_PIN_STATE=0 "
 
 YAML_FILE_PATH = "${WORKDIR}/${PN}.yaml"
-XSCTH_MISC_append = " -yamlconf ${YAML_FILE_PATH}"
+XSCTH_MISC:append = " -yamlconf ${YAML_FILE_PATH}"
 
 YAML_BUILD_CONFIG ?= "${@d.getVar('XSCTH_BUILD_CONFIG').lower()}"
 YAML_APP_CONFIG += "${@'build-config' if d.getVar('YAML_BUILD_CONFIG') != '' else ''}"

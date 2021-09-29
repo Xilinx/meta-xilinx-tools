@@ -2,10 +2,10 @@ inherit xsct-tc
 
 B ?= "${WORKDIR}/build"
 
-XSCTH_PROC_DEFAULT_zynqmp     ??= "psu_cortexa53"
-XSCTH_PROC_DEFAULT_zynq       ??= "ps7_cortexa9"
-XSCTH_PROC_DEFAULT_microblaze ??= "microblaze"
-XSCTH_PROC_DEFAULT_versal     ??= "psv_cortexa72"
+XSCTH_PROC_DEFAULT:zynqmp     ??= "psu_cortexa53"
+XSCTH_PROC_DEFAULT:zynq       ??= "ps7_cortexa9"
+XSCTH_PROC_DEFAULT:microblaze ??= "microblaze"
+XSCTH_PROC_DEFAULT:versal     ??= "psv_cortexa72"
 
 XSCTH_PROC_IP ??= "${XSCTH_PROC_DEFAULT}"
 

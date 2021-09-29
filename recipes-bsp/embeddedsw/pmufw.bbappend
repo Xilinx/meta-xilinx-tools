@@ -6,4 +6,4 @@ PMU_MCDEPENDS ?= ""
 # instead of MACHINE_ARCH.  This is because the same machine may be used with
 # different variants, and zynqmp-dr is known to be 'different'.
 SOC_VARIANT_ARCH ??= "${MACHINE_ARCH}"
-PACKAGE_ARCH_zynqmp-dr = "${@['${BOARDVARIANT_ARCH}', '${SOC_VARIANT_ARCH}'][d.getVar('BOARDVARIANT_ARCH')==d.getVar('MACHINE_ARCH')]}"
+PACKAGE_ARCH:zynqmp-dr = "${@['${BOARDVARIANT_ARCH}', '${SOC_VARIANT_ARCH}'][d.getVar('BOARDVARIANT_ARCH')==d.getVar('MACHINE_ARCH')]}"

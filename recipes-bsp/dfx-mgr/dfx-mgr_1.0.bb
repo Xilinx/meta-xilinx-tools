@@ -42,4 +42,4 @@ do_install(){
 	oe_soinstall ${B}/src/libdfx-mgr.so.${SOVERSION} ${D}${libdir}
 }
 
-FILES_${PN} += "${base_libdir}/firmware/xilinx"
+FILES:${PN} += "${base_libdir}/firmware/xilinx"

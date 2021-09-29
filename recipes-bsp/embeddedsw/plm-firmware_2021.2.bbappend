@@ -12,18 +12,18 @@ XSCTH_PROC_IP = "psv_pmc"
 XSCTH_APP  = "versal PLM"
 
 # XSCT version provides it's own toolchain, so can build in any environment
-COMPATIBLE_HOST_versal = "${HOST_SYS}"
+COMPATIBLE_HOST:versal = "${HOST_SYS}"
 
 # Clear this for a Linux build, using the XSCT toolchain
 EXTRA_OEMAKE_linux = ""
 
 # Workaround for hardcoded toolchain items
-XSCT_PATH_ADD_append_elf = "\
+XSCT_PATH_ADD:append_elf = "\
 ${WORKDIR}/bin:"
 
 MB_OBJCOPY = "mb-objcopy"
 
-do_compile_prepend_elf() {
+do_compile:prepend_elf() {
   mkdir -p ${WORKDIR}/bin
   echo "#! /bin/bash\n${CC} \$@" > ${WORKDIR}/bin/mb-gcc
   echo "#! /bin/bash\n${AS} \$@" > ${WORKDIR}/bin/mb-as
@@ -37,7 +37,7 @@ do_compile_prepend_elf() {
   chmod 0755 ${WORKDIR}/bin/mb-objcopy
 }
 
-do_compile_append() {
+do_compile:append() {
   ${MB_OBJCOPY} -O binary ${B}/${XSCTH_PROJ}/executable.elf ${B}/${XSCTH_PROJ}/executable.bin
 }
 

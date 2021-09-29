@@ -21,28 +21,28 @@ PV = "xilinx+git${SRCPV}"
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
 COMPATIBLE_MACHINE ?= "^$"
-COMPATIBLE_MACHINE_zynqmp = ".*"
-COMPATIBLE_MACHINE_zynq = ".*"
-COMPATIBLE_MACHINE_versal = ".*"
+COMPATIBLE_MACHINE:zynqmp = ".*"
+COMPATIBLE_MACHINE:zynq = ".*"
+COMPATIBLE_MACHINE:versal = ".*"
 
 XSCTH_BUILD_CONFIG ?= ""
 
 DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_PROJ}"
-DT_INCLUDE_append = " ${WORKDIR}"
+DT_INCLUDE:append = " ${WORKDIR}"
 DT_PADDING_SIZE = "0x1000"
 
 UBOOT_DTS ?= ""
 XSCTH_MISC = " -hdf_type ${HDF_EXT}"
 XSCTH_APP = "device-tree"
-YAML_DT_BOARD_FLAGS_zynqmp ?= ""
-YAML_DT_BOARD_FLAGS_versal ?= ""
-YAML_DT_BOARD_FLAGS_zynq ?= ""
+YAML_DT_BOARD_FLAGS:zynqmp ?= ""
+YAML_DT_BOARD_FLAGS:versal ?= ""
+YAML_DT_BOARD_FLAGS:zynq ?= ""
 UBOOT_DTS_NAME = "uboot-device-tree"
 
 do_configure[dirs] += "${DT_FILES_PATH}"
-SRC_URI_append = "${@" ".join(["file://%s" % f for f in (d.getVar('UBOOT_DTS') or "").split()])}"
+SRC_URI:append = "${@" ".join(["file://%s" % f for f in (d.getVar('UBOOT_DTS') or "").split()])}"
 
-do_configure_prepend () {
+do_configure:prepend () {
     if [ ! -z "${UBOOT_DTS}" ]; then
         for f in ${UBOOT_DTS}; do
             cp  ${WORKDIR}/${f} ${DT_FILES_PATH}/
@@ -55,7 +55,7 @@ do_configure_prepend () {
 #Both linux dtb and uboot dtb are installing
 #system-top.dtb for uboot env recipe while do_prepare_recipe_sysroot
 #moving system-top.dts to othername.
-do_compile_prepend() {
+do_compile:prepend() {
     import shutil
     listpath = d.getVar("DT_FILES_PATH")
     if os.path.exists(os.path.join(listpath, "system.dts")):

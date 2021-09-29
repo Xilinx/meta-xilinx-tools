@@ -60,5 +60,5 @@ addtask do_check before do_deploy
 addtask do_deploy after do_install
 
 PACKAGES = ""
-FILES_${PN}= "/opt/xilinx/hw-design/design.xsa"
+FILES:${PN}= "/opt/xilinx/hw-design/design.xsa"
 SYSROOT_DIRS += "/opt"
