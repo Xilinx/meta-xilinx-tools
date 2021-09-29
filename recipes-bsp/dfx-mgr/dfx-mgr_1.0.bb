@@ -8,8 +8,8 @@ REPO ?= "git://github.com/Xilinx/dfx-mgr.git;protocol=https"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
 
-BRANCH = "master"
-SRCREV = "98668448059e580753dea82af614067fddb7c360"
+BRANCH = "xlnx_rel_v2021.2"
+SRCREV = "c3c0553089f9243d20825ee7f33c88260cbd0477"
 SOVERSION = "1.0"
 
 S = "${WORKDIR}/git"
