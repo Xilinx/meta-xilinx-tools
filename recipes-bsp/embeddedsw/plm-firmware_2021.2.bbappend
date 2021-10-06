@@ -15,15 +15,15 @@ XSCTH_APP  = "versal PLM"
 COMPATIBLE_HOST:versal = "${HOST_SYS}"
 
 # Clear this for a Linux build, using the XSCT toolchain
-EXTRA_OEMAKE_linux = ""
+EXTRA_OEMAKE:linux = ""
 
 # Workaround for hardcoded toolchain items
-XSCT_PATH_ADD:append_elf = "\
+XSCT_PATH_ADD:append:elf = "\
 ${WORKDIR}/bin:"
 
 MB_OBJCOPY = "mb-objcopy"
 
-do_compile:prepend_elf() {
+do_compile:prepend:elf() {
   mkdir -p ${WORKDIR}/bin
   echo "#! /bin/bash\n${CC} \$@" > ${WORKDIR}/bin/mb-gcc
   echo "#! /bin/bash\n${AS} \$@" > ${WORKDIR}/bin/mb-as

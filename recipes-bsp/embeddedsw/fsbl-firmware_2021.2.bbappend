@@ -31,17 +31,17 @@ COMPATIBLE_HOST:zynq   = "${HOST_SYS}"
 COMPATIBLE_HOST:zynqmp = "${HOST_SYS}"
 
 # Clear this for a Linux build, using the XSCT toolchain
-EXTRA_OEMAKE_linux = ""
+EXTRA_OEMAKE:linux = ""
 EXTRA_OEMAKE:linux-gnueabi = ""
 
 # Workaround for hardcoded toolchain items
-XSCT_PATH_ADD:append_elf = "\
+XSCT_PATH_ADD:append:elf = "\
 ${WORKDIR}/bin:"
 
 XSCT_PATH_ADD:append:eabi = "\
 ${WORKDIR}/bin:"
 
-do_compile:prepend_elf:aarch64() {
+do_compile:prepend:elf:aarch64() {
   mkdir -p ${WORKDIR}/bin
   echo "#! /bin/bash\n${CC} \$@" > ${WORKDIR}/bin/aarch64-none-elf-gcc
   echo "#! /bin/bash\n${AS} \$@" > ${WORKDIR}/bin/aarch64-none-elf-as

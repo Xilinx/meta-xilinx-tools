@@ -22,22 +22,22 @@ XSCTH_APP  = "ZynqMP PMU Firmware"
 
 ULTRA96_VERSION ?= "1"
 YAML_COMPILER_FLAGS:append = " -DENABLE_SCHEDULER "
-YAML_COMPILER_FLAGS:append_ultra96 = " -DENABLE_MOD_ULTRA96 ${@bb.utils.contains('ULTRA96_VERSION', '2', ' -DULTRA96_VERSION=2 ', ' -DULTRA96_VERSION=1 ', d)}"
-YAML_COMPILER_FLAGS:append_k26 = " -DBOARD_SHUTDOWN_PIN=2 -DBOARD_SHUTDOWN_PIN_STATE=0 -DENABLE_EM -DENABLE_MOD_OVERTEMP -DOVERTEMP_DEGC=90.0 "
+YAML_COMPILER_FLAGS:append:ultra96 = " -DENABLE_MOD_ULTRA96 ${@bb.utils.contains('ULTRA96_VERSION', '2', ' -DULTRA96_VERSION=2 ', ' -DULTRA96_VERSION=1 ', d)}"
+YAML_COMPILER_FLAGS:append:k26 = " -DBOARD_SHUTDOWN_PIN=2 -DBOARD_SHUTDOWN_PIN_STATE=0 -DENABLE_EM -DENABLE_MOD_OVERTEMP -DOVERTEMP_DEGC=90.0 "
 
 # XSCT version provides it's own toolchain, so can build in any environment
 COMPATIBLE_HOST:zynqmp = "${HOST_SYS}"
 
 # Clear this for a Linux build, using the XSCT toolchain
-EXTRA_OEMAKE_linux = ""
+EXTRA_OEMAKE:linux = ""
 
 # Workaround for hardcoded toolchain items
-XSCT_PATH_ADD:append_elf = "\
+XSCT_PATH_ADD:append:elf = "\
 ${WORKDIR}/bin:"
 
 MB_OBJCOPY = "mb-objcopy"
 
-do_compile:prepend_elf() {
+do_compile:prepend:elf() {
   mkdir -p ${WORKDIR}/bin
   echo "#! /bin/bash\n${CC} \$@" > ${WORKDIR}/bin/mb-gcc
   echo "#! /bin/bash\n${AS} \$@" > ${WORKDIR}/bin/mb-as
