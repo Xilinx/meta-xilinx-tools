@@ -5,7 +5,7 @@ XSCT_TARBALL ?= "xsct_${XILINX_VER_MAIN}.tar.xz"
 XSCT_DLDIR ?= "${DL_DIR}/xsct/"
 XSCT_STAGING_DIR ?= "${TOPDIR}/xsct"
 
-XSCT_CHECKSUM ?= "8ae22e42554c433ac90cc857daa9cec5"
+XSCT_CHECKSUM ?= "b038e9f101c68ae691616d0976651e2be9d045e1a36d997bfe431c1526ab7a9c"
 VALIDATE_XSCT_CHECKSUM ?= '1'
 
 USE_XSCT_TARBALL ?= '1'
@@ -67,14 +67,14 @@ python xsct_event_extract() {
         if os.path.exists(ext_tarball):
             bb.note("Checking local xsct tarball checksum")
             import hashlib
-            md5hash = hashlib.md5()
-            readsize = 1024*md5hash.block_size
+            sha256hash = hashlib.sha256()
+            readsize = 1024*sha256hash.block_size
             with open(ext_tarball, 'rb') as f:
                 for chunk in iter(lambda: f.read(readsize), b''):
-                    md5hash.update(chunk)
-            chksum_tar_actual = md5hash.hexdigest()
+                    sha256hash.update(chunk)
+            chksum_tar_actual = sha256hash.hexdigest()
             if validate == '1' and chksum_tar_recipe != chksum_tar_actual:
-                bb.fatal('Provided external tarball\'s md5sum does not match checksum defined in xsct-tarball class')
+                bb.fatal('Provided external tarball\'s sha256sum does not match checksum defined in xsct-tarball class')
         elif xsct_url:
             #if fetching the tarball, setting chksum_tar_actual as the one defined in the recipe as the fetcher will fail later otherwise
             chksum_tar_actual = chksum_tar_recipe
@@ -104,7 +104,7 @@ python xsct_event_extract() {
             localdata = bb.data.createCopy(d)
             localdata.setVar('FILESPATH', "")
             localdata.setVar('DL_DIR', xsctdldir)
-            srcuri = d.expand("${XSCT_URL};md5sum=%s;downloadfilename=%s" % (chksum_tar_actual, tarballname))
+            srcuri = d.expand("${XSCT_URL};sha256sum=%s;downloadfilename=%s" % (chksum_tar_actual, tarballname))
             bb.note("Fetching xsct binary tarball from %s" % srcuri)
             fetcher = bb.fetch2.Fetch([srcuri], localdata)
             fetcher.download()
