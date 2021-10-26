@@ -85,7 +85,10 @@ void print_usage(char *prg)
 	fprintf(stderr, "         -o <dtbofile>		(DTBO file path)\n");
 	fprintf(stderr, "         -f <flags>		Optional: <Bitstream type flags>\n");
 	fprintf(stderr, "				   f := <Full | Partial > \n");
-
+	fprintf(stderr, "         -n <Fpga region info>  FPGA Regions represent FPGA's\n");
+	fprintf(stderr, "                                and partial reconfiguration\n");
+	fprintf(stderr, "                                regions of FPGA's in the\n");
+	fprintf(stderr, "                                Device Tree\n");
 	if (iszynqmp)
 	{
 		fprintf(stderr, "				Default: <Full>\n");
@@ -104,9 +107,13 @@ void print_usage(char *prg)
 	fprintf(stderr, " \n");
 	fprintf(stderr, "Examples:\n");
 	fprintf(stderr, "(Load Full bitstream using Overlay)\n");
-	fprintf(stderr, "%s -b top.bit.bin -o can.dtbo\n", prg);
-	fprintf(stderr, "(Load Partial bitstream through the sysfs interface)\n");
-	fprintf(stderr, "%s -b top.bit.bin -f Partial \n", prg);
+	fprintf(stderr, "%s -b top.bit.bin -o can.dtbo -f Full -n Full \n", prg);
+	fprintf(stderr, "(Load Partial bitstream using Overlay)\n");
+	fprintf(stderr, "%s -b rm0.bit.bin -o rm0.dtbo -f Partial -n PR0\n", prg);
+	fprintf(stderr, "(Load Full bitstream using sysfs interface)\n");
+	fprintf(stderr, "%s -b top.bit.bin -f Full\n", prg);
+	fprintf(stderr, "(Load Partial bitstream using sysfs interface)\n");
+	fprintf(stderr, "%s -b rm0.bit.bin -f Partial\n", prg);
 	if (iszynqmp)
 	{
 		fprintf(stderr, "(Load Authenticated bitstream through the sysfs interface)\n");
@@ -208,10 +215,10 @@ int main(int argc, char **argv)
 	int ret;
 	int iszynqmp = fpga_getplatform();
 	char *binfile = NULL, *overlay = NULL, *AesKey = NULL, *flag = NULL, *partial_overlay = NULL;
-	char *Module[100] = {0};
+	char *region = NULL, *Module[100] = {0};
 	int opt, flags = 0, flow = 0,rm_overlay = 0, readback_type = 0, sflags = 0;
-	char command[2048], *token, *tmp, *tmp1, *tmp2 , *tmp3;
-	const char *folder, *filename = "readback", *name;
+	char command[2048], folder[512], *token, *tmp, *tmp1, *tmp2 , *tmp3;
+	const char *filename = "readback", *name;
 	struct stat sb;
 	double time;
         struct timeval t1, t0;
@@ -221,7 +228,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	while ((opt = getopt(argc, argv, "o:b:f:s:p:k:rt::Rh?:")) != -1) {
+	while ((opt = getopt(argc, argv, "o:b:n:f:s:p:k:rt::Rh?:")) != -1) {
 		switch (opt) {
 		case 'o':
 			overlay = optarg;
@@ -232,6 +239,9 @@ int main(int argc, char **argv)
 			if (!(flow == OVERLAY))
 				flow = FPGA_SYSFS;
 			break;
+		case 'n':
+                        region = optarg;
+                        break;
 		case 'f':
 			if (flow == OVERLAY) {
 				name = argv[6];
@@ -295,32 +305,36 @@ int main(int argc, char **argv)
 		}
 	}
 
+	if(region != NULL)
+		snprintf(folder, sizeof(folder), "/configfs/device-tree/overlays/%s", region);
+	else if (!(flags & 1))
+		snprintf(folder, sizeof(folder), "/configfs/device-tree/overlays/full");
+	else if (overlay != NULL) {
+		printf("Error: Provide valid Overlay region info\n\r");
+		return 1;
+	}
 	system("mkdir -p /lib/firmware");
-
 	if (rm_overlay) {
-		folder = "/configfs/device-tree/overlays/full";
 		if (((stat(folder, &sb) == 0) && S_ISDIR(sb.st_mode))) {
-			system("rmdir /configfs/device-tree/overlays/full");
+			snprintf(command, sizeof(command), "rmdir %s", folder);
+			system(command);
 		}
 		return 0;
 	}
 
 	if (flow == OVERLAY) {
-
-		folder = "/configfs/device-tree/overlays/full";
 		if (((stat(folder, &sb) == 0) && S_ISDIR(sb.st_mode))) {
 			printf("Error: Overlay already exists in the live tree\n\r");
 			return 1;
 		}
-
+		snprintf(command, sizeof(command), "cp %s /lib/firmware", binfile);
 		if (argc < 5) {
 			printf("\n\r");
 			printf("%s: For more information run %s -h\n", strerror(22), basename(argv[0]));
 			return 1;
 		}
 		
-		folder = "/configfs/device-tree/";
-		if (((stat(folder, &sb) == 0) && S_ISDIR(sb.st_mode))) {
+		if (((stat("/configfs/device-tree/", &sb) == 0) && S_ISDIR(sb.st_mode))) {
 		} else {
 			system("mkdir /configfs");
 			system("mount -t configfs configfs /configfs");
@@ -340,28 +354,11 @@ int main(int argc, char **argv)
                 	system(command);
 		}
 
-		if (!(flags & 1)) {
-			system("cd /configfs/device-tree/overlays/ && mkdir full");
-			snprintf(command, sizeof(command), "echo -n %s > /configfs/device-tree/overlays/full/path", tmp1);
-			gettimeofday(&t0, NULL);
-			system(command);
-			if (partial_overlay) {
-				snprintf(command, sizeof(command), "cp %s /lib/firmware", partial_overlay);
-				system(command);
-				tmp2 = strdup(partial_overlay);
-				while((token = strsep(&tmp2, "/"))) {
-					tmp3 = token;
-				}
-				system("cd /configfs/device-tree/overlays/ && mkdir full1");
-				snprintf(command, sizeof(command), "echo -n %s > /configfs/device-tree/overlays/full1/path", tmp3);
-				system(command);
-			}
-		} else {
-			system("cd /configfs/device-tree/overlays/ && mkdir full1");
-			snprintf(command, sizeof(command), "echo -n %s > /configfs/device-tree/overlays/full1/path", tmp1);
-			gettimeofday(&t0, NULL);
-			system(command);
-		}
+		snprintf(command, sizeof(command), "mkdir %s", folder);
+		system(command);
+		snprintf(command, sizeof(command), "echo -n %s > %s/path", tmp1, folder);
+		gettimeofday(&t0, NULL);
+		system(command);
 		gettimeofday(&t1, NULL);
 		time = gettime(t0, t1);
 
@@ -374,6 +371,14 @@ int main(int argc, char **argv)
 		}
 		snprintf(command, sizeof(command), "rm /lib/firmware/%s", tmp1);
 		system(command);
+
+		/* FPGA state check */
+		if (!fpga_state()) {
+			printf("Time taken to load BIN is %f Milli Seconds\n\r", time);
+			printf("BIN FILE loaded through FPGA manager successfully\n\r");
+		} else {
+			printf("BIN FILE loading through FPGA manager failed\n\r");
+		}
 	} else if (flow == FPGA_SYSFS) {
 		if (argc < 3) {
 			printf("%s: For more information run %s -h\n", strerror(22), basename(argv[0]));
@@ -383,10 +388,10 @@ int main(int argc, char **argv)
 		system(command);
 		snprintf(command, sizeof(command), "echo %x > /sys/class/fpga_manager/fpga0/flags", flags);
 		system(command);
-	        if (ENCRYPTION_USERKEY_EN & flags) {
-                        snprintf(command, sizeof(command), "echo %s > /sys/class/fpga_manager/fpga0/key", AesKey);
-                        system(command);
-                }	
+		if (ENCRYPTION_USERKEY_EN & flags) {
+			snprintf(command, sizeof(command), "echo %s > /sys/class/fpga_manager/fpga0/key", AesKey);
+			system(command);
+		}
 		tmp = strdup(binfile);
 		while((token = strsep(&tmp, "/"))) {
 			tmp1 = token;
@@ -396,14 +401,18 @@ int main(int argc, char **argv)
 		system(command);
 		gettimeofday(&t1, NULL);
 		time = gettime(t0, t1);
+
+		/* Delete Bin file and DTBO file*/
+		snprintf(command, sizeof(command), "rm /lib/firmware/%s", tmp1);
+		system(command);
+
+		/* FPGA state check */
 		if (!fpga_state()) {
 			printf("Time taken to load BIN is %f Milli Seconds\n\r", time);
 			printf("BIN FILE loaded through FPGA manager successfully\n\r");
 		} else {
 			printf("BIN FILE loading through FPGA manager failed\n\r");
 		}
-		snprintf(command, sizeof(command), "rm /lib/firmware/%s", tmp1);
-		system(command);
 	} else if (flow == READBACK) {
 		if (readback_type > 1) {
 			printf("Invalid arugments :%s\n", strerror(1));
