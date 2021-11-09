@@ -8,17 +8,19 @@ REPO ?= "git://github.com/Xilinx/dfx-mgr.git;protocol=https"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 SRC_URI = "${REPO};${BRANCHARG}"
 
-BRANCH = "xlnx_rel_v2021.2"
-SRCREV = "c3c0553089f9243d20825ee7f33c88260cbd0477"
-SOVERSION = "1.0"
+BRANCH = "master"
+SRCREV = "4e6eef210db4dc0399a70688f17413850012f3a1"
+SOMAJOR = "1"
+SOMINOR = "0"
+SOVERSION = "${SOMAJOR}.${SOMINOR}"
 
 S = "${WORKDIR}/git"
 
 inherit cmake update-rc.d
 
-DEPENDS += " libwebsockets inotify-tools libdfx zocl libdrm"
+DEPENDS += " libwebsockets inotify-tools libdfx xrt zocl libdrm"
 EXTRA_OECMAKE += " \
-		-DCMAKE_INCLUDE_PATH=${S}/include \
+               -DCMAKE_SYSROOT:PATH=${RECIPE_SYSROOT} \
 		"
 INITSCRIPT_NAME = "dfx-mgr.sh"
 INITSCRIPT_PARAMS = "start 99 S ."
@@ -40,6 +42,13 @@ do_install(){
 	install -m 0644 ${S}/src/dfxmgr_client.h ${D}${includedir}
 
 	oe_soinstall ${B}/src/libdfx-mgr.so.${SOVERSION} ${D}${libdir}
+
+	install -m 0644 ${S}/opendfx-graph/include/graph_api.h ${D}${includedir}
+	oe_soinstall ${B}/opendfx-graph/libdfxgraph.so.${SOVERSION} ${D}${libdir}
 }
 
+PACKAGES =+ "libdfx-mgr libdfxgraph"
+
 FILES_${PN} += "${base_libdir}/firmware/xilinx"
+FILES_libdfx-mgr = "${libdir}/libdfx-mgr.so.${SOVERSION} ${libdir}/libdfx-mgr.so.${SOMAJOR}"
+FILES_libdfxgraph = "${libdir}/libdfxgraph.so.${SOVERSION} ${libdir}/libdfxgraph.so.${SOMAJOR}"
