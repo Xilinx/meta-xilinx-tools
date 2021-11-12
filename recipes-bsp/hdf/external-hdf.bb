@@ -20,7 +20,7 @@ HDF_EXT ?= "xsa"
 
 SRC_URI = "${HDF_BASE}${HDF_PATH};${BRANCHARG}"
 
-COMPATIBLE_HOST_xilinx-standalone = "${HOST_SYS}"
+COMPATIBLE_HOST:xilinx-standalone = "${HOST_SYS}"
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
 S = "${WORKDIR}/git"
