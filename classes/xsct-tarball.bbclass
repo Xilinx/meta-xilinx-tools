@@ -67,7 +67,7 @@ python xsct_event_extract() {
         if not ext_tarball and not xsct_url:
             bb.fatal('xsct-tarball class is enabled but no external tarball or url is provided.\n\
 \tEither set USE_XSCT_TARBALL to "0" or provide a path/url')
-        if os.path.exists(ext_tarball):
+        if ext_tarball and os.path.exists(ext_tarball):
             bb.note("Checking local xsct tarball checksum")
             import hashlib
             sha256hash = hashlib.sha256()
@@ -78,6 +78,8 @@ python xsct_event_extract() {
             chksum_tar_actual = sha256hash.hexdigest()
             if validate == '1' and chksum_tar_recipe != chksum_tar_actual:
                 bb.fatal('Provided external tarball\'s sha256sum does not match checksum defined in xsct-tarball class')
+        elif ext_tarball:
+            bb.fatal("Unable to find %s" % ext_tarball)
         elif xsct_url:
             #if fetching the tarball, setting chksum_tar_actual as the one defined in the recipe as the fetcher will fail later otherwise
             chksum_tar_actual = chksum_tar_recipe
