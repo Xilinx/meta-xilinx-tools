@@ -1,4 +1,4 @@
-BIF_PARTITION_ATTR_append_zynqmp = "${@bb.utils.contains('MACHINE_FEATURES', 'fpga-overlay', '', ' bitstream', d)}"
+BIF_BITSTREAM_ATTR = "${@bb.utils.contains('MACHINE_FEATURES', 'fpga-overlay', '', ' bitstream', d)}"
 
 DEPENDS += 'u-boot-zynq-scr'
 
