@@ -107,7 +107,7 @@ function get_elf_jump_offset {
 	JUMP_OFFSET=$(printf "0x%08x" $((${entry_point} - ${ELF_LMA})))
 }
 
-function create_blobstub_microblaze {
+function create_blobstub:microblaze {
 
 cat > ${BLOBSTUB}.s.in << __eof
 /*
@@ -227,7 +227,7 @@ PETALINUX_ARCH=$(xlnx_readelf -e ${INFILE} | grep "Machine:" | awk '{print $2}')
 echo "ELF ARCH is ${PETALINUX_ARCH}"
 
 if [ "${PETALINUX_ARCH}" == "Xilinx" ]; then
-	create_blobstub_microblaze
+	create_blobstub:microblaze
 	build_blobstub
 	insert_payload
 	relocate_blob

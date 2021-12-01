@@ -8,8 +8,8 @@ PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
 XSCTH_BASE_NAME ?= "${PN}${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
 
-FILESEXTRAPATHS_append := ":${XLNX_SCRIPTS_DIR}"
-SRC_URI_append = " file://app.tcl"
+FILESEXTRAPATHS:append := ":${XLNX_SCRIPTS_DIR}"
+SRC_URI:append = " file://app.tcl"
 XSCTH_SCRIPT ?= "${WORKDIR}/app.tcl"
 
 XSCTH_BUILD_DEBUG ?= "0"
@@ -38,4 +38,4 @@ do_deploy() {
 }
 addtask do_deploy after do_compile
 
-FILES_${PN} = "/boot/${PN}-${SRCPV}.elf"
+FILES:${PN} = "/boot/${PN}-${SRCPV}.elf"

@@ -8,13 +8,13 @@ S = "${WORKDIR}/git"
 I = "${AIEDIR}/include"
 
 COMPATIBLE_MACHINE = "^$"
-COMPATIBLE_MACHINE_versal-ai-core = "versal-ai-core"
+COMPATIBLE_MACHINE:versal-ai-core = "versal-ai-core"
 PV = "1.0"
 
 DEPENDS = "libmetal openamp"
-RDEPENDS_${PN} = "libmetal"
+RDEPENDS:${PN} = "libmetal"
 PROVIDES = "libxaiengine"
-RPROVIDES_${PN}	= "libxaiengine"
+RPROVIDES:${PN}	= "libxaiengine"
 
 # The makefile isn't ready for parallel execution at the moment
 PARALLEL_MAKE = "-j 1"
@@ -34,4 +34,4 @@ do_install(){
 	cp -dr ${AIEDIR}/src/*.so* ${D}${libdir}
 }
 
-PACKAGE_ARCH_versal-ai-core = "${SOC_VARIANT_ARCH}"
+PACKAGE_ARCH:versal-ai-core = "${SOC_VARIANT_ARCH}"

@@ -6,8 +6,8 @@ inherit devicetree
 DEPENDS = "dtc-native bootgen-native"
 
 COMPATIBLE_MACHINE ?= "^$"
-COMPATIBLE_MACHINE_zynqmp = ".*"
-COMPATIBLE_MACHINE_zynq = ".*"
+COMPATIBLE_MACHINE:zynqmp = ".*"
+COMPATIBLE_MACHINE:zynq = ".*"
 
 PROVIDES = ""
 
@@ -54,7 +54,7 @@ python do_configure() {
     shutil.move(new_dtsi,orig_dtsi)
 }
 
-python devicetree_do_compile_append() {
+python devicetree_do_compile:append() {
     import glob, subprocess
     pn = d.getVar('PN')
     biffile = pn + '.bif'
@@ -82,4 +82,4 @@ do_install() {
 
 do_deploy[noexec] = "1"
 
-FILES_${PN} += "${nonarch_base_libdir}/firmware/xilinx/${PN}"
+FILES:${PN} += "${nonarch_base_libdir}/firmware/xilinx/${PN}"

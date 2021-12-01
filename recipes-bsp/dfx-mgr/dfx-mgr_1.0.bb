@@ -49,6 +49,6 @@ do_install(){
 
 PACKAGES =+ "libdfx-mgr libdfxgraph"
 
-FILES_${PN} += "${base_libdir}/firmware/xilinx"
-FILES_libdfx-mgr = "${libdir}/libdfx-mgr.so.${SOVERSION} ${libdir}/libdfx-mgr.so.${SOMAJOR}"
-FILES_libdfxgraph = "${libdir}/libdfxgraph.so.${SOVERSION} ${libdir}/libdfxgraph.so.${SOMAJOR}"
+FILES:${PN} += "${base_libdir}/firmware/xilinx"
+FILES:libdfx-mgr = "${libdir}/libdfx-mgr.so.${SOVERSION} ${libdir}/libdfx-mgr.so.${SOMAJOR}"
+FILES:libdfxgraph = "${libdir}/libdfxgraph.so.${SOVERSION} ${libdir}/libdfxgraph.so.${SOMAJOR}"

@@ -79,7 +79,7 @@ BIF attributes and Partition BIF attributes. Attributes of BIF need to be
 specified in local.conf while using xilinx-bootbin recipe for generating
 boot.bin
 
-Use IMAGE_INSTALL_append = " xilinx-bootbin" in local.conf
+Use IMAGE_INSTALL:append = " xilinx-bootbin" in local.conf
 
 Examples for adding dependencies
 ================================

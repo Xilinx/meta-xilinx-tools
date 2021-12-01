@@ -4,7 +4,7 @@ TOOL_VER_MAIN[doc] = "XSCT version, usually the same as XILINX_VER_MAIN"
 XSCT_LOADER ?= "${XSCT_STAGING_DIR}/Vitis/${TOOL_VER_MAIN}/bin/xsct"
 
 XSCT_URL ?= "http://petalinux.xilinx.com/sswreleases/rel-v2021/xsct-trim/xsct-2021-2.tar.xz"
-XSCT_TARBALL ?= "xsct_${TOOL_VER_MAIN}.tar.xz"
+XSCT_TARBALL ?= "xsct_${XILINX_VER_MAIN}.tar.xz"
 XSCT_DLDIR ?= "${DL_DIR}/xsct/"
 XSCT_STAGING_DIR ?= "${TOPDIR}/xsct"
 
@@ -67,7 +67,7 @@ python xsct_event_extract() {
         if not ext_tarball and not xsct_url:
             bb.fatal('xsct-tarball class is enabled but no external tarball or url is provided.\n\
 \tEither set USE_XSCT_TARBALL to "0" or provide a path/url')
-        if os.path.exists(ext_tarball):
+        if ext_tarball and os.path.exists(ext_tarball):
             bb.note("Checking local xsct tarball checksum")
             import hashlib
             sha256hash = hashlib.sha256()
@@ -78,6 +78,8 @@ python xsct_event_extract() {
             chksum_tar_actual = sha256hash.hexdigest()
             if validate == '1' and chksum_tar_recipe != chksum_tar_actual:
                 bb.fatal('Provided external tarball\'s sha256sum does not match checksum defined in xsct-tarball class')
+        elif ext_tarball:
+            bb.fatal("Unable to find %s" % ext_tarball)
         elif xsct_url:
             #if fetching the tarball, setting chksum_tar_actual as the one defined in the recipe as the fetcher will fail later otherwise
             chksum_tar_actual = chksum_tar_recipe
@@ -150,7 +152,7 @@ python xsct_event_extract() {
 
 # The following two items adjust some functions in populate_sdk_ext, so they are benign when set globally.
 # Copy xsct tarball to esdk's download dir, where this class is expecting it to be
-python copy_buildsystem_prepend() {
+python copy_buildsystem:prepend() {
 
     if bb.data.inherits_class('xsct-tarball', d):
         ext_tarball = d.getVar("COPY_XSCT_TO_ESDK")
@@ -167,7 +169,7 @@ python copy_buildsystem_prepend() {
 }
 
 #Add dir with the tools to PATH
-sdk_ext_postinst_append() {
+sdk_ext_postinst:append() {
     if [ "${COPY_XSCT_TO_ESDK}" = "1" ]; then
         echo "export PATH=$target_sdk_dir/tmp/sysroots-xsct/Vitis/${TOOL_VER_MAIN}/bin:\$PATH" >> $env_setup_script
     fi

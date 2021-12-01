@@ -20,7 +20,7 @@ HDF_EXT ?= "xsa"
 
 SRC_URI = "${HDF_BASE}${HDF_PATH};${BRANCHARG}"
 
-COMPATIBLE_HOST_xilinx-standalone = "${HOST_SYS}"
+COMPATIBLE_HOST:xilinx-standalone = "${HOST_SYS}"
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
 S = "${WORKDIR}/git"
@@ -60,5 +60,5 @@ addtask do_check before do_deploy
 addtask do_deploy after do_install
 
 PACKAGES = ""
-FILES_${PN}= "/opt/xilinx/hw-design/design.xsa"
+FILES:${PN}= "/opt/xilinx/hw-design/design.xsa"
 SYSROOT_DIRS += "/opt"

@@ -11,7 +11,7 @@ DEPENDS = "virtual/fsboot virtual/bitstream"
 inherit deploy
 
 COMPATIBLE_MACHINE ?= "^$"
-COMPATIBLE_MACHINE_microblaze = ".*"
+COMPATIBLE_MACHINE:microblaze = ".*"
 
 MMI_FILE ?= "${RECIPE_SYSROOT}/boot/bitstream/system.mmi"
 BIT_FILE ?= "${RECIPE_SYSROOT}/boot/bitstream/system.bit"
@@ -19,7 +19,7 @@ DATA_FILE ?= "${RECIPE_SYSROOT}/boot/fs-boot.elf"
 B = "${WORKDIR}/build"
 
 PROC ??= "kc705_i/microblaze_0"
-PROC_kc705 = "kc705_i/microblaze_0"
+PROC:kc705 = "kc705_i/microblaze_0"
 
 SYSROOT_DIRS += "/boot/bitstream"
 
@@ -58,4 +58,4 @@ do_deploy() {
 
 addtask do_deploy before do_build after do_compile
 
-FILES_${PN} = "/boot/bitstream/download.bit"
+FILES:${PN} = "/boot/bitstream/download.bit"

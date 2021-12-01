@@ -8,7 +8,7 @@ SRC_URI = "\
 	"
 S = "${WORKDIR}"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 do_compile() {
 	${CC} ${LDFLAGS} fpgautil.c -o fpgautil
@@ -18,6 +18,6 @@ do_install() {
         install -Dm 0755 ${S}/fpgautil ${D}${bindir}/fpgautil
 }
 
-FILES_${PN} = "\
+FILES:${PN} = "\
         ${bindir}/fpgautil \
         "

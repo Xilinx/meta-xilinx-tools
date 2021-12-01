@@ -6,8 +6,8 @@ PROVIDES = "virtual/elfrealloc"
 
 inherit deploy
 
-FILESEXTRAPATHS_append := ":${XLNX_SCRIPTS_DIR}"
-SRC_URI_append = " file://mb-realoc"
+FILESEXTRAPATHS:append := ":${XLNX_SCRIPTS_DIR}"
+SRC_URI:append = " file://mb-realoc"
 
 PV = "0.1"
 

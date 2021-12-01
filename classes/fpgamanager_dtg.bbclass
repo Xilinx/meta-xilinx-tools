@@ -9,8 +9,8 @@ require recipes-bsp/device-tree/device-tree.inc
 DEPENDS = "dtc-native bootgen-native"
 
 COMPATIBLE_MACHINE ?= "^$"
-COMPATIBLE_MACHINE_zynqmp = ".*"
-COMPATIBLE_MACHINE_zynq = ".*"
+COMPATIBLE_MACHINE:zynqmp = ".*"
+COMPATIBLE_MACHINE:zynq = ".*"
 
 DT_PADDING_SIZE = "0x1000"
 
@@ -44,19 +44,19 @@ python (){
 }
 
 
-do_configure_prepend() {
+do_configure:prepend() {
 
     if ${@bb.utils.contains('MACHINE_FEATURES', 'fpga-overlay', 'false', 'true', d)}; then
         bbwarn "Using fpga-manager.bbclass requires fpga-overlay MACHINE_FEATURE to be enabled"
     fi
 }
 
-do_configure_append () {
+do_configure:append () {
     if ls ${WORKDIR}/${CUSTOMPLINCLUDE_PATH}/*.dtsi >/dev/null 2>&1; then
         cp ${WORKDIR}/${CUSTOMPLINCLUDE_PATH}/*.dtsi ${XSCTH_WS}/${XSCTH_PROJ}/pl-custom.dtsi
     fi
 }
-do_compile_prepend() {
+do_compile:prepend() {
     listpath = d.getVar("DT_FILES_PATH")
     try:
         os.remove(os.path.join(listpath, "system.dts"))
@@ -64,7 +64,7 @@ do_compile_prepend() {
         pass
 }
 
-python devicetree_do_compile_append() {
+python devicetree_do_compile:append() {
     import glob, subprocess
     pn = d.getVar('PN')
     biffile = pn + '.bif'
@@ -92,4 +92,4 @@ do_install() {
 
 do_deploy[noexec] = "1"
 
-FILES_${PN} += "${nonarch_base_libdir}/firmware/xilinx/${PN}"
+FILES:${PN} += "${nonarch_base_libdir}/firmware/xilinx/${PN}"

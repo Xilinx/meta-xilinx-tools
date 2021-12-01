@@ -16,7 +16,7 @@ XSCTH_MISC = "-hwpname ${XSCTH_PROJ}_hwproj -hdf_type ${HDF_EXT}"
 do_compile[noexec] = "1"
 
 BITSTREAM_NAME ?= "download"
-BITSTREAM_NAME_microblaze ?= "system"
+BITSTREAM_NAME:microblaze ?= "system"
 
 BITSTREAM_BASE_NAME ?= "${BITSTREAM_NAME}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
 
@@ -54,4 +54,4 @@ do_deploy() {
 }
 addtask do_deploy after do_install
 
-FILES_${PN} += "/boot/bitstream/*.bit /boot/bitstream/*.mmi"
+FILES:${PN} += "/boot/bitstream/*.bit /boot/bitstream/*.mmi"

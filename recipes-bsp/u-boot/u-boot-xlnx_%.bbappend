@@ -14,7 +14,7 @@ EXTRA_OEMAKE += "${@'EXT_DTB=${RECIPE_SYSROOT}/${DTB_PATH}/${DTB_NAME}' if (d.ge
 
 UBOOTELF_NODTB_IMAGE ?= "u-boot-nodtb.elf"
 UBOOTELF_NODTB_BINARY ?= "u-boot"
-do_deploy_prepend() {
+do_deploy:prepend() {
     cd ${B}
 
     if [ -f "${UBOOTELF_NODTB_BINARY}" ]; then
