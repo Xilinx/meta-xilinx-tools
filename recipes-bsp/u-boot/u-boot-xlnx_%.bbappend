@@ -23,6 +23,7 @@ do_deploy:prepend() {
 
     #following lines are from uboot-sign.bbclass, vars are defined there
     if [ -e "${UBOOT_DTB_BINARY}" ]; then
+            install ${UBOOT_DTB_BINARY} ${DEPLOYDIR}/${UBOOT_DTB_IMAGE}
             ln -sf ${UBOOT_DTB_IMAGE} ${DEPLOYDIR}/${UBOOT_DTB_BINARY}
             ln -sf ${UBOOT_DTB_IMAGE} ${DEPLOYDIR}/${UBOOT_DTB_SYMLINK}
     fi
