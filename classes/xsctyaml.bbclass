@@ -23,11 +23,6 @@ YAML_BSP_COMPILER_FLAGS ?= ''
 YAML_ENABLE_NO_ALIAS ?= ''
 YAML_ENABLE_DT_VERBOSE ?= ''
 
-YAML_SERIAL_CONSOLE_STDIN:ultra96 ?= "psu_uart_1"
-YAML_SERIAL_CONSOLE_STDOUT:ultra96 ?= "psu_uart_1"
-
-YAML_COMPILER_FLAGS:append:ultra96 = " -DBOARD_SHUTDOWN_PIN=2 -DBOARD_SHUTDOWN_PIN_STATE=0 "
-
 YAML_FILE_PATH = "${WORKDIR}/${PN}.yaml"
 XSCTH_MISC:append = " -yamlconf ${YAML_FILE_PATH}"
 
@@ -126,5 +121,3 @@ python do_create_yaml() {
 }
 
 addtask create_yaml after do_prepare_recipe_sysroot before do_configure
-
-PACKAGE_ARCH:ultra96 = "${BOARD_ARCH}"

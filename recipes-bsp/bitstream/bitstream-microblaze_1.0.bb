@@ -19,7 +19,6 @@ DATA_FILE ?= "${RECIPE_SYSROOT}/boot/fs-boot.elf"
 B = "${WORKDIR}/build"
 
 PROC ??= "kc705_i/microblaze_0"
-PROC:kc705 = "kc705_i/microblaze_0"
 
 SYSROOT_DIRS += "/boot/bitstream"
 
