@@ -18,7 +18,8 @@ S = "${WORKDIR}/git"
 
 inherit cmake update-rc.d
 
-DEPENDS += " libwebsockets inotify-tools libdfx xrt zocl libdrm"
+#DEPENDS += " libwebsockets inotify-tools libdfx xrt zocl libdrm"
+DEPENDS += " libwebsockets inotify-tools libdfx xrt libdrm"
 EXTRA_OECMAKE += " \
                -DCMAKE_SYSROOT:PATH=${RECIPE_SYSROOT} \
 		"
