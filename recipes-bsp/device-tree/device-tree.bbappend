@@ -22,6 +22,8 @@ XSCTH_MISC = " -hdf_type ${HDF_EXT}"
 YAML_OVERLAY_CUSTOM_DTS = "pl-final.dts"
 CUSTOM_PL_INCLUDE_DTSI ?= ""
 EXTRA_DT_FILES ?= ""
+EXTRA_DTFILE_PREFIX ?= "system-top"
+EXTRA_DTFILES_BUNDLE ?= ""
 EXTRA_OVERLAYS ?= ""
 
 DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_PROJ}"
@@ -56,6 +58,27 @@ do_configure:append () {
         echo "/include/ \"$f\"" >> ${DT_FILES_PATH}/${BASE_DTS}.dts
     done
 
+}
+
+devicetree_do_compile:append() {
+    import subprocess
+    dtb_file = d.getVar('DTB_FILE_NAME') or ''
+    ccdtb_prefix = d.getVar('EXTRA_DTFILE_PREFIX') or ''
+    bundle_dtfile = d.getVar('EXTRA_DTFILES_BUNDLE')
+    extra_dt_files = d.getVar('EXTRA_DT_FILES').split() or ''
+    if bundle_dtfile and dtb_file and os.path.isfile(dtb_file):
+        for dtsfile in extra_dt_files:
+            dtname = os.path.splitext(os.path.basename(dtsfile))[0]
+            dtbname = '% s.dtb' % (dtname)
+            dtboname = '% s.dtbo' % (dtname)
+            outputname = '% s-% s' % (ccdtb_prefix,dtbname)
+            if os.path.isfile(dtboname):
+                fdtargs = ["fdtoverlay"]
+                fdtargs += ["-o", outputname]
+                fdtargs += ["-i", dtb_file]
+                fdtargs += [dtboname]
+                bb.note("Running {0}".format(" ".join(fdtargs)))
+                subprocess.run(fdtargs, check = True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 }
 
 do_compile:prepend() {
