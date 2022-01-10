@@ -43,7 +43,7 @@ do_install() {
     if [ "${HDF_BASE}" = "git://" ]; then
          install -m 0644 ${S}/${HDF_MACHINE}/${HDF_NAME} ${D}/opt/xilinx/hw-design/design.xsa
     else
-         install -m 0644 ${WORKDIR}/${HDF_PATH} ${D}/opt/xilinx/hw-design/design.xsa
+         install -m 0644 ${WORKDIR}/${HDF_NAME} ${D}/opt/xilinx/hw-design/design.xsa
     fi
 }
 
@@ -52,7 +52,7 @@ do_deploy() {
     if [ "${HDF_BASE}" = "git://" ]; then
         install -m 0644 ${WORKDIR}/git/${HDF_MACHINE}/${HDF_NAME} ${DEPLOYDIR}/Xilinx-${MACHINE}.${HDF_EXT}
     else
-        install -m 0644 ${WORKDIR}/${HDF_PATH} ${DEPLOYDIR}/Xilinx-${MACHINE}.${HDF_EXT}
+        install -m 0644 ${WORKDIR}/${HDF_NAME} ${DEPLOYDIR}/Xilinx-${MACHINE}.${HDF_EXT}
     fi
 }
 
