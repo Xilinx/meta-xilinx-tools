@@ -25,9 +25,11 @@ Dependencies
 This layer depends on: xsct
 
 xsct-tarball class fetches the required xsct tool and installs it in the local
-sysroots of Yocto build. All the recipes which depend xsct or bootgen will use
-from sysroots. Please see the Xilinx EULA license file for xsct after
-extracting the tarball.
+Yocto build directory, as xsct. All of the recipes which depend on xsct will
+use it from this location.  Please see the Xilinx EULA license file for xsct
+at the following location:
+
+https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/end-user-license-agreement.pdf
 
 Each release is dependent on the Xilinx XSCT release version. Please note that
 xsct tools may not be backward compatible with embeddedsw repo. Meaning
