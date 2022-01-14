@@ -34,17 +34,18 @@ do_configure[cleandirs] = "${B}"
 
 python (){
 
-    if d.getVar("SRC_URI").count(".xsa") != 1 or d.getVar("SRC_URI").count("shell.json") != 1:
-        raise bb.parse.SkipRecipe("Need one '.xsa' and one 'shell.json' file added to SRC_URI")
+    if d.getVar("SRC_URI").count(".xsa") != 1:
+        raise bb.parse.SkipRecipe("Need one '.xsa' file added to SRC_URI")
 
     d.setVar("XSCTH_HDF_PATH",[a for a in d.getVar('SRC_URI').split('file://') if '.xsa' in a][0])
-    d.setVar("JSON_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split('file://') if 'shell.json' in a][0]))
 
     #optional inputs
     if '.xclbin' in d.getVar("SRC_URI"):
         d.setVar("XCL_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split('file://') if '.xclbin' in a][0]))
     if '.dtsi' in d.getVar("SRC_URI"):
         d.setVar("CUSTOMPLINCLUDE_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split('file://') if '.dtsi' in a][0]))
+    if 'shell.json' in d.getVar("SRC_URI"):
+        d.setVar("JSON_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split('file://') if 'shell.json' in a][0]))
 }
 
 
@@ -99,7 +100,9 @@ do_install() {
     if ls ${WORKDIR}/${XCL_PATH}/*.xclbin >/dev/null 2>&1; then
         install -Dm 0644 ${WORKDIR}/${XCL_PATH}/*.xclbin ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.xclbin
     fi
-    install -Dm 0644 ${WORKDIR}/${JSON_PATH}/shell.json ${D}/${nonarch_base_libdir}/firmware/xilinx/${PN}/shell.json
+    if ls ${WORKDIR}/${JSON_PATH}/shell.json >/dev/null 2>&1; then
+        install -Dm 0644 ${WORKDIR}/${JSON_PATH}/shell.json ${D}/${nonarch_base_libdir}/firmware/xilinx/${PN}/shell.json
+    fi
 
     #installing xsa here purely to use in dfxsa recipe from recipe-sysroots. (will be putting in different package so its not installed on target)
     install -d ${D}/xsa
