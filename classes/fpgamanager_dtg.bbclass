@@ -6,11 +6,14 @@ PROVIDES = ''
 
 require recipes-bsp/device-tree/device-tree.inc
 
+S = "${WORKDIR}/git"
+
 DEPENDS = "dtc-native bootgen-native"
 
 COMPATIBLE_MACHINE ?= "^$"
 COMPATIBLE_MACHINE:zynqmp = ".*"
 COMPATIBLE_MACHINE:zynq = ".*"
+COMPATIBLE_MACHINE:versal = ".*"
 
 DT_PADDING_SIZE = "0x1000"
 
@@ -24,6 +27,7 @@ XSCTH_HDF = "${WORKDIR}/${XSCTH_HDF_PATH}"
 
 YAML_OVERLAY_CUSTOM_DTS = "pl-final.dts"
 YAML_FIRMWARE_NAME = "${PN}.bit"
+YAML_FIRMWARE_NAME:versal = "${PN}.pdi"
 
 do_fetch[cleandirs] = "${B}"
 do_configure[cleandirs] = "${B}"
@@ -66,30 +70,47 @@ do_compile:prepend() {
 
 python devicetree_do_compile:append() {
     import glob, subprocess
-    pn = d.getVar('PN')
-    biffile = pn + '.bif'
+    if glob.glob(d.getVar('DT_FILES_PATH') + '/*.bit'):
+        pn = d.getVar('PN')
+        biffile = pn + '.bif'
 
-    with open(biffile, 'w') as f:
-        f.write('all:\n{\n\t' + glob.glob(d.getVar('DT_FILES_PATH') + '/*.bit')[0] + '\n}')
+        with open(biffile, 'w') as f:
+            f.write('all:\n{\n\t' + glob.glob(d.getVar('DT_FILES_PATH') + '/*.bit')[0] + '\n}')
 
-    bootgenargs = ["bootgen"] + (d.getVar("BOOTGEN_FLAGS") or "").split()
-    bootgenargs += ["-image", biffile, "-o", pn + ".bit.bin"]
-    subprocess.run(bootgenargs, check = True)
+        bootgenargs = ["bootgen"] + (d.getVar("BOOTGEN_FLAGS") or "").split()
+        bootgenargs += ["-image", biffile, "-o", pn + ".bit.bin"]
+        subprocess.run(bootgenargs, check = True)
 
-    if not os.path.isfile(pn + ".bit.bin"):
-        bb.fatal("bootgen failed. Enable -log debug with bootgen and check logs")
+        if not os.path.isfile(pn + ".bit.bin"):
+            bb.fatal("bootgen failed. Enable -log debug with bootgen and check logs")
 }
 
 do_install() {
     install -d ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/
     install -Dm 0644 pl-final.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.dtbo
-    install -Dm 0644 ${PN}.bit.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.bit.bin
+
+    #not called bit.bin for dfxsa, just installing .pdi if no bit.bin
+    if ls *.bit.bin >/dev/null 2>&1; then
+        install -Dm 0644 ${PN}.bit.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.bit.bin
+    else
+        install -Dm 0644 ${B}/${PN}/*.pdi ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.pdi
+    fi
+
     if ls ${WORKDIR}/${XCL_PATH}/*.xclbin >/dev/null 2>&1; then
         install -Dm 0644 ${WORKDIR}/${XCL_PATH}/*.xclbin ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.xclbin
     fi
     install -Dm 0644 ${WORKDIR}/${JSON_PATH}/shell.json ${D}/${nonarch_base_libdir}/firmware/xilinx/${PN}/shell.json
+
+    #installing xsa here purely to use in dfxsa recipe from recipe-sysroots. (will be putting in different package so its not installed on target)
+    install -d ${D}/xsa
+    install -Dm 0644 ${WORKDIR}/${XSCTH_HDF_PATH} ${D}/xsa/
+
 }
 
 do_deploy[noexec] = "1"
 
-FILES:${PN} += "${nonarch_base_libdir}/firmware/xilinx/${PN}"
+FILES:${PN} += "${nonarch_base_libdir}/firmware/xilinx/${PN} "
+
+FILES:${PN}-xsa += "xsa/*"
+PACKAGES += "${PN}-xsa"
+SYSROOT_DIRS += "/xsa"
