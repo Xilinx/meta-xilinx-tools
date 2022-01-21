@@ -37,18 +37,18 @@ XSCTH_HDF_PATH ?= "${STATIC_PN}.xsa"
 
 YAML_FIRMWARE_NAME:versal = "${PN}.pdi"
 
-STATIC_PN = ""
-RP_NAME = ""
+STATIC_PN ?= ""
+RP_NAME ?= ""
 
 do_fetch[cleandirs] = "${B}"
 do_configure[cleandirs] = "${B}"
 
 python (){
     if not d.getVar("STATIC_PN"):
-        bb.fatal("STATIC_PN needs to be set to the package name that corresponds to the static xsa")
+        raise bb.parse.SkipRecipe("STATIC_PN needs to be set to the package name that corresponds to the static xsa")
 
     if d.getVar("SRC_URI").count(".xsa") != 1:
-        bb.fatal("Need one '.xsa' file added to SRC_URI")
+        raise bb.parse.SkipRecipe("Need one '.xsa' file added to SRC_URI")
 
     d.setVar("RP_XSCTH_HDF",[a for a in d.getVar('SRC_URI').split('file://') if '.xsa' in a][0])
 
