@@ -39,6 +39,7 @@ YAML_FIRMWARE_NAME:versal = "${PN}.pdi"
 
 STATIC_PN ?= ""
 RP_NAME ?= ""
+RP_PATH = "${@'${STATIC_PN}/${RP_NAME}' if d.getVar('RP_NAME') else '${STATIC_PN}'}"
 
 do_fetch[cleandirs] = "${B}"
 do_configure[cleandirs] = "${B}"
@@ -83,22 +84,22 @@ do_compile:prepend() {
 }
 
 do_install() {
-    install -d ${D}${nonarch_base_libdir}/firmware/xilinx/${STATIC_PN}/${RP_NAME}/${PN}/
-    install -Dm 0644 pl.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${STATIC_PN}/${RP_NAME}/${PN}/${PN}.dtbo
+    install -d ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/
+    install -Dm 0644 pl.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.dtbo
     unzip -n ${WORKDIR}/${PN}.xsa -d ${B}/${PN}/hw/
     if ls ${B}/${PN}/hw/*_partial.pdi >/dev/null 2>&1; then
-        install -Dm 0644 ${B}/${PN}/hw/*_partial.pdi ${D}${nonarch_base_libdir}/firmware/xilinx/${STATIC_PN}/${RP_NAME}/${PN}/${PN}.pdi
+        install -Dm 0644 ${B}/${PN}/hw/*_partial.pdi ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.pdi
     else
         bbfatal "A partial pdi ending with _partial.pdi expected but not found"
     fi
     if ls ${WORKDIR}/${XCL_PATH}/*.xclbin >/dev/null 2>&1; then
-        install -Dm 0644 ${WORKDIR}/${XCL_PATH}/*.xclbin ${D}${nonarch_base_libdir}/firmware/xilinx/${STATIC_PN}/${RP_NAME}/${PN}/${PN}.xclbin
+        install -Dm 0644 ${WORKDIR}/${XCL_PATH}/*.xclbin ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.xclbin
     fi
     if ls ${WORKDIR}/${JSON_PATH}/accel.json >/dev/null 2>&1; then
-        install -Dm 0644 ${WORKDIR}/${JSON_PATH}/accel.json ${D}/${nonarch_base_libdir}/firmware/xilinx/${STATIC_PN}/${RP_NAME}/${PN}/accel.json
+        install -Dm 0644 ${WORKDIR}/${JSON_PATH}/accel.json ${D}/${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/accel.json
     fi
 }
 
 do_deploy[noexec] = "1"
 
-FILES:${PN} += "${nonarch_base_libdir}/firmware/xilinx/${STATIC_PN}/${RP_NAME}/${PN}"
+FILES:${PN} += "${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}"
