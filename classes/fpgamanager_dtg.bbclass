@@ -106,7 +106,7 @@ do_install() {
 
     #installing xsa here purely to use in dfxsa recipe from recipe-sysroots. (will be putting in different package so its not installed on target)
     install -d ${D}/xsa
-    install -Dm 0644 ${WORKDIR}/${XSCTH_HDF_PATH} ${D}/xsa/
+    install -Dm 0644 ${WORKDIR}/${XSCTH_HDF_PATH} ${D}/xsa/${PN}.xsa
 
 }
 
