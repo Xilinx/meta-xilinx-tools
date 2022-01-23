@@ -6,6 +6,9 @@ DEFAULT_PREFERENCE = "100"
 
 inherit xsctapp xsctyaml
 
+# This needs to match the value in psmfw.bbappend
+PSM_FIRMWARE_IMAGE_NAME = "psm-firmware-${MACHINE}"
+
 B = "${S}/${XSCTH_PROJ}"
 
 XSCTH_PROC_IP = "psv_psm"

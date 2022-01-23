@@ -6,6 +6,9 @@ DEFAULT_PREFERENCE = "100"
 
 inherit xsctapp xsctyaml
 
+# This needs to match fsbl.bbappend
+FSBL_IMAGE_NAME = "fsbl-${MACHINE}"
+
 B = "${S}/${XSCTH_PROJ}"
 B:zynq = "${S}/${XSCTH_PROJ}"
 B:zynqmp = "${S}/${XSCTH_PROJ}"

@@ -6,6 +6,9 @@ DEFAULT_PREFERENCE = "100"
 
 inherit xsctapp xsctyaml
 
+# This needs to match the value in plmfw.bbappend
+PLM_IMAGE_NAME = "plm-${MACHINE}"
+
 B = "${S}/${XSCTH_PROJ}"
 
 XSCTH_PROC_IP = "psv_pmc"

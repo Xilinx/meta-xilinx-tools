@@ -6,6 +6,9 @@ DEFAULT_PREFERENCE = "100"
 
 inherit xsctapp xsctyaml
 
+# This needs to match pmufw.bbappend
+PMU_FIRMWARE_IMAGE_NAME = "pmu-firmware-${MACHINE}"
+
 B = "${S}/${XSCTH_PROJ}"
 
 XSCTH_MISC:append:zynqmp-dr = " -lib libmetal"
