@@ -100,3 +100,7 @@ DTB_FILE_NAME = "${BASE_DTS}.dtb"
 FILES:${PN}:append:microblaze = " /boot/devicetree/*.dts"
 
 EXTERNALSRC_SYMLINKS = ""
+
+# This will generate the DTB, no need to check
+def check_devicetree_variables(d):
+    return
