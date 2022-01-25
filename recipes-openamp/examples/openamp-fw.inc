@@ -7,9 +7,11 @@ LICENSE = "BSD"
 PARALLEL_MAKE = "-j 1"
 
 COMPATIBLE_MACHINE = "^$"
-COMPATIBLE_MACHINE:zynq = "zynq"
-COMPATIBLE_MACHINE:zynqmp = "zynqmp"
-COMPATIBLE_MACHINE:versal = "versal"
+COMPATIBLE_MACHINE:microblaze = "^$"
+# Build for actual machines, not the generics as the firmware require machine specific knowledge
+COMPATIBLE_MACHINE:zynq = "${@'.*' if d.getVar('MACHINE') != 'zynq-generic' else '^$'}"
+COMPATIBLE_MACHINE:zynqmp = "${@'.*' if d.getVar('MACHINE') != 'zynqmp-generic' else '^$'}"
+COMPATIBLE_MACHINE:versal = "${@'.*' if d.getVar('MACHINE') != 'versal-generic' else '^$'}"
 
 XSCTH_APP_COMPILER_FLAGS:append:zynqmp = " -mfloat-abi=hard "
 XSCTH_APP_COMPILER_FLAGS:append:versal = " -mfloat-abi=hard "
