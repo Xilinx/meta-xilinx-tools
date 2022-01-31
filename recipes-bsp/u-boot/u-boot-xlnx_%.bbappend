@@ -127,7 +127,8 @@ do_blob_generate () {
 		fi
 	done
 
-	its_filename=${DT_BLOB_DIR}/dtblob.its
+	cd ${DT_BLOB_DIR}
+	its_filename="dtblob.its"
 	dtblob_emit_its_section "${its_filename}" "header"
 	dtblob_emit_its_section "${its_filename}" "imagestart"
 	for dtb in ${RECIPE_SYSROOT}/${DTB_PATH}/${DTB_NAME} $(find ${DT_BLOB_DIR} -name '*.dtb' | sort); do
@@ -154,7 +155,7 @@ do_blob_generate () {
 	dtblob_emit_its_section "${its_filename}" "sectend"
 	dtblob_emit_its_section "${its_filename}" "fitend"
 
-	mkimage ${MKIMAGE_DTBLOB_OPTS} -f "${its_filename}" ${DT_BLOB_DIR}/${UBOOT_BLOB_NAME}
+	mkimage ${MKIMAGE_DTBLOB_OPTS} -f "${its_filename}" "${UBOOT_BLOB_NAME}"
 }
 
 UBOOTELF_NODTB_IMAGE ?= "u-boot-nodtb.elf"
