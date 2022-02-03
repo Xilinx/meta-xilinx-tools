@@ -45,7 +45,7 @@ do_deploy[cleandirs] += "${DEPLOYDIR}"
 
 do_configure:append () {
     if [ -n "${CUSTOM_PL_INCLUDE_DTSI}" ]; then
-        [ ! -f "${CUSTOM_PL_INCLUDE_DTSI}" ] && bbfatal "Please check that the correct filepath was provided using CUSTOM_PL_INCLUDE_DTSI"
+        [ ! -f "${WORKDIR}/${CUSTOM_PL_INCLUDE_DTSI}" ] && bbfatal "Please check that the correct filepath was provided using CUSTOM_PL_INCLUDE_DTSI"
         cp ${WORKDIR}/${CUSTOM_PL_INCLUDE_DTSI} ${XSCTH_WS}/${XSCTH_PROJ}/pl-custom.dtsi
     fi
 
