@@ -1,11 +1,11 @@
 SUMMARY = "Xilinx AI Engine FAL(Functional Abstraction Layer)"
 DESCRIPTION = "AIE FAL provides functional abstraction APIs for runtime support of Xilinx AI Engine IP"
 
-require ai-engine.inc
+require aie-rt.inc
 
 SECTION	= "devel"
 
-XAIEFAL_DIR ?= "XilinxProcessorIPLib/drivers/aiefal"
+XAIEFAL_DIR ?= "fal"
 S = "${WORKDIR}/git"
 
 COMPATIBLE_MACHINE = "^$"
