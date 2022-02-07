@@ -74,7 +74,7 @@ dtblob_emit_config () {
 	default_dtb=1
 	if [ $4 -eq $default_dtb ]; then
 		cat << EOF >> $1
-		default = "config_$2";
+		default = "config_$4";
 EOF
 	fi
 	cat  << EOF >> $1
