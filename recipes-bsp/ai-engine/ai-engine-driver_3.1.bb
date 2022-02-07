@@ -1,11 +1,11 @@
 SUMMARY = "Xilinx AI Engine runtime"
 DESCRIPTION = "This library provides APIs for the runtime support of the Xilinx AI Engine IP"
 
-require ai-engine.inc
+require aie-rt.inc
 
 SECTION	= "libs"
 
-AIEDIR ?= "${S}/XilinxProcessorIPLib/drivers/aienginev2"
+AIEDIR ?= "${S}/driver"
 S = "${WORKDIR}/git"
 I = "${AIEDIR}/include"
 
