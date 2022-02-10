@@ -21,7 +21,7 @@ XSCTH_PROJ = "${PN}/psv_cortexa72_0/device_tree_domain/bsp/"
 
 PROVIDES = ''
 
-DEPENDS = "dtc-native bootgen-native ${STATIC_PN} unzip-native"
+DEPENDS = "dtc-native bootgen-native ${STATIC_PN}"
 
 COMPATIBLE_MACHINE ?= "^$"
 COMPATIBLE_MACHINE:versal = ".*"
@@ -86,7 +86,6 @@ do_compile:prepend() {
 do_install() {
     install -d ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/
     install -Dm 0644 pl.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.dtbo
-    unzip -n ${WORKDIR}/${PN}.xsa -d ${B}/${PN}/hw/
     if ls ${B}/${PN}/hw/*_partial.pdi >/dev/null 2>&1; then
         install -Dm 0644 ${B}/${PN}/hw/*_partial.pdi ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.pdi
     else
