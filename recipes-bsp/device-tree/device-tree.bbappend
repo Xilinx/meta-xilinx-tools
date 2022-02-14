@@ -27,7 +27,8 @@ EXTRA_DTFILES_BUNDLE ?= ""
 EXTRA_OVERLAYS ?= ""
 
 DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_PROJ}"
-DT_INCLUDE:append = " ${WORKDIR}"
+DT_RELEASE_VERSION ?= "${XILINX_VER_MAIN}"
+DT_INCLUDE:append = " ${WORKDIR} ${S}/device_tree/data/kernel_dtsi/${DT_RELEASE_VERSION}/BOARD/"
 DT_PADDING_SIZE = "0x1000"
 DTC_FLAGS:append = "${@['', ' -@'][d.getVar('YAML_ENABLE_DT_OVERLAY') == '1']}"
 
