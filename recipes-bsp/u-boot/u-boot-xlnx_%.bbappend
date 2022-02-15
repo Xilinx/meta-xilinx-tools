@@ -98,6 +98,7 @@ IMPORT_CC_DTBS:k26 ?= " \
 		zynqmp-sck-kv-g-revA.dtbo:zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revA.dtb \
 		zynqmp-sck-kv-g-revB.dtbo:zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revB.dtb \
 		zynqmp-sck-kr-g-revA.dtbo:zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revA.dtb \
+		zynqmp-sck-kr-g-revB.dtbo:zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revB.dtb \
                 "
 
 CC_DTBS_DUP ?= ""
