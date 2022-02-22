@@ -103,13 +103,44 @@ IMPORT_CC_DTBS:k26 ?= " \
 
 CC_DTBS_DUP ?= ""
 CC_DTBS_DUP:k26 ?= " \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revA:zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revZ \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revB:zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-rev1 \
 		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revA:zynqmp-${PREFIX}-k26-xcl2g-revB-sck-kv-g-revA \
-		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revA:zynqmp-${PREFIX}-k26-xcl2g-rev1.0-sck-kv-g-revA \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revA:zynqmp-${PREFIX}-k26-xcl2g-revB-sck-kv-g-revZ \
 		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revB:zynqmp-${PREFIX}-k26-xcl2g-revB-sck-kv-g-revB \
-		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revB:zynqmp-${PREFIX}-k26-xcl2g-rev1.0-sck-kv-g-revB \
-		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revB:zynqmp-${PREFIX}-k26-xcl2g-rev1.0-sck-kv-g-rev1.0 \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revB:zynqmp-${PREFIX}-k26-xcl2g-revB-sck-kv-g-rev1 \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revA:zynqmp-${PREFIX}-k26-xcl2g-rev1-sck-kv-g-revA \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revA:zynqmp-${PREFIX}-k26-xcl2g-rev1-sck-kv-g-revZ \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revB:zynqmp-${PREFIX}-k26-xcl2g-rev1-sck-kv-g-revB \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revB:zynqmp-${PREFIX}-k26-xcl2g-rev1-sck-kv-g-rev1 \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revB:zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-rev1 \
 		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revA:zynqmp-${PREFIX}-k26-xcl2g-revB-sck-kr-g-revA \
-		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revA:zynqmp-${PREFIX}-k26-xcl2g-rev1.0-sck-kr-g-revA \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revB:zynqmp-${PREFIX}-k26-xcl2g-revB-sck-kr-g-revB \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revB:zynqmp-${PREFIX}-k26-xcl2g-revB-sck-kr-g-rev1 \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revA:zynqmp-${PREFIX}-k26-xcl2g-rev1-sck-kr-g-revA \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revB:zynqmp-${PREFIX}-k26-xcl2g-rev1-sck-kr-g-revB \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revB:zynqmp-${PREFIX}-k26-xcl2g-rev1-sck-kr-g-rev1 \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revA:zynqmp-${PREFIX}-k26-xcl2g-ed-revA-sck-kv-g-revA \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revB:zynqmp-${PREFIX}-k26-xcl2g-ed-revA-sck-kv-g-revB \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revA:zynqmp-${PREFIX}-k26-xcl2g-ed-revA-sck-kr-g-revA \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revB:zynqmp-${PREFIX}-k26-xcl2g-ed-revA-sck-kr-g-revB \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revA:zynqmp-${PREFIX}-k26-xcl2g-ed-revA-sck-kv-g-revZ \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revB:zynqmp-${PREFIX}-k26-xcl2g-ed-revA-sck-kv-g-rev1 \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revA:zynqmp-${PREFIX}-k26-xcl2g-ed-revB-sck-kv-g-revA \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revA:zynqmp-${PREFIX}-k26-xcl2g-ed-revB-sck-kv-g-revZ \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revB:zynqmp-${PREFIX}-k26-xcl2g-ed-revB-sck-kv-g-revB \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revB:zynqmp-${PREFIX}-k26-xcl2g-ed-revB-sck-kv-g-rev1 \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revA:zynqmp-${PREFIX}-k26-xcl2g-ed-rev1-sck-kv-g-revA \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revA:zynqmp-${PREFIX}-k26-xcl2g-ed-rev1-sck-kv-g-revZ \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revB:zynqmp-${PREFIX}-k26-xcl2g-ed-rev1-sck-kv-g-revB \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kv-g-revB:zynqmp-${PREFIX}-k26-xcl2g-ed-rev1-sck-kv-g-rev1 \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revB:zynqmp-${PREFIX}-k26-xcl2g-ed-revA-sck-kr-g-rev1 \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revA:zynqmp-${PREFIX}-k26-xcl2g-ed-revB-sck-kr-g-revA \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revB:zynqmp-${PREFIX}-k26-xcl2g-ed-revB-sck-kr-g-revB \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revB:zynqmp-${PREFIX}-k26-xcl2g-ed-revB-sck-kr-g-rev1 \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revA:zynqmp-${PREFIX}-k26-xcl2g-ed-rev1-sck-kr-g-revA \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revB:zynqmp-${PREFIX}-k26-xcl2g-ed-rev1-sck-kr-g-revB \
+		zynqmp-${PREFIX}-k26-xcl2g-revA-sck-kr-g-revB:zynqmp-${PREFIX}-k26-xcl2g-ed-rev1-sck-kr-g-rev1 \
 		"
 
 MKIMAGE_DTBLOB_OPTS ?= "-E -B 0x8"
