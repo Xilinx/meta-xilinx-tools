@@ -51,15 +51,15 @@ python (){
     if d.getVar("SRC_URI").count(".xsa") != 1:
         raise bb.parse.SkipRecipe("Need one '.xsa' file added to SRC_URI")
 
-    d.setVar("RP_XSCTH_HDF",[a for a in d.getVar('SRC_URI').split('file://') if '.xsa' in a][0])
+    d.setVar("RP_XSCTH_HDF",[a for a in d.getVar('SRC_URI').split() if '.xsa' in a][0].lstrip('file://'))
 
     #optional inputs
     if '.xclbin' in d.getVar("SRC_URI"):
-        d.setVar("XCL_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split('file://') if '.xclbin' in a][0]))
+        d.setVar("XCL_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split() if '.xclbin' in a][0].lstrip('file://')))
     if '.dtsi' in d.getVar("SRC_URI"):
-        d.setVar("CUSTOMPLINCLUDE_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split('file://') if '.dtsi' in a][0]))
+        d.setVar("CUSTOMPLINCLUDE_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split() if '.dtsi' in a][0].lstrip('file://')))
     if 'accel.json' in d.getVar("SRC_URI"):
-        d.setVar("JSON_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split('file://') if 'accel.json' in a][0]))
+        d.setVar("JSON_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split() if 'accel.json' in a][0].lstrip('file://')))
 }
 
 
