@@ -134,21 +134,44 @@ int gettime(struct timeval  t0, struct timeval t1)
 int fpga_state()
 {
 	FILE *fptr;
-	char buf[10], *state;
+	char buf[10];
+	char *state_operating = "operating";
+	char *state_unknown = "unknown";
 	
 	system("cat /sys/class/fpga_manager/fpga0/state >> state.txt");
-	state = "operating";
 	fptr = fopen("state.txt", "r");
 	if (fptr) {
 		fgets(buf, 10, fptr);
 		fclose(fptr);
 		system("rm state.txt");
-		if (strcmp(buf, state) == 0)
+		if ((strncmp(buf, state_operating, 9) == 0) || (strncmp(buf, state_unknown, 7) == 0))
 			return 0;
 		else
 			return 1;
 	}
 	
+	return 1;
+}
+
+static int fpga_overlay_check(char *cmd, char *state)
+{
+	char buf[512];
+	FILE *fptr;
+	int len;
+
+	system(cmd);
+	len = strlen(state) + 1;
+	fptr = fopen("state.txt", "r");
+	if (fptr) {
+		fgets(buf, len, fptr);
+		fclose(fptr);
+		system("rm state.txt");
+		if (!strcmp(buf, state))
+			return 0;
+		else
+			return 1;
+	}
+
 	return 1;
 }
 
@@ -327,31 +350,32 @@ int main(int argc, char **argv)
 			printf("Error: Overlay already exists in the live tree\n\r");
 			return 1;
 		}
-		snprintf(command, sizeof(command), "cp %s /lib/firmware", binfile);
-		if (argc < 5) {
-			printf("\n\r");
-			printf("%s: For more information run %s -h\n", strerror(22), basename(argv[0]));
-			return 1;
-		}
-		
+
 		if (((stat("/configfs/device-tree/", &sb) == 0) && S_ISDIR(sb.st_mode))) {
 		} else {
 			system("mkdir /configfs");
 			system("mount -t configfs configfs /configfs");
 		}
-		snprintf(command, sizeof(command), "cp %s /lib/firmware", binfile);
-		system(command);
+
+		if (binfile != NULL) {
+			snprintf(command, sizeof(command), "cp %s /lib/firmware", binfile);
+			system(command);
+		}
+
 		snprintf(command, sizeof(command), "cp %s /lib/firmware", overlay);
 		system(command);
 		tmp = strdup(overlay);
 		while((token = strsep(&tmp, "/"))) {
 			tmp1 = token;
 		}
-		snprintf(command, sizeof(command), "echo %x > /sys/class/fpga_manager/fpga0/flags", flags);
-		system(command);
-		if (ENCRYPTION_USERKEY_EN & flags) {
-			snprintf(command, sizeof(command), "echo %s > /sys/class/fpga_manager/fpga0/key", AesKey);
-                	system(command);
+
+		if (binfile != NULL) {
+			snprintf(command, sizeof(command), "echo %x > /sys/class/fpga_manager/fpga0/flags", flags);
+			system(command);
+			if (ENCRYPTION_USERKEY_EN & flags) {
+				snprintf(command, sizeof(command), "echo %s > /sys/class/fpga_manager/fpga0/key", AesKey);
+				system(command);
+			}
 		}
 
 		snprintf(command, sizeof(command), "mkdir %s", folder);
@@ -362,22 +386,32 @@ int main(int argc, char **argv)
 		gettimeofday(&t1, NULL);
 		time = gettime(t0, t1);
 
+		snprintf(command, sizeof(command), "cat %s/path >> state.txt", folder);
+		ret = fpga_overlay_check(command, tmp1);
+		if (ret) {
+			printf("Failed to apply Overlay\n\r");
+		}
+
 		/* Delete Bin file and DTBO file*/
 		snprintf(command, sizeof(command), "rm /lib/firmware/%s", tmp1);
 		system(command);
-		tmp = strdup(binfile);
-		while((token = strsep(&tmp, "/"))) {
-			tmp1 = token;
+		if (binfile != NULL) {
+			tmp = strdup(binfile);
+			while((token = strsep(&tmp, "/"))) {
+				tmp1 = token;
+			}
+			snprintf(command, sizeof(command), "rm /lib/firmware/%s", tmp1);
+			system(command);
 		}
-		snprintf(command, sizeof(command), "rm /lib/firmware/%s", tmp1);
-		system(command);
 
 		/* FPGA state check */
-		if (!fpga_state()) {
-			printf("Time taken to load BIN is %f Milli Seconds\n\r", time);
-			printf("BIN FILE loaded through FPGA manager successfully\n\r");
-		} else {
-			printf("BIN FILE loading through FPGA manager failed\n\r");
+		if (binfile != NULL) {
+			if (!fpga_state()) {
+				printf("Time taken to load BIN is %f Milli Seconds\n\r", time);
+				printf("BIN FILE loaded through FPGA manager successfully\n\r");
+			} else {
+				printf("BIN FILE loading through FPGA manager failed\n\r");
+			}
 		}
 	} else if (flow == FPGA_SYSFS) {
 		if (argc < 3) {
