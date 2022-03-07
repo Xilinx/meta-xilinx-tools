@@ -85,7 +85,7 @@ do_compile:prepend() {
 
 do_install() {
     install -d ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/
-    install -Dm 0644 pl.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.dtbo
+    install -Dm 0644 RP*.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.dtbo
     if ls ${B}/${PN}/hw/*_partial.pdi >/dev/null 2>&1; then
         install -Dm 0644 ${B}/${PN}/hw/*_partial.pdi ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.pdi
     else
