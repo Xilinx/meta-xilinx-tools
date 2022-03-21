@@ -49,7 +49,16 @@ python xsct_event_extract() {
 
     # Only a handful of targets/tasks need XSCT
     tasks_xsct = [t + '.do_configure' for t in d.getVar('XSCT_TARGETS').split()]
-    xsct_buildtargets = [t for t in e._depgraph['tdepends'] for x in tasks_xsct if x == t]
+
+    xsct_buildtargets = False
+    for mct in e._depgraph['tdepends']:
+        t = mct.split(':')[-1]
+        for x in tasks_xsct:
+            if t == x:
+                xsct_buildtargets = True
+                break
+        if xsct_buildtargets:
+            break
 
     if not xsct_buildtargets and d.getVar('FORCE_XSCT_DOWNLOAD') != '1':
       return
