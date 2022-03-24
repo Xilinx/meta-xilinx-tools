@@ -3,12 +3,12 @@ TOOL_VER_MAIN[doc] = "XSCT version, usually the same as XILINX_VER_MAIN"
 
 XSCT_LOADER ?= "${XSCT_STAGING_DIR}/Vitis/${TOOL_VER_MAIN}/bin/xsct"
 
-XSCT_URL ?= "http://petalinux.xilinx.com/sswreleases/rel-v2021/xsct-trim/xsct-2021-2.tar.xz"
+XSCT_URL ?= "http://petalinux.xilinx.com/sswreleases/rel-v2022/xsct-trim/xsct-2022-1.tar.xz"
 XSCT_TARBALL ?= "xsct_${XILINX_VER_MAIN}.tar.xz"
 XSCT_DLDIR ?= "${DL_DIR}/xsct/"
 XSCT_STAGING_DIR ?= "${TOPDIR}/xsct"
 
-XSCT_CHECKSUM ?= "b038e9f101c68ae691616d0976651e2be9d045e1a36d997bfe431c1526ab7a9c"
+XSCT_CHECKSUM ?= "d33fbdef605d291e0678d76340617ee93283977ffc2a16641ba9f8add5a034ac"
 VALIDATE_XSCT_CHECKSUM ?= '1'
 
 USE_XSCT_TARBALL ?= '1'
