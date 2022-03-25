@@ -7,7 +7,7 @@ require recipes-bsp/device-tree/device-tree.inc
 
 XSCTH_PROC:versal ?= "psv_cortexa72_0"
 
-#overwrite HW_ARG defiend in xsctbase
+# Overwrite HW_ARG defined in xsctbase
 HW_ARG ?= "-processor_ip ${XSCTH_PROC_IP} -rphdf ${WORKDIR}/${RP_XSCTH_HDF}  -hdf ${RECIPE_SYSROOT}/xsa/${XSCTH_HDF_PATH} -arch ${XSCTH_ARCH} ${@['', '-processor ${XSCTH_PROC}'][d.getVar('XSCTH_PROC', True) != '']}"
 
 FILESEXTRAPATHS:append := ":${XLNX_SCRIPTS_DIR}"
@@ -85,7 +85,12 @@ do_compile:prepend() {
 
 do_install() {
     install -d ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/
-    install -Dm 0644 RP*.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.dtbo
+    if ls ${B}/*inst_0.dtbo >/dev/null 2>&1; then
+        install -Dm 0644 *inst_0.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.dtbo
+    else
+        bbfatal "A partial dtbo ending with ${B}/<partial_design>_inst_0.dtbo expected but not found"
+    fi
+
     if ls ${B}/${PN}/hw/*_partial.pdi >/dev/null 2>&1; then
         install -Dm 0644 ${B}/${PN}/hw/*_partial.pdi ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.pdi
     else
