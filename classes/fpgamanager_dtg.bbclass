@@ -88,7 +88,11 @@ python devicetree_do_compile:append() {
 
 do_install() {
     install -d ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/
-    install -Dm 0644 pl-final.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.dtbo
+    if ls ${B}/pl-final.dtbo >/dev/null 2>&1; then
+        install -Dm 0644 pl-final.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.dtbo
+    else
+        bbwarn "A static xsa doesn't contain PL IP, hence ${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.dtbo is not needed"
+    fi
 
     #not called bit.bin for dfxsa, just installing .pdi if no bit.bin
     if ls *.bit.bin >/dev/null 2>&1; then
