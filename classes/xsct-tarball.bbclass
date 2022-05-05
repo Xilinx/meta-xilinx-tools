@@ -1,7 +1,8 @@
 TOOL_VER_MAIN ?= "${XILINX_VER_MAIN}"
 TOOL_VER_MAIN[doc] = "XSCT version, usually the same as XILINX_VER_MAIN"
 
-XSCT_LOADER ?= "${XSCT_STAGING_DIR}/Vitis/${TOOL_VER_MAIN}/bin/xsct"
+XILINX_SDK_TOOLCHAIN ??= "${XSCT_STAGING_DIR}/Vitis/${TOOL_VER_MAIN}"
+XSCT_LOADER ?= "${XILINX_SDK_TOOLCHAIN}/bin/xsct"
 
 XSCT_URL ?= "http://petalinux.xilinx.com/sswreleases/rel-v2022/xsct-trim/xsct-2022-2.tar.xz"
 XSCT_TARBALL ?= "xsct_${XILINX_VER_MAIN}.tar.xz"
@@ -47,6 +48,14 @@ XSCT_TARGETS ?= "\
 
 python xsct_event_extract() {
 
+    def check_xsct_version():
+        xsct_path = d.getVar("XILINX_SDK_TOOLCHAIN")
+        if not os.path.exists(xsct_path):
+            bb.fatal("XSCT path was not found.  This usually means the wrong version of XSCT is\nbeing used.\nUnable to find %s." % xsct_path)
+        loader = d.getVar("XSCT_LOADER")
+        if not os.path.exists(loader):
+            bb.fatal("XSCT binary is not found.\nUnable to find %s." % loader)
+
     # Only a handful of targets/tasks need XSCT
     tasks_xsct = [t + '.do_configure' for t in d.getVar('XSCT_TARGETS').split()]
 
@@ -71,6 +80,7 @@ python xsct_event_extract() {
     chksum_tar_actual = ""
 
     if use_xscttar == '0':
+        check_xsct_version()
         return
     elif d.getVar('WITHIN_EXT_SDK') != '1':
         if not ext_tarball and not xsct_url:
@@ -148,8 +158,7 @@ python xsct_event_extract() {
         with open(tarballchksum, "w") as f:
             f.write(chksum_tar_actual)
 
-        if not os.path.exists(loader):
-            bb.fatal("XSCT is not usable, this usually means the wrong version of XSCT is being\nused.\nUnable to find %s." % loader)
+        check_xsct_version()
 
     except bb.fetch2.BBFetchException as e:
         bb.fatal(str(e))
