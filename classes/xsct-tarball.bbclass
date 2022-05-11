@@ -80,7 +80,8 @@ python xsct_event_extract() {
     chksum_tar_actual = ""
 
     if use_xscttar == '0':
-        check_xsct_version()
+        if d.getVar('WITHIN_EXT_SDK') != '1':
+            check_xsct_version()
         return
     elif d.getVar('WITHIN_EXT_SDK') != '1':
         if not ext_tarball and not xsct_url:
