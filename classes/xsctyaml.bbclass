@@ -81,6 +81,9 @@ YAML_BSP_CONFIG[dt_verbose] = "set,TRUE"
 YAML_BSP_CONFIG += "${@'dt_setbaud' if d.getVar('YAML_SERIAL_CONSOLE_BAUDRATE') != '' else ''}"
 YAML_BSP_CONFIG[dt_setbaud] = "set,${YAML_SERIAL_CONSOLE_BAUDRATE}"
 
+YAML_BSP_CONFIG += "${@'classic_soc' if d.getVar('YAML_ENABLE_CLASSIC_SOC') == '1' else ''}"
+YAML_BSP_CONFIG[classic_soc] = "set,TRUE"
+
 def patch_yaml(config, configflags, type, type_dict, d):
     import re
     for cfg in config:
