@@ -7,6 +7,8 @@ require recipes-bsp/device-tree/device-tree.inc
 inherit xsctdt xsctyaml
 BASE_DTS ?= "system-top"
 
+DEPENDS += "virtual/hdf"
+
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 S = "${WORKDIR}/git"

@@ -6,6 +6,8 @@ DEFAULT_PREFERENCE = "100"
 
 inherit xsctapp xsctyaml
 
+DEPENDS += "virtual/hdf"
+
 # This needs to match fsbl.bbappend
 FSBL_IMAGE_NAME = "fsbl-${MACHINE}"
 
