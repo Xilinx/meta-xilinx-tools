@@ -8,13 +8,13 @@ INHIBIT_DEFAULT_DEPS = "1"
 
 inherit deploy
 
-HDF_BASE ?= "git://"
+HDF_BASE ??= "git://"
 HDF_PATH ??= "github.com/Xilinx/hdf-examples.git"
-HDF_NAME ?= "system.xsa"
+HDF_NAME ??= "system.xsa"
 
 BRANCH = "xlnx_rel_v2022.1"
 SRCREV = "e7669d3aaca520c0c1bc2c9a64c67864daafb499"
-BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
+BRANCHARG ??= "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 
 HDF_EXT ?= "xsa"
 
