@@ -19,12 +19,12 @@ python (){
 
 python devicetree_do_compile:append() {
     import glob, subprocess
-    if glob.glob(d.getVar('DT_FILES_PATH') + '/*.bit'):
+    if glob.glob(d.getVar('XSCTH_HW_PATH') + '/*.bit'):
         pn = d.getVar('PN')
         biffile = pn + '.bif'
 
         with open(biffile, 'w') as f:
-            f.write('all:\n{\n\t' + glob.glob(d.getVar('DT_FILES_PATH') + '/*.bit')[0] + '\n}')
+            f.write('all:\n{\n\t' + glob.glob(d.getVar('XSCTH_HW_PATH') + '/*.bit')[0] + '\n}')
 
         bootgenargs = ["bootgen"] + (d.getVar("BOOTGEN_FLAGS") or "").split()
         bootgenargs += ["-image", biffile, "-o", pn + ".bit.bin"]
@@ -36,30 +36,31 @@ python devicetree_do_compile:append() {
 
 do_install() {
     install -d ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/
-    if ls ${B}/pl-final.dtbo >/dev/null 2>&1; then
+    if [ -f ${B}/pl-final.dtbo ]; then
         install -Dm 0644 pl-final.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.dtbo
     else
         bbwarn "A static xsa doesn't contain PL IP, hence ${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.dtbo is not needed"
     fi
 
     if [ "${SOC_FAMILY}" != "versal" ]; then
-        if ls *.bit.bin >/dev/null 2>&1; then
-             install -Dm 0644 ${PN}.bit.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.bit.bin
+        if [ -f ${B}/${PN}.bit.bin ]; then
+            install -Dm 0644 ${B}/${PN}.bit.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.bit.bin
         else
-            bbwarn "A static or full bitstream expected but not found"
+            bbwarn "A Full or Static(DFx) bitstream expected but not found"
         fi
     else
-        if ls ${B}/${PN}/hw/*.pdi > /dev/null 2>&1; then
+        if [ -f ${B}/${PN}/hw/*.pdi ]; then
             install -Dm 0644 ${B}/${PN}/hw/*.pdi ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.pdi
         else
             bbwarn "A static pdi expected but not found"
         fi
     fi
 
-    if ls ${WORKDIR}/${XCL_PATH}/*.xclbin >/dev/null 2>&1; then
+    if [ -f ${WORKDIR}/${XCL_PATH}/*.xclbin ]; then
         install -Dm 0644 ${WORKDIR}/${XCL_PATH}/*.xclbin ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.xclbin
     fi
-    if ls ${WORKDIR}/${JSON_PATH}/shell.json >/dev/null 2>&1; then
+
+    if [ -f ${WORKDIR}/${JSON_PATH}/shell.json ]; then
         install -Dm 0644 ${WORKDIR}/${JSON_PATH}/shell.json ${D}/${nonarch_base_libdir}/firmware/xilinx/${PN}/shell.json
     fi
 
