@@ -11,7 +11,8 @@ XSCTH_HDF = "${@'${RECIPE_SYSROOT}/xsa/${XSCTH_HDF_PATH}' if d.getVar('YAML_ENAB
 
 STATIC_PN ?= ""
 RP_NAME ?= ""
-RP_PATH = "${@'${STATIC_PN}/${RP_NAME}' if d.getVar('RP_NAME') and d.getVar('YAML_ENABLE_CLASSIC_SOC') != '1' else 'csoc'}"
+RP_BASE_PATH ?= "${@'${STATIC_PN}/${RP_NAME}' if d.getVar('RP_NAME') else '${STATIC_PN}'}"
+RP_PATH = "${@'csoc' if d.getVar('YAML_ENABLE_CLASSIC_SOC') == '1' else '${RP_BASE_PATH}'}"
 
 python (){
     if not d.getVar("STATIC_PN") and d.getVar('YAML_ENABLE_CLASSIC_SOC') != '1':
