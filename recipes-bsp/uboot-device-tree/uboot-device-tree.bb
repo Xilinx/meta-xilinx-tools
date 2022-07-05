@@ -8,15 +8,14 @@ LIC_FILES_CHKSUM = " \
                 file://${COMMON_LICENSE_DIR}/GPL-2.0-only;md5=801f80980d171dd6425610833a22dbe6 \
                 "
 
-inherit devicetree xsctdt xsctyaml
 require recipes-bsp/device-tree/device-tree.inc
+inherit devicetree xsctdt xsctyaml
 
 PROVIDES = "virtual/uboot-dtb"
 
 S = "${WORKDIR}/git"
-B = "${WORKDIR}/build"
-
-PV = "xilinx+git${SRCPV}"
+DT_VERSION_EXTENSION ?= "xilinx-${XILINX_RELEASE_VERSION}"
+PV = "${DT_VERSION_EXTENSION}+git${SRCPV}"
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
