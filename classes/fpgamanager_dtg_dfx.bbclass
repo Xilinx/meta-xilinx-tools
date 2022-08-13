@@ -26,17 +26,17 @@ python (){
 
 do_install() {
     install -d ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/
-    if [ -f ${B}/*inst_*.dtbo ]; then
-        install -Dm 0644 *inst_*.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.dtbo
+    if [ -f ${B}/pl-partial*.dtbo ]; then
+        install -Dm 0644 ${B}/pl-partial*.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.dtbo
     else
-        bbfatal "A partial dtbo ending with ${B}/<partial_design>_inst_<n>.dtbo expected but not found"
+        bbfatal "A partial dtbo ending with ${B}/pl-partial-<partial_design>_inst_<n>.dtbo expected but not found"
     fi
 
     if [ "${SOC_FAMILY}" != "versal" ]; then
         if [ -f ${B}/${PN}/hw/*_partial.bit ]; then
             install -Dm 0644 ${B}/${PN}/hw/*_partial.bit ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.bit
         else
-            bbwarn "A partial bitstream ending with _partial.bit expected but not found"
+            bbfatal "A partial bitstream ending with _partial.bit expected but not found"
         fi
     else
         if [ -f ${B}/${PN}/hw/*_partial.pdi ]; then
