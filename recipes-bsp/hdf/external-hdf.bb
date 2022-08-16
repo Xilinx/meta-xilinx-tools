@@ -13,7 +13,7 @@ HDF_PATH ??= "github.com/Xilinx/hdf-examples.git"
 HDF_NAME ??= "system.xsa"
 
 BRANCH = "master"
-SRCREV = "7755bddf1de57768afbce47de3178066e0370a77"
+SRCREV = "a18c606f131e30da78b4ed43c467766a70f4487a"
 BRANCHARG ??= "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 
 HDF_EXT ?= "xsa"

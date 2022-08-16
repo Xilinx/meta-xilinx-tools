@@ -12,6 +12,7 @@ PSM_FIRMWARE_IMAGE_NAME = "psm-firmware-${MACHINE}"
 B = "${S}/${XSCTH_PROJ}"
 
 XSCTH_PROC_IP = "psv_psm"
+XSCTH_PROC_IP:versal-net = "psx_psm"
 XSCTH_APP  = "versal PSM Firmware"
 
 # XSCT version provides it's own toolchain, so can build in any environment

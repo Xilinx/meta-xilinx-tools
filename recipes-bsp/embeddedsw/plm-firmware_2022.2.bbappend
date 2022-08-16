@@ -12,6 +12,7 @@ PLM_IMAGE_NAME = "plm-${MACHINE}"
 B = "${S}/${XSCTH_PROJ}"
 
 XSCTH_PROC_IP = "psv_pmc"
+XSCTH_PROC_IP:versal-net = "psx_pmc"
 XSCTH_APP  = "versal PLM"
 
 # XSCT version provides it's own toolchain, so can build in any environment
