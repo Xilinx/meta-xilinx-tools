@@ -3,5 +3,5 @@ BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
 SRC_URI:append = " ${REPO};${BRANCHARG}"
 
 BRANCH = "master"
-SRCREV = "035a0b6aeff0de73afeaf0798e45c194aeb1363e"
+SRCREV = "1c442f2417db2b36b8f722726a030a8435f435c0"
 
