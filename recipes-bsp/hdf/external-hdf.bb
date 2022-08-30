@@ -24,6 +24,9 @@ HDF_EXT ?= "xsa"
 
 SRC_URI = "${HDF_BASE}${HDF_PATH};${BRANCHARG}"
 
+# Above is the last change fallback.  The include file, if it exists, is the current xsa files
+include hdf-repository.inc
+
 COMPATIBLE_HOST:xilinx-standalone = "${HOST_SYS}"
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
@@ -47,8 +50,26 @@ python () {
             # file:// default to the full path
             hdf_name = "${S}/${HDF_PATH}"
         else:
+            # Look for the downloadfilename and user it if defined
+            # the key is that HDF_MACHINE is the name= field.
+            hdf_filename = os.path.basename(d.getVar('HDF_PATH'))
+            for url in d.getVar('SRC_URI').split():
+                filename = hdf_filename
+                done = False
+                for chunk in url.split(';'):
+                    if chunk.startswith('downloadfilename='):
+                        filename=chunk[17:]
+                        continue
+                    if chunk.startswith('name='):
+                        if chunk[5:] == d.getVar('HDF_MACHINE'):
+                            done = True
+                if done:
+                    hdf_filename = filename
+                    break
+
             # Everyone else default to the basename of the HDF_PATH
-            hdf_name = "${S}/" + os.path.basename(d.getVar('HDF_PATH'))
+            hdf_name = "${S}/%s" % hdf_filename
+
         d.setVar('HDF_NAME', hdf_name)
 
     # Must be in S, this ensures that the build environment is aware of the file for checksuming
