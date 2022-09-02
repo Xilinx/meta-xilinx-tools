@@ -1,17 +1,17 @@
 SUMMARY = "Xilinx AI Engine runtime"
 DESCRIPTION = "This library provides APIs for the runtime support of the Xilinx AI Engine IP"
 
-require ai-engine.inc
+require aie-rt.inc
 
 SECTION	= "libs"
 
-AIEDIR ?= "${S}/XilinxProcessorIPLib/drivers/aienginev2"
+AIEDIR ?= "${S}/driver"
 S = "${WORKDIR}/git"
 I = "${AIEDIR}/include"
 
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE:versal-ai-core = "versal-ai-core"
-PV = "2.1"
+PV = "3.2"
 
 IOBACKENDS ?= "Linux"
 
