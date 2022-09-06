@@ -16,7 +16,7 @@ HDF_PATH ??= "github.com/Xilinx/hdf-examples.git"
 HDF_NAME ??= ""
 
 BRANCH ??= "master"
-SRCREV ??= "6ffebb190873fa9dc516b2d7e9f54af135e31312"
+SRCREV ??= "e4417a57eb7602e6b1e37120a36fdcc6ab257841"
 BRANCHARG ??= "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) != '']}"
 
 # Only 'xsa' is currently supported here
