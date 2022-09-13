@@ -22,7 +22,10 @@ BRANCHARG ??= "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH', True) !=
 # Only 'xsa' is currently supported here
 HDF_EXT ?= "xsa"
 
-SRC_URI = "${HDF_BASE}${HDF_PATH};${BRANCHARG}"
+# Provide a way to extend the SRC_URI, default to adding protocol=https for git:// usage.
+HDF_EXTENSION ?= "${@';protocol=https' if d.getVar('HDF_BASE') == 'git://' else ''}"
+
+SRC_URI = "${HDF_BASE}${HDF_PATH};${BRANCHARG}${HDF_EXTENSION}"
 
 # Above is the last change fallback.  The include file, if it exists, is the current xsa files
 include hdf-repository.inc
