@@ -10,6 +10,7 @@ S = "${WORKDIR}/git"
 
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE:versal-ai-core = "versal-ai-core"
+COMPATIBLE_MACHINE:versal-ai-edge = "${SOC_VARIANT_ARCH}"
 
 IOBACKENDS ?= "Linux"
 
