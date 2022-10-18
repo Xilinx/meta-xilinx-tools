@@ -84,6 +84,9 @@ YAML_BSP_CONFIG[dt_setbaud] = "set,${YAML_SERIAL_CONSOLE_BAUDRATE}"
 YAML_BSP_CONFIG += "${@'classic_soc' if d.getVar('YAML_ENABLE_CLASSIC_SOC') == '1' else ''}"
 YAML_BSP_CONFIG[classic_soc] = "set,TRUE"
 
+YAML_BSP_CONFIG += "${@'apu_as_overlay_config_master' if d.getVar('YAML_ENABLE_APU_AS_OVERLAY_CONFIG_MASTER') == '1' else ''}"
+YAML_BSP_CONFIG[apu_as_overlay_config_master] = "set,TRUE"
+
 def patch_yaml(config, configflags, type, type_dict, d):
     import re
     for cfg in config:
