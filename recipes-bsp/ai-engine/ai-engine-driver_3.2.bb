@@ -15,8 +15,8 @@ PV = "3.2"
 
 IOBACKENDS ?= "Linux"
 
-DEPENDS = "${@bb.utils.contains('IOBACKENDS', 'metal', 'libmetal', '', d)}"
-RDEPENDS:${PN} = "${@bb.utils.contains('IOBACKENDS', 'metal', 'libmetal', '', d)}"
+DEPENDS = "${@bb.utils.contains('IOBACKENDS', 'metal', 'libmetal-xlnx', '', d)}"
+RDEPENDS:${PN} = "${@bb.utils.contains('IOBACKENDS', 'metal', 'libmetal-xlnx', '', d)}"
 
 PROVIDES = "libxaiengine"
 RPROVIDES:${PN}	= "libxaiengine"
