@@ -1,15 +1,18 @@
-TOOL_VER_MAIN ?= "${XILINX_VER_MAIN}"
-TOOL_VER_MAIN[doc] = "XSCT version, usually the same as XILINX_VER_MAIN"
+
+TOOL_VER_MAIN ?= "${XILINX_XSCT_VERSION}"
+TOOL_VER_MAIN[doc] = "XSCT version, usually the same as XILINX_XSCT_VERSION"
 
 XILINX_SDK_TOOLCHAIN ??= "${XSCT_STAGING_DIR}/Vitis/${TOOL_VER_MAIN}"
 XSCT_LOADER ?= "${XILINX_SDK_TOOLCHAIN}/bin/xsct"
 
-XSCT_URL ?= "http://petalinux.xilinx.com/sswreleases/rel-v2022/xsct-trim/xsct-2022-1.tar.xz"
-XSCT_TARBALL ?= "xsct_${XILINX_VER_MAIN}.tar.xz"
+XSCT_URL ?= "http://petalinux.xilinx.com/sswreleases/rel-v2022/xsct-trim/xsct-${@d.getVar('TOOL_VER_MAIN').replace('.', '-')}.tar.xz"
+XSCT_TARBALL ?= "xsct_${TOOL_VER_MAIN}.tar.xz"
 XSCT_DLDIR ?= "${DL_DIR}/xsct/"
 XSCT_STAGING_DIR ?= "${TOPDIR}/xsct"
 
-XSCT_CHECKSUM ?= "e343a8b386398e292f636f314a057076e551a8173723b8ea0bc1bbd879c05259"
+XSCT_CHECKSUM[2022.1] = "e343a8b386398e292f636f314a057076e551a8173723b8ea0bc1bbd879c05259"
+XSCT_CHECKSUM[2022.2] = "8a3272036ca61f017f357bf6ad9dfbdec6aebb39f43c3ca0cee7ec86ea4c066f"
+XSCT_CHECKSUM ?= "${@d.getVarFlag('XSCT_CHECKSUM', d.getVar('TOOL_VER_MAIN'))}"
 VALIDATE_XSCT_CHECKSUM ?= '1'
 
 USE_XSCT_TARBALL ?= '1'

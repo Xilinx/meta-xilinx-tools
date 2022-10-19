@@ -1,28 +1,35 @@
-meta-xilinx-tools
-=================
+# meta-xilinx-tools
 
 This layer provides support for using Xilinx tools on supported architectures
-MicroBlaze, Zynq and ZynqMP.
+MicroBlaze, Zynq, ZynqMP and Versal.
 
-Maintainers, Mailing list, Patches
-==================================
+## Maintainers, Mailing list, Patches
 
 Please send any patches, pull requests, comments or questions for this layer to
-the [meta-xilinx mailing list](https://lists.yoctoproject.org/listinfo/meta-xilinx)
+the [meta-xilinx mailing list](https://lists.yoctoproject.org/g/meta-xilinx)
 with ['meta-xilinx-tools'] in the subject:
 
 	meta-xilinx@lists.yoctoproject.org
 
-Maintainers:
+When sending patches, please make sure the email subject line includes
+"[meta-xilinx-tools][PATCH]" and cc'ing the maintainers.
 
-	Jaewon Lee <jaewon.lee@xilinx.com>
-        Sai Hari Chandana Kalluri <chandana.kalluri@xilinx.com>
-        Mark Hatle <mark.hatle@xilinx.com>
+For more details follow the OE community patch submission guidelines, as described in:
 
-Dependencies
-============
+https://www.openembedded.org/wiki/Commit_Patch_Message_Guidelines
+https://www.openembedded.org/wiki/How_to_submit_a_patch_to_OpenEmbedded
 
-This layer depends on: xsct
+`git send-email --subject-prefix 'meta-xilinx-tools][PATCH' --to meta-xilinx@yoctoproject.org`
+
+**Maintainers:**
+
+	Mark Hatle <mark.hatle@amd.com>
+	Sandeep Gundlupet Raju <sandeep.gundlupet-raju@amd.com>
+	John Toomey <john.toomey@amd.com>
+
+## Dependencies
+
+This layer depends on: xsct and other layers
 
 xsct-tarball class fetches the required xsct tool and installs it in the local
 sysroots of Yocto build. All the recipes which depend xsct or bootgen will use
@@ -33,23 +40,23 @@ Each release is dependent on the Xilinx XSCT release version. Please note that
 xsct tools may not be backward compatible with embeddedsw repo. Meaning
 2016.3 xsct tools might not work with older version on embeddedsw repo
 
-Layer dependencies
-=====================
+	URI: https://git.openembedded.org/bitbake
 
-URI: git://git.openembedded.org/bitbake
+	URI: https://git.openembedded.org/openembedded-core
+	layers: meta, meta-poky
 
-URI: git://git.openembedded.org/openembedded-core
+	URI: https://git.yoctoproject.org/meta-xilinx
+	layers: meta-xilinx-microblaze, meta-xilinx-bsp, meta-xilinx-core,
+		meta-xilinx-pynq, meta-xilinx-contrib, meta-xilinx-standalone,
+		meta-xilinx-vendor.
 
-URI: git://git.openembedded.org/meta-xilinx (meta-xilinx-bsp)
+	branch: master or xilinx current release version (e.g. hosister)
 
-URI: git://git.openembedded.org/meta-xilinx (meta-xilinx-standalone)
-
-Providing path to XSA
-=====================
+## Hardware Configuration using XSA
 
 meta-xilinx-tools recipes depends on XSA to be provided.
 As of the 2019.2 release, all design files were renamed from hdf to xsa.
-But the variables and references to hdf will remain and renamed in the future release
+But the variables and references to hdf will remain and renamed in the future release.
 
 HDF_BASE can be set to git:// or file://
 
@@ -57,110 +64,103 @@ HDF_PATH will be git repository or the path containing HDF
 
 For example:
 
-Set the following way to use XSA from local path
-
+* Using GIT subversion
+```bash
+HDF_BASE = "git://"
+HDF_PATH = "github.com/Xilinx/hdf-examples.git"
+HDF_NAME = "system.xsa"
+HDF_MACHINE = "zcu102-zynqmp"
+```
+* Using XSA file path
+```bash
 HDF_BASE = "file://"
-
-HDF_PATH = "/< path-to-xsa >/system.xsa"
-
-Adding dependencies to build BOOT.bin
-=====================================
-
-This layer can be used via dependencies while creating the required Boot.bin.
-
-Basically the goal to build FSBL or PMU etc will depend on the use-case and
-Boot.bin will indicate these dependencies.  Boot.bin is created using bootgen
-tool from Xilinx. Please refer to help files of bootgen.
-
-Executing bootgen -bif_help  will provide some detailed help on BIF attributes.
-
-BIF file is required for generating boot.bin, BIF is partitioned into Common
-BIF attributes and Partition BIF attributes. Attributes of BIF need to be
-specified in local.conf while using xilinx-bootbin recipe for generating
-boot.bin
-
-Use IMAGE_INSTALL:append = " xilinx-bootbin" in local.conf
-
-Examples for adding dependencies
-================================
-
-1) Example to include dependency for zc702-zynq7 board
---------------------------------------------------------
-
-See https://github.com/Xilinx/meta-xilinx-tools/blob/master/recipes-bsp/bootbin/machine-xilinx-zynq.inc
-
-BIF_PARTITION_ATTR= "fsbl u-boot"
-
-BIF_PARTITION_ATTR[fsbl]="bootloader"
-
-BIF_PARTITION_IMAGE[fsbl]="${DEPLOY_DIR_IMAGE}/fsbl-${MACHINE}.elf"
-
-BIF_PARTITION_DEPENDS[fsbl]="virtual/fsbl:do_deploy"
+HDF_PATH = "/<absolute-path-to-xsa>/system.xsa"
+```
 
 
-BIF_PARTITION_IMAGE[u-boot]="${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.elf"
-
-BIF_PARTITION_DEPENDS[u-boot]="virtual/bootloader:do_deploy"
-
-
-2) Example to include dependency for zcu102-zynqmp board
----------------------------------------------------------
-
-See https://github.com/Xilinx/meta-xilinx-tools/blob/master/recipes-bsp/bootbin/machine-xilinx-zynqmp.inc
-
-BIF_PARTITION_ATTR= "fsbl pmu atf u-boot"
-
-BIF_PARTITION_ATTR[fsbl]="bootloader, destination_cpu=a53-0"
-
-BIF_PARTITION_IMAGE[fsbl]="${DEPLOY_DIR_IMAGE}/fsbl-${MACHINE}.elf"
-
-BIF_PARTITION_DEPENDS[fsbl]="virtual/fsbl:do_deploy"
-
-
-BIF_PARTITION_ATTR[pmu]="destination_cpu=pmu"
-
-BIF_PARTITION_IMAGE[pmu]="${DEPLOY_DIR_IMAGE}/pmu-firmware-${MACHINE}.elf"
-
-BIF_PARTITION_DEPENDS[pmu] ?= "virtual/pmu-firmware:do_deploy"
-
-
-BIF_PARTITION_ATTR[atf]="destination_cpu=a53-0,exception_level=el-3,trustzone"
-
-BIF_PARTITION_IMAGE[atf]="${DEPLOY_DIR_IMAGE}/arm-trusted-firmware-${TUNE_PKGARCH}.elf"
-
-BIF_PARTITION_DEPENDS[atf]="arm-trusted-firmware:do_deploy"
-
-
-BIF_PARTITION_ATTR[u-boot]="destination_cpu=a53-0,exception_level=el-2"
-
-BIF_PARTITION_IMAGE[u-boot]="${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.elf"
-
-BIF_PARTITION_DEPENDS[u-boot]="virtual/bootloader:do_deploy"
-
-Additional configurations using YAML
-====================================
+## Additional configurations using YAML
 
 This layer provides additional configurations through YAML
 
-1) Example YAML based configuration for uart0 setting in PMU Firmware
+1) Example YAML based configuration for embeddedsw components(FSBL, PMUFW, etc.) uart, memory, flash settings.
+   from machine or local confiruation file.
 
-YAML_SERIAL_CONSOLE_STDIN = "psu_uart_0"
+* FSBL or FS-BOOT
+```bash
+# Microblaze:
+YAML_FILE_PATH:pn-fs-boot = "${WORKDIR}/fsboot.yaml"
+YAML_SERIAL_CONSOLE_STDIN:microblaze-generic:pn-fs-boot = "axi_uartlite_0"
+YAML_SERIAL_CONSOLE_STDOUT:microblaze-generic:pn-fs-boot = "axi_uartlite_0"
 
-YAML_SERIAL_CONSOLE_STDOUT = "psu_uart_0"
+YAML_MAIN_MEMORY_CONFIG:microblaze-generic:pn-fs-boot = "mig_7series_0"
+or
+YAML_MAIN_MEMORY_CONFIG:microblaze-generic:pn-fs-boot = "DDR4_0"
 
-2) Example YAML based configuration for device tree generation
+YAML_FLASH_MEMORY_CONFIG:microblaze-generic:pn-fs-boot = "axi_quad_spi_0"
 
-YAML_MAIN_MEMORY_CONFIG = "psu_ddr_0"
+# Zynq-7000:
+YAML_SERIAL_CONSOLE_STDIN:zynq-generic:pn-fsbl-firmware = "ps7_uart_1"
+YAML_SERIAL_CONSOLE_STDOUT:zynq-generic:pn-fsbl-firmware = "ps7_uart_1"
 
-YAML_CONSOLE_DEVICE_CONFIG = "psu_uart_0"
+# ZynqMP:
+YAML_SERIAL_CONSOLE_STDIN:zynqmp-generic:pn-fsbl-firmware = "psu_uart_0"
+YAML_SERIAL_CONSOLE_STDOUT:zynqmp-generic:pn-fsbl-firmware = "psu_uart_0"
+```
 
-3) YAML_DT_BOARD_FLAGS has board specific dtsi in DTG code base this can be enabled by using
-See https://github.com/Xilinx/device-tree-xlnx/tree/master/device_tree/data/kernel_dtsi/2018.1/BOARD
+* PMUFW or PLMFW
+```bash
+# ZynqMP:
+YAML_SERIAL_CONSOLE_STDIN:zynqmp-generic:pn-pmu-firmware = "psu_uart_1"
+YAML_SERIAL_CONSOLE_STDOUT:zynqmp-generic:pn-pmu-firmware = "psu_uart_1"
 
-YAML_DT_BOARD_FLAGS = "{BOARD zcu102-rev1.0}"
+# Versal:
+YAML_SERIAL_CONSOLE_STDIN:versal-generic:pn-plm-firmware = "versal_cips_0_pspmc_0_psv_sbsauart_0"
+YAML_SERIAL_CONSOLE_STDOUT:versal-generic:pn-plm-firmware = "versal_cips_0_pspmc_0_psv_sbsauart_0"
+```
+
+2) Example YAML based configuration for device tree serial, baudrate, memeory settings.
+
+```bash
+# Microblaze:
+YAML_CONSOLE_DEVICE_CONFIG:microblaze-generic:pn-device-tree = "axi_uartlite_0"
+
+YAML_MAIN_MEMORY_CONFIG:microblaze-generic:pn-device-tree = "mig_7series_0"
+or
+YAML_MAIN_MEMORY_CONFIG:microblaze-generic:pn-device-tree = "DDR4_0"
+
+# Zynq-7000:
+YAML_CONSOLE_DEVICE_CONFIG:zynq-generic:pn-device-tree = "ps7_uart_1"
+YAML_MAIN_MEMORY_CONFIG:zynq-generic:pn-device-tree = "PS7_DDR_0"
+YAML_SERIAL_CONSOLE_BAUDRATE = "115200"
+
+# ZynqMP:
+YAML_CONSOLE_DEVICE_CONFIG:zynqmp-generic:pn-device-tree = "psu_uart_0"
+YAML_MAIN_MEMORY_CONFIG:zynqmp-generic:pn-device-tree = "PSU_DDR_0"
+YAML_SERIAL_CONSOLE_BAUDRATE = "115200"
+
+# Versal:
+YAML_CONSOLE_DEVICE_CONFIG:versal-generic:pn-device-tree = "versal_cips_0_pspmc_0_psv_sbsauart_0"
+YAML_SERIAL_CONSOLE_BAUDRATE = "115200"
+```
+
+3) Example YAML based configuration for setting eval board specific dtsi files available in DTG repo.
+Refer https://github.com/Xilinx/device-tree-xlnx/tree/xlnx_rel_v2022.1/device_tree/data/kernel_dtsi/2022.1/BOARD
+for more details
+
+```bash
+# Microblaze:
+YAML_DT_BOARD_FLAGS:microblaze-generic:pn-device-tree = {BOARD kc705-full}
+
+# Zynq-7000:
+YAML_DT_BOARD_FLAGS:zynq-generic:pn-device-tree = "{BOARD zc702}"
+
+# ZynqMP:
+YAML_DT_BOARD_FLAGS:zynqmp-generic:pn-device-tree = "{BOARD zcu102-rev1.0}"
+
+# Versal:
+YAML_DT_BOARD_FLAGS:versal-generic:pn-device-tree = "{BOARD versal-vck190-reva-x-ebm-01-reva}"
+```
 
 Note only Xilinx eval boards have the dtsi in DTG, for custom board one needs
 to patch DTG to include the custom board dtsi and enable it using YAML
-configuration
-
-
+configuration.
