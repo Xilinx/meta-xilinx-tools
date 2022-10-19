@@ -125,6 +125,7 @@ do_compile() {
 }
 
 do_install() {
+        bbwarn "fpga-manager-util recipe will be deprecated in 2023.1 release, users should start using fpgamanager_dtg.bbclass instead"
         install -d ${D}${nonarch_base_libdir}/firmware/xilinx/base
         if [ -e "base.dtbo" ]; then
             #install base hdf artifacts

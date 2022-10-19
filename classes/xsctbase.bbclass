@@ -6,6 +6,7 @@ XSCTH_PROC_DEFAULT:zynqmp     ??= "psu_cortexa53"
 XSCTH_PROC_DEFAULT:zynq       ??= "ps7_cortexa9"
 XSCTH_PROC_DEFAULT:microblaze ??= "microblaze"
 XSCTH_PROC_DEFAULT:versal     ??= "psv_cortexa72"
+XSCTH_PROC_DEFAULT:versal-net ??= "psx_cortexa78"
 
 XSCTH_PROC_IP ??= "${XSCTH_PROC_DEFAULT}"
 
@@ -19,7 +20,7 @@ XSCTH_MISC ??= ""
 XSCTH_SCRIPT ??= ""
 XSCTH_PROC ??= ""
 XSCTH_EXECUTABLE ??= "executable.elf"
-XSCTH_ARCH ?= "${@bb.utils.contains_any('XSCTH_PROC_IP', ['psu_cortexa53', 'psv_cortexa72'], '64', '32', d)}"
+XSCTH_ARCH ?= "${@bb.utils.contains_any('XSCTH_PROC_IP', ['psu_cortexa53', 'psv_cortexa72', 'psx_cortexa78'], '64', '32', d)}"
 
 PROJ_ARG ??= "-ws ${XSCTH_WS} -pname ${XSCTH_PROJ} -rp ${XSCTH_REPO}"
 HW_ARG ??= "-processor_ip ${XSCTH_PROC_IP} -hdf ${XSCTH_HDF} -arch ${XSCTH_ARCH} ${@['', '-processor ${XSCTH_PROC}'][d.getVar('XSCTH_PROC', True) != '']}"
