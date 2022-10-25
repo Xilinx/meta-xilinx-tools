@@ -28,12 +28,17 @@ do_install() {
 
     if [ -e ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ]; then
         install -d ${D}/boot/bitstream/
-        install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ${D}/boot/bitstream/
+        install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ${D}/boot/bitstream/${BITSTREAM_BASE_NAME}.bit
+        ln -sf ${BITSTREAM_BASE_NAME}.bit ${D}/boot/bitstream/${BITSTREAM_NAME}-${MACHINE}.bit
+    else
+        touch ${D}/boot/bitstream/${BITSTREAM_NAME}-${MACHINE}.bit
     fi
 
+    #Microblaze xsa files contain mmi file which is required to generate download.bit, bin, and mcs files.
     if [ -e ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.mmi ]; then
         install -d ${D}/boot/bitstream/
         install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.mmi ${D}/boot/bitstream/
+        ln -sf ${MMI_BASE_NAME}.mmi ${D}/boot/bitstream/${BITSTREAM_NAME}-${MACHINE}.mmi
     fi
 }
 
