@@ -2,6 +2,9 @@ REPO ??= "git://github.com/Xilinx/device-tree-xlnx.git;protocol=https"
 BRANCHARG = "${@['nobranch=1', 'branch=${BRANCH}'][d.getVar('BRANCH') != '']}"
 SRC_URI:append = " ${REPO};${BRANCHARG}"
 
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+SRC_URI:append = " file://0001-zynqmp.dtsi-Change-mali400-interrupt-and-clock-names.patch"
+
 BRANCH[2022.1] = "xlnx_rel_v2022.1"
 SRCREV[2022.1] = "1b364a44fae80fed4ea2863accc71f380b46c038"
 

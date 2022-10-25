@@ -1,0 +1,35 @@
+From b298056f20330c9e501d3bf0e2011669453f6504 Mon Sep 17 00:00:00 2001
+From: Mark Hatle <mark.hatle@amd.com>
+Date: Mon, 24 Oct 2022 15:52:19 -0500
+Subject: [PATCH] zynqmp.dtsi: Change mali400 interrupt and clock names
+
+Move the mali400 names from the Xilinx specific names to the more
+generic community naming (from the lima driver).
+
+Based on the work from:
+
+   https://github.com/ikwzm/ZynqMP-FPGA-Linux/commit/7da294fffe8124684df38f99651acc4729a63807
+
+Signed-off-by: Mark Hatle <mark.hatle@amd.com>
+---
+ device_tree/data/kernel_dtsi/2022.2/zynqmp/zynqmp.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/device_tree/data/kernel_dtsi/2022.2/zynqmp/zynqmp.dtsi b/device_tree/data/kernel_dtsi/2022.2/zynqmp/zynqmp.dtsi
+index cadbd885..b32eb9a9 100644
+--- a/device_tree/data/kernel_dtsi/2022.2/zynqmp/zynqmp.dtsi
++++ b/device_tree/data/kernel_dtsi/2022.2/zynqmp/zynqmp.dtsi
+@@ -452,8 +452,8 @@
+ 			reg = <0x0 0xfd4b0000 0x0 0x10000>;
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <0 132 4>, <0 132 4>, <0 132 4>, <0 132 4>, <0 132 4>, <0 132 4>;
+-			interrupt-names = "IRQGP", "IRQGPMMU", "IRQPP0", "IRQPPMMU0", "IRQPP1", "IRQPPMMU1";
+-			clock-names = "gpu", "gpu_pp0", "gpu_pp1";
++			interrupt-names = "gp", "gpmmu", "pp0", "ppmmu0", "pp1", "ppmmu1";
++			clock-names = "gpu", "core", "bus";
+ 			power-domains = <&zynqmp_firmware PD_GPU>;
+ 		};
+ 
+-- 
+2.37.0 (Apple Git-136)
+
