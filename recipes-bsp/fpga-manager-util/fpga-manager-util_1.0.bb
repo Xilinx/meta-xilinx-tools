@@ -10,7 +10,7 @@ require recipes-bsp/device-tree/device-tree.inc
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/build"
 
-PV = "xilinx+git${SRCPV}"
+PV = "xilinx-${XILINX_XSCT_VERSION}+git${SRCPV}"
 
 FILESEXTRAPATHS:append := ":${XLNX_SCRIPTS_DIR}"
 
