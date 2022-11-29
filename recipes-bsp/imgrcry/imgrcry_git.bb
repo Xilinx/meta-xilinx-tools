@@ -8,7 +8,7 @@ inherit xsctapp xsctyaml deploy
 
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE:zynqmp = "zynqmp"
-COMPATIBLE_MACHINE:k26-som = "none"
+COMPATIBLE_MACHINE:kria = "none"
 
 XSCTH_APP:zynqmp = "Image Recovery"
 
