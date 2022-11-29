@@ -31,6 +31,7 @@ do_install() {
         install -Dm 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.bit ${D}/boot/bitstream/${BITSTREAM_BASE_NAME}.bit
         ln -sf ${BITSTREAM_BASE_NAME}.bit ${D}/boot/bitstream/${BITSTREAM_NAME}-${MACHINE}.bit
     else
+	install -d ${D}/boot/bitstream/
         touch ${D}/boot/bitstream/${BITSTREAM_NAME}-${MACHINE}.bit
     fi
 
