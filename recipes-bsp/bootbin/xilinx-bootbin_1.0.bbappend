@@ -1,10 +1,10 @@
 BIF_BITSTREAM_ATTR ?= "${@bb.utils.contains('MACHINE_FEATURES', 'fpga-overlay', '', ' bitstream', d)}"
 
-DEPENDS += 'u-boot-zynq-scr'
+DEPENDS += 'u-boot-xlnx-scr'
 
 # Only adjust the depends when on versal
 BOOTSCR_DEP = ''
-BOOTSCR_DEP:versal = 'u-boot-zynq-scr:do_deploy'
+BOOTSCR_DEP:versal = 'u-boot-xlnx-scr:do_deploy'
 do_compile[depends] .= " ${BOOTSCR_DEP}"
 
 do_compile:append:versal() {
