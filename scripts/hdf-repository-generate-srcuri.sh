@@ -7,6 +7,10 @@
 #    https://artifactory.xilinx.com/artifactory/petalinux-hwproj-dev/hdf-examples/2022.2/06062022 \
 #    /usr/local/hdf-examples \
 #    > recipes-bsp/hdf/hdf-repository.inc
+#
+# It is assumed the URL being pointed to will be a series of directories.  The HDF_MACHINE value
+# will be the directory name, and the contents within the directory will be the XSA file.
+#
 
 if [ $# -lt 1 -o $# -gt 2 ]; then
     echo "Usage: $0 <url> [<local_dir>]" >&2
@@ -43,34 +47,30 @@ fi
 
 echo "# Automatically generated.  Manual changes will be lost."
 echo
-echo "HDF_BASE ??= '${urlproto}'"
-echo "HDF_PATH ??= '${urlpath}/\${HDF_MACHINE}/system.xsa'"
-echo
-if [ ${urlproto} = "file://" ]; then
-    echo "BRANCHARG ??= 'name=\${HDF_MACHINE}'"
-else
-    echo "BRANCHARG ??= 'downloadfilename=\${HDF_MACHINE}_system.xsa;name=\${HDF_MACHINE}'"
-fi
-echo
+echo "# Redefine the default to use our values if not overriden by the user"
+echo "# fall back to the original default if necessary"
+echo "HDF_BASE_DEFAULT := '\${HDF_BASE}'"
+echo "HDF_PATH_DEFAULT := '\${HDF_PATH}'"
+echo "BRANCHARG_DEFAULT := '\${BRANCHARG}'"
+echo "HDF_BASE ??= \"\${@d.getVarFlag('HDF_BASE', d.getVar('HDF_MACHINE')) or '\${HDF_BASE_DEFAULT}'}\""
+echo "HDF_PATH ??= \"\${@d.getVarFlag('HDF_PATH', d.getVar('HDF_MACHINE')) or '\${HDF_PATH_DEFAULT}'}\""
+echo "BRANCHARG ??= \"\${@d.getVarFlag('BRANCHARG', d.getVar('HDF_MACHINE')) or '\${BRANCHARG_DEFAULT}'}\""
 
 # Downloaded but not used
 README="README.md"
 if [ ! -e ${README} ]; then
-    README=""
-    echo "WARNING: No README file!" >&2
+    echo "WARNING: No ${README} file!" >&2
 else
     echo "SRC_URI += '${url}/$README;name=readme'"
     echo "SRC_URI[readme.sha256sum] = '$(sha256sum $README | cut -d ' ' -f 1)'"
+    echo
 fi
-
-echo
 
 # Include the files, but don't setup LIC_FILES_CHKSUM.  User can manually
 # file the LICENSE file if needed.
 LICENSE="LICENSE.md"
 if [ ! -e ${LICENSE} ]; then
-    LICENSE=""
-    echo "WARNING: No README file!" >&2
+    echo "WARNING: No ${LICENSE} file!" >&2
 else
     echo "SRC_URI += '${url}/$LICENSE;name=license'"
     echo "SRC_URI[license.sha256sum] = '$(sha256sum $LICENSE | cut -d ' ' -f 1)'"
@@ -80,15 +80,31 @@ else
     #    echo "LIC_FILES_CHKSUM = 'file://${urlpath}/$LICENSE;md5=$(md5sum $LICENSE | cut -d ' ' -f 1)'"
     #else
     #    echo "LIC_FILES_CHKSUM = 'file://$LICENSE;md5=$(md5sum $LICENSE | cut -d ' ' -f 1)'"
+    echo
 fi
 
-echo
-
-for each_file in `find . -type f -name system.xsa | sed 's,\./,,'`; do
-    id=$(dirname $each_file | tr '/' '_') ; \
-    sha=$(sha256sum $each_file | cut -d ' ' -f 1) ; \
-    echo "SRC_URI[$id.sha256sum] = '$sha'" ; \
+for each_file in $(find . -type f -name '*.xsa' | sort) ; do
+    case ${each_file} in
+        *index.html)  continue ;;
+        *${README})   continue ;;
+        *${LICENSE})  continue ;;
+        *)
+            id=$(basename `dirname $each_file` | tr '/' '_')
+            file=$(basename $each_file)
+            sha=$(sha256sum $each_file | cut -d ' ' -f 1)
+            echo
+            echo "# $id"
+            echo "HDF_BASE[$id] = '${urlproto}'"
+            echo "HDF_PATH[$id] = '${urlpath}/$id/$file'"
+            if [ ${urlproto} = "file://" ]; then
+                echo "BRANCHARG[$id] = 'name=$id'"
+            else
+                echo "BRANCHARG[$id] = 'downloadfilename=${id}_system.xsa;name=$id'"
+            fi
+            echo "SRC_URI[$id.sha256sum] = '$sha'"
+            ;;
+    esac
 done
-if [ -n "${temp}" ]; then
-    rm -r $temp
+if [ -n "${tempdir}" ]; then
+    rm -r $tempdir
 fi
