@@ -59,12 +59,17 @@ do_compile:prepend:eabi:arm() {
   chmod 0755 ${WORKDIR}/bin/arm-none-eabi-ar
 }
 
-# xsctapp sets it's own do_install, replace it with the real one
+# xsctapp sets it's own do_install, replace it with the real one (from meta-xilinx-standalone)
 do_install() {
     :
 }
 
+# Override the default with the specific component name and path XSCT puts out
+# this path is within the B directory
+ESW_COMPONENT = "${XSCTH_PROJ}/executable.elf"
+
+# xsctapp sets it's own do_deploy, replace it with the real one (from meta-xilinx-standalone)
 do_deploy() {
-    install -Dm 0644 ${B}/${XSCTH_PROJ}/executable.elf ${DEPLOYDIR}/${FSBL_BASE_NAME}.elf
+    install -Dm 0644 ${B}/${ESW_COMPONENT} ${DEPLOYDIR}/${FSBL_BASE_NAME}.elf
     ln -sf ${FSBL_BASE_NAME}.elf ${DEPLOYDIR}/${FSBL_IMAGE_NAME}.elf
 }
