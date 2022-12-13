@@ -96,11 +96,7 @@ for each_file in $(find . -type f -name '*.xsa' | sort) ; do
             echo "# $id"
             echo "HDF_BASE[$id] = '${urlproto}'"
             echo "HDF_PATH[$id] = '${urlpath}/$id/$file'"
-            if [ ${urlproto} = "file://" ]; then
-                echo "BRANCHARG[$id] = 'name=$id'"
-            else
-                echo "BRANCHARG[$id] = 'downloadfilename=${id}_system.xsa;name=$id'"
-            fi
+            echo "BRANCHARG[$id] = 'name=$id'"
             echo "SRC_URI[$id.sha256sum] = '$sha'"
             ;;
     esac
