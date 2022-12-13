@@ -1,7 +1,6 @@
 DESCRIPTION = "Device Tree generation and packaging for BSP Device Trees using DTG from Xilinx"
 
 LICENSE = "GPL-2.0-or-later"
-LIC_FILES_CHKSUM = "file://xadcps/data/xadcps.mdd;md5=f7fa1bfdaf99c7182fc0d8e7fd28e04a"
 
 require recipes-bsp/device-tree/device-tree.inc
 inherit xsctdt xsctyaml
