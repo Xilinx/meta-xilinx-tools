@@ -2,7 +2,7 @@ SUMMARY = "Recipe to generate necessary artifacts to use fpga-manager"
 DESCRIPTION = "This recipe generates bin and dtbo files to load/unload overlays using fpga-manager-script"
 
 LICENSE = "Proprietary"
-LIC_FILES_CHKSUM = "file://xadcps/data/xadcps.mdd;md5=f7fa1bfdaf99c7182fc0d8e7fd28e04a"
+LIC_FILES_CHKSUM = "file://xadcps/data/xadcps.mdd;md5=d2baf2c4690cd90d3c2c2efabfde5fd4"
 
 inherit deploy xsctbase xsctyaml
 require recipes-bsp/device-tree/device-tree.inc
