@@ -35,7 +35,6 @@ XSCT_TARGETS ?= "\
 	bitstream-extraction \
 	device-tree \
 	extract-cdo \
-	fpga-manager-util \
 	fsbl-firmware \
 	fs-boot \
 	imgrcry \
