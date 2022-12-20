@@ -15,7 +15,7 @@ python (){
 }
 
 python devicetree_do_compile:append() {
-    import glob, subprocess
+    import glob, subprocess, shutil
     if glob.glob(d.getVar('XSCTH_HW_PATH') + '/*.bit'):
         pn = d.getVar('PN')
         biffile = pn + '.bif'
@@ -26,6 +26,16 @@ python devicetree_do_compile:append() {
         bootgenargs = ["bootgen"] + (d.getVar("BOOTGEN_FLAGS") or "").split()
         bootgenargs += ["-image", biffile, "-o", pn + ".bit.bin"]
         subprocess.run(bootgenargs, check = True)
+
+        # In Zynq7k using "-process_bitstream bin" bootgen flag, bit.bin file is
+        # generated in XSCTH_HW_PATH directory with <xsa_name>.bit.bin file,
+        # Hence we need to move this file from XSCTH_HW_PATH to XSCTH_WS
+        # directory and rename to ${PN}.bit.bin for do_install task.
+        arch = d.getVar('SOC_FAMILY')
+        if arch == 'zynq':
+            src_bitbin_file = glob.glob(d.getVar('XSCTH_HW_PATH') + '/*.bit.bin')[0]
+            dst_bitbin_file = d.getVar('XSCTH_WS') + '/' + pn + '.bit.bin'
+            shutil.move(src_bitbin_file, dst_bitbin_file)
 
         if not os.path.isfile(pn + ".bit.bin"):
             bb.fatal("bootgen failed. Enable -log debug with bootgen and check logs")
