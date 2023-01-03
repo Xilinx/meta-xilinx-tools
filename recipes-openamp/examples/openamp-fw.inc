@@ -4,7 +4,7 @@ ESW_VER = "${@bb.parse.vars_from_file(d.getVar('FILE', False),d)[1] or '${XILINX
 
 inherit xsctapp xsctyaml deploy
 
-LICENSE = "BSD"
+LICENSE = "BSD-3-Clause"
 
 PARALLEL_MAKE = "-j 1"
 
