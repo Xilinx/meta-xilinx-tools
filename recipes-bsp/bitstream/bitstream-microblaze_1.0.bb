@@ -4,7 +4,7 @@ This recipe will take a bitstream without any elf binary in it and add \
 an elf file to it. By default fs-boot.elf is embedded into the bitstream, \
 this can be overriding by setting DATA_FILE in your build environment"
 
-LICENSE = "BSD"
+LICENSE = "BSD-3-Clause"
 
 DEPENDS = "virtual/fsboot virtual/bitstream"
 
