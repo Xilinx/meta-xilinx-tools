@@ -87,7 +87,7 @@ do_check() {
     fi
 }
 
-HDF_MACHINE ?= "${@d.getVar('BOARD') if d.getVar('BOARD') else d.getVar('MACHINE')}"
+HDF_MACHINE ?= "${MACHINE}"
 
 do_install() {
     install -d ${D}/opt/xilinx/hw-design
