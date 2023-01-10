@@ -1,11 +1,9 @@
 inherit fpgamanager_common
-COMPATIBLE_MACHINE:zynq = ".*"
-YAML_OVERLAY_CUSTOM_DTS = "pl-final.dts"
 
-python (){
+python() {
     d.setVar("XSCTH_HDF_PATH",[a for a in d.getVar('SRC_URI').split() if '.xsa' in a][0].lstrip('file://'))
 
-    #optional inputs
+    # Optional inputs
     if '.xclbin' in d.getVar("SRC_URI"):
         d.setVar("XCL_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split() if '.xclbin' in a][0].lstrip('file://')))
     if '.dtsi' in d.getVar("SRC_URI") and d.getVar('YAML_ENABLE_CLASSIC_SOC') != '1':

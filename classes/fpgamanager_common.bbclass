@@ -26,13 +26,23 @@ DEPENDS = "\
     virtual/dtb \
     "
 
+# Recipes that inherit from this class need to use an appropriate machine
+# override for COMPATIBLE_MACHINE to build successfully; don't allow building
+# for microblaze MACHINE
 COMPATIBLE_MACHINE ?= "^$"
-COMPATIBLE_MACHINE:zynqmp = ".*"
-COMPATIBLE_MACHINE:versal = ".*"
+COMPATIBLE_MACHINE:microblaze = "^$"
 
 BOOTGEN_FLAGS ?= " -arch ${SOC_FAMILY} -w ${@bb.utils.contains('SOC_FAMILY','zynqmp','','-process_bitstream bin',d)}"
 
 DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_DT_PATH}"
+YAML_OVERLAY_CUSTOM_DTS = "pl-final.dts"
+
+# Note: For YAML_PARTIAL_OVERLAY_CUSTOM_DTS file .dts extension is appended
+# from device-tree generators tcl scripts, hence we don't need to set from
+# bbclass.
+YAML_PARTIAL_OVERLAY_CUSTOM_DTS = 'pl-partial-final'
+PL_CUSTOM_INCLUDE_PATH ?= ""
+PL_PARTIAL_CUSTOM_INCLUDE_PATH ?= ""
 
 XSCTH_BUILD_CONFIG = 'Release'
 XSCTH_MISC = " -hdf_type ${HDF_EXT} -hwpname ${PN}"
@@ -45,12 +55,10 @@ do_fetch[cleandirs] = "${B}"
 do_configure[cleandirs] = "${B}"
 
 python (){
-
     if d.getVar("SRC_URI").count(".xsa") != 1:
         raise bb.parse.SkipRecipe("Need one '.xsa' file added to SRC_URI")
 
-
-    #optional inputs
+    # Optional inputs
     if '.xclbin' in d.getVar("SRC_URI"):
         d.setVar("XCL_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split() if '.xclbin' in a][0].lstrip('file://')))
 }
@@ -62,8 +70,8 @@ do_configure:prepend() {
 }
 
 do_configure:append () {
-    if [ -f ${WORKDIR}/${CUSTOMPLINCLUDE_PATH}/*.dtsi ]; then
-        cp ${WORKDIR}/${CUSTOMPLINCLUDE_PATH}/*.dtsi ${XSCTH_WS}/${XSCTH_DT_PATH}/pl-custom.dtsi
+    if [ -f ${WORKDIR}/${PL_CUSTOM_INCLUDE_PATH}/*.dtsi ]; then
+        cp ${WORKDIR}/${PL_CUSTOM_INCLUDE_PATH}/*.dtsi ${XSCTH_WS}/${XSCTH_DT_PATH}/pl-custom.dtsi
     fi
 }
 do_compile:prepend() {
