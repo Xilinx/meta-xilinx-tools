@@ -22,6 +22,7 @@ YAML_OVERLAY_CUSTOM_DTS ?= ''
 YAML_BSP_COMPILER_FLAGS ?= ''
 YAML_ENABLE_NO_ALIAS ?= ''
 YAML_ENABLE_DT_VERBOSE ?= ''
+YAML_PARTIAL_OVERLAY_CUSTOM_DTS ?= ''
 
 YAML_FILE_PATH = "${WORKDIR}/${PN}.yaml"
 XSCTH_MISC:append = " -yamlconf ${YAML_FILE_PATH}"
@@ -86,6 +87,9 @@ YAML_BSP_CONFIG[classic_soc] = "set,TRUE"
 
 YAML_BSP_CONFIG += "${@'apu_as_overlay_config_master' if d.getVar('YAML_ENABLE_APU_AS_OVERLAY_CONFIG_MASTER') == '1' else ''}"
 YAML_BSP_CONFIG[apu_as_overlay_config_master] = "set,TRUE"
+
+YAML_BSP_CONFIG += "${@'partial_overlay_custom_dts' if d.getVar('YAML_PARTIAL_OVERLAY_CUSTOM_DTS') != '' else ''}"
+YAML_BSP_CONFIG[partial_overlay_custom_dts] = "set,${YAML_PARTIAL_OVERLAY_CUSTOM_DTS}"
 
 def patch_yaml(config, configflags, type, type_dict, d):
     import re
