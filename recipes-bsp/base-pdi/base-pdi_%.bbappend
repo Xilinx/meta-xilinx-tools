@@ -18,16 +18,16 @@ do_install() {
     install -d ${D}/boot
 
     if [ `ls ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.pdi | wc -l` -eq 1 ]; then
-
         install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.pdi ${D}/boot/base-design.pdi
-
     elif [ `ls ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.pdi | wc -l` -gt 1 ]; then
-
-        if [ ! -f ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/${BASE_PDI_NAME} ]; then
-            bbfatal "${BASE_PDI_NAME} is not a valid pdi name. Use BASE_PDI_NAME to pick from the following:\n$(basename -a ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.pdi)"
+        # In Classic SoC design vivado tools will append "_soc" suffix and Hence
+        # use *_soc.pdi packaged to Boot.bin
+        if [ -f ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*_soc.pdi ]; then
+            install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*_soc.pdi ${D}/boot/base-design.pdi
+        else
+            bbfatal "Multiple PDI found in xsa, Use BASE_PDI_NAME to pick from the following:\n$(basename -a ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.pdi)"
         fi
-        install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/${BASE_PDI_NAME} ${D}/boot/base-design.pdi
     else
-        bbfatal "No pdi exists in design"
+        bbfatal "No pdi found in xsa"
     fi
 }
