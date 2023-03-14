@@ -1,7 +1,7 @@
 # meta-xilinx-tools
 
-This layer provides support for using Xilinx tools on supported architectures
-MicroBlaze, Zynq, ZynqMP and Versal.
+This layer enables AMD Xilinx tools related metadata for MicroBlaze, Zynq,
+ZynqMP and Versal devices.
 
 ## Maintainers, Mailing list, Patches
 
@@ -12,20 +12,32 @@ with ['meta-xilinx-tools'] in the subject:
 	meta-xilinx@lists.yoctoproject.org
 
 When sending patches, please make sure the email subject line includes
-"[meta-xilinx-tools][PATCH]" and cc'ing the maintainers.
+`[meta-xilinx-tools][<BRANCH_NAME>][PATCH]` and cc'ing the maintainers.
 
 For more details follow the OE community patch submission guidelines, as described in:
 
 https://www.openembedded.org/wiki/Commit_Patch_Message_Guidelines
 https://www.openembedded.org/wiki/How_to_submit_a_patch_to_OpenEmbedded
 
-`git send-email --subject-prefix 'meta-xilinx-tools][PATCH' --to meta-xilinx@yoctoproject.org`
+`git send-email --to meta-xilinx@lists.yoctoproject.org *.patch`
+
+> **Note:** When creating patches, please use below format. To follow best practice,
+> if you have more than one patch use `--cover-letter` option while generating the
+> patches. Edit the 0000-cover-letter.patch and change the title and top of the
+> body as appropriate.
+
+**Syntax:**
+`git format-patch -s --subject-prefix="meta-xilinx-tools][<BRANCH_NAME>][PATCH" -1`
+
+**Example:**
+`git format-patch -s --subject-prefix="meta-xilinx-tools][langdale][PATCH" -1`
 
 **Maintainers:**
 
 	Mark Hatle <mark.hatle@amd.com>
 	Sandeep Gundlupet Raju <sandeep.gundlupet-raju@amd.com>
 	John Toomey <john.toomey@amd.com>
+---
 
 ## Dependencies
 
@@ -40,16 +52,23 @@ Each release is dependent on the Xilinx XSCT release version. Please note that
 xsct tools may not be backward compatible with embeddedsw repo. Meaning
 2016.3 xsct tools might not work with older version on embeddedsw repo
 
-	URI: https://git.openembedded.org/bitbake
-
-	URI: https://git.openembedded.org/openembedded-core
+	URI: https://git.yoctoproject.org/poky
 	layers: meta, meta-poky
+	branch: langdale
 
-	URI: https://git.yoctoproject.org/meta-xilinx
-	layers: meta-xilinx-microblaze, meta-xilinx-bsp, meta-xilinx-core,
-		meta-xilinx-contrib, meta-xilinx-standalone, meta-xilinx-vendor.
+	URI: https://git.openembedded.org/meta-openembedded
+	layers: meta-oe, meta-perl, meta-python, meta-filesystems, meta-gnome,
+            meta-multimedia, meta-networking, meta-webserver, meta-xfce,
+            meta-initramfs.
+	branch: langdale
 
-	branch: master or xilinx current release version (e.g. hosister)
+	URI:
+        https://git.yoctoproject.org/meta-xilinx (official version)
+        https://github.com/Xilinx/meta-xilinx (development and amd xilinx release)
+	layers: meta-xilinx-core, meta-xilinx-microblaze, meta-xilinx-bsp,
+            meta-xilinx-standalone, meta-xilinx-vendor.
+	branch: langdale or amd xilinx release version (e.g. rel-v2023.1)
+---
 
 ## Hardware Configuration using XSA
 
@@ -75,89 +94,101 @@ HDF_MACHINE = "zcu102-zynqmp"
 HDF_BASE = "file://"
 HDF_PATH = "/<absolute-path-to-xsa>/system.xsa"
 ```
-
+---
 
 ## Additional configurations using YAML
 
 This layer provides additional configurations through YAML
 
-1) Example YAML based configuration for embeddedsw components(FSBL, PMUFW, etc.) uart, memory, flash settings.
+1. Example YAML based configuration for embeddedsw components(FSBL, PMUFW, etc.) uart, memory, flash settings.
    from machine or local confiruation file.
 
 * FSBL or FS-BOOT
 ```bash
-# Microblaze:
+# MicroBlaze:
 YAML_FILE_PATH:pn-fs-boot = "${WORKDIR}/fsboot.yaml"
-YAML_SERIAL_CONSOLE_STDIN:microblaze-generic:pn-fs-boot = "axi_uartlite_0"
-YAML_SERIAL_CONSOLE_STDOUT:microblaze-generic:pn-fs-boot = "axi_uartlite_0"
+YAML_SERIAL_CONSOLE_STDIN:pn-fs-boot = "axi_uartlite_0"
+YAML_SERIAL_CONSOLE_STDOUT:pn-fs-boot = "axi_uartlite_0"
 
-YAML_MAIN_MEMORY_CONFIG:microblaze-generic:pn-fs-boot = "mig_7series_0"
+YAML_MAIN_MEMORY_CONFIG:pn-fs-boot = "mig_7series_0"
 or
-YAML_MAIN_MEMORY_CONFIG:microblaze-generic:pn-fs-boot = "DDR4_0"
+YAML_MAIN_MEMORY_CONFIG:pn-fs-boot = "DDR4_0"
 
-YAML_FLASH_MEMORY_CONFIG:microblaze-generic:pn-fs-boot = "axi_quad_spi_0"
+YAML_FLASH_MEMORY_CONFIG:pn-fs-boot = "axi_quad_spi_0"
 
 # Zynq-7000:
-YAML_SERIAL_CONSOLE_STDIN:zynq-generic:pn-fsbl-firmware = "ps7_uart_1"
-YAML_SERIAL_CONSOLE_STDOUT:zynq-generic:pn-fsbl-firmware = "ps7_uart_1"
+YAML_SERIAL_CONSOLE_STDIN:pn-fsbl-firmware = "ps7_uart_1"
+YAML_SERIAL_CONSOLE_STDOUT:pn-fsbl-firmware = "ps7_uart_1"
 
 # ZynqMP:
-YAML_SERIAL_CONSOLE_STDIN:zynqmp-generic:pn-fsbl-firmware = "psu_uart_0"
-YAML_SERIAL_CONSOLE_STDOUT:zynqmp-generic:pn-fsbl-firmware = "psu_uart_0"
+YAML_SERIAL_CONSOLE_STDIN:pn-fsbl-firmware = "psu_uart_0"
+YAML_SERIAL_CONSOLE_STDOUT:pn-fsbl-firmware = "psu_uart_0"
 ```
 
 * PMUFW or PLMFW
 ```bash
 # ZynqMP:
-YAML_SERIAL_CONSOLE_STDIN:zynqmp-generic:pn-pmu-firmware = "psu_uart_1"
-YAML_SERIAL_CONSOLE_STDOUT:zynqmp-generic:pn-pmu-firmware = "psu_uart_1"
+YAML_SERIAL_CONSOLE_STDIN:pn-pmu-firmware = "psu_uart_1"
+YAML_SERIAL_CONSOLE_STDOUT:pn-pmu-firmware = "psu_uart_1"
 
 # Versal:
-YAML_SERIAL_CONSOLE_STDIN:versal-generic:pn-plm-firmware = "versal_cips_0_pspmc_0_psv_sbsauart_0"
-YAML_SERIAL_CONSOLE_STDOUT:versal-generic:pn-plm-firmware = "versal_cips_0_pspmc_0_psv_sbsauart_0"
+YAML_SERIAL_CONSOLE_STDIN:pn-plm-firmware = "versal_cips_0_pspmc_0_psv_sbsauart_0"
+YAML_SERIAL_CONSOLE_STDOUT:pn-plm-firmware = "versal_cips_0_pspmc_0_psv_sbsauart_0"
+
+# Versal Net:
+YAML_SERIAL_CONSOLE_STDIN:pn-plm-firmware = "psx_wizard_0_psxl_0_psx_sbsauart_0"
+YAML_SERIAL_CONSOLE_STDOUT:pn-plm-firmware = "psx_wizard_0_psxl_0_psx_sbsauart_0"
 ```
 
-2) Example YAML based configuration for device tree serial, baudrate, memeory settings.
+2. Example YAML based configuration for device tree serial, baudrate, memory
+   configurations.
 
 ```bash
-# Microblaze:
-YAML_CONSOLE_DEVICE_CONFIG:microblaze-generic:pn-device-tree = "axi_uartlite_0"
-
-YAML_MAIN_MEMORY_CONFIG:microblaze-generic:pn-device-tree = "mig_7series_0"
+# MicroBlaze:
+YAML_CONSOLE_DEVICE_CONFIG:pn-device-tree = "axi_uartlite_0"
+YAML_SERIAL_CONSOLE_BAUDRATE = "115200"
+YAML_MAIN_MEMORY_CONFIG:pn-device-tree = "mig_7series_0"
 or
-YAML_MAIN_MEMORY_CONFIG:microblaze-generic:pn-device-tree = "DDR4_0"
+YAML_MAIN_MEMORY_CONFIG:pn-device-tree = "DDR4_0"
 
 # Zynq-7000:
-YAML_CONSOLE_DEVICE_CONFIG:zynq-generic:pn-device-tree = "ps7_uart_1"
-YAML_MAIN_MEMORY_CONFIG:zynq-generic:pn-device-tree = "PS7_DDR_0"
+YAML_CONSOLE_DEVICE_CONFIG:pn-device-tree = "ps7_uart_1"
+YAML_MAIN_MEMORY_CONFIG:pn-device-tree = "PS7_DDR_0"
 YAML_SERIAL_CONSOLE_BAUDRATE = "115200"
 
 # ZynqMP:
-YAML_CONSOLE_DEVICE_CONFIG:zynqmp-generic:pn-device-tree = "psu_uart_0"
-YAML_MAIN_MEMORY_CONFIG:zynqmp-generic:pn-device-tree = "PSU_DDR_0"
+YAML_CONSOLE_DEVICE_CONFIG:pn-device-tree = "psu_uart_0"
+YAML_MAIN_MEMORY_CONFIG:pn-device-tree = "PSU_DDR_0"
 YAML_SERIAL_CONSOLE_BAUDRATE = "115200"
 
 # Versal:
-YAML_CONSOLE_DEVICE_CONFIG:versal-generic:pn-device-tree = "versal_cips_0_pspmc_0_psv_sbsauart_0"
+YAML_CONSOLE_DEVICE_CONFIG:pn-device-tree = "versal_cips_0_pspmc_0_psv_sbsauart_0"
+YAML_SERIAL_CONSOLE_BAUDRATE = "115200"
+
+# Versal Net:
+YAML_CONSOLE_DEVICE_CONFIG:pn-device-tree = "psx_wizard_0_psxl_0_psx_sbsauart_0"
 YAML_SERIAL_CONSOLE_BAUDRATE = "115200"
 ```
 
-3) Example YAML based configuration for setting eval board specific dtsi files available in DTG repo.
+3. Example YAML based configuration for setting eval board specific dtsi files available in DTG repo.
 Refer https://github.com/Xilinx/device-tree-xlnx/tree/xlnx_rel_v2023.1/device_tree/data/kernel_dtsi/2023.1/BOARD
 for more details
 
 ```bash
-# Microblaze:
-YAML_DT_BOARD_FLAGS:microblaze-generic:pn-device-tree = {BOARD kc705-full}
+# MicroBlaze:
+YAML_DT_BOARD_FLAGS:pn-device-tree = "{BOARD kcu105}"
 
 # Zynq-7000:
-YAML_DT_BOARD_FLAGS:zynq-generic:pn-device-tree = "{BOARD zc702}"
+YAML_DT_BOARD_FLAGS:pn-device-tree = "{BOARD zc702}"
 
 # ZynqMP:
-YAML_DT_BOARD_FLAGS:zynqmp-generic:pn-device-tree = "{BOARD zcu102-rev1.0}"
+YAML_DT_BOARD_FLAGS:pn-device-tree = "{BOARD zcu102-rev1.0}"
 
 # Versal:
-YAML_DT_BOARD_FLAGS:versal-generic:pn-device-tree = "{BOARD versal-vck190-reva-x-ebm-01-reva}"
+YAML_DT_BOARD_FLAGS:pn-device-tree = "{BOARD versal-vck190-reva-x-ebm-01-reva}"
+
+# Versal Net:
+YAML_DT_BOARD_FLAGS:pn-device-tree = "{BOARD versal-net-ipp-rev1.9}"
 ```
 
 Note only Xilinx eval boards have the dtsi in DTG, for custom board one needs
