@@ -26,7 +26,7 @@ index cadbd885..b32eb9a9 100644
 -			interrupt-names = "IRQGP", "IRQGPMMU", "IRQPP0", "IRQPPMMU0", "IRQPP1", "IRQPPMMU1";
 -			clock-names = "gpu", "gpu_pp0", "gpu_pp1";
 +			interrupt-names = "gp", "gpmmu", "pp0", "ppmmu0", "pp1", "ppmmu1";
-+			clock-names = "gpu", "core", "bus";
++			clock-names = "bus", "core";
  			power-domains = <&zynqmp_firmware PD_GPU>;
  		};
  
