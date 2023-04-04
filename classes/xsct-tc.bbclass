@@ -6,6 +6,7 @@ XSCT_PATH_ADD = "${XILINX_SDK_TOOLCHAIN}/bin:"
 # compiler, don't bother to build compilers for this...
 INHIBIT_DEFAULT_DEPS:linux = "1"
 INHIBIT_DEFAULT_DEPS:linux-gnueabi = "1"
+INHIBIT_DEFAULT_DEPS:linux-musl = "1"
 
 TC_XSCT_PATH = "\
 ${XILINX_SDK_TOOLCHAIN}/gnu/microblaze/lin/bin:\
@@ -15,6 +16,7 @@ ${XILINX_SDK_TOOLCHAIN}/gnu/aarch64/lin/aarch64-none/bin:"
 
 XSCT_PATH_ADD:append:linux = "${TC_XSCT_PATH}"
 XSCT_PATH_ADD:append:linux-gnueabi = "${TC_XSCT_PATH}"
+XSCT_PATH_ADD:append:linux-musl = "${TC_XSCT_PATH}"
 
 PATH =. "${XSCT_PATH_ADD}"
 TOOL_PATH = "${XILINX_SDK_TOOLCHAIN}/bin"
