@@ -23,6 +23,7 @@ XSCTH_MISC = " -hdf_type ${HDF_EXT}"
 DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_PROJ}"
 DT_RELEASE_VERSION ?= "${XILINX_XSCT_VERSION}"
 DT_INCLUDE:append = " ${WORKDIR} ${S}/device_tree/data/kernel_dtsi/${DT_RELEASE_VERSION}/BOARD/"
+DT_INCLUDE:append = " ${S}/device_tree/data/kernel_dtsi/${DT_RELEASE_VERSION}/include/"
 DT_PADDING_SIZE = "0x1000"
 DTC_FLAGS:append = "${@['', ' -@'][d.getVar('YAML_ENABLE_DT_OVERLAY') == '1']}"
 
