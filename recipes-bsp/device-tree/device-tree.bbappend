@@ -5,7 +5,6 @@ LIC_FILES_CHKSUM = "file://xadcps/data/xadcps.mdd;md5=d2baf2c4690cd90d3c2c2efabf
 
 require recipes-bsp/device-tree/device-tree.inc
 inherit xsctdt xsctyaml
-BASE_DTS ?= "system-top"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
@@ -48,8 +47,6 @@ do_install:append:microblaze () {
         dtc -I dtb -O dts -o ${D}/boot/devicetree/mb.dts ${B}/${DTB_FILE}
     done
 }
-
-DTB_FILE_NAME = "${BASE_DTS}.dtb"
 
 FILES:${PN}:append:microblaze = " /boot/devicetree/*.dts"
 
