@@ -67,7 +67,7 @@ xsct tools may not be backward compatible with embeddedsw repo. Meaning
         https://github.com/Xilinx/meta-xilinx (development and amd xilinx release)
 	layers: meta-xilinx-core, meta-xilinx-microblaze, meta-xilinx-bsp,
             meta-xilinx-standalone, meta-xilinx-vendor.
-	branch: langdale or amd xilinx release version (e.g. rel-v2022.2)
+	branch: langdale or amd xilinx release version (e.g. rel-v2023.1)
 ---
 
 ## Hardware Configuration using XSA
@@ -171,7 +171,7 @@ YAML_SERIAL_CONSOLE_BAUDRATE = "115200"
 ```
 
 3. Example YAML based configuration for setting eval board specific dtsi files available in DTG repo.
-Refer https://github.com/Xilinx/device-tree-xlnx/tree/xlnx_rel_v2022.2/device_tree/data/kernel_dtsi/2022.2/BOARD
+Refer https://github.com/Xilinx/device-tree-xlnx/tree/xlnx_rel_v2023.1/device_tree/data/kernel_dtsi/2023.1/BOARD
 for more details
 
 ```bash
