@@ -95,8 +95,8 @@ IMAGE_INSTALL:append = " \
 ### Loading DFx RP PL bitstream or pdi and dt overlay
 * ZynqMP or Versal DFx RP
 ```
-yocto-vck190-dfx-2022:~$ sudo su
-root@yocto-vck190-dfx-2022:~# tree /lib/firmware/xilinx
+yocto-vck190-dfx-2023:~$ sudo su
+root@yocto-vck190-dfx-2023:~# tree /lib/firmware/xilinx
 /lib/firmware/xilinx
 `-- vck190-dfx-static
     |-- rp1
@@ -119,8 +119,8 @@ root@yocto-vck190-dfx-2022:~# tree /lib/firmware/xilinx
     `-- vck190-dfx-static.pdi
 
 7 directories, 12 files
-root@yocto-vck190-dfx-2022:~#
-root@yocto-vck190-dfx-2022:~# cat /proc/interrupts
+root@yocto-vck190-dfx-2023:~#
+root@yocto-vck190-dfx-2023:~# cat /proc/interrupts
            CPU0       CPU1
  11:      17699      37013     GICv3  30 Level     arch_timer
  14:          0          0     GICv3  62 Level     zynqmp_ipi
@@ -153,7 +153,7 @@ IPI4:         0          0       Timer broadcast interrupts
 IPI5:         0          0       IRQ work interrupts
 IPI6:         0          0       CPU wake-up interrupts
 Err:          0
-root@yocto-vck190-dfx-2022:~# fpgautil -o /lib/firmware/xilinx/vck190-dfx-static/vck190-dfx-static.dtbo
+root@yocto-vck190-dfx-2023:~# fpgautil -o /lib/firmware/xilinx/vck190-dfx-static/vck190-dfx-static.dtbo
 [  257.555571] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga/external-fpga-config
 [  257.565879] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga/pid
 [  257.574670] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga/uid
@@ -167,7 +167,7 @@ root@yocto-vck190-dfx-2022:~# fpgautil -o /lib/firmware/xilinx/vck190-dfx-static
 [  257.663234] of-fpga-region fpga:fpga-PR0: FPGA Region probed
 [  257.669135] of-fpga-region fpga:fpga-PR1: FPGA Region probed
 [  257.675022] of-fpga-region fpga:fpga-PR2: FPGA Region probed
-root@yocto-vck190-dfx-2022:~# fpgautil -b /lib/firmware/xilinx/vck190-dfx-static/rp1/vck190-dfx-rp1rm1-dipsw/vck190-dfx-rp1rm1-dipsw.pdi -o /lib/firmware/xilinx/vck190-dfx-static/rp1/vck190-dfx-rp1rm1-dipsw/vck190-dfx-rp1rm1-dipsw.dtbo -f Partial -n PR0
+root@yocto-vck190-dfx-2023:~# fpgautil -b /lib/firmware/xilinx/vck190-dfx-static/rp1/vck190-dfx-rp1rm1-dipsw/vck190-dfx-rp1rm1-dipsw.pdi -o /lib/firmware/xilinx/vck190-dfx-static/rp1/vck190-dfx-rp1rm1-dipsw/vck190-dfx-rp1rm1-dipsw.dtbo -f Partial -n PR0
 [  273.511455] fpga_manager fpga0: writing vck190-dfx-rp1rm1-dipsw.pdi to Xilinx Versal FPGA Manager
 [284052.461]Loading PDI from DDR
 [284052.566]Monolithic/Master Device
@@ -198,7 +198,7 @@ root@yocto-vck190-dfx-2022:~# fpgautil -b /lib/firmware/xilinx/vck190-dfx-static
 [  273.670490] input: pl-gpio-keys as /devices/platform/pl-gpio-keys/input/input0
 Time taken to load BIN is 171.000000 Milli Seconds
 BIN FILE loaded through FPGA manager successfully
-root@yocto-vck190-dfx-2022:~#
+root@yocto-vck190-dfx-2023:~#
 ```
 ---
 
@@ -208,7 +208,7 @@ root@yocto-vck190-dfx-2022:~#
 * Verify RP PL GPIO DIP switches are registered.
 * Move the DIP Switches ON/OFF and verify the interrupt counts.
 ```
-root@yocto-vck190-dfx-2022:~# cat /proc/interrupts
+root@yocto-vck190-dfx-2023:~# cat /proc/interrupts
            CPU0       CPU1
  11:      21074      64756     GICv3  30 Level     arch_timer
  14:          0          0     GICv3  62 Level     zynqmp_ipi
@@ -245,15 +245,15 @@ IPI4:         0          0       Timer broadcast interrupts
 IPI5:         0          0       IRQ work interrupts
 IPI6:         0          0       CPU wake-up interrupts
 Err:          0
-root@yocto-vck190-dfx-2022:~#
+root@yocto-vck190-dfx-2023:~#
 ```
 ---
 
 ### Unloading DFx RP PL bitstream or pdi and dt overlay
 * ZynqMP or Versal DFx RP
 ```
-root@yocto-vck190-dfx-2022:~# fpgautil -R -n PR0
-root@yocto-vck190-dfx-2022:~# cat /proc/interrupts
+root@yocto-vck190-dfx-2023:~# fpgautil -R -n PR0
+root@yocto-vck190-dfx-2023:~# cat /proc/interrupts
            CPU0       CPU1
  11:      23001      83170     GICv3  30 Level     arch_timer
  14:          0          0     GICv3  62 Level     zynqmp_ipi
@@ -286,7 +286,7 @@ IPI4:         0          0       Timer broadcast interrupts
 IPI5:         0          0       IRQ work interrupts
 IPI6:         0          0       CPU wake-up interrupts
 Err:          0
-root@yocto-vck190-dfx-2022:~#
+root@yocto-vck190-dfx-2023:~#
 ```
 ---
 
