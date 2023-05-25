@@ -22,6 +22,7 @@ YAML_OVERLAY_CUSTOM_DTS ?= ''
 YAML_BSP_COMPILER_FLAGS ?= ''
 YAML_KERNEL_VERSION ?= ''
 YAML_ENABLE_NO_ALIAS ?= ''
+YAML_ENABLE_DTG_ALIAS ?= ''
 YAML_ENABLE_DT_VERBOSE ?= ''
 YAML_PARTIAL_OVERLAY_CUSTOM_DTS ?= ''
 
@@ -79,6 +80,8 @@ YAML_BSP_CONFIG += "${@'remove_pl' if d.getVar('YAML_REMOVE_PL_DT') == '1' else 
 YAML_BSP_CONFIG[remove_pl] = "set,TRUE"
 YAML_BSP_CONFIG += "${@'no_alias' if d.getVar('YAML_ENABLE_NO_ALIAS') == '1' else ''}"
 YAML_BSP_CONFIG[no_alias] = "set,TRUE"
+YAML_BSP_CONFIG += "${@'dtg_alias' if d.getVar('YAML_ENABLE_DTG_ALIAS') == '1' else ''}"
+YAML_BSP_CONFIG[dtg_alias] = "set,TRUE"
 
 YAML_BSP_CONFIG += "${@'dt_verbose' if d.getVar('YAML_ENABLE_DT_VERBOSE') == '1' else ''}"
 YAML_BSP_CONFIG[dt_verbose] = "set,TRUE"
