@@ -6,12 +6,14 @@ XILINX_SDK_TOOLCHAIN ??= "${XSCT_STAGING_DIR}/Vitis/${TOOL_VER_MAIN}"
 XSCT_LOADER ?= "${XILINX_SDK_TOOLCHAIN}/bin/xsct"
 
 XSCT_URL[2023.1] = "http://petalinux.xilinx.com/sswreleases/rel-v2023/xsct-trim/xsct-2023-1_0425.tar.xz"
+XSCT_URL[2023.2_ksb] = "http://petalinux.xilinx.com/sswreleases/rel-v2023/xsct-trim/xsct-2023-2-ksb.tar.xz"
 XSCT_URL ?= "${@d.getVarFlag('XSCT_URL', d.getVar('TOOL_VER_MAIN'))}"
 XSCT_TARBALL ?= "xsct_${TOOL_VER_MAIN}.tar.xz"
 XSCT_DLDIR ?= "${DL_DIR}/xsct/"
 XSCT_STAGING_DIR ?= "${TOPDIR}/xsct"
 
 XSCT_CHECKSUM[2023.1] = "b23f1bca2bf2205912797e90061708e228ec76809c5765f5955d12e4b31f82aa"
+XSCT_CHECKSUM[2023.2_ksb] = "3b184a2036ac2011c8ef9caefe8f143861f476f9dc44e52374ec1fd891002dce"
 XSCT_CHECKSUM ?= "${@d.getVarFlag('XSCT_CHECKSUM', d.getVar('TOOL_VER_MAIN'))}"
 VALIDATE_XSCT_CHECKSUM ?= '1'
 
