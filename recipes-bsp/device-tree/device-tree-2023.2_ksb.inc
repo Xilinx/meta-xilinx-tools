@@ -1,0 +1,3 @@
+BRANCH = "master"
+SRCREV = "c77af3cc46b646172d852d86d4c24fdba92f2307"
+DT_VERSION_EXTENSION ?= "xilinx-2023.2-ksb"
