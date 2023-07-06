@@ -8,6 +8,18 @@
   * [Unloading PL bitstream or pdi and dt overlay](#unloading-pl-bitstream-or-pdi-and-dt-overlay)
 * [References](#references)
 
+> **Note:** This README will be deprecated in 2024.1 release. User should start
+> using below README for dfx configuration.
+
+| DFx Configuration | DFx Configuration README |
+|---|---|
+|Zynq-7000 Full bitstream loading | [DFx Zynq Full README](README.dfx.dtg.zynq.full.md)|
+|ZynqMP Full bitstream loading | [DFx ZynqMP Full README](README.dfx.dtg.zynqmp.full.md)|
+|ZynqMP DFx Static bitstream loading | [DFx ZynqMP Static README](README.dfx.dtg.zynqmp.static.md)|
+|Versal DFx Static PDI loading | [DFx Versal Static README](README.dfx.dtg.versal.static.md)|
+
+---
+
 ## Introduction
 This readme describes the build instructions to create firmware recipes using
 fpgamanager_dtg.bbclass for Zynq-7000 and ZynqMP dynamic configuration, ZynqMP

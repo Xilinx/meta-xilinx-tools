@@ -8,6 +8,16 @@
   * [Unloading DFx RP PL bitstream or pdi and dt overlay](#unloading-dfx-rp-pl-bitstream-or-pdi-and-dt-overlay)
 * [References](#references)
 
+> **Note:** This README will be deprecated in 2024.1 release. User should start
+> using below README for dfx configuration.
+
+| DFx Configuration | DFx Configuration README |
+|---|---|
+|ZynqMP DFx Partial bitstream loading | [DFx ZynqMP Partial README](README.dfx.dtg.zynqmp.partial.md)|
+|Versal DFx Static PDI loading | [DFx Versal Partial README](README.dfx.dtg.versal.partial.md)|
+
+---
+
 ## Introduction
 This readme describes the build instructions to create firmware recipes using
 fpgamanager_dtg_dfx.bbclass for ZynqMP and Versal DFx Reconfigurable Partition(RP)
