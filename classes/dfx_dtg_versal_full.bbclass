@@ -1,7 +1,6 @@
 inherit dfx_common
 
 python() {
-    # XSCTH_HDF_PATH Placeholder for CSoC v2 multi xsa flow.
     d.setVar("XSCTH_HDF_PATH",[a for a in d.getVar('SRC_URI').split() if '.xsa' in a][0].lstrip('file://'))
 
     # Optional inputs
@@ -25,7 +24,7 @@ do_install() {
         if [ -f ${B}/${PN}/hw/*_pld.pdi ]; then
             install -Dm 0644 ${B}/${PN}/hw/*_pld.pdi ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.pdi
         else
-            bbfatal "A PL pdi ending with _pld.pdi in Classic SoC xsa is expected but not found"
+            bbfatal "A PL pdi ending with _pld.pdi in Segmented configuration xsa is expected but not found"
         fi
     fi
 
@@ -36,15 +35,6 @@ do_install() {
     if [ -f ${WORKDIR}/${JSON_PATH}/shell.json ]; then
         install -Dm 0644 ${WORKDIR}/${JSON_PATH}/shell.json ${D}/${nonarch_base_libdir}/firmware/xilinx/${PN}/shell.json
     fi
-
-    # Installing xsa here purely to use case in CSoC recipe from recipe-sysroot.
-    # Hence it will be package so it's not installed on target.
-    install -d ${D}/xsa
-    install -Dm 0644 ${WORKDIR}/${XSCTH_HDF_PATH} ${D}/xsa/${PN}.xsa
-
 }
 
 FILES:${PN} += "${nonarch_base_libdir}/firmware/xilinx/${PN} "
-FILES:${PN}-xsa += "xsa/*"
-PACKAGES += "${PN}-xsa"
-SYSROOT_DIRS += "/xsa"
