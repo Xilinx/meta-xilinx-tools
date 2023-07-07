@@ -72,7 +72,10 @@ do_install() {
         install -Dm 0644 ${WORKDIR}/${JSON_PATH}/shell.json ${D}/${nonarch_base_libdir}/firmware/xilinx/${PN}/shell.json
     fi
 
-    #installing xsa here purely to use in dfxsa recipe from recipe-sysroots. (will be putting in different package so its not installed on target)
+    # In case of DFx designs, To create a new reconfigurable partition(RP)
+    # platform (using "platform create [options]" command) from RP firmware
+    # recipe depends on DFx Static recipe xsa(${STATIC_PN}). Hence this DFx Static
+    # xsa will be packaged to recipe-sysroots but not installed on target rootfs.
     install -d ${D}/xsa
     install -Dm 0644 ${WORKDIR}/${XSCTH_HDF_PATH} ${D}/xsa/${PN}.xsa
 
@@ -80,6 +83,7 @@ do_install() {
 
 FILES:${PN} += "${nonarch_base_libdir}/firmware/xilinx/${PN} "
 
+# For DFx use case only.
 FILES:${PN}-xsa += "xsa/*"
 PACKAGES += "${PN}-xsa"
 SYSROOT_DIRS += "/xsa"
