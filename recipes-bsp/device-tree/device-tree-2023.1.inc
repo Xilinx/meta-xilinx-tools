@@ -1,2 +1,2 @@
 BRANCH = "xlnx_rel_v2023.1"
-SRCREV = "722aaf390d65ac64b38a5abde9eb997f19ef0e6f"
+SRCREV = "db419faa2f2ec70614f4fc0bd5b89fb8e079dc4f"
