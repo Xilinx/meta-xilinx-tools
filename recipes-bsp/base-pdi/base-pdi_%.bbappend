@@ -20,10 +20,11 @@ do_install() {
     if [ `ls ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.pdi | wc -l` -eq 1 ]; then
         install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.pdi ${D}/boot/base-design.pdi
     elif [ `ls ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.pdi | wc -l` -gt 1 ]; then
-        # In Classic SoC design vivado tools will append "_soc" suffix and Hence
-        # use *_soc.pdi packaged to Boot.bin
-        if [ -f ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*_soc.pdi ]; then
-            install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*_soc.pdi ${D}/boot/base-design.pdi
+        # In Segmented Configuration design vivado tools will generate both
+        # "_boot" and "_pld.pdi" embedded in single xsa and Hence use *_boot.pdi
+        # packaged to Boot.bin.
+        if [ -f ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*_boot.pdi ]; then
+            install -m 0644 ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*_boot.pdi ${D}/boot/base-design.pdi
         else
             bbfatal "Multiple PDI found in xsa, Use BASE_PDI_NAME to pick from the following:\n$(basename -a ${XSCTH_WS}/${XSCTH_PROJ}_hwproj/*.pdi)"
         fi
