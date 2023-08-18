@@ -9,7 +9,9 @@ XSCT_URL[2023.1] = "http://petalinux.xilinx.com/sswreleases/rel-v2023/xsct-trim/
 XSCT_URL ?= "${@d.getVarFlag('XSCT_URL', d.getVar('TOOL_VER_MAIN'))}"
 XSCT_TARBALL ?= "xsct_${TOOL_VER_MAIN}.tar.xz"
 XSCT_DLDIR ?= "${DL_DIR}/xsct/"
+
 XSCT_STAGING_DIR ?= "${TOPDIR}/xsct"
+BB_HASHEXCLUDE_COMMON += "XSCT_STAGING_DIR"
 
 XSCT_CHECKSUM[2023.1] = "b23f1bca2bf2205912797e90061708e228ec76809c5765f5955d12e4b31f82aa"
 XSCT_CHECKSUM ?= "${@d.getVarFlag('XSCT_CHECKSUM', d.getVar('TOOL_VER_MAIN'))}"
