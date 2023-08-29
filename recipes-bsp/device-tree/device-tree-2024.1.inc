@@ -1,0 +1,5 @@
+# Start with 2023.2
+DT_RELEASE_VERSION = "2023.2"
+
+BRANCH = "master"
+SRCREV = "341cf32016e737287bc7ae8898a41d1b41f72d8e"
