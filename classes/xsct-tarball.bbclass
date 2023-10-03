@@ -52,6 +52,7 @@ XSCT_TARGETS ?= "\
 	pmu-firmware \
 	psm-firmware \
 	uboot-device-tree \
+	esw-bsp \
 	"
 
 python xsct_event_extract() {
