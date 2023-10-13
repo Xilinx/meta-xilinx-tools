@@ -53,6 +53,7 @@ XSCT_TARGETS ?= "\
 	psm-firmware \
 	uboot-device-tree \
 	esw-bsp \
+	xsct-native \
 	"
 
 python xsct_event_extract() {
