@@ -1,38 +1,28 @@
-# Build Instructions to create firmware recipes using fpgamanager_dtg_dfx bbclass
+# Build Instructions to create Versal DFx Partial firmware recipes
 
 * [Introduction](#introduction)
 * [How to create a DFx RP firmware recipe app](#how-to-create-a-dfx-rp-firmware-recipe-app)
 * [Test Procedure on Target](#test-procedure-on-target)
-  * [Loading DFx RP PL bitstream or pdi and dt overlay](#loading-dfx-rp-pl-bitstream-or-pdi-and-dt-overlay)
+  * [Loading DFx RP PL pdi and dt overlay](#loading-dfx-rp-pl-pdi-and-dt-overlay)
   * [Testing RP PL functionality](#testing-rp-pl-functionality)
-  * [Unloading DFx RP PL bitstream or pdi and dt overlay](#unloading-dfx-rp-pl-bitstream-or-pdi-and-dt-overlay)
+  * [Unloading DFx RP PL pdi and dt overlay](#unloading-dfx-rp-pl-pdi-and-dt-overlay)
 * [References](#references)
-
-> **Note:** This README will be deprecated in 2024.1 release. User should start
-> using below README for dfx configuration.
-
-| DFx Configuration | DFx Configuration README |
-|---|---|
-|ZynqMP DFx Partial bitstream loading | [DFx ZynqMP Partial README](README.dfx.dtg.zynqmp.partial.md)|
-|Versal DFx Static PDI loading | [DFx Versal Partial README](README.dfx.dtg.versal.partial.md)|
-
----
 
 ## Introduction
 This readme describes the build instructions to create firmware recipes using
-fpgamanager_dtg_dfx.bbclass for ZynqMP and Versal DFx Reconfigurable Partition(RP)
+dfx_dtg_versal_partial.bbclass for Versal DFx Reconfigurable Partition(RP)
 configuration. This bitbake class support only vivado dfx design.
 
 > **Note:** Refer https://github.com/Xilinx/dfx-mgr/blob/master/README.md for
 > shell.json and accel.json file content.
 
-* **ZynqMP and Versal**:
+* **Versal**:
   * Design: Vivado DFx design.
     * Input files to firmware recipes: .xsa, .dtsi(optional: to add pl-partial-custom
       dt nodes), accel.json (optional) and .xclbin (optional).
     * Usage Examples:
 ```
-# ZynqMP or Versal DFx RP
+# Versal DFx RP
 SRC_URI = " \
     file://<dfx_design_rp_pl>.xsa \
     file://<dfx_design_rp_pl_custom>.dtsi \
@@ -44,29 +34,29 @@ SRC_URI = " \
 
 ## How to create a DFx RP firmware recipe app
 
-1. Follow [fpgamanger static firmware recipe instructions](README.fpgamanager.dtg.md)
-   upto step 5 to create DFx static firmware recipe
+1. Follow [Versal DFx Static firmware recipe instructions](README.dfx.dtg.versal.static.md)
+   upto step 5 to create Versal DFx static firmware recipe.
 2. Create RP recipes-firmware directory in meta layer and copy the .xsa, .dtsi,
    .json and .xclbin file to these directories.
 ```
 $ mkdir -p <meta-layer>/recipes-fimrware/<recipes-firmware-app>/files
 $ cp -r <path-to-files>/*.{xsa, dtsi, accel.json and .xclbin} <meta-layer>/recipes-fimrware/<firmware-app-name>/files
 ```
-3. Now create the recipes for DFx RP firmware xsa using recipetool.
+3. Now create the recipes for Versal DFx RP firmware app using recipetool.
 ```
 $ recipetool create -o <meta-layer>/recipes-fimrware/<firmware-app-name>/firmware-app-name.bb file:///<meta-layer>/recipes-fimrware/<firmware-app-name>/files 
 ```
-4. Modify the recipe and inherit fpgamanager_dtg_dfx bbclass as shown below.
+4. Modify the recipe and inherit dfx_dtg_versal_partial bbclass as shown below.
 > **Note:** DFx RP recipes depends on DFx Static xsa, hence `STATIC_PN` should
 > reference to DFx Static recipe name. Optionally user can set `RP_NAME` this is
 > useful when you have multiple RP regions in DFx designs.
 
 ```
-SUMMARY = "DFX vck190-rp1rm1-dipsw partial firmware using fpgamanager_dtg_dfx bbclass"
+SUMMARY = "Versal DFX partial firmware app using dfx_dtg_versal_partial bbclass"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
-inherit fpgamanager_dtg_dfx
+inherit dfx_dtg_versal_partial
 
 SRC_URI = " \
     file://vck190_pl_demo_rp1rm1_dipsw.xsa \
@@ -86,7 +76,7 @@ IMAGE_INSTALL:append = " \
   firmware-app-name \
   "
 ```
-6. Follow [fpgamanger static firmware recipe instructions](README.fpgamanager.dtg.md) and continue from step 5.
+6. Follow [Versal DFx static firmware recipe instructions](README.dfx.dtg.versal.static.md) and continue from step 5.
 7. Once images are built firmware app files will be installed on target_rootfs.
 ```
 # <target_rootfs>/lib/firmware/xilinx/<static-recipe>/firmware-app-name
@@ -94,16 +84,16 @@ IMAGE_INSTALL:append = " \
 ---
 
 ## Test Procedure on Target
-* Once Linux boots on target, use fpgautil command to load RP .bit or .pdi and
+* Once Linux boots on target, use fpgautil command to load RP .pdi and
   corresponding dt overlay as shown below.
 > **Note:**
 > 1. firmware can be loaded only with sudo or root permissions.
-> 2. Prior to load DFx RP PL bitstream or pdi, Make sure DFx static firmware is
->    loaded following [Loading PL bitstream or pdi and dt overlay](README.fpgamanager.dtg.md).
+> 2. Prior to load DFx RP PL pdi, Make sure DFx static firmware is
+>    loaded following [Loading DFx Static pdi and dt overlay](README.dfx.dtg.versal.static.md).
 ---
 
-### Loading DFx RP PL bitstream or pdi and dt overlay
-* ZynqMP or Versal DFx RP
+### Loading DFx RP PL pdi and dt overlay
+* Versal DFx RP
 ```
 yocto-vck190-dfx-2023:~$ sudo su
 root@yocto-vck190-dfx-2023:~# tree /lib/firmware/xilinx
@@ -259,8 +249,8 @@ root@yocto-vck190-dfx-2023:~#
 ```
 ---
 
-### Unloading DFx RP PL bitstream or pdi and dt overlay
-* ZynqMP or Versal DFx RP
+### Unloading DFx RP PL pdi and dt overlay
+* Versal DFx RP
 ```
 root@yocto-vck190-dfx-2023:~# fpgautil -R -n PR0
 root@yocto-vck190-dfx-2023:~# cat /proc/interrupts
@@ -301,5 +291,4 @@ root@yocto-vck190-dfx-2023:~#
 ---
 
 ## References
-* https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841847/Solution+ZynqMP+PL+Programming
 * https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/1188397412/Solution+Versal+PL+Programming
