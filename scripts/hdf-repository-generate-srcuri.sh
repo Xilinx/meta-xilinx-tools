@@ -11,6 +11,23 @@
 # It is assumed the URL being pointed to will be a series of directories.  The HDF_MACHINE value
 # will be the directory name, and the contents within the directory will be the XSA file.
 #
+# Each HDF_MACHINE can be inside subdirectories, but that HDF_MACHINE directory needs to be unique
+# within the entire repository, i.e.
+#
+# <base_url>/MACHINE-1/system.xsa
+# <base_url>/MACHINE-2/my_system.xsa
+# ...
+# <base_url>/MACHINE-n/system.xsa
+#
+# or
+#
+# <base_url>/group/MACHINE-1/system.xsa
+# <base_url>/group/MACHINE-2/my_system.xsa
+# <base_url>/other/MACHINE-3/system.xsa
+# <base_url>/other/MACHINE-4/my_system.xsa
+# ...
+# <base_url>/dir/MACHINE-n/system.xsa
+#
 
 if [ $# -lt 1 -o $# -gt 2 ]; then
     echo "Usage: $0 <url> [<local_dir>]" >&2
@@ -90,14 +107,17 @@ for each_file in $(find . -type f -name '*.xsa' | sort) ; do
         *${LICENSE})  continue ;;
         *)
             id=$(basename `dirname $each_file` | tr '/' '_')
+            # Find subdirectories, if present
+            subdir=$(dirname `dirname $each_file`)
+            subdir=${subdir##.}
             file=$(basename $each_file)
             sha=$(sha256sum $each_file | cut -d ' ' -f 1)
             echo
-            echo "# $id"
-            echo "HDF_BASE[$id] = '${urlproto}'"
-            echo "HDF_PATH[$id] = '${urlpath}/$id/$file'"
-            echo "BRANCHARG[$id] = 'name=$id'"
-            echo "SRC_URI[$id.sha256sum] = '$sha'"
+            echo "# ${id}"
+            echo "HDF_BASE[${id}] = '${urlproto}'"
+            echo "HDF_PATH[${id}] = '${urlpath}${subdir}/${id}/${file}'"
+            echo "BRANCHARG[${id}] = 'name=${id}'"
+            echo "SRC_URI[${id}.sha256sum] = '${sha}'"
             ;;
     esac
 done
