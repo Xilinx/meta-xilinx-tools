@@ -8,14 +8,17 @@ XSCT_LOADER ?= "${XILINX_SDK_TOOLCHAIN}/bin/xsct"
 XSCT_URL[2022.1] = "http://petalinux.xilinx.com/sswreleases/rel-v2022/xsct-trim/xsct-2022-1.tar.xz"
 XSCT_URL[2022.2] = "http://petalinux.xilinx.com/sswreleases/rel-v2022/xsct-trim/xsct-2022-2.tar.xz"
 XSCT_URL[2023.1] = "http://petalinux.xilinx.com/sswreleases/rel-v2023/xsct-trim/xsct-2023-1_0425.tar.xz"
+XSCT_URL[2023.2] = "http://petalinux.xilinx.com/sswreleases/rel-v2023/xsct-trim/xsct-2023-2_1002.tar.xz"
 XSCT_URL ?= "${@d.getVarFlag('XSCT_URL', d.getVar('TOOL_VER_MAIN'))}"
 XSCT_TARBALL ?= "xsct_${TOOL_VER_MAIN}.tar.xz"
 XSCT_DLDIR ?= "${DL_DIR}/xsct/"
 XSCT_STAGING_DIR ?= "${TOPDIR}/xsct"
+BB_HASHEXCLUDE_COMMON += "XSCT_STAGING_DIR"
 
 XSCT_CHECKSUM[2022.1] = "e343a8b386398e292f636f314a057076e551a8173723b8ea0bc1bbd879c05259"
 XSCT_CHECKSUM[2022.2] = "8a3272036ca61f017f357bf6ad9dfbdec6aebb39f43c3ca0cee7ec86ea4c066f"
 XSCT_CHECKSUM[2023.1] = "b23f1bca2bf2205912797e90061708e228ec76809c5765f5955d12e4b31f82aa"
+XSCT_CHECKSUM[2023.2] = "903c8853320e40ed0b23fdf735f88c5a14f945bf92b363f097b8290b523f4016"
 XSCT_CHECKSUM ?= "${@d.getVarFlag('XSCT_CHECKSUM', d.getVar('TOOL_VER_MAIN'))}"
 VALIDATE_XSCT_CHECKSUM ?= '1'
 
