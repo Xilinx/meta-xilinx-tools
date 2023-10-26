@@ -2,4 +2,4 @@
 DT_RELEASE_VERSION = "2023.2"
 
 BRANCH = "master"
-SRCREV = "f4bde124b5e678a5bfe19c477972d5de22fb8425"
+SRCREV = "7c69b1d8c8cff62e158b3028acafae1b0c02dda5"
