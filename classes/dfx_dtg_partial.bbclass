@@ -25,7 +25,7 @@ python (){
 }
 
 do_configure:append () {
-    # fpgamanager_dtg_dfx bbclass doesn't support multiple PR in signal xsa.
+    # dfx_dtg_partial bbclass doesn't support multiple PR in signal xsa.
     # DTG will suffix RpRm name to pl-partial-custom dtsi file when xsa has
     # more than one PR DTG will generate pl-partial-custom-$RpRm.dtsi for each
     # PR. Since this bbclass supports only one PR per xsa, it will find and use

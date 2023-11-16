@@ -65,7 +65,7 @@ python (){
 do_configure:prepend() {
 
     if ${@bb.utils.contains('MACHINE_FEATURES', 'fpga-overlay', 'false', 'true', d)}; then
-        bbwarn "Using fpgamanager_base.bbclass requires fpga-overlay MACHINE_FEATURE to be enabled"
+        bbwarn "Using dfx_dtg* bbclass requires fpga-overlay MACHINE_FEATURE to be enabled"
     fi
 }
 
