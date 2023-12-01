@@ -1,4 +1,12 @@
-inherit dfx_common
+#
+# Copyright (C) 2023, Advanced Micro Devices, Inc.  All rights reserved.
+#
+# SPDX-License-Identifier: MIT
+#
+# This bbclass is inherited by Versal Segmented Configuration firmware app
+# recipes.
+
+inherit dfx_dtg_common
 
 python() {
     d.setVar("XSCTH_HDF_PATH",[a for a in d.getVar('SRC_URI').split() if '.xsa' in a][0].lstrip('file://'))

@@ -1,3 +1,11 @@
+#
+# Copyright (C) 2023, Advanced Micro Devices, Inc.  All rights reserved.
+#
+# SPDX-License-Identifier: MIT
+#
+# This bbclass provides common code for Zynq 7000(Full), ZynqMP(full, DFx Static)
+# firmware bbclass.
+
 inherit devicetree xsctyaml xsctbase
 PROVIDES = ''
 

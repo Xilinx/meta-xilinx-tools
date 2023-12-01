@@ -1,7 +1,12 @@
-# Note: This bbclass is a temporary for 2023.2 release and DO NOT inherit this
-# bbclass directly. For more details refer README.dfx.dtg.<arch>.<design>.md file.
+#
+# Copyright (C) 2023, Advanced Micro Devices, Inc.  All rights reserved.
+#
+# SPDX-License-Identifier: MIT
+#
+# This bbclass provides common code for Zynq 7000(Full), ZynqMP(full, DFx Static)
+# firmware bbclass.
 
-inherit dfx_common
+inherit dfx_dtg_common
 
 python() {
     d.setVar("XSCTH_HDF_PATH",[a for a in d.getVar('SRC_URI').split() if '.xsa' in a][0].lstrip('file://'))

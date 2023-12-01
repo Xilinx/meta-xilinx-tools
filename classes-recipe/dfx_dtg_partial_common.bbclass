@@ -1,4 +1,12 @@
-inherit dfx_common
+#
+# Copyright (C) 2023, Advanced Micro Devices, Inc.  All rights reserved.
+#
+# SPDX-License-Identifier: MIT
+#
+# This bbclass provides common code for ZynqMP and Versal DFx Partial firmware
+# bbclass.
+
+inherit dfx_dtg_common
 
 DEPENDS:append = "${@'${STATIC_PN}' if d.getVar('YAML_ENABLE_CLASSIC_SOC') != '1' else ''}"
 

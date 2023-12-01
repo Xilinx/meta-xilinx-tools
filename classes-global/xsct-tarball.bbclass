@@ -1,3 +1,9 @@
+#
+# Copyright (C) 2016-2022, Xilinx, Inc.  All rights reserved.
+# Copyright (C) 2023, Advanced Micro Devices, Inc.  All rights reserved.
+#
+# SPDX-License-Identifier: MIT
+#
 
 TOOL_VER_MAIN ?= "${XILINX_XSCT_VERSION}"
 TOOL_VER_MAIN[doc] = "XSCT version, usually the same as XILINX_XSCT_VERSION"

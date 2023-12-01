@@ -1,9 +1,13 @@
-# Copyright (C) 2017 Xilinx
+#
+# Copyright (C) 2023, Advanced Micro Devices, Inc.  All rights reserved.
+# Copyright (C) 2017-2022, Xilinx, Inc.  All rights reserved.
 # Based on externalsrc.bbclass, original copyrights follow:
 # Copyright (C) 2012 Linux Foundation
 # Some code and influence taken from srctree.bbclass:
 # Copyright (C) 2009 Chris Larson <clarson@kergoth.com>
-# Released under the MIT license (see COPYING.MIT for the terms)
+#
+# SPDX-License-Identifier: MIT
+#
 
 SRCTREECOVEREDTASKS ?= "do_patch do_unpack do_fetch"
 EXTERNALXSCTSRCHASH ?= "src build"
