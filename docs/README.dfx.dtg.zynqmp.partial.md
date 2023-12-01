@@ -84,7 +84,7 @@ IMAGE_INSTALL:append = " \
 ---
 
 ## Test Procedure on Target
-* Once Linux boots on target, use fpgautil command to load RP .bit.bin and corresponding
+* Once Linux boots on target, use fpgautil command to load RP .bin and corresponding
   dt overlay as shown below.
 > **Note:**
 > 1. firmware can be loaded only with sudo or root permissions.

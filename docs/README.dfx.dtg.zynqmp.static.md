@@ -64,7 +64,7 @@ COMPATIBLE_MACHINE:zynqmp = "zynqmp"
 ```
 5. Add firmware-recipe app to image and enable fpga-overlay machine features to
    local.conf as shown below.
-> **Note:** fpga-manager-script provides fpgautil tool to load .bit.bin and dtbo
+> **Note:** fpga-manager-script provides fpgautil tool to load .bin and dtbo
 > at runtime linux.
 ```
 MACHINE_FEATURES += "fpga-overlay"
@@ -81,7 +81,7 @@ IMAGE_INSTALL:append = " \
 ---
 
 ## Test Procedure on Target
-* Once Linux boots on target, use fpgautil command to load .bit.bin and
+* Once Linux boots on target, use fpgautil command to load .bin and
   corresponding dt overlay as shown below.
 > **Note:** firmware can be loaded only with sudo or root permissions.
 ---
