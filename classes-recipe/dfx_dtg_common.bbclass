@@ -56,8 +56,9 @@ XSCTH_BUILD_CONFIG = 'Release'
 XSCTH_MISC = " -hdf_type ${HDF_EXT} -hwpname ${PN}"
 XSCTH_HDF = "${WORKDIR}/${XSCTH_HDF_PATH}"
 
-YAML_FIRMWARE_NAME = "${PN}.bit"
-YAML_FIRMWARE_NAME:versal = "${PN}.pdi"
+# YAML_FIRMWARE_NAME doesn't require .bin/.pdi any more as it will be appended
+# from DTG.
+YAML_FIRMWARE_NAME = "${PN}"
 
 do_fetch[cleandirs] = "${B}"
 do_configure[cleandirs] = "${B}"
