@@ -21,6 +21,19 @@ HDF_PATH[eval-brd-sc] = 'petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples
 BRANCHARG[eval-brd-sc] = 'name=eval-brd-sc'
 SRC_URI[eval-brd-sc.sha256sum] = '965cf35910b7a4dcdc76ebbdee374a091882bbd222b2fadbc934f71ebc324533'
 
+# k24c-sm
+HDF_BASE[k24c-sm] = 'https://'
+HDF_PATH[k24c-sm] = 'petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1014_1_10250557/external/k24c-sm/k24c-sm-2023.2_1014_1.xsa'
+BRANCHARG[k24c-sm] = 'name=k24c-sm'
+SRC_URI[k24c-sm.sha256sum] = 'a4378ac37761e6c4354a48b1551fa9b8996a29c2ddff0bbd824adba21cb7278f'
+
+# k24i-sm
+HDF_BASE[k24i-sm] = 'https://'
+HDF_PATH[k24i-sm] = 'petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1014_1_10250557/external/k24i-sm/k24i-sm-2023.2_1014_1.xsa'
+BRANCHARG[k24i-sm] = 'name=k24i-sm'
+SRC_URI[k24i-sm.sha256sum] = '3804978781d15a18d66009ab410d127ee10b351ec25006759f59bdd4a7c79884'
+
+
 # k24-sm
 HDF_BASE[k24-sm] = 'https://'
 HDF_PATH[k24-sm] = 'petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1002_1_10030058/external/k24-sm/k24-sm-2023.2_1002_1.xsa'
