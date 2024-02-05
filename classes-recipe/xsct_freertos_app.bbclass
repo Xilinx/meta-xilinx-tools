@@ -28,6 +28,16 @@ XSCTH_PROC_IP:versal ?= "psv_cortexr5"
 XSCTH_PROC_IP:zynqmp ?= "psu_cortexr5"
 XSCTH_PROC:zynq ?= "ps7_cortexa9_1"
 
+# Set FW_IMAGE_NAME with machine and target processor suffix so that it doesn't
+# conflict with fw name when you build same fw targeting different processor.
+FW_IMAGE_NAME:zynq ?= "${PN}-${MACHINE}-${XSCTH_PROC}"
+FW_IMAGE_NAME ?= "${PN}-${MACHINE}-${XSCTH_PROC_IP}"
+
+# Set XSCTH_BASE_NAME with target processor suffix so that it doesn't
+# conflict with fw name when you build same fw targeting different processor.
+XSCTH_BASE_NAME:zynq ?= "${PN}${PKGE}-${PKGV}-${PKGR}-${MACHINE}-${XSCTH_PROC}${IMAGE_VERSION_SUFFIX}"
+XSCTH_BASE_NAME = "${PN}${PKGE}-${PKGV}-${PKGR}-${MACHINE}-${XSCTH_PROC_IP}${IMAGE_VERSION_SUFFIX}"
+
 # Configurable params for FreeRTOS BSP such as UART, Clocking etc.
 # TODO - Define params.
 
@@ -46,8 +56,13 @@ INSANE_SKIP:${PN} += "buildpaths"
 do_install() {
     install -d ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/
     if [ -f ${B}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ]; then
-        install -Dm 0644 ${B}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.elf
+        install -Dm 0644 ${B}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${FW_IMAGE_NAME}.elf
     fi
+}
+
+do_deploy() {
+    install -Dm 0644 ${B}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ${DEPLOYDIR}/${XSCTH_BASE_NAME}.elf
+    ln -sf ${XSCTH_BASE_NAME}.elf ${DEPLOYDIR}/${FW_IMAGE_NAME}.elf
 }
 
 FILES:${PN} += "${nonarch_base_libdir}/firmware/xilinx/${PN}"
