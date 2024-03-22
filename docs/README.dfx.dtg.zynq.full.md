@@ -12,8 +12,12 @@
 This readme describes the build instructions to create firmware recipes using
 dfx_dtg_zynq_full.bbclass for Zynq-7000 full bitstream loading configuration.
 
-> **Note:** Refer https://github.com/Xilinx/dfx-mgr/blob/master/README.md for
-> shell.json and accel.json file content.
+> **Note:**
+> 1. Refer https://github.com/Xilinx/dfx-mgr/blob/master/README.md for shell.json
+>   and accel.json file content.
+> 2. Using dfx_dtg_zynq_full.bbclass loading bitstream file .bin format is
+>    supported but .bit format is not supported as it can't be used for production
+>    deployment.
 
 * **Zynq-7000**:
   * Design: Vivado flat design.
@@ -62,7 +66,7 @@ COMPATIBLE_MACHINE:zynq = "zynq"
 ```
 5. Add firmware-recipe app to image and enable fpga-overlay machine features to
    local.conf as shown below.
-> **Note:** fpga-manager-script provides fpgautil tool to load .bit.bin and dtbo
+> **Note:** fpga-manager-script provides fpgautil tool to load .bin and dtbo
 > at runtime linux.
 ```
 MACHINE_FEATURES += "fpga-overlay"
@@ -79,7 +83,7 @@ IMAGE_INSTALL:append = " \
 ---
 
 ## Test Procedure on Target
-* Once Linux boots on target, use fpgautil command to load .bit.bin and
+* Once Linux boots on target, use fpgautil command to load .bin and
   corresponding dt overlay as shown below.
 > **Note:** firmware can be loaded only with sudo or root permissions.
 ---
@@ -88,11 +92,11 @@ IMAGE_INSTALL:append = " \
 
 * Zynq-7000
 ```
-yocto-zc702-zynq7-2023:~$ sudo su
-yocto-zc702-zynq7-2023:/home/petalinux# cat /proc/interrupts
+yocto-zc702-zynq7:~$ sudo su
+yocto-zc702-zynq7:/home/petalinux# cat /proc/interrupts
            CPU0       CPU1
  24:          0          0 GIC-0  27 Edge      gt
- 25:       5384       1517 GIC-0  29 Edge      twd
+ 25:       7153       1437 GIC-0  29 Edge      twd
  26:          0          0 GIC-0  37 Level     arm-pmu
  27:          0          0 GIC-0  38 Level     arm-pmu
  29:          0          0 GIC-0  45 Level     f8003000.dma-controller
@@ -104,41 +108,37 @@ yocto-zc702-zynq7-2023:/home/petalinux# cat /proc/interrupts
  35:          0          0 GIC-0  73 Level     f8003000.dma-controller
  36:          0          0 GIC-0  74 Level     f8003000.dma-controller
  37:          0          0 GIC-0  75 Level     f8003000.dma-controller
- 38:      15759          0 GIC-0  51 Level     e000d000.spi
- 40:          0          0 GIC-0  54 Level     eth0
+ 38:      15907          0 GIC-0  51 Level     e000d000.spi
+ 40:         64          0 GIC-0  54 Level     eth0
  41:          0          0 GIC-0  53 Level     e0002000.usb
- 42:       2521          0 GIC-0  57 Level     cdns-i2c
+ 42:       1466          0 GIC-0  57 Level     cdns-i2c
  43:          0          0 GIC-0  41 Edge      f8005000.watchdog
- 44:        330          0 GIC-0  56 Level     mmc0
+ 44:        372          0 GIC-0  56 Level     mmc0
  45:          0          0 GIC-0  43 Level     ttc_clockevent
  46:         43          0 GIC-0  39 Level     f8007100.adc
  47:          0          0 GIC-0  40 Level     f8007000.devcfg
- 48:        169          0 GIC-0  82 Level     xuartps
+ 48:        146          0 GIC-0  82 Level     xuartps
  49:          0          0  zynq-gpio  12 Edge      sw14
  50:          0          0  zynq-gpio  14 Edge      sw13
 IPI0:          0          0  CPU wakeup interrupts
 IPI1:          0          0  Timer broadcast interrupts
-IPI2:        304      12154  Rescheduling interrupts
-IPI3:        578        674  Function call interrupts
+IPI2:        283       6962  Rescheduling interrupts
+IPI3:        574        697  Function call interrupts
 IPI4:          0          0  CPU stop interrupts
 IPI5:          0          0  IRQ work interrupts
 IPI6:          0          0  completion interrupts
 Err:          0
-yocto-zc702-zynq7-2023:/home/petalinux# tree /lib/firmware/
+yocto-zc702-zynq7:/home/petalinux# tree /lib/firmware/
 /lib/firmware/
 `-- xilinx
-    |-- zc702-pl-demo
-    |   |-- shell.json
-    |   |-- zc702-pl-demo.bit.bin
-    |   `-- zc702-pl-demo.dtbo
-    `-- zc702-pl-demo-custom-src
+    `-- zc702-pl-demo
         |-- shell.json
-        |-- zc702-pl-demo-custom-src.bit.bin
-        `-- zc702-pl-demo-custom-src.dtbo
+        |-- zc702-pl-demo.bin
+        `-- zc702-pl-demo.dtbo
 
-3 directories, 6 files
-yocto-zc702-zynq7-2023:/home/petalinux# fpgautil -b /lib/firmware/xilinx/zc702-pl-demo/zc702-pl-demo.bit.bin -o /lib/firmware/xilinx/zc702-pl-demo/zc702-pl-demo.dtbo
-fpga_manager fpga0: writing zc702-pl-demo.bit.bin to Xilinx Zynq FPGA Manager
+2 directories, 3 files
+yocto-zc702-zynq7:/home/petalinux# fpgautil -b /lib/firmware/xilinx/zc702-pl-demo/zc702-pl-demo.bin -o /lib/firmware/xilinx/zc702-pl-demo/zc702-pl-demo.dtbo
+fpga_manager fpga0: writing zc702-pl-demo.bin to Xilinx Zynq FPGA Manager
 OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/firmware-name
 OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/pid
 OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/uid
@@ -149,9 +149,9 @@ OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__sy
 OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/axi_gpio_pb
 gpio gpiochip1: (41210000.gpio): not an immutable chip, please consider fixing it!
 gpio gpiochip3: (41220000.gpio): not an immutable chip, please consider fixing it!
-Time taken to load BIN is 213.000000 Milli Seconds
+Time taken to load BIN is 207.000000 Milli Seconds
 BIN FILE loaded through FPGA manager successfully
-yocto-zc702-zynq7-2023:/home/petalinux#
+yocto-zc702-zynq7:/home/petalinux#
 ```
 
 ---
@@ -164,10 +164,9 @@ yocto-zc702-zynq7-2023:/home/petalinux#
 
 * Zynq-7000
 ```
-yocto-zc702-zynq7-2023:/home/petalinux# cat /proc/interrupts
-           CPU0       CPU1
+yocto-zc702-zynq7:/home/petalinux# cat /proc/interrupts
  24:          0          0 GIC-0  27 Edge      gt
- 25:       7982       1952 GIC-0  29 Edge      twd
+ 25:       8413       1662 GIC-0  29 Edge      twd
  26:          0          0 GIC-0  37 Level     arm-pmu
  27:          0          0 GIC-0  38 Level     arm-pmu
  29:          0          0 GIC-0  45 Level     f8003000.dma-controller
@@ -179,30 +178,33 @@ yocto-zc702-zynq7-2023:/home/petalinux# cat /proc/interrupts
  35:          0          0 GIC-0  73 Level     f8003000.dma-controller
  36:          0          0 GIC-0  74 Level     f8003000.dma-controller
  37:          0          0 GIC-0  75 Level     f8003000.dma-controller
- 38:      15759          0 GIC-0  51 Level     e000d000.spi
- 40:          0          0 GIC-0  54 Level     eth0
+ 38:      15907          0 GIC-0  51 Level     e000d000.spi
+ 40:        103          0 GIC-0  54 Level     eth0
  41:          0          0 GIC-0  53 Level     e0002000.usb
- 42:       2521          0 GIC-0  57 Level     cdns-i2c
+ 42:       1466          0 GIC-0  57 Level     cdns-i2c
  43:          0          0 GIC-0  41 Edge      f8005000.watchdog
- 44:        330          0 GIC-0  56 Level     mmc0
+ 44:        372          0 GIC-0  56 Level     mmc0
  45:          0          0 GIC-0  43 Level     ttc_clockevent
  46:         43          0 GIC-0  39 Level     f8007100.adc
- 47:          2          0 GIC-0  40 Level     f8007000.devcfg
- 48:        358          0 GIC-0  82 Level     xuartps
+ 47:          3          0 GIC-0  40 Level     f8007000.devcfg
+ 48:        291          0 GIC-0  82 Level     xuartps
  49:          0          0  zynq-gpio  12 Edge      sw14
  50:          0          0  zynq-gpio  14 Edge      sw13
+ 51:          0          0  gpio-xilinx  1 Edge      PL_GPIO_DIP_SW1_SW12
+ 52:          0          0  gpio-xilinx  0 Edge      PL_GPIO_DIP_SW0_SW12
+ 53:          0          0  gpio-xilinx  1 Edge      PL_GPIO_PB_SW_S_SW7
+ 54:          0          0  gpio-xilinx  0 Edge      PL_GPIO_PB_SW_N_SW5
 IPI0:          0          0  CPU wakeup interrupts
 IPI1:          0          0  Timer broadcast interrupts
-IPI2:        319      12168  Rescheduling interrupts
-IPI3:        685        835  Function call interrupts
+IPI2:        294       6973  Rescheduling interrupts
+IPI3:        619        785  Function call interrupts
 IPI4:          0          0  CPU stop interrupts
 IPI5:          0          0  IRQ work interrupts
 IPI6:          0          0  completion interrupts
 Err:          0
-yocto-zc702-zynq7-2023:/home/petalinux# cat /proc/interrupts
-           CPU0       CPU1
+yocto-zc702-zynq7:/home/petalinux# cat /proc/interrupts
  24:          0          0 GIC-0  27 Edge      gt
- 25:      10272       2367 GIC-0  29 Edge      twd
+ 25:      11730       6937 GIC-0  29 Edge      twd
  26:          0          0 GIC-0  37 Level     arm-pmu
  27:          0          0 GIC-0  38 Level     arm-pmu
  29:          0          0 GIC-0  45 Level     f8003000.dma-controller
@@ -214,34 +216,38 @@ yocto-zc702-zynq7-2023:/home/petalinux# cat /proc/interrupts
  35:          0          0 GIC-0  73 Level     f8003000.dma-controller
  36:          0          0 GIC-0  74 Level     f8003000.dma-controller
  37:          0          0 GIC-0  75 Level     f8003000.dma-controller
- 38:      15759          0 GIC-0  51 Level     e000d000.spi
- 40:          0          0 GIC-0  54 Level     eth0
+ 38:      15907          0 GIC-0  51 Level     e000d000.spi
+ 40:        397          0 GIC-0  54 Level     eth0
  41:          0          0 GIC-0  53 Level     e0002000.usb
- 42:       2521          0 GIC-0  57 Level     cdns-i2c
+ 42:       1466          0 GIC-0  57 Level     cdns-i2c
  43:          0          0 GIC-0  41 Edge      f8005000.watchdog
- 44:        330          0 GIC-0  56 Level     mmc0
+ 44:        372          0 GIC-0  56 Level     mmc0
  45:          0          0 GIC-0  43 Level     ttc_clockevent
  46:         43          0 GIC-0  39 Level     f8007100.adc
- 47:          2          0 GIC-0  40 Level     f8007000.devcfg
- 48:        395          0 GIC-0  82 Level     xuartps
- 49:          9          0  zynq-gpio  12 Edge      sw14
- 50:         11          0  zynq-gpio  14 Edge      sw13
+ 47:          3          0 GIC-0  40 Level     f8007000.devcfg
+ 48:        383          0 GIC-0  82 Level     xuartps
+ 49:          0          0  zynq-gpio  12 Edge      sw14
+ 50:          0          0  zynq-gpio  14 Edge      sw13
+ 51:          4          0  gpio-xilinx  1 Edge      PL_GPIO_DIP_SW1_SW12
+ 52:          6          0  gpio-xilinx  0 Edge      PL_GPIO_DIP_SW0_SW12
+ 53:          2          0  gpio-xilinx  1 Edge      PL_GPIO_PB_SW_S_SW7
+ 54:          8          0  gpio-xilinx  0 Edge      PL_GPIO_PB_SW_N_SW5
 IPI0:          0          0  CPU wakeup interrupts
 IPI1:          0          0  Timer broadcast interrupts
-IPI2:        322      12172  Rescheduling interrupts
-IPI3:        718        870  Function call interrupts
+IPI2:        298       6973  Rescheduling interrupts
+IPI3:        638       1065  Function call interrupts
 IPI4:          0          0  CPU stop interrupts
 IPI5:          0          0  IRQ work interrupts
 IPI6:          0          0  completion interrupts
 Err:          0
-yocto-zc702-zynq7-2023:/home/petalinux#
+yocto-zc702-zynq7:/home/petalinux#
 ```
 ---
 
 ### Unloading PL bitstream and dt overlay
 * Zynq
 ```
-yocto-zc702-zynq7-2023:/home/petalinux# fpgautil -R
+yocto-zc702-zynq7:/home/petalinux# fpgautil -R
 ```
 
 ---

@@ -1,1 +1,0 @@
-inherit dfx_dtg_full_internal

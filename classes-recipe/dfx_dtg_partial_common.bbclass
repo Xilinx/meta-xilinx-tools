@@ -1,4 +1,12 @@
-inherit dfx_common
+#
+# Copyright (C) 2023, Advanced Micro Devices, Inc.  All rights reserved.
+#
+# SPDX-License-Identifier: MIT
+#
+# This bbclass provides common code for ZynqMP and Versal DFx Partial firmware
+# bbclass.
+
+inherit dfx_dtg_common
 
 DEPENDS:append = "${@'${STATIC_PN}' if d.getVar('YAML_ENABLE_CLASSIC_SOC') != '1' else ''}"
 
@@ -24,8 +32,28 @@ python (){
         d.setVar("JSON_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split() if 'accel.json' in a][0].lstrip('file://')))
 }
 
+# In case of DFx partial, it will have both static and partial bistream extracted
+# in XSCTH_HW_PATH durin platform generate operation. Hence convert *_partial.bit
+# to bin format.
+python devicetree_do_compile:append() {
+    import glob, subprocess, shutil
+    if glob.glob(d.getVar('XSCTH_HW_PATH') + '/*_partial.bit'):
+        pn = d.getVar('PN')
+        biffile = pn + '.bif'
+
+        with open(biffile, 'w') as f:
+            f.write('all:\n{\n\t' + glob.glob(d.getVar('XSCTH_HW_PATH') + '/*_partial.bit')[0] + '\n}')
+
+        bootgenargs = ["bootgen"] + (d.getVar("BOOTGEN_FLAGS") or "").split()
+        bootgenargs += ["-image", biffile, "-o", pn + ".bin"]
+        subprocess.run(bootgenargs, check = True)
+
+        if not os.path.isfile(pn + ".bin"):
+            bb.fatal("bootgen failed. Enable -log debug with bootgen and check logs")
+}
+
 do_configure:append () {
-    # fpgamanager_dtg_dfx bbclass doesn't support multiple PR in signal xsa.
+    # dfx_dtg_partial bbclass doesn't support multiple PR in signal xsa.
     # DTG will suffix RpRm name to pl-partial-custom dtsi file when xsa has
     # more than one PR DTG will generate pl-partial-custom-$RpRm.dtsi for each
     # PR. Since this bbclass supports only one PR per xsa, it will find and use
@@ -62,11 +90,17 @@ do_install() {
         bbfatal "A partial dtbo ending with ${B}/pl-partial-final-<partial_design>_inst_<n>.dtbo expected but not found"
     fi
 
+    # In ZynqMP DFx Partial, if bin is included instead of .bit in xsa then .bin
+    # will be copied from directly from ${B}/${PN}/hw/ to destination directory
+    # else copy converted bit to bin file from ${B}/${PN}.bin to destination
+    # directory.
     if [ "${SOC_FAMILY}" != "versal" ]; then
-        if [ -f ${B}/${PN}/hw/*_partial.bit ]; then
-            install -Dm 0644 ${B}/${PN}/hw/*_partial.bit ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.bit
+        if [ -f ${B}/${PN}/hw/*_partial.bin ]; then
+            install -Dm 0644 ${B}/${PN}/hw/*_partial.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.bit
+        elif [ -f ${B}/${PN}.bin ]; then
+            install -Dm 0644 ${B}/${PN}.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.bin
         else
-            bbfatal "A partial bitstream ending with _partial.bit expected but not found"
+            bbfatal "A partial bitstream ending with .bin expected but not found"
         fi
     else
         if [ -f ${B}/${PN}/hw/*_partial.pdi ]; then

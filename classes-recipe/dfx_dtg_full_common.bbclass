@@ -1,7 +1,12 @@
-# Note: This bbclass is a temporary for 2023.2 release and DO NOT inherit this
-# bbclass directly. For more details refer README.dfx.dtg.<arch>.<design>.md file.
+#
+# Copyright (C) 2023, Advanced Micro Devices, Inc.  All rights reserved.
+#
+# SPDX-License-Identifier: MIT
+#
+# This bbclass provides common code for Zynq 7000(Full), ZynqMP(full, DFx Static)
+# firmware bbclass.
 
-inherit dfx_common
+inherit dfx_dtg_common
 
 python() {
     d.setVar("XSCTH_HDF_PATH",[a for a in d.getVar('SRC_URI').split() if '.xsa' in a][0].lstrip('file://'))
@@ -25,20 +30,20 @@ python devicetree_do_compile:append() {
             f.write('all:\n{\n\t' + glob.glob(d.getVar('XSCTH_HW_PATH') + '/*.bit')[0] + '\n}')
 
         bootgenargs = ["bootgen"] + (d.getVar("BOOTGEN_FLAGS") or "").split()
-        bootgenargs += ["-image", biffile, "-o", pn + ".bit.bin"]
+        bootgenargs += ["-image", biffile, "-o", pn + ".bin"]
         subprocess.run(bootgenargs, check = True)
 
-        # In Zynq7k using "-process_bitstream bin" bootgen flag, bit.bin file is
-        # generated in XSCTH_HW_PATH directory with <xsa_name>.bit.bin file,
+        # In Zynq7k using "-process_bitstream bin" bootgen flag, .bin file is
+        # generated in XSCTH_HW_PATH directory with <xsa_name>.bin file,
         # Hence we need to move this file from XSCTH_HW_PATH to XSCTH_WS
-        # directory and rename to ${PN}.bit.bin for do_install task.
+        # directory and rename to ${PN}.bin for do_install task.
         arch = d.getVar('SOC_FAMILY')
         if arch == 'zynq':
-            src_bitbin_file = glob.glob(d.getVar('XSCTH_HW_PATH') + '/*.bit.bin')[0]
-            dst_bitbin_file = d.getVar('XSCTH_WS') + '/' + pn + '.bit.bin'
+            src_bitbin_file = glob.glob(d.getVar('XSCTH_HW_PATH') + '/*.bin')[0]
+            dst_bitbin_file = d.getVar('XSCTH_WS') + '/' + pn + '.bin'
             shutil.move(src_bitbin_file, dst_bitbin_file)
 
-        if not os.path.isfile(pn + ".bit.bin"):
+        if not os.path.isfile(pn + ".bin"):
             bb.fatal("bootgen failed. Enable -log debug with bootgen and check logs")
 }
 
@@ -50,11 +55,17 @@ do_install() {
         bbwarn "A static xsa doesn't contain PL IP, hence ${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.dtbo is not needed"
     fi
 
+    # In Zynq(Full), ZynqMP(Full, DFx Static) if bin is included instead of .bit
+    # in xsa then .bin will be copied from directly from ${B}/${PN}/hw/ to
+    # destination directory else copy converted bit to bin file from ${B}/${PN}.bin
+    # to destination directory.
     if [ "${SOC_FAMILY}" != "versal" ]; then
-        if [ -f ${B}/${PN}.bit.bin ]; then
-            install -Dm 0644 ${B}/${PN}.bit.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.bit.bin
+        if [ -f ${B}/${PN}/hw/*.bin ]; then
+            install -Dm 0644 ${B}/${PN}/hw/*.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.bin
+        elif [ -f ${B}/${PN}.bin ]; then
+            install -Dm 0644 ${B}/${PN}.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.bin
         else
-            bbwarn "A Full or Static(DFx) bitstream expected but not found"
+            bbwarn "A Full or Static(DFx) bitstream ending with .bin expected but not found"
         fi
     else
         if [ -f ${B}/${PN}/hw/*.pdi ]; then
