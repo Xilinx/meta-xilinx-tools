@@ -33,7 +33,7 @@ XSCTH_PROC:zynq ?= "ps7_cortexa9_1"
 
 INSANE_SKIP:${PN} = "arch"
 
-FW_LIB_DIR = "/lib/firmware"
+FW_LIB_DIR = "${nonarch_base_libdir}/firmware"
 
 do_install() {
 	install -d ${D}${FW_LIB_DIR}
