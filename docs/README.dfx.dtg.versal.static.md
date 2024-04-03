@@ -90,23 +90,24 @@ IMAGE_INSTALL:append = " \
 
 * Versal (DFx Static)
 ```
-yocto-vck190-dfx-2023:~$ sudo su
-root@yocto-vck190-dfx-2023:~#
-root@yocto-vck190-dfx-2023:~# fpgautil -o /lib/firmware/xilinx/vck190-dfx-static/vck190-dfx-static.dtbo
-[  257.555571] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga/external-fpga-config
-[  257.565879] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga/pid
-[  257.574670] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga/uid
-[  257.583599] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/fpga_PR0
-[  257.593434] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/fpga_PR1
-[  257.603268] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/fpga_PR2
-[  257.613100] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/static_region_axi_bram_ctrl_0
-[  257.624762] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/static_region_dfx_decoupler_rp1
-[  257.636589] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/static_region_dfx_decoupler_rp2
-[  257.648415] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/static_region_dfx_decoupler_rp3
-[  257.663234] of-fpga-region fpga:fpga-PR0: FPGA Region probed
-[  257.669135] of-fpga-region fpga:fpga-PR1: FPGA Region probed
-[  257.675022] of-fpga-region fpga:fpga-PR2: FPGA Region probed
-root@yocto-vck190-dfx-2023:~#
+yocto-vck190-versal:/$ sudo su
+yocto-vck190-versal:/# fpgautil -b /lib/firmware/xilinx/vck190-dfx-static/vck190-dfx-static.pdi -o /lib/firmware/xilinx/vck190-dfx-static/vck190-dfx-static.dtbo
+[  110.575263] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga/external-fpga-config
+[  110.585557] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga/pid
+[  110.594365] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga/uid
+[  110.603307] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/fpga_PR0
+[  110.613152] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/fpga_PR1
+[  110.623007] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/fpga_PR2
+[  110.632849] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/static_region_axi_bram_ctrl_0
+[  110.644516] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/static_region_dfx_decoupler_rp1
+[  110.656351] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/static_region_dfx_decoupler_rp2
+[  110.668188] OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/static_region_dfx_decoupler_rp3
+[  110.682762] of-fpga-region fpga:fpga-PR0: FPGA Region probed
+[  110.689956] of-fpga-region fpga:fpga-PR1: FPGA Region probed
+[  110.695890] of-fpga-region fpga:fpga-PR2: FPGA Region probed
+Time taken to load BIN is 133.000000 Milli Seconds
+BIN FILE loaded through FPGA manager successfully
+yocto-vck190-versal:/#
 ```
 ---
 
