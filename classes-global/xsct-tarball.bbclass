@@ -88,6 +88,8 @@ python xsct_event_extract() {
     if not xsct_buildtargets and d.getVar('FORCE_XSCT_DOWNLOAD') != '1':
       return
 
+    bb.warn("XSCT has been deprecated. It will still be available for several releases. In the future, it's recommended to start new projects with SDT workflow.")
+
     ext_tarball = d.getVar("EXTERNAL_XSCT_TARBALL")
     use_xscttar = d.getVar("USE_XSCT_TARBALL")
     chksum_tar_recipe = d.getVar("XSCT_CHECKSUM")
