@@ -17,9 +17,9 @@ SRC_URI[ac701-microblazeel.sha256sum] = '951461342ee4c3536d53ba6d601f9da79b4a232
 
 # eval-brd-sc
 HDF_BASE[eval-brd-sc] = 'https://'
-HDF_PATH[eval-brd-sc] = 'petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1002_1_10030058/external/eval-brd-sc/eval-brd-sc-2023.2_1002_1.xsa'
+HDF_PATH[eval-brd-sc] = 'petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1014_1_04040458/external/eval-brd-sc/eval-brd-sc-2023.2_1014_1.xsa'
 BRANCHARG[eval-brd-sc] = 'name=eval-brd-sc'
-SRC_URI[eval-brd-sc.sha256sum] = '965cf35910b7a4dcdc76ebbdee374a091882bbd222b2fadbc934f71ebc324533'
+SRC_URI[eval-brd-sc.sha256sum] = '2781772ccb0a350f84829a13ebbf0c2ced2249891c651e68dffb6a57a2c14c86'
 
 # k24c-sm
 HDF_BASE[k24c-sm] = 'https://'
@@ -120,9 +120,9 @@ SRC_URI[vck190-versal.sha256sum] = '5ca5f3bfd485288fd66259bb08cd5dcb1db781339d5d
 
 # vck-sc-zynqmp
 HDF_BASE[vck-sc-zynqmp] = 'https://'
-HDF_PATH[vck-sc-zynqmp] = 'petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1002_1_10030058/external/vck-sc-zynqmp/vck-sc-zynqmp-2023.2_1002_1.xsa'
+HDF_PATH[vck-sc-zynqmp] = 'petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1014_1_04040458/external/vck-sc-zynqmp/vck-sc-zynqmp-2023.2_1014_1.xsa'
 BRANCHARG[vck-sc-zynqmp] = 'name=vck-sc-zynqmp'
-SRC_URI[vck-sc-zynqmp.sha256sum] = 'e10af96328f72de2b948da605e3fd0e93ba99988f261363fd5ee17efce22393d'
+SRC_URI[vck-sc-zynqmp.sha256sum] = '308364f62e7ca2d1899f5e11513d07d1d101251b99dc114aec119e68332abec6'
 
 # vcu118-microblazeel
 HDF_BASE[vcu118-microblazeel] = 'https://'
