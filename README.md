@@ -48,6 +48,10 @@ sysroots of Yocto build. All the recipes which depend xsct or bootgen will use
 from sysroots. Please see the Xilinx EULA license file for xsct after
 extracting the tarball.
 
+Warning: XSCT has been deprecated. It will still be available for several release.
+It is recommended to start new machines using the System Device Tree workflow, if
+available.  See meta-xilinx/meta-xilinx-standalone-experimental for more details.
+
 Each release is dependent on the Xilinx XSCT release version. Please note that
 xsct tools may not be backward compatible with embeddedsw repo. Meaning
 2016.3 xsct tools might not work with older version on embeddedsw repo
