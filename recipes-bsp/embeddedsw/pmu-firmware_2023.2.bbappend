@@ -43,18 +43,17 @@ do_compile:prepend:elf() {
   chmod 0755 ${WORKDIR}/bin/mb-objcopy
 }
 
-do_compile:append() {
-  ${MB_OBJCOPY} -O binary ${B}/${XSCTH_PROJ}/executable.elf ${B}/${XSCTH_PROJ}/executable.bin
-}
+ESW_COMPONENT = "${XSCTH_PROJ}/executable.elf"
 
 # xsctapp sets it's own do_install, replace it with the real one
 do_install() {
     :
 }
 
+# Duplicate from pmu-firmware.inc in meta-xilinx-standalone (replaces the version from xsctapp.bbclass)
 do_deploy() {
-    install -Dm 0644 ${B}/${XSCTH_PROJ}/executable.elf ${DEPLOYDIR}/${PMU_FIRMWARE_BASE_NAME}.elf
+    install -Dm 0644 ${B}/${ESW_COMPONENT} ${DEPLOYDIR}/${PMU_FIRMWARE_BASE_NAME}.elf
     ln -sf ${PMU_FIRMWARE_BASE_NAME}.elf ${DEPLOYDIR}/${PMU_FIRMWARE_IMAGE_NAME}.elf
-    install -m 0644 ${B}/${XSCTH_PROJ}/executable.bin ${DEPLOYDIR}/${PMU_FIRMWARE_BASE_NAME}.bin
+    install -m 0644 ${B}/${ESW_COMPONENT}.bin ${DEPLOYDIR}/${PMU_FIRMWARE_BASE_NAME}.bin
     ln -sf ${PMU_FIRMWARE_BASE_NAME}.bin ${DEPLOYDIR}/${PMU_FIRMWARE_IMAGE_NAME}.bin
 }
