@@ -10,9 +10,9 @@ LIC_FILES_CHKSUM = "file://../../../../license.txt;md5=${@d.getVarFlag('LIC_FILE
 
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE:kria = "${MACHINE}"
-COMPATIBLE_MACHINE:vck-sc-zynqmp = "${MACHINE}"
+COMPATIBLE_MACHINE:eval-brd-sc-zynqmp = "${MACHINE}"
 
-EXTRA_OEMAKE:append:vck-sc-zynqmp = "BOARD=SC"
+EXTRA_OEMAKE:append:eval-brd-sc-zynqmp = "BOARD=SC"
 
 S = "${WORKDIR}/git/lib/sw_apps/img_rcvry/src"
 
