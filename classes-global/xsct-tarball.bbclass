@@ -175,7 +175,7 @@ python xsct_event_extract() {
             mkdir -p ${XSCT_STAGING_DIR}; \
             cd ${XSCT_STAGING_DIR}; \
             tar -xvf ${XSCT_DLDIR}/${XSCT_TARBALL};")
-        bb.note('Extracting external xsct-tarball to sysroots')
+        bb.note('Extracting external xsct-tarball (%s/%s) to sysroots' % (d.getVar('XSCT_DLDIR'), d.getVar('XSCT_TARBALL')))
         subprocess.check_output(cmd, shell=True)
         with open(tarballchksum, "w") as f:
             f.write(chksum_tar_actual)
