@@ -126,6 +126,9 @@ python xsct_event_extract() {
             chksum_tar_actual = chksum_tar_recipe
     xsctdldir = d.getVar("XSCT_DLDIR")
     tarballname = d.getVar("XSCT_TARBALL")
+
+    bb.note("XSCT_TARBALL is set to %s" % tarballname)
+
     xsctsysroots = d.getVar("XSCT_STAGING_DIR")
     loader = d.getVar("XSCT_LOADER")
 
