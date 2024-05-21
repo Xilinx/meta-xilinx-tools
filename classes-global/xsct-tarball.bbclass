@@ -109,6 +109,8 @@ python xsct_event_extract() {
             bb.fatal('xsct-tarball class is enabled but no external tarball or url is provided.\n\
 \tEither set USE_XSCT_TARBALL to "0" or provide a path/url')
         if ext_tarball and os.path.exists(ext_tarball):
+            bb.note("EXTERNAL_XSCT_TARBALL is set to %s" % ext_tarball)
+
             bb.note("Checking local xsct tarball checksum")
             import hashlib
             sha256hash = hashlib.sha256()
