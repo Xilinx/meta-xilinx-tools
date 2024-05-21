@@ -173,7 +173,8 @@ python xsct_event_extract() {
             rm -rf ${XSCT_STAGING_DIR}; \
             mkdir -p ${XSCT_STAGING_DIR}; \
             cd ${XSCT_STAGING_DIR}; \
-            tar -xvf ${XSCT_DLDIR}/${XSCT_TARBALL};")
+            tar -xvf ${XSCT_DLDIR}/${XSCT_TARBALL}; \
+            rm -rf ${XILINX_SDK_TOOLCHAIN}/tps/lnx64/cmake* ;")
         bb.note('Extracting external xsct-tarball to sysroots')
         subprocess.check_output(cmd, shell=True)
         with open(tarballchksum, "w") as f:
