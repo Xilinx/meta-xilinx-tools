@@ -29,7 +29,11 @@ do_compile[lockfiles] = "${TMPDIR}/xsct-invoke.lock"
 do_compile() {
 
     cd ${B}/${XSCTH_PROJ}
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${XILINX_SDK_TOOLCHAIN}/tps/lnx64/cmake-3.3.2/libs/Ubuntu/x86_64-linux-gnu/:
+    case ${XILINX_XSCT_VERSION} in
+        2022.1 | 2022.2 | 2023.1 | 2023.2 | 2024.1)
+            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${XILINX_SDK_TOOLCHAIN}/tps/lnx64/cmake-3.3.2/libs/Ubuntu/x86_64-linux-gnu/:
+            ;;
+    esac
     oe_runmake
     if [ ! -e ${B}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ]; then
         bbfatal_log "${XSCTH_PROJ} compile failed."
