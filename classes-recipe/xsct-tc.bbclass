@@ -5,8 +5,6 @@
 # SPDX-License-Identifier: MIT
 #
 
-XILINX_SDK_TOOLCHAIN ??= "${XSCT_STAGING_DIR}/Vitis/${TOOL_VER_MAIN}"
-
 XSCT_PATH_ADD = "${XILINX_SDK_TOOLCHAIN}/bin:"
 
 # When building in a Linux target config, we need to use the provided XSCT
