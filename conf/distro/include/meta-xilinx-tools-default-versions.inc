@@ -1,0 +1,13 @@
+XILINX_XSCT_VERSION ??= "${@d.getVar("XILINX_RELEASE_VERSION").replace('v','')}"
+ESDK_LOCALCONF_ALLOW:append = " XILINX_XSCT_VERSION"
+
+HOSTTOOLS += "ps"
+
+BUILDCFG_VARS:append = " XILINX_XSCT_VERSION"
+
+# Default to XSCT version matching XILINX_RELEASE_VERSION
+PREFERRED_VERSION_external-hdf          ?= "${@d.getVar("XILINX_RELEASE_VERSION").replace('v','')}"
+
+PREFERRED_VERSION_openamp-fw-echo-testd ?= "${@d.getVar("XILINX_RELEASE_VERSION").replace('v','')}%"
+PREFERRED_VERSION_openamp-fw-mat-muld   ?= "${@d.getVar("XILINX_RELEASE_VERSION").replace('v','')}%"
+PREFERRED_VERSION_openamp-fw-rpc-demo   ?= "${@d.getVar("XILINX_RELEASE_VERSION").replace('v','')}%"
