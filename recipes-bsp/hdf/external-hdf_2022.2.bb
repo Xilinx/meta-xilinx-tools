@@ -6,6 +6,7 @@ PROVIDES = "virtual/hdf"
 
 INHIBIT_DEFAULT_DEPS = "1"
 
+
 inherit deploy
 
 # HDF_BASE - file protocol
