@@ -8,8 +8,6 @@
 
 inherit xsctapp xsctyaml deploy
 
-DEPENDS = "esw-bsp"
-
 # For ZynqMP DR device Baremetal app depends on libmetal.
 DEPENDS:append:zynqmp-dr = " libmetal"
 
