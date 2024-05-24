@@ -32,7 +32,7 @@ XSCTH_ARCH ?= "${@bb.utils.contains_any('XSCTH_PROC_IP', ['psu_cortexa53', 'psv_
 PROJ_ARG ??= "-ws ${XSCTH_WS} -pname ${XSCTH_PROJ} -rp ${XSCTH_REPO}"
 HW_ARG ??= "-processor_ip ${XSCTH_PROC_IP} -hdf ${XSCTH_HDF} -arch ${XSCTH_ARCH} ${@['', '-processor ${XSCTH_PROC}'][d.getVar('XSCTH_PROC', True) != '']}"
 
-DEPENDS += 'ncurses-native'
+DEPENDS += 'ncurses-native xsct-native'
 
 do_configure[vardeps] += "TOOL_VER_MAIN"
 do_configure[depends] += "virtual/hdf:do_deploy"

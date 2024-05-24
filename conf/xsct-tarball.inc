@@ -7,8 +7,7 @@
 TOOL_VER_MAIN ?= "${XILINX_XSCT_VERSION}"
 TOOL_VER_MAIN[doc] = "XSCT version, usually the same as XILINX_XSCT_VERSION"
 
-XILINX_SDK_TOOLCHAIN ??= "${XSCT_STAGING_DIR}/Vitis/${TOOL_VER_MAIN}"
-XSCT_LOADER ?= "${XILINX_SDK_TOOLCHAIN}/bin/xsct"
+XILINX_SDK_TOOLCHAIN ??= "${RECIPE_SYSROOT_NATIVE}/Vitis/${TOOL_VER_MAIN}"
 
 ESDK_LOCALCONF_ALLOW:append = " XILINX_SDK_TOOLCHAIN"
 
@@ -20,9 +19,6 @@ XSCT_URL[2024.1] = "http://petalinux.xilinx.com/sswreleases/rel-v2024/xsct-trim/
 XSCT_URL[2024.2] = "http://petalinux.xilinx.com/sswreleases/rel-v2024/xsct-trim/xsct-2024-2_XXXX.tar.xz"
 XSCT_URL ?= "${@d.getVarFlag('XSCT_URL', d.getVar('TOOL_VER_MAIN'))}"
 XSCT_TARBALL ?= "xsct_${TOOL_VER_MAIN}.tar.xz"
-XSCT_DLDIR ?= "${DL_DIR}/xsct/"
-XSCT_STAGING_DIR ?= "${TOPDIR}/xsct"
-BB_HASHEXCLUDE_COMMON += "XSCT_STAGING_DIR"
 
 XSCT_CHECKSUM[2022.1] = "e343a8b386398e292f636f314a057076e551a8173723b8ea0bc1bbd879c05259"
 XSCT_CHECKSUM[2022.2] = "8a3272036ca61f017f357bf6ad9dfbdec6aebb39f43c3ca0cee7ec86ea4c066f"
@@ -35,34 +31,5 @@ XSCT_CHECKSUM ?= "${@d.getVarFlag('XSCT_CHECKSUM', d.getVar('TOOL_VER_MAIN'))}"
 VALIDATE_XSCT_CHECKSUM ?= '1'
 VALIDATE_XSCT_CHECKSUM[doc] = "Ignore the checksum when set to 0"
 
-USE_XSCT_TARBALL ?= '1'
-USE_XSCT_TARBALL[doc] = "Flag to determine whether or not to use the xsct-tarball class. \
-If enabled, the tarball from path EXTERNAL_XSCT_TARBALL is copied to downloads/xsct, and extracted \
-to tmp/sysroots-xsct. XILINX_SDK_TOOLCHAIN is set accordingly to use xsct from this path."
-
-COPY_XSCT_TO_ESDK ?= "0"
-COPY_XSCT_TO_ESDK[doc] = "Flag to determine whether or not to copy the xsct-tarball to the eSDK"
-
 EXTERNAL_XSCT_TARBALL ?= ""
 EXTERNAL_XSCT_TARBALL[doc] = "Variable that defines where the xsct tarball is stored"
-
-# Specify which targets actually need to call xsct
-XSCT_TARGETS ?= "\
-	base-pdi \
-	bitstream-extraction \
-	device-tree \
-	extract-cdo \
-	fsbl-firmware \
-	fs-boot \
-	imgrcry \
-	imgsel \
-	openamp-fw-echo-testd \
-	openamp-fw-mat-muld \
-	openamp-fw-rpc-demo \
-	plm-firmware \
-	pmu-firmware \
-	psm-firmware \
-	uboot-device-tree \
-	esw-bsp \
-	xsct-native \
-	"
