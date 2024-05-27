@@ -92,7 +92,7 @@ function parse_args {
 function get_elf_addr_and_size {
 
 	# Get load address of payload ELF file
-	ELF_LMA=0x$(${CROSS_COMPILE}objdump --headers $INFILE | grep -w "\.text" | awk '{print $5}')
+	ELF_LMA=0x$(${CROSS_COMPILE}objdump --headers $INFILE | grep -w "\.data" | awk '{print $5}')
 
 	# Generate binary image of payload
 	${CROSS_COMPILE}objcopy -R .note -R .comment -R .note.gnu.build-id  -O binary $INFILE $TMP_BINFILE
