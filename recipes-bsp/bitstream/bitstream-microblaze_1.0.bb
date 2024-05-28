@@ -8,7 +8,7 @@ LICENSE = "BSD-3-Clause"
 
 DEPENDS = "virtual/fsboot virtual/bitstream"
 
-inherit deploy
+inherit check_xsct_enabled deploy
 
 COMPATIBLE_MACHINE ?= "^$"
 COMPATIBLE_MACHINE:microblaze = ".*"

@@ -6,7 +6,9 @@ PROVIDES = "virtual/hdf"
 
 INHIBIT_DEFAULT_DEPS = "1"
 
-inherit deploy
+inherit check_xsct_enabled deploy
+
+HDF_MACHINE ?= "${MACHINE}"
 
 # HDF_BASE - file protocol
 # HDF_PATH - Path to git repository, or file in question
@@ -87,8 +89,6 @@ do_check() {
         bbfatal "Unable to find ${HDF_NAME}.  Verify HDF_BASE, HDF_PATH and HDF_NAME."
     fi
 }
-
-HDF_MACHINE ?= "${MACHINE}"
 
 do_install() {
     install -d ${D}/opt/xilinx/hw-design
