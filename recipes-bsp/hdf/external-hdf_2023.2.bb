@@ -8,7 +8,9 @@ INHIBIT_DEFAULT_DEPS = "1"
 
 S = "${UNPACKDIR}"
 
-inherit deploy
+inherit check_xsct_enabled deploy
+
+HDF_MACHINE ?= "${MACHINE}"
 
 HDF_BASE ??= ""
 HDF_BASE[doc] = "Download protocol (file://, git://, http:// or https://)"
@@ -119,8 +121,6 @@ do_check() {
         bbfatal "Unable to find ${HDF_NAME}.  Verify HDF_BASE, HDF_PATH and HDF_NAME."
     fi
 }
-
-HDF_MACHINE ?= "${MACHINE}"
 
 do_install() {
     install -d ${D}/opt/xilinx/hw-design

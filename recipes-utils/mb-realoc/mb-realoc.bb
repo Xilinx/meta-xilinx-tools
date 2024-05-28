@@ -4,7 +4,7 @@ LICENSE = "CLOSED"
 
 PROVIDES = "virtual/elfrealloc"
 
-inherit deploy
+inherit check_xsct_enabled deploy
 
 FILESEXTRAPATHS:append := ":${XLNX_SCRIPTS_DIR}"
 SRC_URI:append = " file://mb-realoc"

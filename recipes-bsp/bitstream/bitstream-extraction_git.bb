@@ -9,7 +9,7 @@ PROVIDES = "virtual/bitstream"
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
-inherit xsctbit deploy image-artifact-names
+inherit check_xsct_enabled xsctbit deploy image-artifact-names
 
 S = "${UNPACKDIR}"
 

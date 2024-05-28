@@ -2,7 +2,7 @@ DESCRIPTION = "OpenAMP demo firmware"
 
 ESW_VER = "${@bb.parse.vars_from_file(d.getVar('FILE', False),d)[1] or '${XILINX_XSCT_VERSION}'}"
 
-inherit xsctapp xsctyaml deploy
+inherit check_xsct_enabled xsctapp xsctyaml deploy
 
 LICENSE = "BSD-3-Clause"
 

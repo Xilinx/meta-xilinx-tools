@@ -8,10 +8,14 @@ INHIBIT_DEFAULT_DEPS = "1"
 
 BB_STRICT_CHECKSUM = "${VALIDATE_XSCT_CHECKSUM}"
 
+# Set defaults for parsing without XSCT enabled.
+XSCT_URL ??= "https://undefined/undefined"
+XSCT_TARBALL ??= "undefined"
+
 SRC_URI = "${XSCT_URL};downloadfilename=${XSCT_TARBALL}"
 SRC_URI[sha256sum] = "${XSCT_CHECKSUM}"
 
-inherit native
+inherit check_xsct_enabled native
 
 S = "${UNPACKDIR}/Vitis"
 B = "${S}"
