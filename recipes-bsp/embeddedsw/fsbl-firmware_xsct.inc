@@ -1,13 +1,7 @@
-# Should not need any external patches
-SRC_URI = "${EMBEDDEDSW_SRCURI}"
-
-# We WANT to default to this version when available
-DEFAULT_PREFERENCE = "100"
-
 inherit xsctapp xsctyaml
 
-# This needs to match fsbl.bbappend
-FSBL_IMAGE_NAME = "fsbl-${MACHINE}"
+# The makefile does not handle parallelization
+PARALLEL_MAKE = "-j1"
 
 B = "${S}/${XSCTH_PROJ}"
 B:zynq = "${S}/${XSCTH_PROJ}"
@@ -38,7 +32,7 @@ ${UNPACKDIR}/bin:"
 XSCT_PATH_ADD:append:eabi = "\
 ${UNPACKDIR}/bin:"
 
-do_compile:prepend:elf:aarch64() {
+do_configure:prepend:elf:aarch64() {
   mkdir -p ${UNPACKDIR}/bin
   echo "#! /bin/bash\n${CC} \$@" > ${UNPACKDIR}/bin/aarch64-none-elf-gcc
   echo "#! /bin/bash\n${AS} \$@" > ${UNPACKDIR}/bin/aarch64-none-elf-as
@@ -49,7 +43,7 @@ do_compile:prepend:elf:aarch64() {
 }
 
 ARM_INSTRUCTION_SET:eabi:arm = "arm"
-do_compile:prepend:eabi:arm() {
+do_configure:prepend:eabi:arm() {
   mkdir -p ${UNPACKDIR}/bin
   echo "#! /bin/bash\n${CC} \$@" > ${UNPACKDIR}/bin/arm-none-eabi-gcc
   echo "#! /bin/bash\n${AS} \$@" > ${UNPACKDIR}/bin/arm-none-eabi-as
@@ -73,3 +67,5 @@ do_deploy() {
     install -Dm 0644 ${B}/${ESW_COMPONENT} ${DEPLOYDIR}/${FSBL_BASE_NAME}.elf
     ln -sf ${FSBL_BASE_NAME}.elf ${DEPLOYDIR}/${FSBL_IMAGE_NAME}.elf
 }
+
+addtask deploy before do_build after do_install
