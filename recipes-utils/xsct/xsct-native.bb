@@ -71,9 +71,12 @@ do_compile() {
     fi
 
     # Various workarounds
-
-    # Remove included cmake, we want to use YP version in all cases
-    rm -rf ${PV}/tps/lnx64/cmake*
+    case ${XILINX_XSCT_VERSION} in
+        2024.2)
+            # Remove included cmake, we want to use YP version in all cases
+            rm -rf ${PV}/tps/lnx64/cmake*
+            ;;
+    esac
 }
 
 do_install() {
