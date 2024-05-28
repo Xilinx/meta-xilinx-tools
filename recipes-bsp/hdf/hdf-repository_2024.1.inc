@@ -5,9 +5,9 @@
 HDF_BASE_DEFAULT := '${HDF_BASE}'
 HDF_PATH_DEFAULT := '${HDF_PATH}'
 BRANCHARG_DEFAULT := '${BRANCHARG}'
-HDF_BASE ??= "${@d.getVarFlag('HDF_BASE', d.getVar('HDF_MACHINE')) or '${HDF_BASE_DEFAULT}'}"
-HDF_PATH ??= "${@d.getVarFlag('HDF_PATH', d.getVar('HDF_MACHINE')) or '${HDF_PATH_DEFAULT}'}"
-BRANCHARG ??= "${@d.getVarFlag('BRANCHARG', d.getVar('HDF_MACHINE')) or '${BRANCHARG_DEFAULT}'}"
+HDF_BASE ??= "${@d.getVarFlag('HDF_BASE', d.getVar('HDF_MACHINE') or 'undefined') or '${HDF_BASE_DEFAULT}'}"
+HDF_PATH ??= "${@d.getVarFlag('HDF_PATH', d.getVar('HDF_MACHINE') or 'undefined') or '${HDF_PATH_DEFAULT}'}"
+BRANCHARG ??= "${@d.getVarFlag('BRANCHARG', d.getVar('HDF_MACHINE') or 'undefined') or '${BRANCHARG_DEFAULT}'}"
 
 # ac701-microblazeel
 HDF_BASE[ac701-microblazeel] = 'https://'

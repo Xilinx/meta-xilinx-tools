@@ -69,9 +69,9 @@ echo "# fall back to the original default if necessary"
 echo "HDF_BASE_DEFAULT := '\${HDF_BASE}'"
 echo "HDF_PATH_DEFAULT := '\${HDF_PATH}'"
 echo "BRANCHARG_DEFAULT := '\${BRANCHARG}'"
-echo "HDF_BASE ??= \"\${@d.getVarFlag('HDF_BASE', d.getVar('HDF_MACHINE')) or '\${HDF_BASE_DEFAULT}'}\""
-echo "HDF_PATH ??= \"\${@d.getVarFlag('HDF_PATH', d.getVar('HDF_MACHINE')) or '\${HDF_PATH_DEFAULT}'}\""
-echo "BRANCHARG ??= \"\${@d.getVarFlag('BRANCHARG', d.getVar('HDF_MACHINE')) or '\${BRANCHARG_DEFAULT}'}\""
+echo "HDF_BASE ??= \"\${@d.getVarFlag('HDF_BASE', d.getVar('HDF_MACHINE') or 'undefined') or '\${HDF_BASE_DEFAULT}'}\""
+echo "HDF_PATH ??= \"\${@d.getVarFlag('HDF_PATH', d.getVar('HDF_MACHINE') or 'undefined') or '\${HDF_PATH_DEFAULT}'}\""
+echo "BRANCHARG ??= \"\${@d.getVarFlag('BRANCHARG', d.getVar('HDF_MACHINE') or 'undefined') or '\${BRANCHARG_DEFAULT}'}\""
 
 # Downloaded but not used
 README="README.md"

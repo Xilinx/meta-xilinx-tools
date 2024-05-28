@@ -3,7 +3,7 @@ DESCRIPTION = "Image Selector"
 PROVIDES = "virtual/imgsel"
 DEPENDS += "bootgen-native"
 
-inherit xsctapp xsctyaml deploy
+inherit check_xsct_enabled xsctapp xsctyaml deploy
 
 PARALLEL_MAKE = "-j 1"
 
