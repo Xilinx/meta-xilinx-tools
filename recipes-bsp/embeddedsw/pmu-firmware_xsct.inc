@@ -1,13 +1,7 @@
-# Should not need any external patches
-SRC_URI = "${EMBEDDEDSW_SRCURI}"
-
-# We WANT to default to this version when available
-DEFAULT_PREFERENCE = "100"
-
 inherit xsctapp xsctyaml
 
-# This needs to match pmufw.bbappend
-PMU_FIRMWARE_IMAGE_NAME = "pmu-firmware-${MACHINE}"
+# The makefile does not handle parallelization
+PARALLEL_MAKE = "-j1"
 
 B = "${S}/${XSCTH_PROJ}"
 
@@ -31,7 +25,7 @@ ${WORKDIR}/bin:"
 
 MB_OBJCOPY = "mb-objcopy"
 
-do_compile:prepend:elf() {
+do_configure:prepend:elf() {
   mkdir -p ${WORKDIR}/bin
   echo "#! /bin/bash\n${CC} \$@" > ${WORKDIR}/bin/mb-gcc
   echo "#! /bin/bash\n${AS} \$@" > ${WORKDIR}/bin/mb-as
@@ -41,6 +35,10 @@ do_compile:prepend:elf() {
   chmod 0755 ${WORKDIR}/bin/mb-as
   chmod 0755 ${WORKDIR}/bin/mb-ar
   chmod 0755 ${WORKDIR}/bin/mb-objcopy
+}
+
+do_compile:append() {
+    ${MB_OBJCOPY} -O binary ${B}/${ESW_COMPONENT} ${B}/${ESW_COMPONENT}.bin
 }
 
 ESW_COMPONENT = "${XSCTH_PROJ}/executable.elf"
@@ -57,3 +55,5 @@ do_deploy() {
     install -m 0644 ${B}/${ESW_COMPONENT}.bin ${DEPLOYDIR}/${PMU_FIRMWARE_BASE_NAME}.bin
     ln -sf ${PMU_FIRMWARE_BASE_NAME}.bin ${DEPLOYDIR}/${PMU_FIRMWARE_IMAGE_NAME}.bin
 }
+
+addtask deploy before do_build after do_install
