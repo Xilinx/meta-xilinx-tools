@@ -11,6 +11,8 @@ ESW_VER ?= "${XILINX_XSCT_VERSION}"
 
 inherit xlnx-embeddedsw xsctbase image-artifact-names
 
+DEPENDS:prepend = "cmake-native "
+
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
 XSCTH_BASE_NAME ?= "${PN}${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
