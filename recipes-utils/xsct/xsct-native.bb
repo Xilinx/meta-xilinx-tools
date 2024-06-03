@@ -65,27 +65,37 @@ XSCT_LOADER ?= "${XILINX_SDK_TOOLCHAIN}/bin/xsct"
 
 # Remove files we don't want
 do_compile() {
-    # Validation routines
-    if [ ! -d ${PV} ]; then
-        bbfatal "XSCT version mismatch.\nUnable to find `pwd`/${PV}.\nThis usually means the wrong version of XSCT is being used."
-    fi
+    if [ "${USE_XSCT_TARBALL}" = "1" ]; then
+        # Validation routines
+        if [ ! -d ${PV} ]; then
+            bbfatal "XSCT version mismatch.\nUnable to find `pwd`/${PV}.\nThis usually means the wrong version of XSCT is being used."
+        fi
 
-    if [ ! -e ${PV}/bin/xsct ]; then
-        bbfatal "XSCT binary is not found.\nUnable to find `pwd`/${PV}/bin/xsct."
-    fi
+        if [ ! -e ${PV}/bin/xsct ]; then
+            bbfatal "XSCT binary is not found.\nUnable to find `pwd`/${PV}/bin/xsct."
+        fi
 
-    # Various workarounds
-    case ${XILINX_XSCT_VERSION} in
-        2024.2)
-            # Remove included cmake, we want to use YP version in all cases
-            rm -rf ${PV}/tps/lnx64/cmake*
-            ;;
-    esac
+        # Various workarounds
+        case ${XILINX_XSCT_VERSION} in
+            2024.2)
+                # Remove included cmake, we want to use YP version in all cases
+                rm -rf ${PV}/tps/lnx64/cmake*
+                ;;
+        esac
+    else
+        if [ ! -e ${XSCT_LOADER} ]; then
+            bbfatal "${XSCT_LOADER} not found.  Please configure XILINX_SDK_TOOLCHAIN with the path to the extracted xsct-trim."
+        fi
+    fi
 }
 
 do_install() {
-    install -d ${D}${STAGING_DIR_NATIVE}/Vitis
-    cp --preserve=mode,timestamps -R ${S}/* ${D}${STAGING_DIR_NATIVE}/Vitis/.
+    if [ "${USE_XSCT_TARBALL}" = "1" ]; then
+        install -d ${D}${STAGING_DIR_NATIVE}/Vitis
+        cp --preserve=mode,timestamps -R ${S}/* ${D}${STAGING_DIR_NATIVE}/Vitis/.
+    else
+        bbwarn "Using external XSCT: ${XILINX_SDK_TOOLCHAIN}"
+    fi
 }
 
 # If the user overrides with EXTERNAL_XSCT_TARBALL, use it instead
@@ -94,6 +104,10 @@ python() {
 
     if ext_tarball:
         d.setVar('XSCT_URL', 'file://${EXTERNAL_XSCT_TARBALL}')
+
+    use_xsct_tarball = d.getVar("USE_XSCT_TARBALL")
+    if use_xsct_tarball != '1':
+        d.setVar('SRC_URI', '')
 }
 
 ERROR_QA:remove = "already-stripped"
