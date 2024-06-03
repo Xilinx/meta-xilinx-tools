@@ -32,5 +32,10 @@ XSCT_CHECKSUM ?= "${@d.getVarFlag('XSCT_CHECKSUM', d.getVar('TOOL_VER_MAIN'))}"
 VALIDATE_XSCT_CHECKSUM ?= '1'
 VALIDATE_XSCT_CHECKSUM[doc] = "Ignore the checksum when set to 0"
 
+USE_XSCT_TARBALL ?= '1'
+USE_XSCT_TARBALL[doc] = "Flag to determine whether or not to use the xsct-tarball class. \
+If enabled, the tarball from path EXTERNAL_XSCT_TARBALL is copied to downloads/xsct, and extracted \
+to tmp/sysroots-xsct. XILINX_SDK_TOOLCHAIN is set accordingly to use xsct from this path."
+
 EXTERNAL_XSCT_TARBALL ?= ""
 EXTERNAL_XSCT_TARBALL[doc] = "Variable that defines where the xsct tarball is stored"
