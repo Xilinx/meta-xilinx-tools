@@ -34,6 +34,7 @@ COMPATIBLE_MACHINE:zynq = ".*"
 COMPATIBLE_MACHINE:zynqmp = ".*"
 COMPATIBLE_MACHINE:microblaze = ".*"
 COMPATIBLE_MACHINE:versal = ".*"
+COMPATIBLE_MACHINE:versal-net = ".*"
 
 do_configure[cleandirs] += "${DT_FILES_PATH} ${B}"
 do_deploy[cleandirs] += "${DEPLOYDIR}"
