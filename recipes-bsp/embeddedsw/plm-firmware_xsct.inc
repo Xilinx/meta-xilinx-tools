@@ -11,6 +11,7 @@ XSCTH_APP  = "versal PLM"
 
 # XSCT version provides it's own toolchain, so can build in any environment
 COMPATIBLE_HOST:versal = "${HOST_SYS}"
+COMPATIBLE_HOST:versal-net = "${HOST_SYS}"
 
 # Clear this for a Linux build, using the XSCT toolchain
 EXTRA_OEMAKE:linux = ""
