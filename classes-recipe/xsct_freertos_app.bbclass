@@ -9,7 +9,7 @@
 inherit xsctapp xsctyaml deploy
 
 # For ZynqMP DR device FreeRTOS app depends on libmetal.
-DEPENDS:append:zynqmp-dr = " libmetal"
+DEPENDS:append = "${@bb.utils.contains('MACHINE_FEATURES', 'rfsoc', ' libmetal', '', d)}"
 
 # recipes that inherit from this class need to use an appropriate machine
 # override for COMPATIBLE_MACHINE to build successfully; don't allow building
