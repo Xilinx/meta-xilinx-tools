@@ -12,5 +12,6 @@ XSCTH_APP = "Hello World"
 
 COMPATIBLE_MACHINE:zynqmp = ".*"
 COMPATIBLE_MACHINE:versal = ".*"
+COMPATIBLE_MACHINE:versal-net = ".*"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"

@@ -14,9 +14,11 @@ COMPATIBLE_MACHINE:microblaze = "^$"
 COMPATIBLE_MACHINE:zynq = "${@'.*' if d.getVar('MACHINE') != 'zynq-generic' else '^$'}"
 COMPATIBLE_MACHINE:zynqmp = "${@'.*' if d.getVar('MACHINE') != 'zynqmp-generic' else '^$'}"
 COMPATIBLE_MACHINE:versal = "${@'.*' if d.getVar('MACHINE') != 'versal-generic' else '^$'}"
+COMPATIBLE_MACHINE:versal-net = "${@'.*' if d.getVar('MACHINE') != 'versal-net-generic' else '^$'}"
 
 XSCTH_APP_COMPILER_FLAGS:append:zynqmp = " -mfloat-abi=hard "
 XSCTH_APP_COMPILER_FLAGS:append:versal = " -mfloat-abi=hard "
+XSCTH_APP_COMPILER_FLAGS:append:versal-net = " -mfloat-abi=hard "
 
 YAML_BSP_CONFIG += "WITH_PROXY"
 YAML_BSP_CONFIG += "${@bb.utils.contains('SOC_FAMILY', 'zynq', 'extra_compiler_flags', '', d)}"
