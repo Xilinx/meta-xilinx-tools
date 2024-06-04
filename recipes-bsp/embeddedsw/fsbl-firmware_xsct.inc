@@ -7,7 +7,7 @@ B = "${S}/${XSCTH_PROJ}"
 B:zynq = "${S}/${XSCTH_PROJ}"
 B:zynqmp = "${S}/${XSCTH_PROJ}"
 
-XSCTH_MISC:append:zynqmp-dr = " -lib libmetal"
+XSCTH_MISC:append = "${@bb.utils.contains('MACHINE_FEATURES', 'rfsoc', ' -lib libmetal', '', d)}"
 
 XSCTH_COMPILER_DEBUG_FLAGS = " -DFSBL_DEBUG_INFO"
 

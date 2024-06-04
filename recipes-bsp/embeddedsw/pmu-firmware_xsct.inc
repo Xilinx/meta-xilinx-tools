@@ -5,7 +5,7 @@ PARALLEL_MAKE = "-j1"
 
 B = "${S}/${XSCTH_PROJ}"
 
-XSCTH_MISC:append:zynqmp-dr = " -lib libmetal"
+XSCTH_MISC:append = "${@bb.utils.contains('MACHINE_FEATURES', 'rfsoc', ' -lib libmetal', '', d)}"
 
 XSCTH_COMPILER_DEBUG_FLAGS = "-DDEBUG_MODE -DXPFW_DEBUG_DETAILED"
 XSCTH_PROC_IP = "psu_pmu"
