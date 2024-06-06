@@ -13,7 +13,7 @@ inherit devicetree xsctdt xsctyaml
 
 PROVIDES = "virtual/uboot-dtb"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 DT_VERSION_EXTENSION ?= "xilinx-${XILINX_RELEASE_VERSION}"
 PV = "${DT_VERSION_EXTENSION}+git"
 
@@ -41,7 +41,7 @@ SRC_URI:append = "${@" ".join(["file://%s" % f for f in (d.getVar('UBOOT_DTS') o
 do_configure:prepend () {
     if [ ! -z "${UBOOT_DTS}" ]; then
         for f in ${UBOOT_DTS}; do
-            cp  ${WORKDIR}/${f} ${DT_FILES_PATH}/
+            cp  ${UNPACKDIR}/${f} ${DT_FILES_PATH}/
         done
         return
     fi

@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 inherit xsct_baremetal_app
 
 SRC_URI = "${EMBEDDEDSW_SRCURI}"
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 # Set the template app to "Hello World"
 XSCTH_APP = "Hello World"

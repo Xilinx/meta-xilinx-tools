@@ -1,6 +1,6 @@
 DESCRIPTION = "Image Recovery"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 PROVIDES = "virtual/imgrcry"
 DEPENDS += "bootgen-native fsbl-firmware"
 inherit xsctapp xsctyaml deploy
@@ -12,7 +12,7 @@ COMPATIBLE_MACHINE:zynqmp = "zynqmp"
 XSCTH_APP:zynqmp = "Image Recovery"
 
 do_configure:append () {
-cat > ${WORKDIR}/${PN}.bif << EOF
+cat > ${UNPACKDIR}/${PN}.bif << EOF
         the_ROM_image:
         {
                 [bootloader, destination_cpu=a53-0] ${DEPLOY_DIR_IMAGE}/fsbl-${MACHINE}.elf 
@@ -23,7 +23,7 @@ EOF
 }
 
 do_compile:append () {
-        bootgen -image ${WORKDIR}/${PN}.bif -arch ${SOC_FAMILY} -w -o ${B}/${XSCTH_PROJ}/${PN}.bin
+        bootgen -image ${UNPACKDIR}/${PN}.bif -arch ${SOC_FAMILY} -w -o ${B}/${XSCTH_PROJ}/${PN}.bin
 }
 
 do_deploy:append () {

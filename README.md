@@ -110,7 +110,7 @@ This layer provides additional configurations through YAML
 * FSBL or FS-BOOT
 ```bash
 # MicroBlaze:
-YAML_FILE_PATH:pn-fs-boot = "${WORKDIR}/fsboot.yaml"
+YAML_FILE_PATH:pn-fs-boot = "${UNPACKDIR}/fsboot.yaml"
 YAML_SERIAL_CONSOLE_STDIN:pn-fs-boot = "axi_uartlite_0"
 YAML_SERIAL_CONSOLE_STDOUT:pn-fs-boot = "axi_uartlite_0"
 

@@ -10,7 +10,7 @@ inherit dfx_dtg_common
 
 DEPENDS:append = "${@'${STATIC_PN}' if d.getVar('YAML_ENABLE_CLASSIC_SOC') != '1' else ''}"
 
-XSCTH_MISC:append = " -rphdf ${WORKDIR}/${RP_XSCTH_HDF}"
+XSCTH_MISC:append = " -rphdf ${UNPACKDIR}/${RP_XSCTH_HDF}"
 XSCTH_HDF_PATH ?= "${STATIC_PN}.xsa"
 XSCTH_HDF = "${@'${RECIPE_SYSROOT}/xsa/${XSCTH_HDF_PATH}' if d.getVar('YAML_ENABLE_CLASSIC_SOC') != '1' else '${HDF_PATH}'}"
 
@@ -68,8 +68,8 @@ do_configure:append () {
                 # In some use case user can unset this variable from local.conf
                 # In such case copy PL_PARTIAL_CUSTOM_INCLUDE_PATH dtsi file only if
                 # YAML_PARTIAL_OVERLAY_CUSTOM_DTS is set else ignore it
-                if [ -f ${WORKDIR}/${PL_PARTIAL_CUSTOM_INCLUDE_PATH}/*.dtsi ]; then
-                    cp ${WORKDIR}/${PL_PARTIAL_CUSTOM_INCLUDE_PATH}/*.dtsi $dtsi
+                if [ -f ${UNPACKDIR}/${PL_PARTIAL_CUSTOM_INCLUDE_PATH}/*.dtsi ]; then
+                    cp ${UNPACKDIR}/${PL_PARTIAL_CUSTOM_INCLUDE_PATH}/*.dtsi $dtsi
                 fi
                 break
             else
@@ -110,12 +110,12 @@ do_install() {
         fi
     fi
 
-    if [ -f ${WORKDIR}/${XCL_PATH}/*.xclbin ]; then
-        install -Dm 0644 ${WORKDIR}/${XCL_PATH}/*.xclbin ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.xclbin
+    if [ -f ${UNPACKDIR}/${XCL_PATH}/*.xclbin ]; then
+        install -Dm 0644 ${UNPACKDIR}/${XCL_PATH}/*.xclbin ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.xclbin
     fi
 
-    if [ -f ${WORKDIR}/${JSON_PATH}/accel.json ]; then
-        install -Dm 0644 ${WORKDIR}/${JSON_PATH}/accel.json ${D}/${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/accel.json
+    if [ -f ${UNPACKDIR}/${JSON_PATH}/accel.json ]; then
+        install -Dm 0644 ${UNPACKDIR}/${JSON_PATH}/accel.json ${D}/${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/accel.json
     fi
 }
 

@@ -75,12 +75,12 @@ do_install() {
         fi
     fi
 
-    if [ -f ${WORKDIR}/${XCL_PATH}/*.xclbin ]; then
-        install -Dm 0644 ${WORKDIR}/${XCL_PATH}/*.xclbin ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.xclbin
+    if [ -f ${UNPACKDIR}/${XCL_PATH}/*.xclbin ]; then
+        install -Dm 0644 ${UNPACKDIR}/${XCL_PATH}/*.xclbin ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.xclbin
     fi
 
-    if [ -f ${WORKDIR}/${JSON_PATH}/shell.json ]; then
-        install -Dm 0644 ${WORKDIR}/${JSON_PATH}/shell.json ${D}/${nonarch_base_libdir}/firmware/xilinx/${PN}/shell.json
+    if [ -f ${UNPACKDIR}/${JSON_PATH}/shell.json ]; then
+        install -Dm 0644 ${UNPACKDIR}/${JSON_PATH}/shell.json ${D}/${nonarch_base_libdir}/firmware/xilinx/${PN}/shell.json
     fi
 
     # In case of DFx designs, To create a new reconfigurable partition(RP)
@@ -88,7 +88,7 @@ do_install() {
     # recipe depends on DFx Static recipe xsa(${STATIC_PN}). Hence this DFx Static
     # xsa will be packaged to recipe-sysroots but not installed on target rootfs.
     install -d ${D}/xsa
-    install -Dm 0644 ${WORKDIR}/${XSCTH_HDF_PATH} ${D}/xsa/${PN}.xsa
+    install -Dm 0644 ${UNPACKDIR}/${XSCTH_HDF_PATH} ${D}/xsa/${PN}.xsa
 
 }
 

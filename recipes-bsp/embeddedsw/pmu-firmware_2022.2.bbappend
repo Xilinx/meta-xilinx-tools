@@ -27,20 +27,20 @@ EXTRA_OEMAKE:linux = ""
 
 # Workaround for hardcoded toolchain items
 XSCT_PATH_ADD:append:elf = "\
-${WORKDIR}/bin:"
+${UNPACKDIR}/bin:"
 
 MB_OBJCOPY = "mb-objcopy"
 
 do_compile:prepend:elf() {
-  mkdir -p ${WORKDIR}/bin
-  echo "#! /bin/bash\n${CC} \$@" > ${WORKDIR}/bin/mb-gcc
-  echo "#! /bin/bash\n${AS} \$@" > ${WORKDIR}/bin/mb-as
-  echo "#! /bin/bash\n${AR} \$@" > ${WORKDIR}/bin/mb-ar
-  echo "#! /bin/bash\n${OBJCOPY} \$@" > ${WORKDIR}/bin/mb-objcopy
-  chmod 0755 ${WORKDIR}/bin/mb-gcc
-  chmod 0755 ${WORKDIR}/bin/mb-as
-  chmod 0755 ${WORKDIR}/bin/mb-ar
-  chmod 0755 ${WORKDIR}/bin/mb-objcopy
+  mkdir -p ${UNPACKDIR}/bin
+  echo "#! /bin/bash\n${CC} \$@" > ${UNPACKDIR}/bin/mb-gcc
+  echo "#! /bin/bash\n${AS} \$@" > ${UNPACKDIR}/bin/mb-as
+  echo "#! /bin/bash\n${AR} \$@" > ${UNPACKDIR}/bin/mb-ar
+  echo "#! /bin/bash\n${OBJCOPY} \$@" > ${UNPACKDIR}/bin/mb-objcopy
+  chmod 0755 ${UNPACKDIR}/bin/mb-gcc
+  chmod 0755 ${UNPACKDIR}/bin/mb-as
+  chmod 0755 ${UNPACKDIR}/bin/mb-ar
+  chmod 0755 ${UNPACKDIR}/bin/mb-objcopy
 }
 
 ESW_COMPONENT = "${XSCTH_PROJ}/executable.elf"

@@ -14,14 +14,14 @@ COMPATIBLE_MACHINE:eval-brd-sc-zynqmp = "${MACHINE}"
 
 EXTRA_OEMAKE:append:eval-brd-sc-zynqmp = "BOARD=SC"
 
-S = "${WORKDIR}/git/lib/sw_apps/img_rcvry/src"
+S = "${UNPACKDIR}/git/lib/sw_apps/img_rcvry/src"
 
 PARALLEL_MAKE = "-j 1"
 
 XSCTH_EXECUTABLE = "ImgRecovery.elf"
 
 do_configure () {
-cat > ${WORKDIR}/${PN}.bif << EOF
+cat > ${UNPACKDIR}/${PN}.bif << EOF
     the_ROM_image:
     {
         [bootloader, destination_cpu=a53-0] ${DEPLOY_DIR_IMAGE}/fsbl-${MACHINE}.elf
@@ -33,7 +33,7 @@ EOF
 
 do_compile () {
     oe_runmake all
-    bootgen -image ${WORKDIR}/${PN}.bif -arch ${SOC_FAMILY} -w -o ${B}/${PN}.bin
+    bootgen -image ${UNPACKDIR}/${PN}.bif -arch ${SOC_FAMILY} -w -o ${B}/${PN}.bin
 
     printf "* ${PN}\nSRCREV: ${SRCREV}\nBRANCH: ${BRANCH}\n\n" > ${S}/${PN}.manifest
 }

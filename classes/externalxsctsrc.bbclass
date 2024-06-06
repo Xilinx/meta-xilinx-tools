@@ -25,7 +25,7 @@ python () {
         if externalsrcbuild:
             d.setVar('B', externalsrcbuild)
         else:
-            d.setVar('B', '${WORKDIR}/${BPN}-${PV}/')
+            d.setVar('B', '${UNPACKDIR}/${BPN}-${PV}/')
 
         if d.getVar('S') == d.getVar('B'):
             bb.error("Cannot set build directory to be same as source directory")

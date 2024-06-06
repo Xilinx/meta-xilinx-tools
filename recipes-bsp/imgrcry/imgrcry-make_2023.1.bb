@@ -1,6 +1,6 @@
 DESCRIPTION = "Image Recovery"
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/git/license.txt;md5=ce611484168a6000bd35df68fc4f4290"
+LIC_FILES_CHKSUM = "file://${UNPACKDIR}/git/license.txt;md5=ce611484168a6000bd35df68fc4f4290"
 
 PROVIDES = "virtual/imgrcry"
 RCONFLICTS:${PN} = "imgrcry"
@@ -11,14 +11,14 @@ inherit deploy xlnx-embeddedsw xsctbase
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE:kria = "${MACHINE}"
 
-S = "${WORKDIR}/git/lib/sw_apps/img_rcvry/src"
+S = "${UNPACKDIR}/git/lib/sw_apps/img_rcvry/src"
 
 PARALLEL_MAKE = "-j 1"
 
 XSCTH_EXECUTABLE = "ImgRecovery.elf"
 
 do_configure () {
-cat > ${WORKDIR}/${PN}.bif << EOF
+cat > ${UNPACKDIR}/${PN}.bif << EOF
     the_ROM_image:
     {
         [bootloader, destination_cpu=a53-0] ${DEPLOY_DIR_IMAGE}/fsbl-${MACHINE}.elf
@@ -30,7 +30,7 @@ EOF
 
 do_compile () {
     oe_runmake all
-    bootgen -image ${WORKDIR}/${PN}.bif -arch ${SOC_FAMILY} -w -o ${B}/${PN}.bin
+    bootgen -image ${UNPACKDIR}/${PN}.bif -arch ${SOC_FAMILY} -w -o ${B}/${PN}.bin
 }
 
 do_deploy () {

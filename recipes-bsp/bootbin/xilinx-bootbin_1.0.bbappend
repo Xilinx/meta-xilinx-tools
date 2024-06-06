@@ -2,6 +2,8 @@ BIF_BITSTREAM_ATTR ?= "${@bb.utils.contains('MACHINE_FEATURES', 'fpga-overlay', 
 
 DEPENDS += 'u-boot-xlnx-scr'
 
+S = "${UNPACKDIR}"
+
 # Only adjust the depends when on versal
 BOOTSCR_DEP = ''
 BOOTSCR_DEP:versal = 'u-boot-xlnx-scr:do_deploy'

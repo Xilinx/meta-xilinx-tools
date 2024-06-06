@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: MIT
 #
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 ESW_VER ?= "${XILINX_XSCT_VERSION}"
 
@@ -17,7 +17,7 @@ XSCTH_BASE_NAME ?= "${PN}${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFI
 
 FILESEXTRAPATHS:append := ":${XLNX_SCRIPTS_DIR}"
 SRC_URI:append = " file://app.tcl"
-XSCTH_SCRIPT ?= "${WORKDIR}/app.tcl"
+XSCTH_SCRIPT ?= "${UNPACKDIR}/app.tcl"
 
 XSCTH_BUILD_DEBUG ?= "0"
 XSCTH_BUILD_CONFIG ?= "${@['Debug', 'Release'][d.getVar('XSCTH_BUILD_DEBUG') == "0"]}"

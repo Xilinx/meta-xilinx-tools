@@ -6,6 +6,8 @@ PROVIDES = "virtual/hdf"
 
 INHIBIT_DEFAULT_DEPS = "1"
 
+S = "${UNPACKDIR}" 
+
 inherit deploy
 
 HDF_BASE ??= ""
@@ -13,7 +15,7 @@ HDF_BASE[doc] = "Download protocol (file://, git://, http:// or https://)"
 HDF_PATH ??= ""
 HDF_PATH[doc] = "Path to git repository, or file"
 HDF_NAME ??= ""
-HDF_NAME[doc] = "Path to the XSA file once downloaded, usually set by the recipe (must be inside WORKDIR) (See anon python)"
+HDF_NAME[doc] = "Path to the XSA file once downloaded, usually set by the recipe (must be inside UNPACKDIR) (See anon python)"
 
 BRANCH ??= ""
 SRCREV ??= ""
@@ -61,9 +63,9 @@ include hdf-repository_2024.1.inc
 COMPATIBLE_HOST:xilinx-standalone = "${HOST_SYS}"
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
-# Don't set S = "${WORKDIR}/git" as we need this to work for other protocols
+# Don't set S = "${UNPACKDIR}/git" as we need this to work for other protocols
 # HDF_NAME will be adjusted to include /git if needed
-S = "${WORKDIR}"
+S = "${UNPACKDIR}"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
