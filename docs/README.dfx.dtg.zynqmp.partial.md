@@ -39,12 +39,12 @@ SRC_URI = " \
 2. Create RP recipes-firmware directory in meta layer and copy the .xsa, .dtsi,
    .json and .xclbin file to these directories.
 ```
-$ mkdir -p <meta-layer>/recipes-fimrware/<recipes-firmware-app>/files
-$ cp -r <path-to-files>/*.{xsa, dtsi, accel.json and .xclbin} <meta-layer>/recipes-fimrware/<firmware-app-name>/files
+$ mkdir -p <meta-layer>/recipes-firmware/<recipes-firmware-app>/files
+$ cp -r <path-to-files>/*.{xsa, dtsi, accel.json and .xclbin} <meta-layer>/recipes-firmware/<firmware-app-name>/files
 ```
 3. Now create the recipes for Versal DFx RP firmware app using recipetool.
 ```
-$ recipetool create -o <meta-layer>/recipes-fimrware/<firmware-app-name>/firmware-app-name.bb file:///<meta-layer>/recipes-fimrware/<firmware-app-name>/files 
+$ recipetool create -o <meta-layer>/recipes-firmware/<firmware-app-name>/firmware-app-name.bb file:///<meta-layer>/recipes-firmware/<firmware-app-name>/files
 ```
 4. Modify the recipe and inherit dfx_dtg_zynqmp_partial bbclass as shown below.
 > **Note:** DFx RP recipes depends on DFx Static xsa, hence `STATIC_PN` should
@@ -84,7 +84,7 @@ IMAGE_INSTALL:append = " \
 ---
 
 ## Test Procedure on Target
-* Once Linux boots on target, use fpgautil command to load RP .bit.bin and corresponding
+* Once Linux boots on target, use fpgautil command to load RP .bin and corresponding
   dt overlay as shown below.
 > **Note:**
 > 1. firmware can be loaded only with sudo or root permissions.

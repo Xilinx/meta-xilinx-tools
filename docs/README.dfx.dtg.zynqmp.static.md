@@ -39,12 +39,12 @@ SRC_URI = " \
 2. Create recipes-firmware directory in meta layer and copy the .xsa, .dtsi,
    .json and .xclbin file to these directories.
 ```
-$ mkdir -p <meta-layer>/recipes-fimrware/<recipes-firmware-app>/files
-$ cp -r <path-to-files>/*.{xsa, dtsi, shell.json and .xclbin} <meta-layer>/recipes-fimrware/<firmware-app-name>/files
+$ mkdir -p <meta-layer>/recipes-firmware/<recipes-firmware-app>/files
+$ cp -r <path-to-files>/*.{xsa, dtsi, shell.json and .xclbin} <meta-layer>/recipes-firmware/<firmware-app-name>/files
 ```
 3. Now create the recipes for ZynqMP DFx Static firmware app using recipetool.
 ```
-$ recipetool create -o <meta-layer>/recipes-fimrware/<firmware-app-name>/firmware-app-name.bb file:///<meta-layer>/recipes-fimrware/<firmware-app-name>/files 
+$ recipetool create -o <meta-layer>/recipes-firmware/<firmware-app-name>/firmware-app-name.bb file:///<meta-layer>/recipes-firmware/<firmware-app-name>/files
 ```
 4. Modify the recipe and inherit dfx_dtg_zynqmp_static bbclass as shown below.
 ```
@@ -64,7 +64,7 @@ COMPATIBLE_MACHINE:zynqmp = "zynqmp"
 ```
 5. Add firmware-recipe app to image and enable fpga-overlay machine features to
    local.conf as shown below.
-> **Note:** fpga-manager-script provides fpgautil tool to load .bit.bin and dtbo
+> **Note:** fpga-manager-script provides fpgautil tool to load .bin and dtbo
 > at runtime linux.
 ```
 MACHINE_FEATURES += "fpga-overlay"
@@ -81,7 +81,7 @@ IMAGE_INSTALL:append = " \
 ---
 
 ## Test Procedure on Target
-* Once Linux boots on target, use fpgautil command to load .bit.bin and
+* Once Linux boots on target, use fpgautil command to load .bin and
   corresponding dt overlay as shown below.
 > **Note:** firmware can be loaded only with sudo or root permissions.
 ---
