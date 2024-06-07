@@ -108,7 +108,7 @@ do_install() {
         install -d ${D}${STAGING_DIR_NATIVE}/Vitis
         cp --preserve=mode,timestamps -R ${S}/* ${D}${STAGING_DIR_NATIVE}/Vitis/.
     else
-        bbwarn "Using external XSCT: ${XILINX_SDK_TOOLCHAIN}"
+        bbdebug 2 "Using external XSCT: ${XILINX_SDK_TOOLCHAIN}"
     fi
 }
 
