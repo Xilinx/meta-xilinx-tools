@@ -15,6 +15,7 @@ ELF_LOAD_ADDR ?= "0"
 ELF_JUMP_OFFSET ?= ""
 ELF_INFILE ?= "${DEPLOY_DIR_IMAGE}/u-boot.elf"
 OUTFILE_NAME ?= "u-boot-s"
+S = "${UNPACKDIR}"
 B = "${UNPACKDIR}"
 
 PARALLEL_MAKE=""
@@ -24,7 +25,7 @@ do_compile[depends] = "virtual/bootloader:do_deploy"
 
 do_compile() {
 	export CROSS_COMPILE="${TARGET_PREFIX}"
-	${UNPACKDIR}/mb-realoc -l ${ELF_LOAD_ADDR} -i ${ELF_INFILE} -o ${OUTFILE_NAME}
+	./mb-realoc -l ${ELF_LOAD_ADDR} -i ${ELF_INFILE} -o ${OUTFILE_NAME}
 }
 
 do_install[noexec] = "1"
