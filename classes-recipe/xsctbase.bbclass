@@ -32,7 +32,7 @@ XSCTH_ARCH ?= "${@bb.utils.contains_any('XSCTH_PROC_IP', ['psu_cortexa53', 'psv_
 PROJ_ARG ??= "-ws ${XSCTH_WS} -pname ${XSCTH_PROJ} -rp ${XSCTH_REPO}"
 HW_ARG ??= "-processor_ip ${XSCTH_PROC_IP} -hdf ${XSCTH_HDF} -arch ${XSCTH_ARCH} ${@['', '-processor ${XSCTH_PROC}'][d.getVar('XSCTH_PROC', True) != '']}"
 
-DEPENDS += 'ncurses-native xsct-native'
+DEPENDS += 'xsct-native'
 
 do_configure[vardeps] += "TOOL_VER_MAIN"
 do_configure[depends] += "virtual/hdf:do_deploy"
@@ -61,7 +61,7 @@ do_configure() {
     echo "Using xsct from: $(which xsct)"
     echo "cmd is: xsct -sdx -nodisp ${XSCTH_SCRIPT} ${PROJ_ARG} ${HW_ARG} ${APP_ARG} ${MISC_ARG}"
 
-    eval LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${STAGING_LIBDIR_NATIVE} xsct -sdx -nodisp ${XSCTH_SCRIPT} ${PROJ_ARG} ${HW_ARG} ${APP_ARG} ${MISC_ARG}
+    eval xsct -sdx -nodisp ${XSCTH_SCRIPT} ${PROJ_ARG} ${HW_ARG} ${APP_ARG} ${MISC_ARG}
 
 }
 
