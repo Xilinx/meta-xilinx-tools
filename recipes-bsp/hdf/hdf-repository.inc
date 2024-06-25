@@ -219,3 +219,15 @@ HDF_BASE[zcu216-zynqmp] = 'https://'
 HDF_PATH[zcu216-zynqmp] = 'petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1002_1_10030058/external/zcu216-zynqmp/zcu216-zynqmp-2023.2_1002_1.xsa'
 BRANCHARG[zcu216-zynqmp] = 'name=zcu216-zynqmp'
 SRC_URI[zcu216-zynqmp.sha256sum] = 'b5acbd79b1cf84419014c238fadccd829689cb0f06a988072cd9cb4cf4da3233'
+
+# embedded-plus-ve2302
+HDF_BASE[embedded-plus-ve2302] = 'https://'
+HDF_PATH[embedded-plus-ve2302] = 'petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1014_1_06190336/external/embedded-plus-ve2302/embedded-plus-ve2302-2023.2_1014_1.xsa'
+BRANCHARG[embedded-plus-ve2302] = 'name=embedded-plus-ve2302'
+SRC_URI[embedded-plus-ve2302.sha256sum] = '3219a0459c9733f38eb7be63907b7b5cb0b870cbef1c242eb98d9336d84fd2e5'
+
+# embedded-plus-ve2302-es1
+HDF_BASE[embedded-plus-ve2302-es1] = 'https://'
+HDF_PATH[embedded-plus-ve2302-es1] = 'petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1014_1_06190336/external/embedded-plus-ve2302-es1/embedded-plus-ve2302-es1-2023.2_1014_1.xsa'
+BRANCHARG[embedded-plus-ve2302-es1] = 'name=embedded-plus-ve2302-es1'
+SRC_URI[embedded-plus-ve2302-es1.sha256sum] = '8806f261cb5671684f3b60196955f3b426e9682d582d38cf9909f6874dff8139'
