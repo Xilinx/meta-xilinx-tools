@@ -12,8 +12,9 @@ inherit xsctdt xsctyaml
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-S = "${UNPACKDIR}/git"
-B = "${UNPACKDIR}/${BPN}-build"
+S = "${WORKDIR}/git"
+UNPACKDIR = "${WORKDIR}/sources"
+B = "${WORKDIR}/${BPN}-build"
 
 DT_VERSION_EXTENSION ?= "xilinx-${XILINX_RELEASE_VERSION}"
 PV = "${DT_VERSION_EXTENSION}+git"
