@@ -33,6 +33,8 @@ XSCTH_PROC_IP:versal ?= "psv_cortexr5"
 XSCTH_PROC_IP:zynqmp ?= "psu_cortexr5"
 XSCTH_PROC:zynq ?= "ps7_cortexa9_1"
 
+DEBUG_PREFIX_MAP:remove = "-fcanon-prefix-map"
+
 INSANE_SKIP:${PN} = "arch"
 
 FW_LIB_DIR = "${nonarch_base_libdir}/firmware"
