@@ -8,19 +8,18 @@
 
 inherit dfx_dtg_common
 
-DEPENDS:append = "${@'${STATIC_PN}' if d.getVar('YAML_ENABLE_CLASSIC_SOC') != '1' else ''}"
+DEPENDS:append = "${@'${STATIC_PN}'}"
 
 XSCTH_MISC:append = " -rphdf ${WORKDIR}/${RP_XSCTH_HDF}"
 XSCTH_HDF_PATH ?= "${STATIC_PN}.xsa"
-XSCTH_HDF = "${@'${RECIPE_SYSROOT}/xsa/${XSCTH_HDF_PATH}' if d.getVar('YAML_ENABLE_CLASSIC_SOC') != '1' else '${HDF_PATH}'}"
+XSCTH_HDF = "${@'${RECIPE_SYSROOT}/xsa/${XSCTH_HDF_PATH}'}"
 
 STATIC_PN ?= ""
 RP_NAME ?= ""
 RP_BASE_PATH ?= "${@'${STATIC_PN}/${RP_NAME}' if d.getVar('RP_NAME') else '${STATIC_PN}'}"
-RP_PATH = "${@'csoc' if d.getVar('YAML_ENABLE_CLASSIC_SOC') == '1' else '${RP_BASE_PATH}'}"
 
 python (){
-    if not d.getVar("STATIC_PN") and d.getVar('YAML_ENABLE_CLASSIC_SOC') != '1':
+    if not d.getVar("STATIC_PN"):
         raise bb.parse.SkipRecipe("STATIC_PN needs to be set to the package name that corresponds to the static xsa")
 
     d.setVar("RP_XSCTH_HDF",[a for a in d.getVar('SRC_URI').split() if '.xsa' in a][0].lstrip('file://'))
@@ -80,12 +79,12 @@ do_configure:append () {
 }
 
 do_install() {
-    install -d ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/
+    install -d ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_BASE_PATH}/${PN}/
 
     if [ -f ${B}/pl-partial-final*.dtbo ] && [ -n "${YAML_PARTIAL_OVERLAY_CUSTOM_DTS}" ]; then
-        install -Dm 0644 ${B}/pl-partial-final*.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.dtbo
+        install -Dm 0644 ${B}/pl-partial-final*.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_BASE_PATH}/${PN}/${PN}.dtbo
     elif [ -f ${B}/pl-partial*.dtbo ] && [ -z "${YAML_PARTIAL_OVERLAY_CUSTOM_DTS}" ]; then
-        install -Dm 0644 ${B}/pl-partial*.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.dtbo
+        install -Dm 0644 ${B}/pl-partial*.dtbo ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_BASE_PATH}/${PN}/${PN}.dtbo
     else
         bbfatal "A partial dtbo ending with ${B}/pl-partial-final-<partial_design>_inst_<n>.dtbo expected but not found"
     fi
@@ -96,27 +95,27 @@ do_install() {
     # directory.
     if [ "${SOC_FAMILY}" != "versal" ]; then
         if [ -f ${B}/${PN}/hw/*_partial.bin ]; then
-            install -Dm 0644 ${B}/${PN}/hw/*_partial.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.bit
+            install -Dm 0644 ${B}/${PN}/hw/*_partial.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_BASE_PATH}/${PN}/${PN}.bit
         elif [ -f ${B}/${PN}.bin ]; then
-            install -Dm 0644 ${B}/${PN}.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.bin
+            install -Dm 0644 ${B}/${PN}.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_BASE_PATH}/${PN}/${PN}.bin
         else
             bbfatal "A partial bitstream ending with .bin expected but not found"
         fi
     else
         if [ -f ${B}/${PN}/hw/*_partial.pdi ]; then
-            install -Dm 0644 ${B}/${PN}/hw/*_partial.pdi ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.pdi
+            install -Dm 0644 ${B}/${PN}/hw/*_partial.pdi ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_BASE_PATH}/${PN}/${PN}.pdi
         else
             bbfatal "A partial pdi ending with _partial.pdi expected but not found"
         fi
     fi
 
     if [ -f ${WORKDIR}/${XCL_PATH}/*.xclbin ]; then
-        install -Dm 0644 ${WORKDIR}/${XCL_PATH}/*.xclbin ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/${PN}.xclbin
+        install -Dm 0644 ${WORKDIR}/${XCL_PATH}/*.xclbin ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_BASE_PATH}/${PN}/${PN}.xclbin
     fi
 
     if [ -f ${WORKDIR}/${JSON_PATH}/accel.json ]; then
-        install -Dm 0644 ${WORKDIR}/${JSON_PATH}/accel.json ${D}/${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}/accel.json
+        install -Dm 0644 ${WORKDIR}/${JSON_PATH}/accel.json ${D}/${nonarch_base_libdir}/firmware/xilinx/${RP_BASE_PATH}/${PN}/accel.json
     fi
 }
 
-FILES:${PN} += "${nonarch_base_libdir}/firmware/xilinx/${RP_PATH}/${PN}"
+FILES:${PN} += "${nonarch_base_libdir}/firmware/xilinx/${RP_BASE_PATH}/${PN}"
