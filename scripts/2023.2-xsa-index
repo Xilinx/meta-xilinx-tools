@@ -18,6 +18,7 @@ vck190-ospi-versal https://petalinux.xilinx.com/sswreleases/rel-v2023/hdf-exampl
 vck190-versal https://petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1002_1_10030058/external/vck190-versal/vck190-versal-2023.2_1002_1.xsa
 vck-sc-zynqmp https://petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1014_1_04040458/external/vck-sc-zynqmp/vck-sc-zynqmp-2023.2_1014_1.xsa
 vcu118-microblazeel https://petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1002_1_10030058/external/vcu118-microblazeel/vcu118-microblazeel-2023.2_1002_1.xsa
+vek280-versal https://raw.githubusercontent.com/Xilinx/hdf-examples/xlnx_rel_v2023.2/vek280-versal/system.xsa
 versal-net-generic https://petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1002_1_10030058/external/versal-net-generic/versal-net-generic-2023.2_0810_1.xsa
 vmk180-emmc-versal https://petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1002_1_10030058/external/vmk180-emmc-versal/vmk180-emmc-versal-2023.2_1002_1.xsa
 vmk180-ospi-versal https://petalinux.xilinx.com/sswreleases/rel-v2023/hdf-examples/2023.2/2023.2_1002_1_10030058/external/vmk180-ospi-versal/vmk180-ospi-versal-2023.2_1002_1.xsa
