@@ -78,26 +78,16 @@ xsct tools may not be backward compatible with embeddedsw repo. Meaning
 
 meta-xilinx-tools recipes depends on XSA to be provided.
 As of the 2019.2 release, all design files were renamed from hdf to xsa.
-But the variables and references to hdf will remain and renamed in the future release.
 
-HDF_BASE can be set to git:// or file://
+HDF_URI specifies the download url for the XSA file.  It is usually file://
+or https://.
 
-HDF_PATH will be git repository or the path containing HDF
+HDF_URI[sha256sum] must also be defined so the download can be verified.
 
-For example:
 
-* Using GIT subversion
-```bash
-HDF_BASE = "git://"
-HDF_PATH = "github.com/Xilinx/hdf-examples.git"
-HDF_NAME = "system.xsa"
-HDF_MACHINE = "zcu102-zynqmp"
-```
-* Using XSA file path
-```bash
-HDF_BASE = "file://"
-HDF_PATH = "/<absolute-path-to-xsa>/system.xsa"
-```
+These value as set automatically by gen-machineconf, and will rarely need
+to be set manually.
+
 ---
 
 ## Additional configurations using YAML
