@@ -6,7 +6,7 @@ PROVIDES = "virtual/hdf"
 
 INHIBIT_DEFAULT_DEPS = "1"
 
-inherit check_xsct_enabled deploy
+inherit check_xsct_enabled deploy image-artifact-names
 
 HDF_MACHINE ?= "${MACHINE}"
 
@@ -27,6 +27,9 @@ HDF_EXT ?= "xsa"
 
 # Provide a way to extend the SRC_URI, default to adding protocol=https for git:// usage.
 HDF_EXTENSION ?= "${@';protocol=https' if d.getVar('HDF_BASE') == 'git://' else ''}"
+
+# HDF_NAME without the .xsa
+HDF_BASE_NAME = "${@os.path.basename(d.getVar('HDF_NAME') or '').replace('.xsa', '')}"
 
 SRC_URI = "${HDF_BASE}${HDF_PATH}${BRANCHARGS}${HDF_EXTENSION}"
 
@@ -90,19 +93,18 @@ do_check() {
     fi
 }
 
-do_install() {
-    install -d ${D}/opt/xilinx/hw-design
-    install -m 0644 ${HDF_NAME} ${D}/opt/xilinx/hw-design/design.${HDF_EXT}
-}
+do_install[noexec] = "1"
 
 do_deploy() {
     install -d ${DEPLOYDIR}
-    install -m 0644 ${HDF_NAME} ${DEPLOYDIR}/Xilinx-${MACHINE}.${HDF_EXT}
+    install -m 0644 ${HDF_NAME} ${DEPLOYDIR}/${HDF_BASE_NAME}${IMAGE_VERSION_SUFFIX}.${HDF_EXT}
+    if [ ${HDF_BASE_NAME}${IMAGE_VERSION_SUFFIX}.${HDF_EXT} != ${MACHINE}${IMAGE_VERSION_SUFFIX}.${HDF_EXT} ]; then
+        ln -s ${HDF_BASE_NAME}${IMAGE_VERSION_SUFFIX}.${HDF_EXT} ${DEPLOYDIR}/${MACHINE}${IMAGE_VERSION_SUFFIX}.${HDF_EXT}
+    fi
+    ln -s ${HDF_BASE_NAME}${IMAGE_VERSION_SUFFIX}.${HDF_EXT} ${DEPLOYDIR}/Xilinx-${MACHINE}${IMAGE_VERSION_SUFFIX}.${HDF_EXT}
+    ln -s ${HDF_BASE_NAME}${IMAGE_VERSION_SUFFIX}.${HDF_EXT} ${DEPLOYDIR}/Xilinx-${MACHINE}.${HDF_EXT}
+
 }
 
-addtask do_check before do_deploy after do_patch
-addtask do_deploy after do_install
-
-PACKAGES = ""
-FILES:${PN}= "/opt/xilinx/hw-design/design.${HDF_EXT}"
-SYSROOT_DIRS += "/opt"
+addtask check before do_deploy after do_patch
+addtask deploy after do_install before do_build
