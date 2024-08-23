@@ -27,9 +27,13 @@ EOF
 
 do_compile:append () {
         bootgen -image ${WORKDIR}/${PN}.bif -arch ${SOC_FAMILY} -w -o ${B}/${XSCTH_PROJ}/${PN}.bin
+
+        printf "* ${PN}\nSRCREV: ${SRCREV}\nBRANCH: ${BRANCH}\n\n" > ${S}/${PN}.manifest
 }
 
 do_deploy:append () {
-        install -Dm 0644 ${B}/${XSCTH_PROJ}/${PN}.bin ${DEPLOYDIR}/${XSCTH_BASE_NAME}.bin
-        ln -sf ${XSCTH_BASE_NAME}.bin ${DEPLOYDIR}/${PN}-${MACHINE}.bin
+        install -Dm 0644 ${B}/${XSCTH_PROJ}/${PN}.bin ${DEPLOYDIR}/image-selector.bin
+        ln -sf image-selector.bin ${DEPLOYDIR}/image-selector-${MACHINE}.bin
+
+        install -Dm 0644 ${S}/${PN}.manifest ${DEPLOYDIR}/image-selector-${MACHINE}.manifest
 }
