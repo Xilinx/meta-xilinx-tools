@@ -48,6 +48,12 @@ do_compile[noexec] = "1"
 do_install[noexec] = "1"
 
 python () {
+    if (d.getVar('XILINX_WITH_ESW') != 'xsct'):
+        raise bb.parse.SkipRecipe("This recipe is only supported in xsct workflow.")
+
+    if (d.getVar('XILINX_XSCT_VERSION') != d.getVar('PV')):
+        raise bb.parse.SkipRecipe("Only xsct version %s is supported." % d.getVar('XILINX_XSCT_VERSION'))
+
     if (d.getVar('HDF_EXT') != 'xsa'):
         raise bb.parse.SkipRecipe("Only XSA format is supported in Vivado tool starting from 2019.2 release")
 
