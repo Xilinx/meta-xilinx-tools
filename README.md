@@ -192,7 +192,7 @@ YAML_DT_BOARD_FLAGS:pn-device-tree = "{BOARD zcu102-rev1.0}"
 YAML_DT_BOARD_FLAGS:pn-device-tree = "{BOARD versal-vck190-reva-x-ebm-01-reva}"
 
 # Versal Net:
-YAML_DT_BOARD_FLAGS:pn-device-tree = "{BOARD versal-net-vn-p-b2197-00-reva}"
+YAML_DT_BOARD_FLAGS:pn-device-tree = "{BOARD versal-net-ipp-rev1.9}"
 ```
 
 Note only Xilinx eval boards have the dtsi in DTG, for custom board one needs
