@@ -12,7 +12,10 @@ inherit check_xsct_enabled deploy image-artifact-names
 # they may also define HDF_URI[S] to define the unpacking path.
 HDF_URI[doc] = "URI for the .xsa file, set by the machine configuration file"
 
-HDF_URI ??= ""
+HDF_BASE ??= ""
+HDF_PATH ??= ""
+
+HDF_URI ??= "${HDF_BASE}${HDF_PATH}"
 
 SRC_URI = "${HDF_URI}"
 SRC_URI[sha256sum] = "${@d.getVarFlag('HDF_URI', 'sha256sum') or 'undefined'}"
