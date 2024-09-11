@@ -1,5 +1,5 @@
 # When this layer is included, we hard code how to build the firmware
-IMGSEL_DEPENDS = "virtual/imgsel:do_deploy"
+IMGSEL_DEPENDS = "image-selector-xsct:do_deploy"
 IMGSEL_MCDEPENDS = ""
 IMGSEL_DEPLOY_DIR = "${DEPLOY_DIR_IMAGE}"
 

@@ -1,7 +1,7 @@
 DESCRIPTION = "Image Selector"
 
-PROVIDES = "virtual/imgsel"
 DEPENDS += "bootgen-native"
+RCONFLICTS:${PN} = "image-selector"
 
 inherit check_xsct_enabled xsctapp xsctyaml deploy
 
