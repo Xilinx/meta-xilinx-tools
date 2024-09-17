@@ -1,9 +1,7 @@
 DESCRIPTION = "Image Recovery"
-PROVIDES = "virtual/imgrcry"
-RCONFLICTS:${PN} = "imgrcry"
 DEPENDS += "bootgen-native fsbl-firmware"
 
-inherit check_xsct_enabled deploy xlnx-embeddedsw xsctbase image-artifact-names
+inherit check_xsct_enabled deploy xlnx-embeddedsw xsctbase
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://../../../../license.txt;md5=${@d.getVarFlag('LIC_FILES_CHKSUM', d.getVar('BRANCH')) or '0'}"
@@ -39,12 +37,11 @@ do_compile () {
 }
 
 do_deploy () {
-    install -Dm 0644 ${S}/../misc/web.img ${DEPLOYDIR}/imgrcry_web.img
+    install -Dm 0644 ${S}/../misc/web.img ${DEPLOYDIR}/image-recovery_web.img
     install -Dm 0644 ${B}/${PN}.bin ${DEPLOYDIR}/${PN}-${MACHINE}-${IMAGE_VERSION_SUFFIX}.bin
-    ln -sf ${PN}-${MACHINE}-${IMAGE_VERSION_SUFFIX}.bin ${DEPLOYDIR}/imgrcry-${MACHINE}.bin
+    ln -sf ${PN}-${MACHINE}-${IMAGE_VERSION_SUFFIX}.bin ${DEPLOYDIR}/image-recovery-${MACHINE}.bin
 
-    install -Dm 0644 ${S}/${PN}.manifest ${DEPLOYDIR}/${PN}-${MACHINE}-${IMAGE_VERSION_SUFFIX}.manifest
-    ln -sf ${PN}-${MACHINE}-${IMAGE_VERSION_SUFFIX}.manifest ${DEPLOYDIR}/imgrcry-${MACHINE}.manifest
+    install -Dm 0644 ${S}/${PN}.manifest ${DEPLOYDIR}/image-recovery-${MACHINE}.manifest
 }
 
 addtask do_deploy after do_compile

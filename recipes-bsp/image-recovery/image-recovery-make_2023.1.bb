@@ -2,7 +2,6 @@ DESCRIPTION = "Image Recovery"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/git/license.txt;md5=ce611484168a6000bd35df68fc4f4290"
 
-PROVIDES = "virtual/imgrcry"
 RCONFLICTS:${PN} = "imgrcry"
 DEPENDS += "bootgen-native fsbl-firmware"
 

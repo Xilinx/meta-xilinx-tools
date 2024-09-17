@@ -1,5 +1,4 @@
 DESCRIPTION = "Image Recovery"
-PROVIDES = "virtual/imgrcry"
 RCONFLICTS:${PN} = "imgrcry"
 DEPENDS += "bootgen-native fsbl-firmware"
 
