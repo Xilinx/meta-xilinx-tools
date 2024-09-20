@@ -10,7 +10,7 @@ python() {
     raise bb.parse.SkipRecipe(
         "%s is not available with the XSCT (meta-xilinx-tools) workflow, "
         "please remove the meta-xilinx-tools layer and enable "
-        "meta-xilinx-standalone-experimental to use this recipe." % d.getVar('PN'))
+        "meta-xilinx-standalone-sdt to use this recipe." % d.getVar('PN'))
 }
 
 BBCLASSEXTEND = "native nativesdk"

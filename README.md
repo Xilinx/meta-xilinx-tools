@@ -50,7 +50,7 @@ extracting the tarball.
 
 Warning: XSCT has been deprecated. It will still be available for several release.
 It is recommended to start new machines using the System Device Tree workflow, if
-available.  See meta-xilinx/meta-xilinx-standalone-experimental for more details.
+available.  See meta-xilinx/meta-xilinx-standalone-sdt for more details.
 
 Each release is dependent on the Xilinx XSCT release version. Please note that
 xsct tools may not be backward compatible with embeddedsw repo. Meaning
