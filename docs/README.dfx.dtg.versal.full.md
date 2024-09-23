@@ -1,12 +1,13 @@
 # Build Instructions to create Versal Segmented Configuration firmware recipes
 
-* [Introduction](#introduction)
-* [How to create a firmware recipe app](#how-to-create-a-firmware-recipe-app)
-* [Test Procedure on Target](#test-procedure-on-target)
-  * [Loading PL pdi and dt overlay](#loading-pl-pdi-and-dt-overlay)
-  * [Testing PL functionality](#testing-pl-functionality)
-  * [Unloading PL pdi and dt overlay](#unloading-pl-pdi-and-dt-overlay)
-* [References](#references)
+- [Build Instructions to create Versal Segmented Configuration firmware recipes](#build-instructions-to-create-versal-segmented-configuration-firmware-recipes)
+  - [Introduction](#introduction)
+  - [How to create a firmware recipe app](#how-to-create-a-firmware-recipe-app)
+  - [Test Procedure on Target](#test-procedure-on-target)
+    - [Loading PL pdi and dt overlay](#loading-pl-pdi-and-dt-overlay)
+    - [Testing PL functionality](#testing-pl-functionality)
+    - [Unloading PL pdi and dt overlay](#unloading-pl-pdi-and-dt-overlay)
+  - [References](#references)
 
 ## Introduction
 This readme describes the build instructions to create firmware recipes using
@@ -41,11 +42,13 @@ SRC_URI = " \
 $ mkdir -p <meta-layer>/recipes-firmware/<recipes-firmware-app>/files
 $ cp -r <path-to-files>/*.{xsa, dtsi, shell.json and .xclbin} <meta-layer>/recipes-firmware/<firmware-app-name>/files
 ```
-3. Now create the recipes for Versal Segmented Configuration(full pdi loading) firmware app using recipetool.
+3. Now create the recipes for Versal or Versal-Net Segmented Configuration(full pdi loading) firmware app using recipetool.
 ```
 $ recipetool create -o <meta-layer>/recipes-firmware/<firmware-app-name>/firmware-app-name.bb file:///<meta-layer>/recipes-firmware/<firmware-app-name>/files
 ```
 4. Modify the recipe and inherit dfx_dtg_versal_full bbclass as shown below.
+
+* Versal
 ```
 SUMMARY = "Versal Segmented Configuration(full pdi loading) firmware app using dfx_dtg_versal_full bbclass"
 LICENSE = "MIT"
@@ -59,8 +62,26 @@ SRC_URI = "\
     file://vck190-dfx-full.dtsi \
     "
 
-COMPATIBLE_MACHINE:versal = "versal"
+COMPATIBLE_MACHINE:versal = ".*"
 ```
+
+* Versal-Net
+```
+SUMMARY = "Versal-Net Segmented Configuration(full pdi loading) firmware app using dfx_dtg_versal_full bbclass"
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
+
+inherit dfx_dtg_versal_full
+
+SRC_URI = "\
+    file://versal_net_dfx_full.xsa \
+    file://shell.json \
+    file://versal-net-dfx-full.dtsi \
+    "
+
+COMPATIBLE_MACHINE:versal-net = ".*"
+```
+
 5. Add firmware-recipe app to image and enable fpga-overlay machine features to
    local.conf as shown below.
 > **Note:** fpga-manager-script provides fpgautil tool to load .pdi and dtbo
@@ -87,7 +108,7 @@ IMAGE_INSTALL:append = " \
 
 ### Loading PL pdi and dt overlay
 
-* Versal
+* Versal or Versal-Net
 ```
 yocto-vck190-versal-dfx-full-2023:~$ sudo su
 yocto-vck190-versal-dfx-full-2023:/home/petalinux# tree /lib/firmware/xilinx/
