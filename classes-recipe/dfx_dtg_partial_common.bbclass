@@ -8,6 +8,11 @@
 
 inherit dfx_dtg_common
 
+# Recipes that inherit from this class need to use an appropriate machine
+# override for COMPATIBLE_MACHINE to build successfully, don't allow building
+# for Zynq-7000 as dfx designs are not supported for Zynq-7000.
+COMPATIBLE_MACHINE:zynq = "^$"
+
 DEPENDS:append = "${@'${STATIC_PN}'}"
 
 XSCTH_MISC:append = " -rphdf ${WORKDIR}/${RP_XSCTH_HDF}"

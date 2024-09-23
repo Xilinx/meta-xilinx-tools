@@ -8,6 +8,12 @@
 
 inherit dfx_dtg_common
 
+# Recipes that inherit from this class need to use an appropriate machine
+# override for COMPATIBLE_MACHINE to build successfully, don't allow building
+# for Zynq-7000 and ZynqMP MACHINE.
+COMPATIBLE_MACHINE:zynq = "^$"
+COMPATIBLE_MACHINE:zynqmp = "^$"
+
 python() {
     d.setVar("XSCTH_HDF_PATH",[a for a in d.getVar('SRC_URI').split() if '.xsa' in a][0].lstrip('file://'))
 
