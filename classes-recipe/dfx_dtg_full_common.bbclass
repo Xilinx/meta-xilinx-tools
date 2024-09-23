@@ -59,7 +59,7 @@ do_install() {
     # in xsa then .bin will be copied from directly from ${B}/${PN}/hw/ to
     # destination directory else copy converted bit to bin file from ${B}/${PN}.bin
     # to destination directory.
-    if [ "${SOC_FAMILY}" != "versal" ]; then
+    if [ "${SOC_FAMILY}" = "zynq" ] || [ "${SOC_FAMILY}" = "zynqmp" ]; then
         if [ -f ${B}/${PN}/hw/*.bin ]; then
             install -Dm 0644 ${B}/${PN}/hw/*.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.bin
         elif [ -f ${B}/${PN}.bin ]; then

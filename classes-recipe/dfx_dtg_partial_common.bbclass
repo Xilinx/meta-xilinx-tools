@@ -98,7 +98,7 @@ do_install() {
     # will be copied from directly from ${B}/${PN}/hw/ to destination directory
     # else copy converted bit to bin file from ${B}/${PN}.bin to destination
     # directory.
-    if [ "${SOC_FAMILY}" != "versal" ]; then
+    if [ "${SOC_FAMILY}" = "zynqmp" ]; then
         if [ -f ${B}/${PN}/hw/*_partial.bin ]; then
             install -Dm 0644 ${B}/${PN}/hw/*_partial.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${RP_BASE_PATH}/${PN}/${PN}.bit
         elif [ -f ${B}/${PN}.bin ]; then
