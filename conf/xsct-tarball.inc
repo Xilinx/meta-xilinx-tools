@@ -12,12 +12,12 @@ XILINX_SDK_TOOLCHAIN ??= "${XILINX_SDK_TOOLCHAIN_BASE}/Vitis/${TOOL_VER_MAIN}"
 
 ESDK_LOCALCONF_ALLOW:append = " XILINX_SDK_TOOLCHAIN"
 
-XSCT_URL[2022.1] = "http://petalinux.xilinx.com/sswreleases/rel-v2022/xsct-trim/xsct-2022-1.tar.xz"
-XSCT_URL[2022.2] = "http://petalinux.xilinx.com/sswreleases/rel-v2022/xsct-trim/xsct-2022-2.tar.xz"
-XSCT_URL[2023.1] = "http://petalinux.xilinx.com/sswreleases/rel-v2023/xsct-trim/xsct-2023-1_0425.tar.xz"
-XSCT_URL[2023.2] = "http://petalinux.xilinx.com/sswreleases/rel-v2023/xsct-trim/xsct-2023-2_1002.tar.xz"
-XSCT_URL[2024.1] = "http://petalinux.xilinx.com/sswreleases/rel-v2024/xsct-trim/xsct-2024-1_0515.tar.xz"
-XSCT_URL[2024.2] = "http://petalinux.xilinx.com/sswreleases/rel-v2024/xsct-trim/xsct-2024-2_XXXX.tar.xz"
+XSCT_URL[2022.1] = "https://petalinux.xilinx.com/sswreleases/rel-v2022/xsct-trim/xsct-2022-1.tar.xz"
+XSCT_URL[2022.2] = "https://petalinux.xilinx.com/sswreleases/rel-v2022/xsct-trim/xsct-2022-2.tar.xz"
+XSCT_URL[2023.1] = "https://petalinux.xilinx.com/sswreleases/rel-v2023/xsct-trim/xsct-2023-1_0425.tar.xz"
+XSCT_URL[2023.2] = "https://petalinux.xilinx.com/sswreleases/rel-v2023/xsct-trim/xsct-2023-2_1002.tar.xz"
+XSCT_URL[2024.1] = "https://petalinux.xilinx.com/sswreleases/rel-v2024/xsct-trim/xsct-2024-1_0515.tar.xz"
+XSCT_URL[2024.2] = "https://petalinux.xilinx.com/sswreleases/rel-v2024.2/xsct-trim/xsct-2024-2_XXXX.tar.xz"
 XSCT_URL ?= "${@d.getVarFlag('XSCT_URL', d.getVar('TOOL_VER_MAIN'))}"
 XSCT_TARBALL ?= "xsct_${TOOL_VER_MAIN}.tar.xz"
 
