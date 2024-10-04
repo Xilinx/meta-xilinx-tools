@@ -42,6 +42,13 @@ do_patch_config:qemu-versal() {
 }
 
 
+SRC_URI:append:qemu-versal = " file://qemu-versal-net.nopatch"
+
+do_patch_config:qemu-versal() {
+    cd ${B}
+    cat ${WORKDIR}/qemu-versal-net.nopatch | patch -p1
+}
+
 
 # Empty no-op default
 do_patch_config() {
