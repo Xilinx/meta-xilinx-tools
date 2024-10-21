@@ -1,4 +1,4 @@
 DT_RELEASE_VERSION = "2024.2"
 
-BRANCH = "master"
+BRANCH = "xlnx_rel_v2024.2"
 SRCREV = "3b3521bc97067ab4b1f113445c8e5a164f2d49a2"
