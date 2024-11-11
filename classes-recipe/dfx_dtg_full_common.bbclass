@@ -14,7 +14,7 @@ python() {
     # Optional inputs
     if '.xclbin' in d.getVar("SRC_URI"):
         d.setVar("XCL_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split() if '.xclbin' in a][0].lstrip('file://')))
-    if '.dtsi' in d.getVar("SRC_URI") and d.getVar('YAML_ENABLE_CLASSIC_SOC') != '1':
+    if '.dtsi' in d.getVar("SRC_URI"):
         d.setVar("CUSTOMPLINCLUDE_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split() if '.dtsi' in a][0].lstrip('file://')))
     if 'shell.json' in d.getVar("SRC_URI"):
         d.setVar("JSON_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split() if 'shell.json' in a][0].lstrip('file://')))
@@ -59,7 +59,7 @@ do_install() {
     # in xsa then .bin will be copied from directly from ${B}/${PN}/hw/ to
     # destination directory else copy converted bit to bin file from ${B}/${PN}.bin
     # to destination directory.
-    if [ "${SOC_FAMILY}" != "versal" ]; then
+    if [ "${SOC_FAMILY}" = "zynq" ] || [ "${SOC_FAMILY}" = "zynqmp" ]; then
         if [ -f ${B}/${PN}/hw/*.bin ]; then
             install -Dm 0644 ${B}/${PN}/hw/*.bin ${D}${nonarch_base_libdir}/firmware/xilinx/${PN}/${PN}.bin
         elif [ -f ${B}/${PN}.bin ]; then

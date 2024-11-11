@@ -1,0 +1,23 @@
+Adjust serial port order for qemu-versal-net
+
+This enables the second serial port, and adds/updates the alias so serial1
+points to it.
+
+The (unused) dcc port is now assigned serial2.
+
+Signed-off-by: Mark Hatle <mark.hatle@amd.com>
+
+diff -ur device-tree-build.orig/device-tree/system-top.dts device-tree-build/device-tree/system-top.dts
+--- device-tree-build.orig/device-tree/system-top.dts	2024-10-04 15:53:56.105072464 -0600
++++ device-tree-build/device-tree/system-top.dts	2024-10-04 15:55:41.030105027 -0600
+@@ -16,8 +16,8 @@
+ 	aliases {
+ 		ethernet0 = &gem0;
+ 		serial0 = &serial0;
+-		serial1 = &dcc;
+-		serial2 = &serial1;
++		serial1 = &serial1;
++		serial2 = &dcc;
+ 		spi0 = &qspi;
+ 	};
+ };

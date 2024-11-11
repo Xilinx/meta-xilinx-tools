@@ -28,7 +28,7 @@ XSCTH_HW_PATH = "${XSCTH_WS}/${XSCTH_PROJ}/hw"
 
 S = "${WORKDIR}/git"
 
-DEPENDS = "\
+DEPENDS += "\
     dtc-native \
     bootgen-native \
     virtual/dtb \

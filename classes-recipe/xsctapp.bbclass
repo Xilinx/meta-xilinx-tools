@@ -7,11 +7,11 @@
 
 S = "${WORKDIR}/git"
 
-XILINX_XSCT_VERSION ??= "${@d.getVar("XILINX_RELEASE_VERSION").replace('v','')}"
-
 ESW_VER ?= "${XILINX_XSCT_VERSION}"
 
 inherit xlnx-embeddedsw xsctbase image-artifact-names
+
+DEPENDS:prepend = "cmake-native "
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 

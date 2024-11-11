@@ -1,0 +1,13 @@
+/* 
+ * DTG doesn't generate the memory nodes for versal-net virt xsa as it doesn't
+ * have a board files with DDR configuration but these nodes are required for
+ * qemu-versal-net to boot from qemu, Hence append these static memory nodes to
+ * linux dtb.
+ */
+
+/ {
+    memorynoc_ddr4_ddr: memory@0 {
+        device_type = "memory";
+	reg = <0x0 0x00000000 0x0 0x80000000>, <0x00000008 0x00000000 0x00000001 0x80000000>;
+    };
+};

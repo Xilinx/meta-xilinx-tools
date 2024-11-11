@@ -1,0 +1,50 @@
+Adjust serial port order for qemu-versal
+
+This enables the second serial port, and adds/updates the alias so serial1
+points to it.
+
+The (unused) dcc port is now assigned serial2.
+
+Signed-off-by: Mark Hatle <mark.hatle@amd.com>
+
+diff -ur device-tree-build.orig/device-tree/pcw.dtsi device-tree-build/device-tree/pcw.dtsi
+--- device-tree-build.orig/device-tree/pcw.dtsi	2024-08-24 11:54:20.613575393 -0600
++++ device-tree-build/device-tree/pcw.dtsi	2024-08-24 11:55:21.626216319 -0600
+@@ -88,6 +88,13 @@
+ 	port-number = <0>;
+ 	status = "okay";
+ };
++&serial1 {
++	cts-override ;
++	current-speed = <115200>;
++	device_type = "serial";
++	port-number = <1>;
++	status = "okay";
++};
+ &ttc0 {
+ 	status = "okay";
+ };
+diff -ur device-tree-build.orig/device-tree/system-top.dts device-tree-build/device-tree/system-top.dts
+--- device-tree-build.orig/device-tree/system-top.dts	2024-08-24 11:54:20.613575393 -0600
++++ device-tree-build/device-tree/system-top.dts	2024-08-24 11:55:40.210411639 -0600
+@@ -20,7 +20,8 @@
+ 		i2c0 = &i2c0;
+ 		i2c1 = &i2c1;
+ 		serial0 = &serial0;
+-		serial1 = &dcc;
++		serial1 = &serial1;
++		serial2 = &dcc;
+ 		spi0 = &qspi;
+ 	};
+ 	memorynoc_ddr4_ddr: memory@0 {
+diff -ur device-tree-build.orig/device-tree/versal-vmk180-reva.dtsi device-tree-build/device-tree/versal-vmk180-reva.dtsi
+--- device-tree-build.orig/device-tree/versal-vmk180-reva.dtsi	2024-08-24 11:54:20.613575393 -0600
++++ device-tree-build/device-tree/versal-vmk180-reva.dtsi	2024-08-24 11:56:32.470961137 -0600
+@@ -22,6 +22,7 @@
+ 
+ 	aliases {
+ 		serial0 = &serial0;
++		serial1 = &serial1;
+ 		serial2 = &dcc;
+ 		ethernet0 = &gem0;
+ 		ethernet1 = &gem1;

@@ -22,7 +22,6 @@ B = "${S}"
 
 SYSROOT_DIRS_NATIVE += "${STAGING_DIR_NATIVE}/Vitis/${PV}"
 
-# Based on poky/meta/classes-global/base.bbclass
 python do_fetch() {
     src_uri = (d.getVar('SRC_URI') or "").split()
     if not src_uri:
@@ -42,7 +41,6 @@ python do_fetch() {
         bb.fatal("Bitbake Fetcher Error: " + repr(e))
 }
 
-# Based on poky/meta/classes-global/base.bbclass
 python do_unpack() {
     src_uri = (d.getVar('SRC_URI') or "").split()
     if not src_uri:
@@ -76,6 +74,14 @@ do_compile() {
         if [ ! -e ${PV}/bin/xsct ]; then
             bbfatal "XSCT binary is not found.\nUnable to find `pwd`/${PV}/bin/xsct."
         fi
+
+        # Various workarounds
+        case ${XILINX_XSCT_VERSION} in
+            2024.2)
+                # Remove included cmake, we want to use YP version in all cases
+                rm -rf ${PV}/tps/lnx64/cmake*
+                ;;
+        esac
     else
         if [ ! -e ${XSCT_LOADER} ]; then
             bbfatal "${XSCT_LOADER} not found.  Please configure XILINX_SDK_TOOLCHAIN with the path to the extracted xsct-trim."

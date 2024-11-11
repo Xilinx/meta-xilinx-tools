@@ -53,3 +53,8 @@ do_deploy() {
 }
 
 addtask deploy before do_build after do_install
+
+python() {
+    if not d.getVar('PV').startswith(d.getVar('XILINX_XSCT_VERSION')):
+        raise bb.parse.SkipRecipe("Recipe version %s is not compatible with XILINX_XSCT_VERSION %s" % (d.getVar('PV'), d.getVar("XILINX_XSCT_VERSION")))
+} 

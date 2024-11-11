@@ -1,12 +1,13 @@
 # Build Instructions to create Versal DFx Partial firmware recipes
 
-* [Introduction](#introduction)
-* [How to create a DFx RP firmware recipe app](#how-to-create-a-dfx-rp-firmware-recipe-app)
-* [Test Procedure on Target](#test-procedure-on-target)
-  * [Loading DFx RP PL pdi and dt overlay](#loading-dfx-rp-pl-pdi-and-dt-overlay)
-  * [Testing RP PL functionality](#testing-rp-pl-functionality)
-  * [Unloading DFx RP PL pdi and dt overlay](#unloading-dfx-rp-pl-pdi-and-dt-overlay)
-* [References](#references)
+- [Build Instructions to create Versal DFx Partial firmware recipes](#build-instructions-to-create-versal-dfx-partial-firmware-recipes)
+  - [Introduction](#introduction)
+  - [How to create a DFx RP firmware recipe app](#how-to-create-a-dfx-rp-firmware-recipe-app)
+  - [Test Procedure on Target](#test-procedure-on-target)
+    - [Loading DFx RP PL pdi and dt overlay](#loading-dfx-rp-pl-pdi-and-dt-overlay)
+    - [Testing RP PL functionality](#testing-rp-pl-functionality)
+    - [Unloading DFx RP PL pdi and dt overlay](#unloading-dfx-rp-pl-pdi-and-dt-overlay)
+  - [References](#references)
 
 ## Introduction
 This readme describes the build instructions to create firmware recipes using
@@ -42,7 +43,7 @@ SRC_URI = " \
 $ mkdir -p <meta-layer>/recipes-firmware/<recipes-firmware-app>/files
 $ cp -r <path-to-files>/*.{xsa, dtsi, accel.json and .xclbin} <meta-layer>/recipes-firmware/<firmware-app-name>/files
 ```
-3. Now create the recipes for Versal DFx RP firmware app using recipetool.
+3. Now create the recipes for Versal or Versal-Net DFx RP firmware app using recipetool.
 ```
 $ recipetool create -o <meta-layer>/recipes-firmware/<firmware-app-name>/firmware-app-name.bb file:///<meta-layer>/recipes-firmware/<firmware-app-name>/files
 ```
@@ -51,6 +52,7 @@ $ recipetool create -o <meta-layer>/recipes-firmware/<firmware-app-name>/firmwar
 > reference to DFx Static recipe name. Optionally user can set `RP_NAME` this is
 > useful when you have multiple RP regions in DFx designs.
 
+* Versal
 ```
 SUMMARY = "Versal DFX partial firmware app using dfx_dtg_versal_partial bbclass"
 LICENSE = "MIT"
@@ -64,12 +66,32 @@ SRC_URI = " \
     file://pl-partial-custom.dtsi \
     "
 
-COMPATIBLE_MACHINE ?= "^$"
-COMPATIBLE_MACHINE:versal = "versal"
+COMPATIBLE_MACHINE:versal = ".*"
 
 STATIC_PN = "vck190-dfx-static"
 RP_NAME = "rp1"
 ```
+
+* Versal-Net
+```
+SUMMARY = "Versal-Net DFX partial firmware app using dfx_dtg_versal_partial bbclass"
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
+
+inherit dfx_dtg_versal_partial
+
+SRC_URI = " \
+    file://versal_net_dfx_rp0rm0.xsa \
+    file://accel.json \
+    file://pl-partial-custom.dtsi \
+    "
+
+COMPATIBLE_MACHINE:versal-net = ".*"
+
+STATIC_PN = "versal-net-dfx-static"
+RP_NAME = "rp0"
+```
+
 5. Add RP firmware-recipe app to image to local.conf as shown below.
 ```
 IMAGE_INSTALL:append = " \
