@@ -11,8 +11,6 @@ PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
 inherit check_xsct_enabled xsctbit deploy image-artifact-names
 
-S = "${UNPACKDIR}"
-
 XSCTH_MISC = "-hwpname ${XSCTH_PROJ}_hwproj -hdf_type ${HDF_EXT}"
 
 do_compile[noexec] = "1"

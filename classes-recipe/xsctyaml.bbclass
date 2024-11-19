@@ -34,7 +34,7 @@ YAML_ENABLE_DTG_ALIAS ?= ''
 YAML_ENABLE_DT_VERBOSE ?= ''
 YAML_PARTIAL_OVERLAY_CUSTOM_DTS ?= ''
 
-YAML_FILE_PATH = "${UNPACKDIR}/${PN}.yaml"
+YAML_FILE_PATH = "${WORKDIR}/${PN}.yaml"
 XSCTH_MISC:append = " -yamlconf ${YAML_FILE_PATH}"
 
 YAML_BUILD_CONFIG ?= "${@d.getVar('XSCTH_BUILD_CONFIG').lower()}"
@@ -101,9 +101,6 @@ YAML_BSP_CONFIG[dt_verbose] = "set,TRUE"
 
 YAML_BSP_CONFIG += "${@'dt_setbaud' if d.getVar('YAML_SERIAL_CONSOLE_BAUDRATE') != '' else ''}"
 YAML_BSP_CONFIG[dt_setbaud] = "set,${YAML_SERIAL_CONSOLE_BAUDRATE}"
-
-YAML_BSP_CONFIG += "${@'classic_soc' if d.getVar('YAML_ENABLE_CLASSIC_SOC') == '1' else ''}"
-YAML_BSP_CONFIG[classic_soc] = "set,TRUE"
 
 YAML_BSP_CONFIG += "${@'apu_as_overlay_config_master' if d.getVar('YAML_ENABLE_APU_AS_OVERLAY_CONFIG_MASTER') == '1' else ''}"
 YAML_BSP_CONFIG[apu_as_overlay_config_master] = "set,TRUE"

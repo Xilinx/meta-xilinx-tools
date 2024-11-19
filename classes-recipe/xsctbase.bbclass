@@ -7,7 +7,7 @@
 
 inherit xsct-tc
 
-B ?= "${UNPACKDIR}/build"
+B ?= "${WORKDIR}/build"
 
 XSCTH_PROC_DEFAULT:zynqmp     ??= "psu_cortexa53"
 XSCTH_PROC_DEFAULT:zynq       ??= "ps7_cortexa9"

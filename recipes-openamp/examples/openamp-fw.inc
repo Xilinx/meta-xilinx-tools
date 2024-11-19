@@ -29,9 +29,12 @@ FW_OS_NAME ?= "standalone"
 
 XSCTH_MISC = "-osname ${FW_OS_NAME}"
 XSCTH_PROC:versal-net ?= "psx_cortexr52_0"
+XSCTH_PROC_IP:versal-net ?= "psx_cortexr52_0"
 XSCTH_PROC_IP:versal ?= "psv_cortexr5"
 XSCTH_PROC_IP:zynqmp ?= "psu_cortexr5"
 XSCTH_PROC:zynq ?= "ps7_cortexa9_1"
+
+DEBUG_PREFIX_MAP:remove = "-fcanon-prefix-map"
 
 INSANE_SKIP:${PN} = "arch"
 

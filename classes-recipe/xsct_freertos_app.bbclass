@@ -22,6 +22,7 @@ FREERTOS_DEPENDS_LIBRARIES ?= "xiltimer"
 XSCTH_MISC:append = " -osname freertos10_xilinx -lib ${FREERTOS_DEPENDS_LIBRARIES}"
 
 # Set default target processor and user can override this from recipe.
+XSCTH_PROC_IP:versal-net ?= "psx_cortexr52"
 XSCTH_PROC_IP:versal ?= "psv_cortexr5"
 XSCTH_PROC_IP:zynqmp ?= "psu_cortexr5"
 XSCTH_PROC:zynq ?= "ps7_cortexa9_1"

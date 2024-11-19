@@ -5,13 +5,13 @@
 # SPDX-License-Identifier: MIT
 #
 
-S = "${UNPACKDIR}/git"
-
-XILINX_XSCT_VERSION ??= "${@d.getVar("XILINX_RELEASE_VERSION").replace('v','')}"
+S = "${WORKDIR}/git"
 
 ESW_VER ?= "${XILINX_XSCT_VERSION}"
 
 inherit xlnx-embeddedsw xsctbase image-artifact-names
+
+DEPENDS:prepend = "cmake-native "
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
@@ -19,7 +19,7 @@ XSCTH_BASE_NAME ?= "${PN}${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFI
 
 FILESEXTRAPATHS:append := ":${XLNX_SCRIPTS_DIR}"
 SRC_URI:append = " file://app.tcl"
-XSCTH_SCRIPT ?= "${UNPACKDIR}/app.tcl"
+XSCTH_SCRIPT ?= "${WORKDIR}/app.tcl"
 
 XSCTH_BUILD_DEBUG ?= "0"
 XSCTH_BUILD_CONFIG ?= "${@['Debug', 'Release'][d.getVar('XSCTH_BUILD_DEBUG') == "0"]}"

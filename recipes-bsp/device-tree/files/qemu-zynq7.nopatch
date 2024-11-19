@@ -1,0 +1,48 @@
+Enable a second serial port for qemu-zynq7
+
+This is a special patch that enables the second serial port to the zc702 like
+board used for QEMU.  The real board does not have two physical serial ports,
+but the chip itself has a second serial port which QEMU can emulation for
+validation.
+
+This renumbers serial0 to point to uart0 (normally not wired on a zc702) and
+adds uart1 as the second serial port.
+
+Signed-off-by: Mark Hatle <mark.hatle@amd.com>
+
+diff -ur device-tree-build.orig/device-tree/system-top.dts device-tree-build/device-tree/system-top.dts
+--- device-tree-build.orig/device-tree/system-top.dts	2024-08-23 21:57:43.054215909 -0600
++++ device-tree-build/device-tree/system-top.dts	2024-08-23 21:58:46.898904976 -0600
+@@ -18,7 +18,8 @@
+ 	aliases {
+ 		ethernet0 = &gem0;
+ 		i2c0 = &i2c0;
+-		serial0 = &uart1;
++		serial0 = &uart0;
++		serial1 = &uart1;
+ 		spi0 = &qspi;
+ 	};
+ 	memory@0 {
+diff -ur device-tree-build.orig/device-tree/pcw.dtsi device-tree-build/device-tree/pcw.dtsi
+--- device-tree-build.orig/device-tree/pcw.dtsi	2024-08-23 21:57:43.054215909 -0600
++++ device-tree-build/device-tree/pcw.dtsi	2024-08-24 09:22:06.130962977 -0600
+@@ -47,12 +47,18 @@
+ 	xlnx,has-power = <0x0>;
+ 	xlnx,has-wp = <0x1>;
+ };
+-&uart1 {
++&uart0 {
+ 	cts-override ;
+ 	device_type = "serial";
+ 	port-number = <0>;
+ 	status = "okay";
+ };
++&uart1 {
++	cts-override ;
++	device_type = "serial";
++	port-number = <1>;
++	status = "okay";
++};
+ &usb0 {
+ 	phy_type = "ulpi";
+ 	status = "okay";

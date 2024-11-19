@@ -15,4 +15,4 @@ SRC_URI:append =" \
 
 XSCTH_BUILD_CONFIG = ""
 
-XSCTH_SCRIPT = "${UNPACKDIR}/fsboot.tcl"
+XSCTH_SCRIPT = "${WORKDIR}/fsboot.tcl"

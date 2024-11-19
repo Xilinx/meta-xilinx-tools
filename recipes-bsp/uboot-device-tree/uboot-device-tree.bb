@@ -28,7 +28,7 @@ COMPATIBLE_MACHINE:versal-net = ".*"
 XSCTH_BUILD_CONFIG ?= ""
 
 DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_PROJ}"
-DT_INCLUDE:append = " ${UNPACKDIR}"
+DT_INCLUDE:append = " ${WORKDIR}"
 DT_PADDING_SIZE = "0x1000"
 
 UBOOT_DTS ?= ""
@@ -42,19 +42,12 @@ SRC_URI:append = "${@" ".join(["file://%s" % f for f in (d.getVar('UBOOT_DTS') o
 do_configure:prepend () {
     if [ ! -z "${UBOOT_DTS}" ]; then
         for f in ${UBOOT_DTS}; do
-            cp  ${UNPACKDIR}/${f} ${DT_FILES_PATH}/
+            cp  ${WORKDIR}/${f} ${DT_FILES_PATH}/
         done
         return
     fi
 }
 
-
-SRC_URI:append = "${@bb.utils.contains('MACHINE_FEATURES', 'provencore', ' file://pnc.dtsi', '', d)}"
-do_configure:append() {
-    if [ ${@bb.utils.contains('MACHINE_FEATURES', 'provencore', 'true', '', d)} ]; then
-        echo '#include "pnc.dtsi"' >> ${DT_FILES_PATH}/system-top.dts
-    fi
-}
 
 #Both linux dtb and uboot dtb are installing
 #system-top.dtb for uboot env recipe while do_prepare_recipe_sysroot

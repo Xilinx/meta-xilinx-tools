@@ -21,20 +21,20 @@ EXTRA_OEMAKE:linux = ""
 
 # Workaround for hardcoded toolchain items
 XSCT_PATH_ADD:append:elf = "\
-${UNPACKDIR}/bin:"
+${WORKDIR}/bin:"
 
 MB_OBJCOPY = "mb-objcopy"
 
 do_configure:prepend:elf() {
-  mkdir -p ${UNPACKDIR}/bin
-  echo "#! /bin/bash\n${CC} \$@" > ${UNPACKDIR}/bin/mb-gcc
-  echo "#! /bin/bash\n${AS} \$@" > ${UNPACKDIR}/bin/mb-as
-  echo "#! /bin/bash\n${AR} \$@" > ${UNPACKDIR}/bin/mb-ar
-  echo "#! /bin/bash\n${OBJCOPY} \$@" > ${UNPACKDIR}/bin/mb-objcopy
-  chmod 0755 ${UNPACKDIR}/bin/mb-gcc
-  chmod 0755 ${UNPACKDIR}/bin/mb-as
-  chmod 0755 ${UNPACKDIR}/bin/mb-ar
-  chmod 0755 ${UNPACKDIR}/bin/mb-objcopy
+  mkdir -p ${WORKDIR}/bin
+  echo "#! /bin/bash\n${CC} \$@" > ${WORKDIR}/bin/mb-gcc
+  echo "#! /bin/bash\n${AS} \$@" > ${WORKDIR}/bin/mb-as
+  echo "#! /bin/bash\n${AR} \$@" > ${WORKDIR}/bin/mb-ar
+  echo "#! /bin/bash\n${OBJCOPY} \$@" > ${WORKDIR}/bin/mb-objcopy
+  chmod 0755 ${WORKDIR}/bin/mb-gcc
+  chmod 0755 ${WORKDIR}/bin/mb-as
+  chmod 0755 ${WORKDIR}/bin/mb-ar
+  chmod 0755 ${WORKDIR}/bin/mb-objcopy
 }
 
 do_compile:append() {
@@ -57,3 +57,8 @@ do_deploy() {
 }
 
 addtask deploy before do_build after do_install
+
+python() {
+    if not d.getVar('PV').startswith(d.getVar('XILINX_XSCT_VERSION')):
+        raise bb.parse.SkipRecipe("Recipe version %s is not compatible with XILINX_XSCT_VERSION %s" % (d.getVar('PV'), d.getVar("XILINX_XSCT_VERSION")))
+}

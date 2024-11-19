@@ -16,7 +16,7 @@ COMPATIBLE_MACHINE:microblaze = ".*"
 MMI_FILE ?= "${RECIPE_SYSROOT}/boot/bitstream/system.mmi"
 BIT_FILE ?= "${RECIPE_SYSROOT}/boot/bitstream/system.bit"
 DATA_FILE ?= "${RECIPE_SYSROOT}/boot/fs-boot.elf"
-B = "${UNPACKDIR}/build"
+B = "${WORKDIR}/build"
 
 PROC ??= "kc705_i/microblaze_0"
 

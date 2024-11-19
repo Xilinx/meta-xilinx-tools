@@ -6,15 +6,13 @@ PROVIDES = "virtual/hdf"
 
 INHIBIT_DEFAULT_DEPS = "1"
 
-S = "${UNPACKDIR}" 
-
-inherit check_xsct_enabled deploy
+inherit check_xsct_enabled deploy image-artifact-names
 
 HDF_MACHINE ?= "${MACHINE}"
 
 # HDF_BASE - file protocol
 # HDF_PATH - Path to git repository, or file in question
-# HDF_NAME - Path to the XSA file once downloaded (must be inside UNPACKDIR) (See anon python)
+# HDF_NAME - Path to the XSA file once downloaded (must be inside WORKDIR) (See anon python)
 HDF_BASE ??= "git://"
 HDF_PATH ??= "github.com/Xilinx/hdf-examples.git"
 HDF_NAME ??= ""
@@ -30,6 +28,9 @@ HDF_EXT ?= "xsa"
 # Provide a way to extend the SRC_URI, default to adding protocol=https for git:// usage.
 HDF_EXTENSION ?= "${@';protocol=https' if d.getVar('HDF_BASE') == 'git://' else ''}"
 
+# HDF_NAME without the .xsa
+HDF_BASE_NAME = "${@os.path.basename(d.getVar('HDF_NAME') or '').replace('.xsa', '')}"
+
 SRC_URI = "${HDF_BASE}${HDF_PATH}${BRANCHARGS}${HDF_EXTENSION}"
 
 # Above is the last change fallback.  The include file, if it exists, is the current xsa files
@@ -38,15 +39,21 @@ include hdf-repository.inc
 COMPATIBLE_HOST:xilinx-standalone = "${HOST_SYS}"
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
-# Don't set S = "${UNPACKDIR}/git" as we need this to work for other protocols
+# Don't set S = "${WORKDIR}/git" as we need this to work for other protocols
 # HDF_NAME will be adjusted to include /git if needed
-S = "${UNPACKDIR}"
+S = "${WORKDIR}"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 do_install[noexec] = "1"
 
 python () {
+    if (d.getVar('XILINX_WITH_ESW') != 'xsct'):
+        raise bb.parse.SkipRecipe("This recipe is only supported in xsct workflow.")
+
+    if (d.getVar('XILINX_XSCT_VERSION') != d.getVar('PV')):
+        raise bb.parse.SkipRecipe("Only xsct version %s is supported." % d.getVar('XILINX_XSCT_VERSION'))
+
     if (d.getVar('HDF_EXT') != 'xsa'):
         raise bb.parse.SkipRecipe("Only XSA format is supported in Vivado tool starting from 2019.2 release")
 
@@ -92,19 +99,18 @@ do_check() {
     fi
 }
 
-do_install() {
-    install -d ${D}/opt/xilinx/hw-design
-    install -m 0644 ${HDF_NAME} ${D}/opt/xilinx/hw-design/design.${HDF_EXT}
-}
+do_install[noexec] = "1"
 
 do_deploy() {
     install -d ${DEPLOYDIR}
-    install -m 0644 ${HDF_NAME} ${DEPLOYDIR}/Xilinx-${MACHINE}.${HDF_EXT}
+    install -m 0644 ${HDF_NAME} ${DEPLOYDIR}/${HDF_BASE_NAME}${IMAGE_VERSION_SUFFIX}.${HDF_EXT}
+    if [ ${HDF_BASE_NAME}${IMAGE_VERSION_SUFFIX}.${HDF_EXT} != ${MACHINE}${IMAGE_VERSION_SUFFIX}.${HDF_EXT} ]; then
+        ln -s ${HDF_BASE_NAME}${IMAGE_VERSION_SUFFIX}.${HDF_EXT} ${DEPLOYDIR}/${MACHINE}${IMAGE_VERSION_SUFFIX}.${HDF_EXT}
+    fi
+    ln -s ${HDF_BASE_NAME}${IMAGE_VERSION_SUFFIX}.${HDF_EXT} ${DEPLOYDIR}/Xilinx-${MACHINE}${IMAGE_VERSION_SUFFIX}.${HDF_EXT}
+    ln -s ${HDF_BASE_NAME}${IMAGE_VERSION_SUFFIX}.${HDF_EXT} ${DEPLOYDIR}/Xilinx-${MACHINE}.${HDF_EXT}
+
 }
 
-addtask do_check before do_deploy after do_patch
-addtask do_deploy after do_install
-
-PACKAGES = ""
-FILES:${PN}= "/opt/xilinx/hw-design/design.${HDF_EXT}"
-SYSROOT_DIRS += "/opt"
+addtask check before do_deploy after do_patch
+addtask deploy after do_install before do_build

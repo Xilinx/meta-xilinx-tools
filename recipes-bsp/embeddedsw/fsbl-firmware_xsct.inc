@@ -27,30 +27,30 @@ EXTRA_OEMAKE:linux-gnueabi = ""
 
 # Workaround for hardcoded toolchain items
 XSCT_PATH_ADD:append:elf = "\
-${UNPACKDIR}/bin:"
+${WORKDIR}/bin:"
 
 XSCT_PATH_ADD:append:eabi = "\
-${UNPACKDIR}/bin:"
+${WORKDIR}/bin:"
 
 do_configure:prepend:elf:aarch64() {
-  mkdir -p ${UNPACKDIR}/bin
-  echo "#! /bin/bash\n${CC} \$@" > ${UNPACKDIR}/bin/aarch64-none-elf-gcc
-  echo "#! /bin/bash\n${AS} \$@" > ${UNPACKDIR}/bin/aarch64-none-elf-as
-  echo "#! /bin/bash\n${AR} \$@" > ${UNPACKDIR}/bin/aarch64-none-elf-ar
-  chmod 0755 ${UNPACKDIR}/bin/aarch64-none-elf-gcc
-  chmod 0755 ${UNPACKDIR}/bin/aarch64-none-elf-as
-  chmod 0755 ${UNPACKDIR}/bin/aarch64-none-elf-ar
+  mkdir -p ${WORKDIR}/bin
+  echo "#! /bin/bash\n${CC} \$@" > ${WORKDIR}/bin/aarch64-none-elf-gcc
+  echo "#! /bin/bash\n${AS} \$@" > ${WORKDIR}/bin/aarch64-none-elf-as
+  echo "#! /bin/bash\n${AR} \$@" > ${WORKDIR}/bin/aarch64-none-elf-ar
+  chmod 0755 ${WORKDIR}/bin/aarch64-none-elf-gcc
+  chmod 0755 ${WORKDIR}/bin/aarch64-none-elf-as
+  chmod 0755 ${WORKDIR}/bin/aarch64-none-elf-ar
 }
 
 ARM_INSTRUCTION_SET:eabi:arm = "arm"
 do_configure:prepend:eabi:arm() {
-  mkdir -p ${UNPACKDIR}/bin
-  echo "#! /bin/bash\n${CC} \$@" > ${UNPACKDIR}/bin/arm-none-eabi-gcc
-  echo "#! /bin/bash\n${AS} \$@" > ${UNPACKDIR}/bin/arm-none-eabi-as
-  echo "#! /bin/bash\n${AR} \$@" > ${UNPACKDIR}/bin/arm-none-eabi-ar
-  chmod 0755 ${UNPACKDIR}/bin/arm-none-eabi-gcc
-  chmod 0755 ${UNPACKDIR}/bin/arm-none-eabi-as
-  chmod 0755 ${UNPACKDIR}/bin/arm-none-eabi-ar
+  mkdir -p ${WORKDIR}/bin
+  echo "#! /bin/bash\n${CC} \$@" > ${WORKDIR}/bin/arm-none-eabi-gcc
+  echo "#! /bin/bash\n${AS} \$@" > ${WORKDIR}/bin/arm-none-eabi-as
+  echo "#! /bin/bash\n${AR} \$@" > ${WORKDIR}/bin/arm-none-eabi-ar
+  chmod 0755 ${WORKDIR}/bin/arm-none-eabi-gcc
+  chmod 0755 ${WORKDIR}/bin/arm-none-eabi-as
+  chmod 0755 ${WORKDIR}/bin/arm-none-eabi-ar
 }
 
 # xsctapp sets it's own do_install, replace it with the real one (from meta-xilinx-standalone)
@@ -69,3 +69,8 @@ do_deploy() {
 }
 
 addtask deploy before do_build after do_install
+
+python() {
+    if not d.getVar('PV').startswith(d.getVar('XILINX_XSCT_VERSION')):
+        raise bb.parse.SkipRecipe("Recipe version %s is not compatible with XILINX_XSCT_VERSION %s" % (d.getVar('PV'), d.getVar("XILINX_XSCT_VERSION")))
+} 

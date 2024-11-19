@@ -17,12 +17,11 @@ SRC_URI[sha256sum] = "${XSCT_CHECKSUM}"
 
 inherit check_xsct_enabled native
 
-S = "${UNPACKDIR}/Vitis"
+S = "${WORKDIR}/Vitis"
 B = "${S}"
 
 SYSROOT_DIRS_NATIVE += "${STAGING_DIR_NATIVE}/Vitis/${PV}"
 
-# Based on poky/meta/classes-global/base.bbclass
 python do_fetch() {
     src_uri = (d.getVar('SRC_URI') or "").split()
     if not src_uri:
@@ -42,26 +41,10 @@ python do_fetch() {
         bb.fatal("Bitbake Fetcher Error: " + repr(e))
 }
 
-# Based on poky/meta/classes-global/base.bbclass
 python do_unpack() {
-    import shutil
-
-    sourcedir = d.getVar('S')
-    # Intentionally keep SOURCE_BASEDIR internal to the task just for SDE
-    d.setVar("SOURCE_BASEDIR", sourcedir)
-
     src_uri = (d.getVar('SRC_URI') or "").split()
     if not src_uri:
         return
-
-    basedir = None
-    unpackdir = d.getVar('UNPACKDIR')
-    workdir = d.getVar('WORKDIR')
-    if sourcedir.startswith(workdir) and not sourcedir.startswith(unpackdir):
-        basedir = sourcedir.replace(workdir, '').strip("/").split('/')[0]
-        if basedir:
-            bb.utils.remove(workdir + '/' + basedir, True)
-            d.setVar("SOURCE_BASEDIR", workdir + '/' + basedir)
 
     try:
         for uri in src_uri:
@@ -73,14 +56,9 @@ python do_unpack() {
                 local_uri = uri
 
             fetcher = bb.fetch2.Fetch([local_uri], d)
-            fetcher.unpack(d.getVar('UNPACKDIR'))
+            fetcher.unpack(d.getVar('WORKDIR'))
     except bb.fetch2.BBFetchException as e:
         bb.fatal("Bitbake Fetcher Error: " + repr(e))
-
-    if basedir and os.path.exists(unpackdir + '/' + basedir):
-        # Compatibility magic to ensure ${WORKDIR}/git and ${WORKDIR}/${BP}
-        # as often used in S work as expected.
-        shutil.move(unpackdir + '/' + basedir, workdir + '/' + basedir)
 }
 
 XSCT_LOADER ?= "${XILINX_SDK_TOOLCHAIN}/bin/xsct"
@@ -96,6 +74,14 @@ do_compile() {
         if [ ! -e ${PV}/bin/xsct ]; then
             bbfatal "XSCT binary is not found.\nUnable to find `pwd`/${PV}/bin/xsct."
         fi
+
+        # Various workarounds
+        case ${XILINX_XSCT_VERSION} in
+            2024.2)
+                # Remove included cmake, we want to use YP version in all cases
+                rm -rf ${PV}/tps/lnx64/cmake*
+                ;;
+        esac
     else
         if [ ! -e ${XSCT_LOADER} ]; then
             bbfatal "${XSCT_LOADER} not found.  Please configure XILINX_SDK_TOOLCHAIN with the path to the extracted xsct-trim."

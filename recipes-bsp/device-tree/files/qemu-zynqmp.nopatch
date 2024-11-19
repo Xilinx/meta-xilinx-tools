@@ -1,0 +1,24 @@
+Adjust serial port order for qemu-zynqmp
+
+The order of the serial ports is adjusted to match the uart ordering.  This
+will ensure that the console ordering used by the test cases will match the
+Yocto Project expections.
+
+This renumbers serial 1 to uart1, and the (unused) serial2 to 'dcc'.
+
+Signed-off-by: Mark Hatle <mark.hatle@amd.com>
+
+diff -ur device-tree-build.orig/device-tree/system-top.dts device-tree-build/device-tree/system-top.dts
+--- device-tree-build.orig/device-tree/system-top.dts	2024-08-24 09:51:17.519425060 -0600
++++ device-tree-build/device-tree/system-top.dts	2024-08-24 09:55:05.918066023 -0600
+@@ -21,8 +21,8 @@
+ 		i2c0 = &i2c0;
+ 		i2c1 = &i2c1;
+ 		serial0 = &uart0;
+-		serial1 = &dcc;
+-		serial2 = &uart1;
++		serial1 = &uart1;
++		serial2 = &dcc;
+ 		spi0 = &qspi;
+ 	};
+ 	memory@0 {
