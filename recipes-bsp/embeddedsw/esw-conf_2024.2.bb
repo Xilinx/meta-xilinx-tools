@@ -1,9 +1,6 @@
 # Can't depend on esw since this is needed for setup!
 inherit xlnx-embeddedsw
 
-S = "${WORKDIR}/git"
-B = "${WORKDIR}/build"
-
 INHIBIT_DEFAULT_DEPS = "1"
 
 python() {
