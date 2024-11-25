@@ -17,7 +17,7 @@ SRC_URI[sha256sum] = "${XSCT_CHECKSUM}"
 
 inherit check_xsct_enabled native
 
-S = "${WORKDIR}/Vitis"
+S = "${UNPACKDIR}/Vitis"
 B = "${S}"
 
 SYSROOT_DIRS_NATIVE += "${STAGING_DIR_NATIVE}/Vitis/${PV}"
@@ -56,7 +56,7 @@ python do_unpack() {
                 local_uri = uri
 
             fetcher = bb.fetch2.Fetch([local_uri], d)
-            fetcher.unpack(d.getVar('WORKDIR'))
+            fetcher.unpack(d.getVar('UNPACKDIR'))
     except bb.fetch2.BBFetchException as e:
         bb.fatal("Bitbake Fetcher Error: " + repr(e))
 }
@@ -80,6 +80,11 @@ do_compile() {
             2024.2)
                 # Remove included cmake, we want to use YP version in all cases
                 rm -rf ${PV}/tps/lnx64/cmake*
+                # Remove included openssl to resolve:
+                #   Vitis/2024.2/lib/lnx64.o/libssl.so.3: version `OPENSSL_3.2.0' not found (required by cmake)
+                rm -rf ${PV}/lib/lnx64.o/libssl.so.3
+                #   Vitis/2024.2/lib/lnx64.o/libcrypto.so.3: version `OPENSSL_3.3.0' not found (required by recipe-sysroot-native/usr/bin/../lib/libssl.so.3)
+                rm -rf ${PV}/lib/lnx64.o/libcrypto.so.3
                 ;;
         esac
     else

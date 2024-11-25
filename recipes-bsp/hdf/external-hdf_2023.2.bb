@@ -29,13 +29,13 @@ def findS(d):
     s = d.getVarFlag('HDF_URI', 'S')
     if not s:
         if url.startswith('file:///'):
-            s = '${WORKDIR}' + os.path.dirname(url[7:])
+            s = '${UNPACKDIR}' + os.path.dirname(url[7:])
         else:
-            s = '${WORKDIR}'
+            s = '${UNPACKDIR}'
     return s
 
-# Don't set S = "${WORKDIR}/git" as we need this to work for other protocols
-S = "${@findS(d) or '${WORKDIR}'}"
+# Don't set S = "${UNPACKDIR}/git" as we need this to work for other protocols
+S = "${@findS(d) or '${UNPACKDIR}'}"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"

@@ -3,6 +3,7 @@ inherit xsctapp xsctyaml
 # The makefile does not handle parallelization
 PARALLEL_MAKE = "-j1"
 
+UNPACKDIR = "${S}"
 B = "${S}/${XSCTH_PROJ}"
 B:zynq = "${S}/${XSCTH_PROJ}"
 B:zynqmp = "${S}/${XSCTH_PROJ}"

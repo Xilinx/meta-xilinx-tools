@@ -11,7 +11,7 @@ SRC_URI:append:qemu-microblazeel = " file://qemu-microblazeel.nopatch"
 
 do_patch_config:qemu-microblazeel() {
     cd ${B}
-    cat ${WORKDIR}/qemu-microblazeel.nopatch | patch -p1
+    cat ${UNPACKDIR}/qemu-microblazeel.nopatch | patch -p1
 }
 
 
@@ -20,7 +20,7 @@ SRC_URI:append:qemu-zynq7 = " file://qemu-zynq7.nopatch"
 
 do_patch_config:qemu-zynq7() {
     cd ${B}
-    cat ${WORKDIR}/qemu-zynq7.nopatch | patch -p1
+    cat ${UNPACKDIR}/qemu-zynq7.nopatch | patch -p1
 }
 
 
@@ -29,7 +29,7 @@ SRC_URI:append:qemu-zynqmp = " file://qemu-zynqmp.nopatch"
 
 do_patch_config:qemu-zynqmp() {
     cd ${B}
-    cat ${WORKDIR}/qemu-zynqmp.nopatch | patch -p1
+    cat ${UNPACKDIR}/qemu-zynqmp.nopatch | patch -p1
 }
 
 
@@ -38,7 +38,7 @@ SRC_URI:append:qemu-versal = " file://qemu-versal.nopatch"
 
 do_patch_config:qemu-versal() {
     cd ${B}
-    cat ${WORKDIR}/qemu-versal.nopatch | patch -p1
+    cat ${UNPACKDIR}/qemu-versal.nopatch | patch -p1
 }
 
 
@@ -46,7 +46,7 @@ SRC_URI:append:qemu-versal-net = " file://qemu-versal-net.nopatch"
 
 do_patch_config:qemu-versal-net() {
     cd ${B}
-    cat ${WORKDIR}/qemu-versal-net.nopatch | patch -p1
+    cat ${UNPACKDIR}/qemu-versal-net.nopatch | patch -p1
 }
 
 

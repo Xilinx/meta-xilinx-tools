@@ -3,6 +3,7 @@ inherit xsctapp xsctyaml
 # The makefile does not handle parallelization
 PARALLEL_MAKE = "-j1"
 
+UNPACKDIR = "${S}"
 B = "${S}/${XSCTH_PROJ}"
 
 XSCTH_MISC:append = "${@bb.utils.contains('MACHINE_FEATURES', 'rfsoc', ' -lib libmetal', '', d)}"

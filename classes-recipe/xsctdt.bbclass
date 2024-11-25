@@ -16,4 +16,4 @@ SRC_URI:append = " \
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
-XSCTH_SCRIPT = "${WORKDIR}/dtgen.tcl"
+XSCTH_SCRIPT = "${UNPACKDIR}/dtgen.tcl"
