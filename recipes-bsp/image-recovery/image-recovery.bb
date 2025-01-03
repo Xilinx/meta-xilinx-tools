@@ -2,8 +2,10 @@ DESCRIPTION = "Image Recovery"
 
 S = "${WORKDIR}/git"
 DEPENDS += "bootgen-native fsbl-firmware"
-inherit check_xsct_enabled xsctapp xsctyaml deploy
 
+PV = "${ESW_VER}"
+
+inherit check_xsct_enabled xsctapp xsctyaml deploy
 
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE:zynqmp = "zynqmp"
