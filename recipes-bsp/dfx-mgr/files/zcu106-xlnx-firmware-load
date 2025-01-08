@@ -54,18 +54,21 @@ if [ -n "${eeprom}" ]; then
          echo "later than 2.0 board revisions are supported in 2.0 bit and dtbo files"
          fwname="${boardid}-${revision}"
          fwdir="${fwbasedir}/${fwname}"
-         echo "${fwname}" > "${fwfile}"
+	 #load firmware using client command
+         dfx-mgr-client -load "${fwname}"
          exit 1
     elif [ ! -d "${fwdir}" ] ; then
          echo "No default firmware named ${fwname} found in ${fwbasedir} , Loading rev1.0 bitstream and dtbo as default "
          revision=1.0
          fwname=$(ls ${fwbasedir} | grep ${revision})
          fwdir="${fwbasedir}/${fwname}"
-         echo "${fwname}" > "${fwfile}"
+	 #load firmware using client command
+         dfx-mgr-client -load "${fwname}"
          exit 1
     fi
 
     echo "Default firmware detected: ${fwname}"
-    echo "${fwname}" > "${fwfile}"
+    #load firmware using client command
+    dfx-mgr-client -load "${fwname}"
     exit 0
 fi
