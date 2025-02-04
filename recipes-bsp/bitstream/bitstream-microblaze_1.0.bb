@@ -22,6 +22,8 @@ PROC ??= "kc705_i/microblaze_0"
 
 SYSROOT_DIRS += "/boot/bitstream"
 
+PV .= "+${XILINX_XSCT_VERSION}"
+
 do_configure() {
     echo "MMI=${MMI_FILE} BIT=${BIT_FILE} DATA=${DATA_FILE} PROCESSOR=${PROC} OUT=${B}/download.bit" > ${B}/updatemem.conf
     if [ ! -e ${B}/updatemem.conf ]; then
