@@ -1,6 +1,7 @@
 DESCRIPTION = "Device Tree generation and packaging for BSP Device Trees using DTG from Xilinx"
 
-PV = '${XILINX_XSCT_VERSION}'
+PV = '${XILINX_XSCT_VERSION}+git'
+PE = '1'
 
 LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://xadcps/data/xadcps.mdd;md5=d2baf2c4690cd90d3c2c2efabfde5fd4"
@@ -15,9 +16,6 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/${BPN}-build"
 
-DT_VERSION_EXTENSION ?= "xilinx-${XILINX_RELEASE_VERSION}"
-PV = "${DT_VERSION_EXTENSION}+git"
-
 XSCTH_BUILD_CONFIG = ""
 YAML_COMPILER_FLAGS ?= ""
 XSCTH_APP = "device-tree"
@@ -25,6 +23,9 @@ XSCTH_MISC = " -hdf_type ${HDF_EXT}"
 
 DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_PROJ}"
 DT_RELEASE_VERSION ?= "${XILINX_XSCT_VERSION}"
+
+PV .= "${@'' if d.getVar('DT_RELEASE_VERSION') == d.getVar('XILINX_XSCT_VERSION') else '+${DT_RELEASE_VERSION}'}"
+
 DT_INCLUDE:append = " ${WORKDIR} ${S}/device_tree/data/kernel_dtsi/${DT_RELEASE_VERSION}/BOARD/"
 DT_INCLUDE:append = " ${S}/device_tree/data/kernel_dtsi/${DT_RELEASE_VERSION}/include/"
 DT_PADDING_SIZE = "0x1000"
