@@ -2,6 +2,8 @@ SRC_URI = ""
 
 DEPENDS += "virtual/hdf"
 
+PV .= "+${XILINX_XSCT_VERSION}"
+
 HDF_EXT ?= "xsa"
 PDI_HDF ?= "${DEPLOY_DIR_IMAGE}/Xilinx-${MACHINE}.${HDF_EXT}"
 
