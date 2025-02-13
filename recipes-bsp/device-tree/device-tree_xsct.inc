@@ -31,6 +31,13 @@ DT_INCLUDE:append = " ${S}/device_tree/data/kernel_dtsi/${DT_RELEASE_VERSION}/in
 DT_PADDING_SIZE = "0x1000"
 DTC_FLAGS:append = "${@['', ' -@'][d.getVar('YAML_ENABLE_DT_OVERLAY') == '1']}"
 
+SDFEC_EXTRA_DT_INCLUDE_FILES ??= ""
+SDFEC_EXTRA_DT_INCLUDE_FILES:zcu111-zynqmp = " system-zcu111.dtsi"
+
+EXTRA_DT_INCLUDE_FILES:append = "${@' ${SDFEC_EXTRA_DT_INCLUDE_FILES}' if d.getVar('ENABLE_SDFEC_DT') == '1' else ''}"
+EXTRA_DT_INCLUDE_FILES:append:vek280-versal = " system-vek280.dtsi"
+EXTRA_DT_INCLUDE_FILES:append:qemu-versal-net = " system-qemu-versal-net.dtsi"
+
 COMPATIBLE_MACHINE:zynq = ".*"
 COMPATIBLE_MACHINE:zynqmp = ".*"
 COMPATIBLE_MACHINE:microblaze = ".*"
