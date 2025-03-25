@@ -48,3 +48,12 @@ do_install() {
 }
 
 FILES:${PN} = "${FW_LIB_DIR}/${OPENAMP_FW_NAME}"
+
+python () {
+    if d.getVar('XILINX_WITH_ESW') != 'xsct':
+        raise bb.parse.SkipRecipe("This recipe requires xsct workflow, which is not enabled.  XILINX_WITH_ESW set to '%s'." % d.getVar('XILINX_WITH_ESW'))
+
+    if not d.getVar('ALLOW_XSCT_OPENAMP'):
+        raise bb.parse.SkipRecipe("OpenAMP is no longer supported when using xsct for build.")
+}
+
