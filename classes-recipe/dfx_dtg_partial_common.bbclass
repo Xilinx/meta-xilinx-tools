@@ -27,13 +27,13 @@ python (){
     if not d.getVar("STATIC_PN"):
         raise bb.parse.SkipRecipe("STATIC_PN needs to be set to the package name that corresponds to the static xsa")
 
-    d.setVar("RP_XSCTH_HDF",[a for a in d.getVar('SRC_URI').split() if '.xsa' in a][0].lstrip('file://'))
+    d.setVar("RP_XSCTH_HDF",[a for a in d.getVar('SRC_URI').split() if '.xsa' in a][0].removeprefix('file://'))
 
     # Optional inputs
     if '.dtsi' in d.getVar("SRC_URI"):
-        d.setVar("PL_PARTIAL_CUSTOM_INCLUDE_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split() if '.dtsi' in a][0].lstrip('file://')))
+        d.setVar("PL_PARTIAL_CUSTOM_INCLUDE_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split() if '.dtsi' in a][0].removeprefix('file://')))
     if 'accel.json' in d.getVar("SRC_URI"):
-        d.setVar("JSON_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split() if 'accel.json' in a][0].lstrip('file://')))
+        d.setVar("JSON_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split() if 'accel.json' in a][0].removeprefix('file://')))
 }
 
 # In case of DFx partial, it will have both static and partial bistream extracted

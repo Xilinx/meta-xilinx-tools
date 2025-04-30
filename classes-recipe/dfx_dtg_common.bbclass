@@ -69,7 +69,7 @@ python (){
 
     # Optional inputs
     if '.xclbin' in d.getVar("SRC_URI"):
-        d.setVar("XCL_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split() if '.xclbin' in a][0].lstrip('file://')))
+        d.setVar("XCL_PATH",os.path.dirname([a for a in d.getVar('SRC_URI').split() if '.xclbin' in a][0].removeprefix('file://')))
 }
 do_configure:prepend() {
 
