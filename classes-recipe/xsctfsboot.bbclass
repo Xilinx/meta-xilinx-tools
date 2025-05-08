@@ -8,7 +8,7 @@
 inherit xsctapp
 
 FILESEXTRAPATHS:append := ":${XLNX_SCRIPTS_DIR}"
-SRC_URI:append =" \
+SRC_URI:append = " \
   file://fsboot.tcl \
   file://base-hsi.tcl \
 "
