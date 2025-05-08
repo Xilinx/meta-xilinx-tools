@@ -8,18 +8,18 @@ XSCT_VERSION=2024.1
 #M# kc705-microblazeel    kc705-full                         QB_MEM = \"-m 1024\"\\n
 #M# kcu105-microblazeel   kcu105                             QB_MEM = \"-m 2G\"\\n
 #M# sp701-microblazeel    sp701-rev1.0                       QB_MEM = \"-m 2G\"\\n
-#M# vck190-emmc-versal    versal-vck190-reva-x-ebm-01-reva   QB_MEM = \"-m 8G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vck190.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
-#M# vck190-ospi-versal    versal-vck190-reva-x-ebm-01-reva   QB_MEM = \"-m 8G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vck190.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
-#M# vck190-versal         versal-vck190-reva-x-ebm-01-reva   QB_MEM = \"-m 8G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vck190.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
+#M# vck190-emmc-versal    versal-vck190-reva-x-ebm-01-reva   MACHINE_FEATURES += \"aie\"\\n\\nQB_MEM = \"-m 8G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vck190.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
+#M# vck190-ospi-versal    versal-vck190-reva-x-ebm-01-reva   MACHINE_FEATURES += \"aie\"\\n\\nQB_MEM = \"-m 8G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vck190.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
+#M# vck190-versal         versal-vck190-reva-x-ebm-01-reva   MACHINE_FEATURES += \"aie\"\\n\\nQB_MEM = \"-m 8G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vck190.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
 #M# vcu118-microblazeel   vcu118-rev2.0                      QB_MEM = \"-m 4G\"\\n
-#M# vek280-versal         versal-vek280-revb                 QB_MEM = \"-m 12G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vek280.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
+#M# vek280-versal         versal-vek280-revb                 MACHINE_FEATURES += \"aie\"\\n\\nQB_MEM = \"-m 12G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vek280.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
 #M# vmk180-emmc-versal    versal-vmk180-reva-x-ebm-01-reva   QB_MEM = \"-m 8G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vmk180.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
 #M# vmk180-ospi-versal    versal-vmk180-reva-x-ebm-01-reva   QB_MEM = \"-m 8G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vmk180.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
 #M# vmk180-versal         versal-vmk180-reva-x-ebm-01-reva   QB_MEM = \"-m 8G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vmk180.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
 #M# vpk120-versal         versal-vpk120-reva                 QB_MEM = \"-m 12G\"\\nQEMU_HW_DTB_PS = \"${QEMU_HW_DTB_PATH}/board-versal-ps-vpk120.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
 #M# vpk180-versal         versal-vpk180-reva                 QB_MEM = \"-m 12G\"\\nQEMU_HW_DTB_PS = \"${QEMU_HW_DTB_PATH}/board-versal-ps-vpk180.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
-#M# zc702-zynq7           zc702                              QB_MEM = \"-m 1024\"\\nQB_XILINX_SERIAL = \"-serial null -serial mon:stdio\"\\n
-#M# zc706-zynq7           zc706                              QB_MEM = \"-m 1024\"\\nQB_XILINX_SERIAL = \"-serial null -serial mon:stdio\"\\n
+#M# zc702-zynq7           zc702                              QB_MEM = \"-m 1024\"\\nQEMU_HW_SERIAL = \"-serial null -serial mon:stdio\"\\n
+#M# zc706-zynq7           zc706                              QB_MEM = \"-m 1024\"\\nQEMU_HW_SERIAL = \"-serial null -serial mon:stdio\"\\n
 #M# zcu102-zynqmp         zcu102-rev1.0                      QB_MEM = \"-m 4G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/zcu102-arm.dtb\"\\nQEMU_HW_DTB_PMU = \"${QEMU_HW_DTB_PATH}/zynqmp-pmu.dtb\"\\n
 #M# zcu104-zynqmp         zcu104-revc                        QB_MEM = \"-m 4G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-zynqmp-zcu104.dtb\"\\nQEMU_HW_DTB_PMU = \"${QEMU_HW_DTB_PATH}/zynqmp-pmu.dtb\"\\n
 #M# zcu106-zynqmp         zcu106-reva                        

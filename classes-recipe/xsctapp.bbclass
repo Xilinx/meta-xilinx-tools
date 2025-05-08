@@ -30,7 +30,7 @@ do_compile() {
 
     cd ${B}/${XSCTH_PROJ}
     case ${XILINX_XSCT_VERSION} in
-        2022.1 | 2022.2 | 2023.1 | 2023.2 | 2024.1)
+        2023.1 | 2023.2 | 2024.1)
             export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${XILINX_SDK_TOOLCHAIN}/tps/lnx64/cmake-3.3.2/libs/Ubuntu/x86_64-linux-gnu/:
             ;;
     esac
@@ -41,7 +41,7 @@ do_compile() {
 }
 
 do_install() {
-    install -Dm 0644 ${B}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ${D}/boot/${PN}-${SRCPV}.elf
+    install -Dm 0644 ${B}/${XSCTH_PROJ}/${XSCTH_EXECUTABLE} ${D}/boot/${PN}-${PV}.elf
 }
 
 do_deploy() {
@@ -50,4 +50,4 @@ do_deploy() {
 }
 addtask do_deploy after do_compile
 
-FILES:${PN} = "/boot/${PN}-${SRCPV}.elf"
+FILES:${PN} = "/boot/${PN}-${PV}.elf"

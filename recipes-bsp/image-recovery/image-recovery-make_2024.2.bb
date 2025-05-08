@@ -3,9 +3,6 @@ DEPENDS += "bootgen-native fsbl-firmware"
 
 inherit check_xsct_enabled deploy xlnx-embeddedsw xsctbase
 
-LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://../../../../license.txt;md5=${@d.getVarFlag('LIC_FILES_CHKSUM', d.getVar('BRANCH')) or '0'}"
-
 COMPATIBLE_MACHINE = "^$"
 COMPATIBLE_MACHINE:kria = "${MACHINE}"
 COMPATIBLE_MACHINE:eval-brd-sc-zynqmp = "${MACHINE}"
@@ -14,6 +11,7 @@ EXTRA_OEMAKE:append:eval-brd-sc-zynqmp = "BOARD=SC"
 
 # S is already set to the shres xlnx-embeddedsw source
 S .= "/lib/sw_apps/img_rcvry/src"
+B = "${S}"
 
 PARALLEL_MAKE = "-j 1"
 
@@ -24,8 +22,8 @@ cat > ${PN}.bif << EOF
     the_ROM_image:
     {
         [bootloader, destination_cpu=a53-0] ${DEPLOY_DIR_IMAGE}/fsbl-${MACHINE}.elf
-        [load=0x10000000] ${S}/../misc/web.img
-        [destination_cpu=a53-0] ${S}/${XSCTH_EXECUTABLE}
+        [load=0x10000000] ${B}/../misc/web.img
+        [destination_cpu=a53-0] ${B}/${XSCTH_EXECUTABLE}
     }
 EOF
 }
@@ -38,7 +36,7 @@ do_compile () {
 }
 
 do_deploy () {
-    install -Dm 0644 ${S}/../misc/web.img ${DEPLOYDIR}/image-recovery_web.img
+    install -Dm 0644 ${B}/../misc/web.img ${DEPLOYDIR}/image-recovery_web.img
     install -Dm 0644 ${B}/${PN}.bin ${DEPLOYDIR}/${PN}-${MACHINE}-${IMAGE_VERSION_SUFFIX}.bin
     ln -sf ${PN}-${MACHINE}-${IMAGE_VERSION_SUFFIX}.bin ${DEPLOYDIR}/image-recovery-${MACHINE}.bin
 

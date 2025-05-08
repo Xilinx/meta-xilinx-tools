@@ -3,6 +3,8 @@ DESCRIPTION = "Image Selector"
 DEPENDS += "bootgen-native"
 RCONFLICTS:${PN} = "image-selector"
 
+PV = "${ESW_VER}"
+
 inherit check_xsct_enabled xsctapp xsctyaml deploy
 
 PARALLEL_MAKE = "-j 1"

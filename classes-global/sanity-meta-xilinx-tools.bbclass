@@ -26,7 +26,14 @@ with SDT workflow.")
         output = output.strip()
 
         if not os.path.exists(output):
-            bb.fatal('libtinfo.so.5 is required by meta-xilinx-tools.\n' \
+            gcc_which = subprocess.check_output("which gcc", \
+                    shell=True, env=env, stderr=subprocess.STDOUT).decode("utf-8")
+
+            gcc_version = subprocess.check_output("gcc --version", \
+                    shell=True, env=env, stderr=subprocess.STDOUT).decode("utf-8")
+            bb.error('%s version %s' % (gcc_which, gcc_version))
+
+            bb.fatal('libtinfo.so.5 (%s) is required by meta-xilinx-tools.\n' \
                      'This library must be installed before the build system ' \
-                     'can use xsct.  It is often part of an ncurses5 package.')
+                     'can use xsct.  It is often part of an ncurses5 package.' % (output))
 }

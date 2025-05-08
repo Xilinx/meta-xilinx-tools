@@ -16,8 +16,11 @@ PROVIDES = "virtual/uboot-dtb"
 UNPACKDIR = "${WORKDIR}/sources"
 S = "${UNPACKDIR}/git"
 
-DT_VERSION_EXTENSION ?= "xilinx-${XILINX_RELEASE_VERSION}"
-PV = "${DT_VERSION_EXTENSION}+git"
+# Version should match device-tree recipe
+PV = '${XILINX_XSCT_VERSION}+git'
+PE = '1'
+
+PV .= "${@'' if d.getVar('DT_RELEASE_VERSION') == d.getVar('XILINX_XSCT_VERSION') else '+${DT_RELEASE_VERSION}'}"
 
 PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
