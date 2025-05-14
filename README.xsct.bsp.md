@@ -175,7 +175,7 @@ YAML_SERIAL_CONSOLE_BAUDRATE = "115200"
 ```
 
 3. Example YAML based configuration for setting eval board specific dtsi files available in DTG repo.
-Refer https://github.com/Xilinx/device-tree-xlnx/tree/xlnx_rel_v2024.2/device_tree/data/kernel_dtsi/2024.2/BOARD
+Refer https://github.com/Xilinx/device-tree-xlnx/tree/xlnx_rel_v2025.1/device_tree/data/kernel_dtsi/2025.1/BOARD
 for more details.
 
 ```bash
