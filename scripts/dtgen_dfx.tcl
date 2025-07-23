@@ -146,9 +146,28 @@ if { $params(ws) ne "" } {
 			platform read $params(ws)/$platname/platform.spr
 			platform remove $platname
 		}
-		set procs [getprocessors $params(hdf)]
-		if {[llength $procs] != 0} {
-			set processor [lindex $procs 0]
+
+		hsi::open_hw_design $params(hdf)
+		if { $params(processor) ne "" } {
+			set processor [lindex [hsi get_cells -hier -filter NAME==$params(processor)] 0]
+			if { $processor eq "" } {
+				puts "Error: No processor instance matching name '$params(processor)' found in static xsa file"
+			}
+		} elseif { $params(processor_ip) ne "" } {
+			set processor [lindex [hsi get_cells -hier -filter IP_NAME==$params(processor_ip)] 0]
+			if { $processor eq "" } {
+				puts "Error: No processor instance matching IP '$params(processor_ip)' found in static xsa file"
+			}
+		} else {
+			set procs [getprocessors $params(hdf)]
+			if {[llength $procs] != 0} {
+				set processor [lindex $procs 0]
+			} {
+				puts "Error: No processor instance found in static xsa file"
+			}
+		}
+
+		if { $processor ne "" } {
 			puts "INFO: Targeting Static XSA Processor is '$processor'"
 			if {$params(rphdf) eq ""} {
 				# Static xsa parsing
@@ -160,7 +179,7 @@ if { $params(ws) ne "" } {
 				-rm-hw $params(rphdf) -os device_tree -proc $processor -no-boot-bsp -out $params(ws)
 			}
 		} else {
-			puts "Error: No processor instance found in static xsa file"
+			puts "Error: Processor instance not set."
 		}
 
 		# Enable zocl by default when design is extensibale platform xsa
