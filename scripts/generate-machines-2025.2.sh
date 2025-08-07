@@ -8,9 +8,6 @@ XSCT_VERSION=2025.2
 #M# kc705-microblazeel    kc705-full                         QB_MEM = \"-m 1024\"\\n
 #M# kcu105-microblazeel   kcu105                             QB_MEM = \"-m 2G\"\\n
 #M# sp701-microblazeel    sp701-rev1.0                       QB_MEM = \"-m 2G\"\\n
-#M# vck190-emmc-versal    versal-vck190-reva-x-ebm-01-reva   QB_MEM = \"-m 8G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vck190.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
-#M# vck190-ospi-versal    versal-vck190-reva-x-ebm-01-reva   QB_MEM = \"-m 8G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vck190.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
-#M# vck190-versal         versal-vck190-reva-x-ebm-01-reva   QB_MEM = \"-m 8G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vck190.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
 #M# vcu118-microblazeel   vcu118-rev2.0                      QB_MEM = \"-m 4G\"\\n
 #M# vek280-versal         versal-vek280-revb                 QB_MEM = \"-m 12G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vek280.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
 #M# generic-versal-net    versal-net-vn-p-b2197-00-reva      QB_MEM = \"-m 8G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-net-psx-spp-1.4.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmx-virt.dtb\"\\n
