@@ -37,7 +37,6 @@ meta-xilinx-tools/scripts/generate-machines-<XSCT_VERSION>.sh scripts.
 | Versal     | [VMK180](https://www.xilinx.com/products/boards-and-kits/vmk180.html)         | [vmk180-versal](conf/machine/vmk180-versal.conf)             | `vmk180-versal`       | `versal-vmk180-reva-x-ebm-01-reva`  | Yes         | Yes       |
 |            | [VPK120](https://www.xilinx.com/products/boards-and-kits/vpk120.html)         | [vpk120-versal](conf/machine/vpk120-versal.conf)             | `vpk120-versal`       | `versal-vpk120-reva`                | Yes         | Yes       |
 |            | [VPK180](https://www.xilinx.com/products/boards-and-kits/vpk180.html)         | [vpk180-versal](conf/machine/vpk180-versal.conf)             | `vpk180-versal`       | `versal-vpk180-reva`                | Yes         | Yes       |
-|            | [VEK280](https://www.xilinx.com/products/boards-and-kits/vek280.html)         | [vek280-versal](conf/machine/vek280-versal.conf)             | `vek280-versal`       | `versal-vek280-revb`                | Yes         | Yes       |
 |            | [VHK158](https://www.xilinx.com/products/boards-and-kits/vhk158.html)         | [vhk158-versal](conf/machine/vhk158-versal.conf)             | `vhk158-versal`       | `versal-vhk158-reva`                | Yes         | Yes       |
 |            |          | [qemu-versal](conf/machine/qemu-versal.conf) | `vck190-versal` | `versal-vck190-reva-x-ebm-01-reva` | Yes         | NA       |
 
