@@ -8,9 +8,10 @@ it has not been enabled using XILINX_WITH_ESW in your configuration. Some \
 bbappend files and preferred version setting may not take effect. See the \
 meta-xilinx-tools README for details.")
     elif e.data.getVar('XILINX_WITH_ESW') == 'xsct':
-        bb.warn("XSCT has been deprecated. It will still be available for \
-several releases. In the future, it's recommended to start new projects \
-with SDT workflow.")
+        bb.warn("XSCT has been deprecated.  All non Microblaze XSCT BSPs \
+will be deprecated in version 2026.1, while Microblaze will be end-of-life \
+in 2026.2.  Users are advised to start new projects with the SDT workflow, \
+and transition Microblaze to Microblaze-V.")
 
         # Check that libtinfo.so.5 is available!  Use the _HOST_ compiler, skipping any
         # Yocto Project specific libraries.
