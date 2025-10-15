@@ -1,4 +1,5 @@
 DESCRIPTION = "Image Recovery"
+PROVIDES = "virtual/imgrcry"
 DEPENDS += "bootgen-native fsbl-firmware"
 
 inherit check_xsct_enabled deploy xlnx-embeddedsw xsctbase
