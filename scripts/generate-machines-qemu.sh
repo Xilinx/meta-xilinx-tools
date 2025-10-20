@@ -1,6 +1,6 @@
 #! /bin/bash -e
 
-XSCT_VERSION=2025.2
+XSCT_VERSION=2026.1
 
 ### The following table controls the automatic generated of the machine .conf files (lines start with #M#)
 ### Machine               Board Template                     PRE                                                                 POST

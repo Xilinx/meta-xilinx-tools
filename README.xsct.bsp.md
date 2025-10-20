@@ -1,4 +1,4 @@
-# AMD Evaluation Boards XSCT BSP Machines files
+2# AMD Evaluation Boards XSCT BSP Machines files
 
 The following boards are supported by the meta-xilinx-tools layer. Eval board XSCT
 (Software Command-Line Tool) BSP machine configuration files are generated using
@@ -168,7 +168,7 @@ YAML_SERIAL_CONSOLE_BAUDRATE = "115200"
 ```
 
 3. Example YAML based configuration for setting eval board specific dtsi files available in DTG repo.
-Refer https://github.com/Xilinx/device-tree-xlnx/tree/xlnx_rel_v2025.2/device_tree/data/kernel_dtsi/2025.2/BOARD
+Refer https://github.com/Xilinx/device-tree-xlnx/tree/xlnx_rel_v2026.1/device_tree/data/kernel_dtsi/2026.1/BOARD
 for more details.
 
 ```bash

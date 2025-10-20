@@ -85,6 +85,6 @@ xsct tools may not be backward compatible with embeddedsw repo. Meaning
         https://github.com/Xilinx/meta-xilinx (development and AMD release)
 	layers: meta-xilinx-core, meta-xilinx-microblaze, meta-xilinx-bsp,
             meta-xilinx-standalone, meta-xilinx-vendor.
-	branch: scarthgap or AMD release version (e.g. rel-v2025.2)
+	branch: scarthgap or AMD release version (e.g. rel-v2026.1)
 ---
 
