@@ -4,7 +4,8 @@
 #
 # SPDX-License-Identifier: MIT
 #
-TOOL_VER_MAIN ?= "${XILINX_XSCT_VERSION}"
+#TOOL_VER_MAIN ?= "${XILINX_XSCT_VERSION}"
+TOOL_VER_MAIN ?= "${@'${XILINX_XSCT_VERSION}' if d.getVar('XILINX_XSCT_VERSION') != '2026.1' else '2025.2'}"
 TOOL_VER_MAIN[doc] = "XSCT version, usually the same as XILINX_XSCT_VERSION"
 
 XILINX_SDK_TOOLCHAIN_BASE = "${@'${COMPONENTS_DIR}/${BUILD_ARCH}/xsct-native' if d.getVar('PN') == 'defaultpkgname' else '${RECIPE_SYSROOT_NATIVE}'}"
