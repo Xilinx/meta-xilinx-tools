@@ -17,7 +17,7 @@ XSCT_URL[2023.2] = "https://petalinux.xilinx.com/sswreleases/rel-v2023/xsct-trim
 XSCT_URL[2024.1] = "https://petalinux.xilinx.com/sswreleases/rel-v2024/xsct-trim/xsct-2024-1_0515.tar.xz"
 XSCT_URL[2024.2] = "https://petalinux.xilinx.com/sswreleases/rel-v2024.2/xsct-trim/xsct-2024-2_1104.tar.xz"
 XSCT_URL[2025.1] = "https://petalinux.xilinx.com/sswreleases/rel-v2025.1/xsct-trim/xsct-2025-1_0517.tar.xz"
-XSCT_URL[2025.2] = "https:///edf.amd.com/sswreleases/rel-v2025.2/xsct-trim/xsct-2025-2_1018.tar.xz"
+XSCT_URL[2025.2] = "https://edf.amd.com/sswreleases/rel-v2025.2/xsct-trim/xsct-2025-2_1018.tar.xz"
 XSCT_URL ?= "${@d.getVarFlag('XSCT_URL', d.getVar('TOOL_VER_MAIN'))}"
 XSCT_TARBALL ?= "xsct_${TOOL_VER_MAIN}.tar.xz"
 
