@@ -81,6 +81,10 @@ do_compile() {
                 # Remove included cmake, we want to use YP version in all cases
                 rm -rf ${PV}/tps/lnx64/cmake*
                 ;;
+            2025.2)
+                # Remove local libc which conflicts with our libc
+                rm -rf ${PV}/lib/lnx64.o/Ubuntu/22/libc.so*
+                ;;
         esac
     else
         if [ ! -e ${XSCT_LOADER} ]; then
