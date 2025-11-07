@@ -81,7 +81,7 @@ do_compile() {
                 # Remove included cmake, we want to use YP version in all cases
                 rm -rf ${PV}/tps/lnx64/cmake*
                 ;;
-            2026.1)
+            2025.2 | 2026.1)
                 # Remove local libc which conflicts with our libc
                 rm -rf ${PV}/lib/lnx64.o/Ubuntu/22/libc.so*
                 ;;
