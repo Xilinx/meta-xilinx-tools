@@ -9,7 +9,6 @@ XSCT_VERSION=2026.1
 #M# kcu105-microblazeel   kcu105                             QB_MEM = \"-m 2G\"\\n
 #M# sp701-microblazeel    sp701-rev1.0                       QB_MEM = \"-m 2G\"\\n
 #M# vcu118-microblazeel   vcu118-rev2.0                      QB_MEM = \"-m 4G\"\\n
-#M# generic-versal-net    versal-net-vn-p-b2197-00-reva      QB_MEM = \"-m 8G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-net-psx-spp-1.4.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmx-virt.dtb\"\\n
 #M# vhk158-versal         versal-vhk158-reva                 QB_MEM = \"-m 32G\"\\nQEMU_HW_DTB_PS = \"\${QEMU_HW_DTB_PATH}/board-versal-ps-vhk158.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
 #M# vpk180-versal         versal-vpk180-reva                 QB_MEM = \"-m 12G\"\\nQEMU_HW_DTB_PS = \"${QEMU_HW_DTB_PATH}/board-versal-ps-vpk180.dtb\"\\nQEMU_HW_DTB_PMC = \"${QEMU_HW_DTB_PATH}/board-versal-pmc-virt.dtb\"\\n
 #M# zc706-zynq7           zc706                              QB_MEM = \"-m 1024\"\\nQEMU_HW_SERIAL = \"-serial null -serial mon:stdio\"\\n
