@@ -34,6 +34,9 @@ HW_ARG ??= "-processor_ip ${XSCTH_PROC_IP} -hdf ${XSCTH_HDF} -arch ${XSCTH_ARCH}
 
 DEPENDS += 'xsct-native'
 
+# Disable blocking dependency check in xsct
+export XSCT_DEP_CHECK_BLOCKING = "FALSE"
+
 do_configure[vardeps] += "TOOL_VER_MAIN"
 do_configure[depends] += "virtual/hdf:do_deploy"
 do_configure[lockfiles] = "${TMPDIR}/xsct-invoke.lock"
