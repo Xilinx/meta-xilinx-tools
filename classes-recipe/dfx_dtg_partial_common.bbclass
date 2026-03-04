@@ -27,7 +27,8 @@ python (){
     if not d.getVar("STATIC_PN"):
         raise bb.parse.SkipRecipe("STATIC_PN needs to be set to the package name that corresponds to the static xsa")
 
-    d.setVar("RP_XSCTH_HDF",[a for a in d.getVar('SRC_URI').split() if '.xsa' in a][0].removeprefix('file://'))
+    localpath = bb.fetch2.localpath([a for a in d.getVar('SRC_URI').split() if '.xsa' in a][0], d)
+    d.setVar("RP_XSCTH_HDF", os.path.basename(localpath))
 
     # Optional inputs
     if '.dtsi' in d.getVar("SRC_URI"):
