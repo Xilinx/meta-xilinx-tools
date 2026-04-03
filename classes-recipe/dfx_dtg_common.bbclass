@@ -43,6 +43,7 @@ COMPATIBLE_MACHINE:microblaze = "^$"
 BOOTGEN_FLAGS ?= " -arch ${SOC_FAMILY} -w ${@bb.utils.contains('SOC_FAMILY','zynqmp','','-process_bitstream bin',d)}"
 
 DT_FILES_PATH = "${XSCTH_WS}/${XSCTH_DT_PATH}"
+DT_INCLUDE:append = " ${DT_FILES_PATH}/include"
 YAML_OVERLAY_CUSTOM_DTS = "pl-final.dts"
 
 # Note: For YAML_PARTIAL_OVERLAY_CUSTOM_DTS file .dts extension is appended
