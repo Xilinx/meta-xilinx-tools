@@ -18,7 +18,7 @@ XSCT_URL[2024.1] = "https://petalinux.xilinx.com/sswreleases/rel-v2024/xsct-trim
 XSCT_URL[2024.2] = "https://petalinux.xilinx.com/sswreleases/rel-v2024.2/xsct-trim/xsct-2024-2_1104.tar.xz"
 XSCT_URL[2025.1] = "https://petalinux.xilinx.com/sswreleases/rel-v2025.1/xsct-trim/xsct-2025-1_0517.tar.xz"
 XSCT_URL[2025.2] = "https://edf.amd.com/sswreleases/rel-v2025.2/xsct-trim/xsct-2025-2_1110.tar.xz"
-XSCT_URL[2026.1] = "https://edf.amd.com/sswreleases/rel-v2026.1/xsct-trim/xsct-2026-1_0514.tar.xz"
+XSCT_URL[2026.1] = "https://edf.amd.com/sswreleases/rel-v2026.1/xsct-trim/xsct-2026-1_0604.tar.xz"
 XSCT_URL ?= "${@d.getVarFlag('XSCT_URL', d.getVar('TOOL_VER_MAIN'))}"
 XSCT_TARBALL ?= "xsct_${TOOL_VER_MAIN}.tar.xz"
 
@@ -28,7 +28,7 @@ XSCT_CHECKSUM[2024.1] = "b73be5f07312e48aa3ceb96d947a5c7b347caf2dd23c85c3db12893
 XSCT_CHECKSUM[2024.2] = "7fc702dfd0d94cf2facbdd680b9fb4f873bdb43166ef19bb28acffdce1773c7b"
 XSCT_CHECKSUM[2025.1] = "9d303d5124e4774d545e6448e1314aa8921d4e38951db82ce38957c645cf2384"
 XSCT_CHECKSUM[2025.2] = "3ae9e4cd07e179a016467d6eb743d04a389af9857a1c72c8c6104cfc47fca823"
-XSCT_CHECKSUM[2026.1] = "5db02720189aa59ddbb4933b060736f41159b06a54da0306728b070e93a1cb9d"
+XSCT_CHECKSUM[2026.1] = "ee79d756ef2820025b849508f083eec71027265e5ba8852e6c4094ccb0e8f195"
 XSCT_CHECKSUM ?= "${@d.getVarFlag('XSCT_CHECKSUM', d.getVar('TOOL_VER_MAIN'))}"
 
 VALIDATE_XSCT_CHECKSUM ?= '1'
