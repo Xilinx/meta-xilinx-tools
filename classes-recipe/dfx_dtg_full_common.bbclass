@@ -9,7 +9,8 @@
 inherit dfx_dtg_common
 
 python() {
-    d.setVar("XSCTH_HDF_PATH",[a for a in d.getVar('SRC_URI').split() if '.xsa' in a][0].removeprefix('file://'))
+    localpath = bb.fetch2.localpath([a for a in d.getVar('SRC_URI').split() if '.xsa' in a][0], d)
+    d.setVar("XSCTH_HDF_PATH", os.path.basename(localpath))
 
     # Optional inputs
     if '.xclbin' in d.getVar("SRC_URI"):
